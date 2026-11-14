@@ -30,9 +30,13 @@ htmlcov/
 .env.*
 !.env.example
 
-# Descargas crudas regenerables con los scripts (la procedencia queda en los manifiestos)
-datos/crudos/
-ciencia/.cache/
+# Descargas crudas: se regeneran con `tv ingest-fenomenos`. Se versionan solo los manifiestos
+# (SHA-256, URL y fecha de cada archivo) y el registro de descarga, para auditar la procedencia.
+data/raw/*/*
+!data/raw/*/manifiesto.json
+data/interim/*
+data/processed/*
+!data/*/.gitkeep
 
 # Sistema operativo y editores
 .DS_Store

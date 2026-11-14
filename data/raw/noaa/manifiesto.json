@@ -1,0 +1,11 @@
+[
+ {
+  "archivo": "oni.ascii.txt",
+  "sha256": "118c563331335c8649cdc2677e6be7ae89d1259d901345fcddbc2857af280f7f",
+  "bytes": 23050,
+  "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+  "producto": "NOAA_CPC_ONI",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:21+00:00"
+ }
+]

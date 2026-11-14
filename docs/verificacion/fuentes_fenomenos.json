@@ -1,0 +1,37 @@
+{
+ "generado_utc": "2026-11-14T20:50:42+00:00",
+ "SENAMHI": {
+  "url": "https://www.senamhi.gob.pe/",
+  "error": "ConnectionError: HTTPSConnectionPool(host='www.senamhi.gob.pe', port=443): Max retries exceeded with url: / (Caused by ProtocolError('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer')))"
+ },
+ "IGP": {
+  "url": "https://ultimosismos.igp.gob.pe/",
+  "error": "ProxyError: HTTPSConnectionPool(host='ultimosismos.igp.gob.pe', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 502 Bad Gateway')))"
+ },
+ "IGP_OVS": {
+  "url": "https://ovs.igp.gob.pe/",
+  "error": "ProxyError: HTTPSConnectionPool(host='ovs.igp.gob.pe', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 502 Bad Gateway')))"
+ },
+ "INGEMMET": {
+  "url": "https://geocatmin.ingemmet.gob.pe/geocatmin/",
+  "error": "SSLError: HTTPSConnectionPool(host='geocatmin.ingemmet.gob.pe', port=443): Max retries exceeded with url: /geocatmin/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1035)')))"
+ },
+ "ANA": {
+  "url": "https://snirh.ana.gob.pe/",
+  "http": 200,
+  "url_final": "https://snirh.ana.gob.pe/",
+  "bytes": 1560
+ },
+ "CENEPRED": {
+  "url": "https://sigrid.cenepred.gob.pe/sigridv3/",
+  "http": 200,
+  "url_final": "https://sigrid.cenepred.gob.pe/sigridv3/",
+  "bytes": 62241
+ },
+ "SINIA": {
+  "url": "https://sinia.minam.gob.pe/",
+  "http": 403,
+  "url_final": "https://sinia.minam.gob.pe/",
+  "bytes": 864
+ }
+}

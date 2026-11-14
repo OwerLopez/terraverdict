@@ -1,0 +1,123 @@
+[
+ {
+  "archivo": "usgs_1973_1977.csv",
+  "sha256": "b195959730b48df2e75aa6717fb4f3756c757bb082ae7469a71e910673c600f7",
+  "bytes": 20938,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:22+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_1978_1982.csv",
+  "sha256": "f5275542fa290568268cc283c383960d0fb0aca64196f1f95d6b608d6ca1dda1",
+  "bytes": 24513,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:23+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_1983_1987.csv",
+  "sha256": "a48602fb11ae60cb2f92b54e1184f8749216244fe24556a0f4e3774902898d6f",
+  "bytes": 24347,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:23+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_1988_1992.csv",
+  "sha256": "d8fbf64991aaff8006c81f70969123d39a6d5e6734994ef1804fe30679705ac1",
+  "bytes": 30807,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:24+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_1993_1997.csv",
+  "sha256": "bca383f30e8896dbd442ee4ac540a72d98032ceb638733d3f7dbd6cb37635091",
+  "bytes": 32597,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:24+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_1998_2002.csv",
+  "sha256": "c577f921f4848c1f48ce6620d6768ceaf7a0b02a625f2b6bb51d7d46e9ee7bc1",
+  "bytes": 110017,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:25+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_2003_2007.csv",
+  "sha256": "06081ab1876bf0e64f82bead8c9db41413781969d68729c83515156f0be28f3d",
+  "bytes": 70473,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:25+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_2008_2012.csv",
+  "sha256": "d53710ae5b3c6aa725ce50edd488b0130eddaeed2bc2c2167e4de8ee0723a3eb",
+  "bytes": 51890,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:25+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_2013_2017.csv",
+  "sha256": "d33196222084b31a4e1cfb3d0148d0e4f02041e09f2c36852b650761c08e7b82",
+  "bytes": 117945,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:26+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_2018_2022.csv",
+  "sha256": "72b239f770ea156f37966ec04fa7ca0d2646f44dfd306f91d5be517712f45f6c",
+  "bytes": 119364,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:26+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ },
+ {
+  "archivo": "usgs_2023_2026.csv",
+  "sha256": "dbe080e268a56779c5d3d14a658202be8a11f5ac16fdc8b9718b3a1ad4317231",
+  "bytes": 92243,
+  "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+  "producto": "USGS_COMCAT",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:27+00:00",
+  "radio_km": 350,
+  "mag_min": 4.0
+ }
+]

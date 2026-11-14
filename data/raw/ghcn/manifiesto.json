@@ -1,0 +1,11 @@
+[
+ {
+  "archivo": "ghcn_PE000084752.csv",
+  "sha256": "1963def04a0c425d2dad4511d7ae6f88f733485645f30dd44acbc526e8edfd88",
+  "bytes": 2389137,
+  "url": "https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/PE000084752.csv",
+  "producto": "NOAA_GHCN_DAILY",
+  "version": null,
+  "descargado_utc": "2026-11-14T20:51:22+00:00"
+ }
+]

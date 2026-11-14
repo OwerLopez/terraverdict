@@ -1,0 +1,184 @@
+# Catálogo científico de fenómenos naturales de Arequipa: variables, métricas, fuentes y tareas.
+#
+# Reglas del catálogo
+# - Una variable entra solo si tiene una razón física para el fenómeno (campo `justificacion`).
+# - El sistema selecciona entre las candidatas con información mutua, redundancia (mRMR) y este
+#   prior físico (`relevancia`): no acumula datos sin criterio.
+# - `acceso` es el resultado de una consulta real desde el entorno del proyecto (fecha en
+#   `verificado`), no una suposición. Las fuentes no accesibles se documentan con su motivo.
+# - Ningún resultado de este sistema es una alerta oficial. En el Perú las alertas las emiten
+#   SENAMHI (hidrometeorología), IGP (sismos y volcanes), INGEMMET (peligros geológicos) e INDECI.
+
+version: 1
+verificado: "2026-11-14"
+
+puntos:
+  ciudad:   {lon: -71.535, lat: -16.4,  descripcion: "Arequipa metropolitana (torrenteras, captación La Tomilla)"}
+  cabecera: {lon: -71.25,  lat: -15.95, descripcion: "Cabecera del sistema regulado del Chili (El Frayle, Pillones)"}
+
+descarga:
+  power_diario: ["19810101", "20261031"]
+  power_mensual: [1981, 2025]
+  ghcn_estacion: PE000084752          # AREQUIPA (aeropuerto Rodríguez Ballón)
+  sismos: {radio_km: 350, mag_min: 4.0, desde: 1973, hasta: 2026}
+
+particion_temporal:                    # misma regla que config/dominios.yaml: la prueba se usa una sola vez
+  entrenamiento: ["1981-01-01", "2015-12-31"]
+  validacion:    ["2016-01-01", "2020-12-31"]
+  prueba:        ["2021-01-01", "2026-10-31"]
+
+abstencion:
+  skill_minimo_validacion: 0.0        # si no supera a la climatología en validación, no se publica pronóstico
+  eventos_minimos_umbral: 30          # por debajo, no se estima umbral de lluvia para deslizamientos
+  psi_deriva_advertencia: 0.25        # índice de estabilidad poblacional entre entrenamiento y ventana reciente
+  faltantes_max_ventana: 0.0          # una ventana de entrada con faltantes no produce pronóstico
+
+fenomenos:
+  lluvia_extrema:
+    nombre: "Lluvias extremas, inundaciones y torrenteras"
+    procesos: >
+      Convección de verano (dic–mar) alimentada por humedad amazónica que cruza los Andes con los
+      vientos del este (Alta de Bolivia). En la ciudad, la lluvia intensa activa las torrenteras
+      (quebradas secas que cruzan la zona urbana) y los huaicos que elevan la turbidez del Chili.
+    objetivo:
+      variable: lluvia_diaria
+      tarea: "Probabilidad de que la lluvia del día siguiente supere el percentil 95 de los días con lluvia de dic–mar"
+      horizonte_dias: 1
+    variables:
+      - {id: lluvia_diaria, nombre: "Precipitación diaria", unidad: "mm/d", rol: objetivo_y_predictor, relevancia: alta,
+         fuente: NASA_POWER_MERRA2, parametro: PRECTOTCORR, resolucion: "0,5° × 0,625°", frecuencia: diaria, cobertura: "1981–presente",
+         justificacion: "La lluvia de los días previos indica régimen húmedo activo y suelo saturado.",
+         limitaciones: "Reanálisis grueso: suaviza tormentas convectivas locales; subestima picos de la ciudad."}
+      - {id: humedad_especifica, nombre: "Humedad específica a 2 m", unidad: "g/kg", rol: predictor, relevancia: alta,
+         fuente: NASA_POWER_MERRA2, parametro: QV2M, resolucion: "0,5° × 0,625°", frecuencia: diaria, cobertura: "1981–presente",
+         justificacion: "Disponibilidad de vapor: sin humedad amazónica no hay convección profunda."}
+      - {id: humedad_relativa, nombre: "Humedad relativa a 2 m", unidad: "%", rol: predictor, relevancia: media,
+         fuente: NASA_POWER_MERRA2, parametro: RH2M, frecuencia: diaria,
+         justificacion: "Cercanía a saturación; redundante en parte con QV2M (lo decide mRMR)."}
+      - {id: temperatura_aire_2m, nombre: "Temperatura media a 2 m", unidad: "°C", rol: predictor, relevancia: media,
+         fuente: NASA_POWER_MERRA2, parametro: T2M, frecuencia: diaria,
+         justificacion: "Calentamiento diurno que dispara la convección."}
+      - {id: amplitud_termica, nombre: "Amplitud térmica diaria (T2M_MAX − T2M_MIN)", unidad: "°C", rol: predictor, relevancia: media,
+         fuente: NASA_POWER_MERRA2, parametro: "T2M_MAX, T2M_MIN", frecuencia: diaria,
+         justificacion: "Días nublados y húmedos tienen menor amplitud: indicador de nubosidad."}
+      - {id: presion_superficie, nombre: "Presión en superficie", unidad: "kPa", rol: predictor, relevancia: baja,
+         fuente: NASA_POWER_MERRA2, parametro: PS, frecuencia: diaria,
+         justificacion: "Perturbaciones sinópticas; señal débil en montaña."}
+      - {id: viento_2m, nombre: "Velocidad del viento a 2 m", unidad: "m/s", rol: predictor, relevancia: baja,
+         fuente: NASA_POWER_MERRA2, parametro: WS2M, frecuencia: diaria,
+         justificacion: "Transporte de humedad; la dirección (no disponible aquí) sería más informativa."}
+      - {id: radiacion_onda_corta, nombre: "Radiación de onda corta en superficie", unidad: "MJ/m²/d", rol: predictor, relevancia: media,
+         fuente: NASA_POWER, parametro: ALLSKY_SFC_SW_DWN, frecuencia: diaria,
+         justificacion: "Nubosidad: menos radiación indica cielo cubierto."}
+      - {id: indice_oni, nombre: "Índice ONI (El Niño)", unidad: "°C", rol: predictor, relevancia: media,
+         fuente: NOAA_CPC_ONI, frecuencia: mensual, cobertura: "1950–presente",
+         justificacion: "El Niño modula la lluvia de verano del sur del Perú (tendencia a déficit en el altiplano)."}
+      - {id: lluvia_estacion, nombre: "Precipitación en la estación Arequipa", unidad: "mm/d", rol: validacion, relevancia: alta,
+         fuente: NOAA_GHCN_DAILY, estacion: PE000084752, frecuencia: diaria,
+         justificacion: "Única referencia de superficie abierta para contrastar el reanálisis.",
+         limitaciones: "Registros con huecos largos; no sirve como serie de entrenamiento continua."}
+    metricas: [brier_skill_score, roc_auc, error_calibracion_esperado, csi, pod, far]
+    eventos_documentados: ["2024-03-corte-huaicos", "2025-02-corte-turbidez", "2025-02-segundo-episodio"]
+
+  sequia:
+    nombre: "Sequías y disponibilidad hídrica"
+    procesos: >
+      El sistema regulado del Chili depende de la lluvia de verano en la cabecera. Un verano seco
+      reduce el almacenamiento de las represas (2023: 159 de 409 hm³). El Niño fuerte tiende a
+      reducir la lluvia del altiplano sur.
+    objetivo:
+      variable: spi_3
+      tarea: "Índice estandarizado de precipitación de 3 meses (SPI-3) a 1 y 3 meses de anticipación"
+      horizontes_meses: [1, 3]
+    variables:
+      - {id: spi_3, nombre: "SPI-3", unidad: "1", rol: objetivo_y_predictor, relevancia: alta,
+         fuente: "derivado de NASA_POWER_MERRA2 PRECTOTCORR mensual", metodo: "McKee et al. (1993), ajuste gamma por mes calendario",
+         justificacion: "Medida estándar de déficit de lluvia comparable entre estaciones."}
+      - {id: spi_6, nombre: "SPI-6", unidad: "1", rol: predictor, relevancia: media, fuente: derivado,
+         justificacion: "Memoria hidrológica más larga (almacenamiento)."}
+      - {id: indice_oni, nombre: "Índice ONI", unidad: "°C", rol: predictor, relevancia: alta, fuente: NOAA_CPC_ONI,
+         justificacion: "Predictor de gran escala con persistencia de meses."}
+      - {id: temperatura_aire_2m, nombre: "Temperatura media mensual", unidad: "°C", rol: predictor, relevancia: media,
+         fuente: NASA_POWER_MERRA2, justificacion: "Demanda evaporativa."}
+      - {id: humedad_especifica, nombre: "Humedad específica mensual", unidad: "g/kg", rol: predictor, relevancia: media,
+         fuente: NASA_POWER_MERRA2, justificacion: "Disponibilidad de vapor."}
+      - {id: volumen_util, nombre: "Volumen útil de las represas", unidad: "hm³", rol: contexto, relevancia: alta,
+         fuente: AUTODEMA, justificacion: "Disponibilidad real de agua.",
+         limitaciones: "Solo reportes aislados en PDF: no hay serie continua abierta. Brecha documentada."}
+    metricas: [rmse_skill, r_pearson, heidke_sequia, cobertura_intervalo]
+
+  sismos:
+    nombre: "Actividad sísmica"
+    procesos: >
+      Subducción de la placa de Nazca bajo la Sudamericana (sismos de interfase como el Mw 8,4 de
+      2001 frente a Arequipa), sismos intraplaca de profundidad intermedia y fallas corticales.
+      La ocurrencia de sismos no se puede predecir de forma determinista; el sistema solo
+      caracteriza tasas, magnitudes y agrupamiento.
+    objetivo:
+      variable: conteo_mensual
+      tarea: "Número de sismos M ≥ magnitud de completitud por mes (evaluación probabilística frente a Poisson)"
+      advertencia: "No es un pronóstico de sismos. Sirve para medir si hay estructura temporal más allá del azar."
+    variables:
+      - {id: catalogo_usgs, nombre: "Catálogo ComCat (tiempo, ubicación, profundidad, magnitud)", rol: objetivo, relevancia: alta,
+         fuente: USGS_COMCAT, cobertura: "1973–presente", resolucion: "evento",
+         justificacion: "Catálogo global homogéneo y abierto con API FDSN.",
+         limitaciones: "Magnitudes de distinto tipo (mb, Mw, Ms); completitud menor que la red nacional del IGP."}
+      - {id: catalogo_igp, nombre: "Catálogo sísmico del IGP", rol: validacion, relevancia: alta, fuente: IGP,
+         justificacion: "Red nacional con menor magnitud de completitud.",
+         limitaciones: "Sin acceso desde el entorno (ver acceso_fuentes_nacionales)."}
+    metricas: [magnitud_completitud, valor_b, tasa_anual, ganancia_informacion_poisson, coeficiente_variacion_intereventos]
+
+  volcanes:
+    nombre: "Actividad volcánica"
+    procesos: >
+      Arco volcánico de los Andes Centrales. Cerca de Arequipa: El Misti (a unos 17 km del centro
+      de la ciudad), Ubinas y Sabancaya (en erupción en años recientes). El monitoreo continuo
+      (sismicidad volcánica, gases, deformación) lo realiza el Observatorio Vulcanológico del Sur
+      del IGP.
+    objetivo:
+      variable: erupciones
+      tarea: "Historia eruptiva, recurrencia y probabilidad anual de inicio de erupción (modelo de Poisson con IC exacto)"
+      advertencia: "Sin datos de monitoreo continuo no se pronostican erupciones; se describen frecuencias históricas."
+    variables:
+      - {id: erupciones_gvp, nombre: "Erupciones del Holoceno (fechas, IEV)", rol: objetivo, relevancia: alta,
+         fuente: SMITHSONIAN_GVP_VOTW, resolucion: "erupción",
+         justificacion: "Base de referencia mundial con fechas, incertidumbre e índice de explosividad.",
+         limitaciones: "Registro incompleto antes del periodo histórico; fechas prehistóricas con incertidumbre."}
+      - {id: sismicidad_volcan, nombre: "Sismos a menos de 25 km de cada volcán", rol: contexto, relevancia: media,
+         fuente: USGS_COMCAT, justificacion: "La sismicidad somera cercana acompaña a menudo la reactivación.",
+         limitaciones: "La red global no detecta la sismicidad volcánica pequeña (M < 3) que registra el IGP."}
+      - {id: monitoreo_ovs, nombre: "Monitoreo del OVS-IGP (sismos volcánicos, SO₂, deformación)", rol: validacion, relevancia: alta,
+         fuente: IGP_OVS, limitaciones: "Sin acceso desde el entorno; publicado como reportes, no como API."}
+    metricas: [erupciones_por_siglo, probabilidad_anual_inicio, intervalo_recurrencia, distribucion_iev]
+
+  deslizamientos:
+    nombre: "Deslizamientos y movimientos en masa"
+    procesos: >
+      Huaicos (flujos de detritos) y deslizamientos detonados sobre todo por lluvia intensa o
+      acumulada en laderas empinadas y quebradas; también por sismos.
+    dominio_bbox: [-76.0, -19.0, -68.0, -12.0]     # sur del Perú: más eventos para estimar umbrales
+    objetivo:
+      variable: lluvia_antecedente
+      tarea: "Lluvia acumulada antes de cada deslizamiento detonado por lluvia frente a su climatología; umbral empírico si hay ≥ 30 eventos"
+    variables:
+      - {id: catalogo_glc, nombre: "Global Landslide Catalog (fecha, ubicación, detonante)", rol: objetivo, relevancia: alta,
+         fuente: NASA_GLC, justificacion: "Catálogo abierto con detonante y precisión de ubicación.",
+         limitaciones: "Basado en noticias: subregistro en zonas rurales; cobertura principal 2007–2017."}
+      - {id: lluvia_antecedente, nombre: "Lluvia acumulada 1, 3, 10 y 30 días antes", unidad: "mm", rol: predictor, relevancia: alta,
+         fuente: NASA_POWER_MERRA2, justificacion: "La lluvia acumulada satura el suelo y reduce la resistencia al corte (Guzzetti et al., 2008)."}
+      - {id: inventario_ingemmet, nombre: "Inventario de peligros geológicos (GEOCATMIN)", rol: validacion, relevancia: alta,
+         fuente: INGEMMET, limitaciones: "Certificado SSL incompleto: no se pudo consultar sin desactivar la verificación."}
+    metricas: [n_eventos, percentil_lluvia_antecedente, umbral_intensidad_duracion]
+
+acceso_fuentes_nacionales:     # consulta real del 2026-11-14 (ver docs/verificacion/fuentes_fenomenos.json)
+  SENAMHI:  {url: "https://www.senamhi.gob.pe/", estado: no_accesible, motivo: "El servidor corta la conexión (connection reset)."}
+  IGP:      {url: "https://ultimosismos.igp.gob.pe/", estado: no_accesible, motivo: "El servidor de origen no responde (502 en el proxy)."}
+  IGP_OVS:  {url: "https://ovs.igp.gob.pe/", estado: no_accesible, motivo: "El servidor de origen no responde (502 en el proxy)."}
+  INGEMMET: {url: "https://geocatmin.ingemmet.gob.pe/geocatmin/", estado: no_accesible, motivo: "Cadena de certificado SSL incompleta."}
+  ANA:      {url: "https://snirh.ana.gob.pe/", estado: portal, motivo: "Responde, pero los datos se descargan con formularios interactivos (sin API)."}
+  CENEPRED: {url: "https://sigrid.cenepred.gob.pe/sigridv3/", estado: portal, motivo: "Responde: visor de escenarios de riesgo, sin API de datos."}
+  SINIA:    {url: "https://sinia.minam.gob.pe/", estado: no_accesible, motivo: "Firewall de aplicaciones: 403."}
+  via_integracion: >
+    Estas fuentes se integran por convenio o descarga manual verificada: el contrato de series del
+    backend (POST /api/v1/series/{id}/observaciones) acepta los datos con su procedencia sin cambiar
+    la arquitectura.

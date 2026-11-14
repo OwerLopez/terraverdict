@@ -1,0 +1,543 @@
+{
+ "inicio_utc": "2026-11-14T20:51:16+00:00",
+ "power_diario_ciudad": {
+  "ok": true,
+  "salida": {
+   "archivo": "power_diario_ciudad.json",
+   "sha256": "a1e94e5a39427e6d087116654acd91dda29187d99b58a1a1d4b3c762460262b3",
+   "bytes": 2469272,
+   "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.535&latitude=-16.4&start=19810101&end=20261031&format=JSON",
+   "producto": "NASA_POWER_MERRA2",
+   "version": null,
+   "descargado_utc": "2026-11-14T20:51:18+00:00",
+   "parametros": "PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,QV2M,WS2M,PS,ALLSKY_SFC_SW_DWN",
+   "punto": "ciudad"
+  },
+  "segundos": 1.9
+ },
+ "power_diario_cabecera": {
+  "ok": true,
+  "salida": {
+   "archivo": "power_diario_cabecera.json",
+   "sha256": "43b8d51ce7dcd22822a44bb62711fa73c399a0eb05b33b544ca97aab0f128c6a",
+   "bytes": 2467407,
+   "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.25&latitude=-15.95&start=19810101&end=20261031&format=JSON",
+   "producto": "NASA_POWER_MERRA2",
+   "version": null,
+   "descargado_utc": "2026-11-14T20:51:20+00:00",
+   "parametros": "PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,QV2M,WS2M,PS,ALLSKY_SFC_SW_DWN",
+   "punto": "cabecera"
+  },
+  "segundos": 1.8
+ },
+ "power_mensual_cabecera": {
+  "ok": true,
+  "salida": {
+   "archivo": "power_-71.25_-15.95_1981_2025.json",
+   "sha256": "c5980a5b862558120de13ad0a60144a002eb8c03a657453a37207eac95af5fdd",
+   "bytes": 51392,
+   "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M&community=AG&longitude=-71.25&latitude=-15.95&start=1981&end=2025&format=JSON",
+   "producto": "NASA_POWER_MERRA2",
+   "version": null,
+   "descargado_utc": "2026-11-14T20:51:21+00:00",
+   "parametros": "PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,QV2M"
+  },
+  "segundos": 0.9
+ },
+ "oni": {
+  "ok": true,
+  "salida": {
+   "archivo": "oni.ascii.txt",
+   "sha256": "118c563331335c8649cdc2677e6be7ae89d1259d901345fcddbc2857af280f7f",
+   "bytes": 23050,
+   "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+   "producto": "NOAA_CPC_ONI",
+   "version": null,
+   "descargado_utc": "2026-11-14T20:51:21+00:00"
+  },
+  "segundos": 0.4
+ },
+ "ghcn": {
+  "ok": true,
+  "salida": {
+   "archivo": "ghcn_PE000084752.csv",
+   "sha256": "1963def04a0c425d2dad4511d7ae6f88f733485645f30dd44acbc526e8edfd88",
+   "bytes": 2389137,
+   "url": "https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/PE000084752.csv",
+   "producto": "NOAA_GHCN_DAILY",
+   "version": null,
+   "descargado_utc": "2026-11-14T20:51:22+00:00"
+  },
+  "segundos": 0.6
+ },
+ "usgs": {
+  "ok": true,
+  "salida": [
+   {
+    "archivo": "usgs_1973_1977.csv",
+    "sha256": "b195959730b48df2e75aa6717fb4f3756c757bb082ae7469a71e910673c600f7",
+    "bytes": 20938,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:22+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_1978_1982.csv",
+    "sha256": "f5275542fa290568268cc283c383960d0fb0aca64196f1f95d6b608d6ca1dda1",
+    "bytes": 24513,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:23+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_1983_1987.csv",
+    "sha256": "a48602fb11ae60cb2f92b54e1184f8749216244fe24556a0f4e3774902898d6f",
+    "bytes": 24347,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:23+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_1988_1992.csv",
+    "sha256": "d8fbf64991aaff8006c81f70969123d39a6d5e6734994ef1804fe30679705ac1",
+    "bytes": 30807,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:24+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_1993_1997.csv",
+    "sha256": "bca383f30e8896dbd442ee4ac540a72d98032ceb638733d3f7dbd6cb37635091",
+    "bytes": 32597,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:24+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_1998_2002.csv",
+    "sha256": "c577f921f4848c1f48ce6620d6768ceaf7a0b02a625f2b6bb51d7d46e9ee7bc1",
+    "bytes": 110017,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:25+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_2003_2007.csv",
+    "sha256": "06081ab1876bf0e64f82bead8c9db41413781969d68729c83515156f0be28f3d",
+    "bytes": 70473,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:25+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_2008_2012.csv",
+    "sha256": "d53710ae5b3c6aa725ce50edd488b0130eddaeed2bc2c2167e4de8ee0723a3eb",
+    "bytes": 51890,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:25+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_2013_2017.csv",
+    "sha256": "d33196222084b31a4e1cfb3d0148d0e4f02041e09f2c36852b650761c08e7b82",
+    "bytes": 117945,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:26+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_2018_2022.csv",
+    "sha256": "72b239f770ea156f37966ec04fa7ca0d2646f44dfd306f91d5be517712f45f6c",
+    "bytes": 119364,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:26+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   },
+   {
+    "archivo": "usgs_2023_2026.csv",
+    "sha256": "dbe080e268a56779c5d3d14a658202be8a11f5ac16fdc8b9718b3a1ad4317231",
+    "bytes": 92243,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+    "producto": "USGS_COMCAT",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:27+00:00",
+    "radio_km": 350,
+    "mag_min": 4.0
+   }
+  ],
+  "segundos": 4.9
+ },
+ "gvp": {
+  "ok": true,
+  "salida": [
+   {
+    "archivo": "gvp_volcanes.geojson",
+    "sha256": "1e2850bc9d3b18b32bd82436de46b7cec08df501300ab10989b04133ddd00496",
+    "bytes": 26491,
+    "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Volcanoes&outputFormat=application%2Fjson&CQL_FILTER=Country%3D%27Peru%27",
+    "producto": "SMITHSONIAN_GVP_VOTW",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:27+00:00",
+    "capa": "GVP-VOTW:Smithsonian_VOTW_Holocene_Volcanoes",
+    "pais": "Peru"
+   },
+   {
+    "archivo": "gvp_erupciones.geojson",
+    "sha256": "8f8b93e71e8829d52beecbed21e96c877f2f727fe777d91429b36d4cb3f2aa05",
+    "bytes": 64113,
+    "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Eruptions&outputFormat=application%2Fjson&CQL_FILTER=Volcano_Number+IN+%28354000%2C354001%2C354003%2C354004%2C354005%2C354006%2C354010%2C354020%2C354031%2C354030%2C354040%2C354050%2C354060%29",
+    "producto": "SMITHSONIAN_GVP_VOTW",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:27+00:00",
+    "capa": "GVP-VOTW:Smithsonian_VOTW_Holocene_Eruptions",
+    "volcanes": [
+     354000,
+     354001,
+     354003,
+     354004,
+     354005,
+     354006,
+     354010,
+     354020,
+     354031,
+     354030,
+     354040,
+     354050,
+     354060
+    ]
+   }
+  ],
+  "segundos": 0.9
+ },
+ "glc": {
+  "ok": true,
+  "salida": {
+   "archivo": "glc.csv",
+   "sha256": "2c4898899dd4f373c4320e121c5b655ebb5394d431fa42e57ec4828d07d48b04",
+   "bytes": 8479717,
+   "url": "https://data.nasa.gov/docs/legacy/Global_Landslide_Catalog_Export/Global_Landslide_Catalog_Export_rows.csv",
+   "producto": "NASA_GLC",
+   "version": null,
+   "descargado_utc": "2026-11-14T20:51:29+00:00"
+  },
+  "segundos": 1.6
+ },
+ "fin_utc": "2026-11-14T20:51:29+00:00",
+ "celdas_deslizamientos": {
+  "celda_-75.0_-13.0": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-75.0_-13.0.json",
+    "sha256": "688bee05ae7098fdb7b8d3cf1d355131da82eeae5019c8605cc133f5b606f00e",
+    "bytes": 259655,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:30+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-75.0_-13.0"
+   },
+   "segundos": 0.8
+  },
+  "celda_-75.0_-12.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-75.0_-12.5.json",
+    "sha256": "d7a1879419da2545745a5448d7c83611edb868a5d7eaed2e0307e689017883bc",
+    "bytes": 260416,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-12.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:31+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-75.0_-12.5"
+   },
+   "segundos": 0.9
+  },
+  "celda_-74.375_-13.0": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-74.375_-13.0.json",
+    "sha256": "19c05c48f79c00d8e940de2b41a951a2f054f69e8d315881ad0a59a26e78a849",
+    "bytes": 260673,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-74.375&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:32+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-74.375_-13.0"
+   },
+   "segundos": 0.9
+  },
+  "celda_-73.75_-15.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-73.75_-15.5.json",
+    "sha256": "2d82582f0be9d57dd058cd92008acb2185cd587ceee78a474ce0b6cb96d0116a",
+    "bytes": 259051,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-15.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:33+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-73.75_-15.5"
+   },
+   "segundos": 0.9
+  },
+  "celda_-73.75_-13.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-73.75_-13.5.json",
+    "sha256": "a47192c7e0f932eda019899669e0068463821b07071b8456758d234ac4d0123b",
+    "bytes": 260384,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-13.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:33+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-73.75_-13.5"
+   },
+   "segundos": 0.5
+  },
+  "celda_-73.125_-15.0": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-73.125_-15.0.json",
+    "sha256": "aa6b4203b1746a841c168b252061e67bfb70a7f3285ccafcac96735ca0d875b0",
+    "bytes": 260474,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-15.0&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:34+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-73.125_-15.0"
+   },
+   "segundos": 0.8
+  },
+  "celda_-73.125_-14.0": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-73.125_-14.0.json",
+    "sha256": "4db80faed98e22c846f556663add7c0bc39c89695c6028b93a7b256eccae8154",
+    "bytes": 260847,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-14.0&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:35+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-73.125_-14.0"
+   },
+   "segundos": 0.9
+  },
+  "celda_-73.125_-13.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-73.125_-13.5.json",
+    "sha256": "6343e5d57937759b1a22575392bc79c0716cfb3a29c34b6c24f5928aaf2ed07f",
+    "bytes": 260997,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-13.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:35+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-73.125_-13.5"
+   },
+   "segundos": 0.4
+  },
+  "celda_-73.125_-12.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-73.125_-12.5.json",
+    "sha256": "9ef48961e5d5ab700451b8b4ead1ee9b003e0bdc2e7c4a00131dcd2bd56009fe",
+    "bytes": 262562,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-12.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:36+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-73.125_-12.5"
+   },
+   "segundos": 0.9
+  },
+  "celda_-72.5_-13.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-72.5_-13.5.json",
+    "sha256": "10dc48fdcdbe0833f1eecd8ea1762b0bfe9922a3216bf36a9ee09118678ff869",
+    "bytes": 261644,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:37+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-72.5_-13.5"
+   },
+   "segundos": 0.7
+  },
+  "celda_-72.5_-13.0": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-72.5_-13.0.json",
+    "sha256": "021ea06e0cf82214f5b8f5cc7cb2660f0423c23c1c4dd503c1d8aa2ae39695f2",
+    "bytes": 262281,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:38+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-72.5_-13.0"
+   },
+   "segundos": 0.7
+  },
+  "celda_-71.875_-15.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-71.875_-15.5.json",
+    "sha256": "217e4cc905e2687fd80fef1cd7164022f67265b8362c7e74e5d3891995a9509c",
+    "bytes": 260173,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-15.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:38+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-71.875_-15.5"
+   },
+   "segundos": 0.7
+  },
+  "celda_-71.875_-13.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-71.875_-13.5.json",
+    "sha256": "3d0b0e4209a0fb3a0312eef2bd2e7cdf830d49c7afc21ff0f65da6effbafa8f8",
+    "bytes": 263024,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:39+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-71.875_-13.5"
+   },
+   "segundos": 1.0
+  },
+  "celda_-71.875_-13.0": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-71.875_-13.0.json",
+    "sha256": "4066276b2685e875d26fd83720812ee2483e67536f499968275e04bb394b1375",
+    "bytes": 263585,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:40+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-71.875_-13.0"
+   },
+   "segundos": 0.8
+  },
+  "celda_-71.25_-16.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-71.25_-16.5.json",
+    "sha256": "b81147bef9f0976075079d9c2c80654416e9b883c86aec3dba824867e4f61481",
+    "bytes": 258979,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-16.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:41+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-71.25_-16.5"
+   },
+   "segundos": 0.9
+  },
+  "celda_-71.25_-15.5": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-71.25_-15.5.json",
+    "sha256": "b9c4577ba4e9b1ca6364b8f67d1ca9e934a7ce083315d702ebfd5b8365469418",
+    "bytes": 260810,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-15.5&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:42+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-71.25_-15.5"
+   },
+   "segundos": 0.9
+  },
+  "celda_-71.25_-13.0": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-71.25_-13.0.json",
+    "sha256": "0fdf339d7546d96b84cefc4c40703b3c8f7545eca59fecd699176d05079eba83",
+    "bytes": 264575,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:43+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-71.25_-13.0"
+   },
+   "segundos": 0.8
+  },
+  "celda_-70.625_-14.0": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-70.625_-14.0.json",
+    "sha256": "b9bd44fe7c2facab70702132c6dd82230e882cc0794b57306a7b2b0032b57661",
+    "bytes": 264795,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.625&latitude=-14.0&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:44+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-70.625_-14.0"
+   },
+   "segundos": 0.9
+  },
+  "celda_-70.0_-14.0": {
+   "ok": true,
+   "salida": {
+    "archivo": "power_diario_celda_-70.0_-14.0.json",
+    "sha256": "538ef64ec0a9d188e82b772a7f418f4dc53b902b6bd61c6943d3c14123e4e694",
+    "bytes": 264618,
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.0&latitude=-14.0&start=19810101&end=20261031&format=JSON",
+    "producto": "NASA_POWER_MERRA2",
+    "version": null,
+    "descargado_utc": "2026-11-14T20:51:44+00:00",
+    "parametros": "PRECTOTCORR",
+    "punto": "celda_-70.0_-14.0"
+   },
+   "segundos": 0.7
+  }
+ }
+}
