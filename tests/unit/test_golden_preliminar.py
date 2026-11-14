@@ -1,4 +1,5 @@
 """Golden: reproduce analisis_preliminar.json desde las series guardadas (sin red)."""
+
 import pytest
 
 from terraverdict.trends.analizar import analizar_serie

@@ -1,5 +1,6 @@
 """E4: con series SIN tendencia (AR(1)), la tasa de 'significativa' debe ser ≈ alpha o menos.
 Marcado slow: pytest -m slow"""
+
 import numpy as np
 import pytest
 

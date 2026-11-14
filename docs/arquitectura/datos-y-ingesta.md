@@ -26,4 +26,4 @@
 
 ## Familias para la prueba de independencia
 
-Definidas en [`configs/familias.yaml`](../../configs/familias.yaml). Decisión pendiente: MODIS/VIIRS LST miden temperatura de *superficie*, no del aire. Propuesta: cuentan como **corroboración física** (se reportan aparte) y no como segunda familia de T2M; la segunda familia real sería ERA5 (no verificado) o SENAMHI.
+Definidas en [`config/familias.yaml`](../../config/familias.yaml). Decisión pendiente: MODIS/VIIRS LST miden temperatura de *superficie*, no del aire. Propuesta: cuentan como **corroboración física** (se reportan aparte) y no como segunda familia de T2M; la segunda familia real sería ERA5 (no verificado) o SENAMHI.

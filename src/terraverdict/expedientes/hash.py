@@ -21,5 +21,6 @@ def _canon(o: Any) -> Any:
 
 def sha256_json(o: Any) -> str:
     """Hash estable: claves ordenadas, sin espacios, floats tal cual."""
-    return hashlib.sha256(json.dumps(_canon(o), sort_keys=True, separators=(",", ":"),
-                                     ensure_ascii=False).encode()).hexdigest()
+    return hashlib.sha256(
+        json.dumps(_canon(o), sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+    ).hexdigest()

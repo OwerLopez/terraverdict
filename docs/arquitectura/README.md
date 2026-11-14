@@ -26,7 +26,7 @@ flowchart LR
     RAW --> CON[contratos pydantic] --> ANU[series anuales / por unidad]
     ANU --> TR[trends: Sen · MK conservador · ENSO-HAC · ventanas · sensor · palanca · independencia · n*]
     PRE[preregistro.yaml + hash] --> TR
-    FAM[configs/familias.yaml] --> TR
+    FAM[config/familias.yaml] --> TR
     TR --> SEL[Sello determinista] --> EXP[(expedientes/*.json)]
     EXP --> REP[tv report → .md]
     EXP --> WEB[web React estático]
@@ -51,7 +51,7 @@ config.py                  ← preregistro + YAML
 
 ```
 preregistro.yaml · pyproject.toml · Makefile
-configs/        chili.yaml · familias.yaml
+config/         chili.yaml · familias.yaml · fuentes · variables · dominios · fenómenos
 src/terraverdict/
   config.py  cli.py
   ingest/       http · manifest · power · noaa · autodema_pdf (esqueleto)

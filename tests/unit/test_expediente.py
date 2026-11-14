@@ -12,7 +12,8 @@ def test_hash_estable_y_sensible(fx, pre):
 def test_expediente_declara_independencia_pendiente(fx, pre):
     a, x = fx[0]["t2m_media_anual"]
     r = analizar_serie(a, x, pre, con_ventanas=False)
-    e = construir_expediente(id="TV-T", objeto={}, variable="t2m", anios=a, valores=x, resultado=r,
-                             productos=[{"id": "POWER"}], pre=pre)
+    e = construir_expediente(
+        id="TV-T", objeto={}, variable="t2m", anios=a, valores=x, resultado=r, productos=[{"id": "POWER"}], pre=pre
+    )
     assert any("independencia" in w for w in e.advertencias)
     assert e.procedencia.preregistro_sha256 == pre.sha256

@@ -26,7 +26,7 @@ palanca:
   quitar_ultimos_anios: 2       # sensibilidad: ¿la tendencia sobrevive sin los últimos N años?
 independencia:
   min_familias_mismo_signo: 2
-  familias: configs/familias.yaml
+  familias: config/familias.yaml
 detectabilidad:
   bootstrap_bloque_anios: 3
 temperatura:

@@ -1,5 +1,6 @@
-import pytest
 from pathlib import Path
+
+import pytest
 
 REF = Path(__file__).resolve().parents[1] / "fixtures/airgr/gr2m_ref.csv"
 

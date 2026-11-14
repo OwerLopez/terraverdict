@@ -1,4 +1,5 @@
 """Carga del preregistro (con su hash) y de la configuración de cuenca."""
+
 from __future__ import annotations
 
 import hashlib

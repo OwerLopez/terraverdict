@@ -1,4 +1,5 @@
 """Sesión HTTP con reintentos. 'ok' SOLO si 2xx/3xx (corrige el hallazgo 9)."""
+
 from __future__ import annotations
 
 import requests
@@ -9,8 +10,13 @@ from urllib3.util.retry import Retry
 def sesion(reintentos: int = 4) -> requests.Session:
     s = requests.Session()
     s.headers["User-Agent"] = "terraverdict/0.1"
-    r = Retry(total=reintentos, backoff_factor=1.5, status_forcelist=(429, 500, 502, 503, 504),
-              allowed_methods=("GET", "POST"), respect_retry_after_header=True)
+    r = Retry(
+        total=reintentos,
+        backoff_factor=1.5,
+        status_forcelist=(429, 500, 502, 503, 504),
+        allowed_methods=("GET", "POST"),
+        respect_retry_after_header=True,
+    )
     s.mount("https://", HTTPAdapter(max_retries=r))
     return s
 

@@ -5,7 +5,7 @@
 | 1 | `p = 0.0` por redondeo a 4 decimales | ✅ El nuevo `trends` guarda el p completo (ver `expedientes/*.json`) |
 | 2 | Hamed-Rao p = 0,0002 vs MK p = 0,057 en lluvia | ✅ Investigado: Yue-Wang 5e-8, pre-blanqueo 0,109 → ADR-013, p = máximo |
 | 3 | Salto de T en 2023–24 con mucha palanca | ✅ Prueba `palanca` (sobrevive: Sen 0,19 °C/déc, p ≈ 3e-5); ⏳ contraste con MODIS/VIIRS y ERA5 |
-| 4 | Análisis termina en 2024 | ⏳ `configs/chili.yaml` ya apunta a 2025; reejecutar `tv ingest-power` |
+| 4 | Análisis termina en 2024 | ⏳ `config/chili.yaml` ya apunta a 2025; reejecutar `tv ingest-power` |
 | 5 | 1983 = 5,2 mm sospechoso | ⏳ Contrastar con CHIRPS v3 |
 | 6 | Cifras del README (98/171/144 mm) no están en el JSON | ⏳ `noaa.clasificar_enso` existe; falta persistir ONI y el promedio por clase en el expediente |
 | 7 | Ventanas solapadas ≠ evidencia independiente | ✅ El informe lo rotula como robustez ante el periodo |

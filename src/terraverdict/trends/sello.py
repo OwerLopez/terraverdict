@@ -3,6 +3,7 @@
 Pruebas no evaluadas (None) impiden el veredicto 'robusta': con una sola familia de datos
 el máximo posible es 'fragil' y lo dice (principio del proyecto).
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -69,6 +70,7 @@ def decidir(r: dict, pre: Preregistro) -> Veredicto:
         fallan.append("independencia")
 
     if fallan or pend:
-        return Veredicto("fragil", sorted(set(fallan)), pend,
-                         "pruebas pendientes impiden 'robusta'" if pend and not fallan else "")
+        return Veredicto(
+            "fragil", sorted(set(fallan)), pend, "pruebas pendientes impiden 'robusta'" if pend and not fallan else ""
+        )
     return Veredicto("robusta")

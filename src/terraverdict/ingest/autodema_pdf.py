@@ -6,6 +6,7 @@ y 6 líneas con 'Volumen Útil'). El primer paso en local es:
 y ajustar RE_FILA. Después este parser sirve de 'golden' contra el que se compara
 el digitalizador con LLM (docs/diseno-tecnico.md, 7b.4).
 """
+
 from __future__ import annotations
 
 import re
@@ -20,8 +21,7 @@ RE_FILA = re.compile(rf"^\s*(?P<represa>[A-Za-zÁÉÍÓÚÑáéíóúñ .]+?)\s+
 def texto_pdf(pdf: str | Path) -> str:
     if not shutil.which("pdftotext"):
         raise RuntimeError("Falta pdftotext (poppler-utils)")
-    return subprocess.run(["pdftotext", "-layout", str(pdf), "-"], capture_output=True,
-                          text=True, check=True).stdout
+    return subprocess.run(["pdftotext", "-layout", str(pdf), "-"], capture_output=True, text=True, check=True).stdout
 
 
 def a_float(s: str) -> float:
@@ -33,8 +33,13 @@ def parsear(texto: str) -> list[dict]:
     for linea in texto.splitlines():
         m = RE_FILA.match(linea)
         if m:
-            filas.append({"represa": m["represa"].strip(), "valores": [a_float(n) for n in m["nums"].split()],
-                          "linea": linea.strip()})
+            filas.append(
+                {
+                    "represa": m["represa"].strip(),
+                    "valores": [a_float(n) for n in m["nums"].split()],
+                    "linea": linea.strip(),
+                }
+            )
     return filas
 
 

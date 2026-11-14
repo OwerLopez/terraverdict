@@ -2,10 +2,12 @@
 Ajusta x ~ a + b·t (sin escalón) y x ~ a + b·t + c·1[t>=q] (con escalón).
 Reporta cambio relativo de b, cambio de signo y AIC. Pettitt como sensibilidad.
 """
+
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
-from scipy import stats
 
 
 def _ols(X: np.ndarray, y: np.ndarray):
@@ -18,8 +20,7 @@ def _ols(X: np.ndarray, y: np.ndarray):
 
 def pettitt(x: np.ndarray) -> dict:
     n = len(x)
-    u = np.array([np.sum([np.sign(x[j] - x[i]) for i in range(t + 1) for j in range(t + 1, n)])
-                  for t in range(n - 1)])
+    u = np.array([np.sum([np.sign(x[j] - x[i]) for i in range(t + 1) for j in range(t + 1, n)]) for t in range(n - 1)])
     k = float(np.max(np.abs(u)))
     p = float(min(1.0, 2 * np.exp(-6 * k**2 / (n**3 + n**2))))
     return {"indice_quiebre": int(np.argmax(np.abs(u))), "p": p}
@@ -29,15 +30,19 @@ def prueba_sensor(anios: np.ndarray, x: np.ndarray, quiebres: dict[str, float]) 
     t = anios - anios.mean()
     _, aic0 = _ols(np.column_stack([np.ones_like(t), t]), x)
     b0 = _ols(np.column_stack([np.ones_like(t), t]), x)[0][1]
-    salida = {}
+    salida: dict[str, dict[str, Any]] = {}
     for nombre, q in quiebres.items():
         paso = (anios >= q).astype(float)
-        if paso.sum() < 5 or (1 - paso).sum() < 5:   # quiebre fuera del periodo útil
+        if paso.sum() < 5 or (1 - paso).sum() < 5:  # quiebre fuera del periodo útil
             salida[nombre] = {"aplicable": False}
             continue
         beta, aic1 = _ols(np.column_stack([np.ones_like(t), t, paso]), x)
-        salida[nombre] = {"aplicable": True, "b_sin_escalon": float(b0), "b_con_escalon": float(beta[1]),
-                          "cambio_relativo_b": float(abs(beta[1] - b0) / abs(b0)) if b0 else None,
-                          "cambia_signo": bool(np.sign(beta[1]) != np.sign(b0)),
-                          "delta_aic": float(aic1 - aic0)}
+        salida[nombre] = {
+            "aplicable": True,
+            "b_sin_escalon": float(b0),
+            "b_con_escalon": float(beta[1]),
+            "cambio_relativo_b": float(abs(beta[1] - b0) / abs(b0)) if b0 else None,
+            "cambia_signo": bool(np.sign(beta[1]) != np.sign(b0)),
+            "delta_aic": float(aic1 - aic0),
+        }
     return {"quiebres": salida, "pettitt": pettitt(x)}

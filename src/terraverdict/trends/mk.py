@@ -6,6 +6,7 @@ hacer la tendencia MÁS significativa; con autocorrelaciones negativas en algún
 Hamed-Rao e Yue-Wang lo hacen. Regla: p conservador = máximo de las variantes
 declaradas en el preregistro. Se guardan TODAS para auditoría.
 """
+
 from __future__ import annotations
 
 import numpy as np
@@ -21,13 +22,18 @@ _VARIANTES = {
 def mk_conservador(x: np.ndarray, variantes: list[str] | None = None) -> dict:
     variantes = variantes or list(_VARIANTES)
     import warnings
-    ps, invalidas = {}, []
+
+    ps: dict[str, float] = {}
+    invalidas: list[str] = []
     for v in variantes:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             p = float(_VARIANTES[v](x).p)
-        (ps if np.isfinite(p) else invalidas.append(v) or {})[v] = p   # varianza negativa -> p=NaN
+        if np.isfinite(p):
+            ps[v] = p
+        else:  # varianza negativa -> p = NaN: se registra como inválida
+            invalidas.append(v)
     if not ps:
         raise ValueError("Ninguna variante de Mann-Kendall produjo un p válido")
-    peor = max(ps, key=ps.get)
+    peor = max(ps, key=lambda k: ps[k])
     return {"p_variantes": ps, "p_invalidas": invalidas, "p_conservador": ps[peor], "variante_limitante": peor}
