@@ -1,0 +1,28 @@
+[project]
+name = "terraverdict"
+version = "0.1.0"
+description = "Detective de tendencias con Sello de Confianza para cuencas de montaña"
+requires-python = ">=3.10"
+dependencies = [
+  "requests>=2.31", "numpy>=1.26", "scipy>=1.11", "pymannkendall>=1.4",
+  "statsmodels>=0.14", "pydantic>=2.5", "pyyaml>=6", "typer>=0.12",
+]
+[project.optional-dependencies]
+geo = ["xarray", "rioxarray", "geopandas", "rasterio", "regionmask", "earthaccess", "pyarrow", "duckdb"]
+ml = ["scikit-learn", "lightgbm", "shap"]
+hydro = ["numba", "pysheds"]
+api = ["fastapi", "uvicorn", "mcp"]
+dev = ["pytest", "hypothesis", "ruff", "mypy", "types-requests", "types-PyYAML"]
+[project.scripts]
+tv = "terraverdict.cli:app"
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: Monte Carlo y pruebas lentas", "red: requiere red"]
+addopts = "-m 'not slow and not red'"
+[tool.ruff]
+line-length = 100

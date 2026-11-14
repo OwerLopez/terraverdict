@@ -1,0 +1,112 @@
+{
+ "$defs": {
+  "Procedencia": {
+   "properties": {
+    "productos": {
+     "items": {
+      "additionalProperties": true,
+      "type": "object"
+     },
+     "title": "Productos",
+     "type": "array"
+    },
+    "preregistro_sha256": {
+     "title": "Preregistro Sha256",
+     "type": "string"
+    },
+    "codigo_commit": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Codigo Commit"
+    },
+    "entradas_sha256": {
+     "title": "Entradas Sha256",
+     "type": "string"
+    },
+    "generado_utc": {
+     "title": "Generado Utc",
+     "type": "string"
+    }
+   },
+   "required": [
+    "productos",
+    "preregistro_sha256",
+    "entradas_sha256",
+    "generado_utc"
+   ],
+   "title": "Procedencia",
+   "type": "object"
+  }
+ },
+ "properties": {
+  "schema_version": {
+   "default": "0.1",
+   "title": "Schema Version",
+   "type": "string"
+  },
+  "id": {
+   "title": "Id",
+   "type": "string"
+  },
+  "tipo": {
+   "title": "Tipo",
+   "type": "string"
+  },
+  "objeto": {
+   "additionalProperties": true,
+   "title": "Objeto",
+   "type": "object"
+  },
+  "periodo": {
+   "additionalProperties": true,
+   "title": "Periodo",
+   "type": "object"
+  },
+  "resultado": {
+   "additionalProperties": true,
+   "title": "Resultado",
+   "type": "object"
+  },
+  "veredicto": {
+   "title": "Veredicto",
+   "type": "string"
+  },
+  "serie": {
+   "additionalProperties": {
+    "type": "number"
+   },
+   "default": {},
+   "title": "Serie",
+   "type": "object"
+  },
+  "advertencias": {
+   "default": [],
+   "items": {
+    "type": "string"
+   },
+   "title": "Advertencias",
+   "type": "array"
+  },
+  "procedencia": {
+   "$ref": "#/$defs/Procedencia"
+  }
+ },
+ "required": [
+  "id",
+  "tipo",
+  "objeto",
+  "periodo",
+  "resultado",
+  "veredicto",
+  "procedencia"
+ ],
+ "title": "Expediente",
+ "type": "object"
+}

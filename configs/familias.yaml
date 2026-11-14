@@ -1,0 +1,13 @@
+# Grafo de procedencia simplificado. Una confirmación cuenta por FAMILIA, no por producto.
+# Si dos productos comparten insumo principal, van en la misma familia.
+productos:
+  POWER_MERRA2:   {familia: reanalisis_merra2, variable: [T2M, PRECTOTCORR]}
+  MERRA2:         {familia: reanalisis_merra2, variable: [T2M, PRECTOTCORR]}
+  GLDAS21:        {familia: reanalisis_merra2, nota: "forzado con MERRA-2 / GDAS"}
+  FLDAS_CHIRPS:   {familia: chirps_ir_pluviometros, nota: "lluvia CHIRPS + resto MERRA-2: dependiente parcial, se cuenta con CHIRPS"}
+  IMERG_FINAL:    {familia: imerg_pmw_gpcc, variable: [P]}
+  CHIRPS_V3:      {familia: chirps_ir_pluviometros, variable: [P]}
+  MODIS_LST:      {familia: lst_satelital_termico, variable: [LST]}
+  VIIRS_LST:      {familia: lst_satelital_termico, nota: "mismo principio físico; sensor distinto -> cuenta como 1 salvo prueba cruzada"}
+  ERA5:           {familia: reanalisis_era5, variable: [T2M, P], estado: no_verificado}
+  GHCN_AREQUIPA:  {familia: estacion_tierra, estado: incompleta_solo_validacion}

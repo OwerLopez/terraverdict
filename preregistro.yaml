@@ -1,0 +1,41 @@
+# PREREGISTRO · TerraVerdict
+# Congelar (estado: congelado) ANTES de correr S1 sobre IMERG/CHIRPS.
+# Cada expediente guarda el SHA-256 de este archivo. Cambiar un valor = nuevo hash = nueva versión.
+# Los valores marcados (propuesto) son del equipo de revisión y deben ser aprobados.
+version: 1
+estado: borrador
+alpha: 0.10                     # (propuesto) nivel de significancia de las tendencias
+ic_nivel: 0.90
+mk_variantes: [original, hamed_rao, prewhitening]   # p conservador = máximo de las tres
+ventanas:
+  L_min: 20
+  u_ventanas: 0.90              # (propuesto) fracción mínima con el mismo signo
+enso:
+  indice: ONI_DJF
+  lags_meses: [0]               # el análisis preliminar usa lag 0; ampliar a 0-3 con ONI mensual
+  errores: HAC                  # Newey-West; maxlags = floor(n^0.25)
+sensor:
+  # Los quiebres se aplican SOLO al producto afectado (la deriva de Terra no aplica a MERRA-2).
+  quiebres_por_producto:
+    POWER_MERRA2: {}                      # sin transición documentada para T2M anual (sensibilidades en 'palanca')
+    IMERG_FINAL: {trmm_a_gpm: 2014.5}
+    MODIS_LST_TERRA: {terra_deriva_orbital: 2020.1}
+    LANDSAT: {l5_a_l7: 1999.0, l7_a_l8: 2013.3}
+  tol_cambio_pendiente: 0.5     # (propuesto) |Δb|/|b| por encima de esto = falla
+palanca:
+  quitar_ultimos_anios: 2       # sensibilidad: ¿la tendencia sobrevive sin los últimos N años?
+independencia:
+  min_familias_mismo_signo: 2
+  familias: configs/familias.yaml
+detectabilidad:
+  bootstrap_bloque_anios: 3
+temperatura:
+  gamma_C_por_km: 6.5           # sensibilidad 5.5 y 7.5; verificar si POWER ya corrige elevación
+gemelo:
+  kge_min: 0.5                  # (propuesto) por debajo, el gemelo no alimenta atribución
+  x2_rango: [0.2, 2.0]          # ampliado respecto del diseño original (0.2-1)
+  beta_lluvia_rango: [0.7, 1.3]
+  calentamiento_meses: 24
+pronostico:
+  h_enso: 0.5                   # (propuesto) ancho del kernel sobre ONI
+  regla_publicacion: crpss_ic90_inferior_mayor_que_0

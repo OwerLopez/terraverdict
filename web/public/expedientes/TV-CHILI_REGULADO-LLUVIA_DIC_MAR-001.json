@@ -1,0 +1,135 @@
+{
+ "schema_version": "0.1",
+ "id": "TV-CHILI_REGULADO-LLUVIA_DIC_MAR-001",
+ "tipo": "tendencia",
+ "objeto": {
+  "cuenca": "chili_regulado",
+  "variable": "lluvia_dic_mar"
+ },
+ "periodo": {
+  "desde": 1982,
+  "hasta": 2024,
+  "n": 43
+ },
+ "resultado": {
+  "n": 43,
+  "periodo": [
+   1982,
+   2024
+  ],
+  "sen": {
+   "sen_por_decada": 16.314285714285717,
+   "ic_por_decada": [
+    1.6600000000000108,
+    30.406896551724138
+   ],
+   "pendiente": 1.6314285714285717,
+   "ordenada": -3135.701428571429
+  },
+  "mk": {
+   "p_variantes": {
+    "original": 0.05681822931485225,
+    "hamed_rao": 0.00022344840789378928,
+    "prewhitening": 0.10872868488501819
+   },
+   "p_invalidas": [],
+   "p_conservador": 0.10872868488501819,
+   "variante_limitante": "prewhitening"
+  },
+  "ventanas": {
+   "n_ventanas": 300,
+   "pct_mismo_signo": 92.0,
+   "pct_significativas": 22.666666666666668
+  },
+  "enso": null,
+  "sensor": {
+   "quiebres": {},
+   "pettitt": {
+    "indice_quiebre": 28,
+    "p": 0.06826862387195246
+   },
+   "quiebres_declarados": {}
+  },
+  "palanca": {
+   "evaluada": true,
+   "quitados": 2,
+   "sen_por_decada": 18.282608695652172,
+   "p_conservador": 0.10042517436963738,
+   "sobrevive": false
+  },
+  "detectabilidad": {
+   "sigma_ruido": 63.12752894130836,
+   "phi_ar1": 0.13173165537095852,
+   "anios_disponibles": 43,
+   "anios_necesarios": 27.699564586203238
+  },
+  "independencia": null,
+  "sello": {
+   "codigo": "sin_tendencia",
+   "emoji": "🔵",
+   "fallan": [],
+   "pendientes": [],
+   "nota": "p conservador > alpha y hay años suficientes (marginal: p ≤ 2·alpha, revisar con otra familia)"
+  }
+ },
+ "veredicto": "sin_tendencia",
+ "serie": {
+  "1982": 121.25,
+  "1983": 5.21,
+  "1984": 245.18,
+  "1985": 121.59,
+  "1986": 187.42,
+  "1987": 125.74,
+  "1988": 112.43,
+  "1989": 148.38,
+  "1990": 65.52,
+  "1991": 51.56,
+  "1992": 28.62,
+  "1993": 86.25,
+  "1994": 128.14,
+  "1995": 171.25,
+  "1996": 104.44,
+  "1997": 209.92,
+  "1998": 90.27,
+  "1999": 180.58,
+  "2000": 237.31,
+  "2001": 278.22,
+  "2002": 177.42,
+  "2003": 124.26,
+  "2004": 122.03,
+  "2005": 95.73,
+  "2006": 108.46,
+  "2007": 35.05,
+  "2008": 160.0,
+  "2009": 106.51,
+  "2010": 78.15,
+  "2011": 176.99,
+  "2012": 267.29,
+  "2013": 208.64,
+  "2014": 131.46,
+  "2015": 180.57,
+  "2016": 165.86,
+  "2017": 233.19,
+  "2018": 172.7,
+  "2019": 153.7,
+  "2020": 299.31,
+  "2021": 132.05,
+  "2022": 150.36,
+  "2023": 107.94,
+  "2024": 200.8
+ },
+ "advertencias": [
+  "Una sola familia de datos: la prueba de independencia no se evaluó."
+ ],
+ "procedencia": {
+  "productos": [
+   {
+    "id": "NASA_POWER_MERRA2"
+   }
+  ],
+  "preregistro_sha256": "b0ae0fa67fd7efcb1383b915299d535eb08a1f9ddee2c3a9b26327af6b8a9855",
+  "codigo_commit": null,
+  "entradas_sha256": "e1a36c9471a2e3de38ea91243f09812276f6db1b1453d0e3c4ae11298ca2f2d9",
+  "generado_utc": "2026-11-14T18:57:14+00:00"
+ }
+}
