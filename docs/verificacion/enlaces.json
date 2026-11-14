@@ -1,23 +1,55 @@
 {
- "generado_utc": "2026-11-14T19:30:23+00:00",
+ "generado_utc": "2026-11-14T20:36:21+00:00",
  "enlaces": [
   {
    "grupo": "Reto",
    "nombre": "Página oficial del reto",
    "url": "https://www.spaceappschallenge.org/2026/challenges/earth-system-trend-detective/",
    "ok": false,
-   "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/earth-system-trend-detective/ (Caused by SSLError(SSLCertVerificationError(1"
+   "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/earth-system-trend-detective/ (Caused by SSLError(SSLCertVerificationError(1",
+   "intentos": 2,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/earth-system-trend-detective/ (Caused by SSLError(SSLCertVerificationError(1"
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/earth-system-trend-detective/ (Caused by SSLError(SSLCertVerificationError(1",
+     "intentos": 2
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/earth-system-trend-detective/ (Caused by SSLError(SSLCertVerificationError(1",
+     "intentos": 2
+    }
+   ],
+   "corridas_con_200": 0
   },
   {
    "grupo": "Reto",
    "nombre": "Giovanni",
    "url": "https://giovanni.gsfc.nasa.gov/",
-   "ok": true,
-   "http": 200,
-   "url_final": "https://giovanni.gsfc.nasa.gov/giovanni/",
-   "tipo": "text/html; charset=UTF-8",
-   "titulo": "Giovanni",
-   "bytes": 20134
+   "ok": false,
+   "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+   "intentos": 2,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "intentos": 2
+    }
+   ],
+   "corridas_con_200": 2
   },
   {
    "grupo": "Reto",
@@ -28,7 +60,25 @@
    "url_final": "https://disc.gsfc.nasa.gov/information/tools?title=Hydrology%20Time%20Series",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "GES DISC",
-   "bytes": 2828
+   "bytes": 2828,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 2
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Reto",
@@ -39,7 +89,25 @@
    "url_final": "https://appeears.earthdatacloud.nasa.gov/",
    "tipo": "text/html; charset=utf-8",
    "titulo": "AppEEARS",
-   "bytes": 8759
+   "bytes": 8759,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Reto",
@@ -50,7 +118,25 @@
    "url_final": "https://www.ncei.noaa.gov/cdo-web/",
    "tipo": "text/html;charset=ISO-8859-1",
    "titulo": "Climate Data Online (CDO) - The National Climatic Data Center's (NCDC) Climate Data Online (CDO) provides free access to",
-   "bytes": 19246
+   "bytes": 19246,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Reto",
@@ -61,7 +147,25 @@
    "url_final": "https://ntrs.nasa.gov/api/citations/20090042747/downloads/20090042747.pdf",
    "tipo": "application/pdf",
    "titulo": null,
-   "bytes": 8810247
+   "bytes": 8810247,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Reto",
@@ -72,7 +176,25 @@
    "url_final": "https://climexp.knmi.nl/",
    "tipo": "text/html",
    "titulo": "Climate Explorer: Welcome to Climate Explorer",
-   "bytes": 20168
+   "bytes": 20167,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Reto",
@@ -83,7 +205,25 @@
    "url_final": "https://medium.com/@snp.kriss/statistical-test-methods-to-detect-trends-in-time-series-data-b361a0ec530b",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "Just a moment...",
-   "bytes": 5815
+   "bytes": 5815,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 403
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 403,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 403,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 0
   },
   {
    "grupo": "Reto",
@@ -94,14 +234,50 @@
    "url_final": "https://www.statsig.com/perspectives/a-comprehensive-guide-to-statistical-significance",
    "tipo": "text/html; charset=utf-8",
    "titulo": "A Comprehensive Guide to Statistical Significance",
-   "bytes": 444722
+   "bytes": 444529,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Reto",
    "nombre": "RADARSAT Constellation Mission (CSA)",
    "url": "https://donnees-data.asc-csa.gc.ca/en/dataset/rcm",
    "ok": false,
-   "error": "SSLError: HTTPSConnectionPool(host='donnees-data.asc-csa.gc.ca', port=443): Max retries exceeded with url: /en/dataset/rcm (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAI"
+   "error": "SSLError: HTTPSConnectionPool(host='donnees-data.asc-csa.gc.ca', port=443): Max retries exceeded with url: /en/dataset/rcm (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAI",
+   "intentos": 2,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "error": "SSLError: HTTPSConnectionPool(host='donnees-data.asc-csa.gc.ca', port=443): Max retries exceeded with url: /en/dataset/rcm (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAI"
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "error": "SSLError: HTTPSConnectionPool(host='donnees-data.asc-csa.gc.ca', port=443): Max retries exceeded with url: /en/dataset/rcm (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAI",
+     "intentos": 2
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "error": "SSLError: HTTPSConnectionPool(host='donnees-data.asc-csa.gc.ca', port=443): Max retries exceeded with url: /en/dataset/rcm (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAI",
+     "intentos": 2
+    }
+   ],
+   "corridas_con_200": 0
   },
   {
    "grupo": "Reto",
@@ -112,7 +288,25 @@
    "url_final": "https://geo.ca/",
    "tipo": "text/html",
    "titulo": "GEO.ca language selection - GEO.CA",
-   "bytes": 25107
+   "bytes": 25107,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Reto",
@@ -123,7 +317,25 @@
    "url_final": "https://www.asc-csa.gc.ca/eng/satellites/swot/",
    "tipo": "text/html;charset=UTF-8",
    "titulo": "The Surface Water and Ocean Topography (SWOT) mission | Canadian Space Agency",
-   "bytes": 34805
+   "bytes": 34805,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "intentos": 2
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 2
   },
   {
    "grupo": "Reto",
@@ -134,7 +346,25 @@
    "url_final": "https://www.asc-csa.gc.ca/eng/satellites/everyday-lives/monitoring-and-protecting-our-ecosystems-from-space.asp",
    "tipo": "text/html;charset=UTF-8",
    "titulo": "Monitoring and protecting our ecosystems from space | Canadian Space Agency",
-   "bytes": 45438
+   "bytes": 45438,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 2
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Reto",
@@ -145,7 +375,25 @@
    "url_final": "https://github.com/asc-csa/Synthetic_Aperture_Radar_Tutorial",
    "tipo": "application/json; charset=utf-8",
    "titulo": null,
-   "bytes": 378
+   "bytes": 378,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 403
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 403,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 403,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 0
   },
   {
    "grupo": "Guía 1",
@@ -156,7 +404,25 @@
    "url_final": "https://data.nasa.gov/",
    "tipo": "text/html; charset=utf-8",
    "titulo": "Welcome - NASA Open Data Portal",
-   "bytes": 43363
+   "bytes": 43363,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 1",
@@ -167,7 +433,25 @@
    "url_final": "https://api.nasa.gov/",
    "tipo": "text/html; charset=utf-8",
    "titulo": "NASA Open APIs",
-   "bytes": 4737
+   "bytes": 4737,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 1",
@@ -178,14 +462,54 @@
    "url_final": "https://www.earthdata.nasa.gov/",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "Your Gateway to NASA Earth Observation Data | NASA Earthdata",
-   "bytes": 185221
+   "bytes": 185221,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 1",
    "nombre": "Cuenta Earthdata (URS)",
    "url": "https://urs.earthdata.nasa.gov",
-   "ok": false,
-   "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+   "ok": true,
+   "http": 200,
+   "url_final": "https://urs.earthdata.nasa.gov/",
+   "tipo": "text/html; charset=utf-8",
+   "titulo": "Earthdata Login",
+   "bytes": 10392,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "intentos": 2
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 1
   },
   {
    "grupo": "Guía 1",
@@ -196,7 +520,25 @@
    "url_final": "https://search.earthdata.nasa.gov/",
    "tipo": "text/html",
    "titulo": "Earthdata Search",
-   "bytes": 14874
+   "bytes": 14874,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 1",
@@ -207,7 +549,25 @@
    "url_final": "https://worldview.earthdata.nasa.gov/",
    "tipo": "text/html",
    "titulo": "NASA Worldview",
-   "bytes": 4315
+   "bytes": 4315,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 1",
@@ -218,14 +578,50 @@
    "url_final": "https://images.nasa.gov/",
    "tipo": "text/html",
    "titulo": null,
-   "bytes": 178991
+   "bytes": 178991,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 1",
    "nombre": "Retos Space Apps 2026",
    "url": "https://www.spaceappschallenge.org/2026/challenges/",
    "ok": false,
-   "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_F"
+   "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_F",
+   "intentos": 2,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_F"
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_F",
+     "intentos": 2
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "error": "SSLError: HTTPSConnectionPool(host='www.spaceappschallenge.org', port=443): Max retries exceeded with url: /2026/challenges/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_F",
+     "intentos": 2
+    }
+   ],
+   "corridas_con_200": 0
   },
   {
    "grupo": "Guía 2",
@@ -236,14 +632,54 @@
    "url_final": "https://search.asf.alaska.edu/",
    "tipo": "text/html",
    "titulo": "ASF Data Search",
-   "bytes": 90083
+   "bytes": 90083,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 2",
    "nombre": "R02 NISAR (JPL)",
    "url": "https://nisar.jpl.nasa.gov",
-   "ok": false,
-   "error": "ProxyError: HTTPSConnectionPool(host='science.nasa.gov', port=443): Max retries exceeded with url: /mission/nisar/ (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed"
+   "ok": true,
+   "http": 200,
+   "url_final": "https://science.nasa.gov/mission/nisar/",
+   "tipo": "text/html; charset=UTF-8",
+   "titulo": "NISAR - NASA Science",
+   "bytes": 295999,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "error": "ProxyError: HTTPSConnectionPool(host='science.nasa.gov', port=443): Max retries exceeded with url: /mission/nisar/ (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed"
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 2
   },
   {
    "grupo": "Guía 2",
@@ -254,7 +690,25 @@
    "url_final": "https://power.larc.nasa.gov/",
    "tipo": "text/html",
    "titulo": "NASA POWER | Homepage",
-   "bytes": 35593
+   "bytes": 35593,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 2",
@@ -265,7 +719,25 @@
    "url_final": "https://smap.jpl.nasa.gov/",
    "tipo": "text/html; charset=utf-8",
    "titulo": "SMAP",
-   "bytes": 77394
+   "bytes": 77394,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 2",
@@ -276,7 +748,25 @@
    "url_final": "https://firms.modaps.eosdis.nasa.gov/",
    "tipo": "text/html",
    "titulo": "NASA | LANCE | FIRMS",
-   "bytes": 19529
+   "bytes": 19529,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "intentos": 2
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 2
   },
   {
    "grupo": "Guía 2",
@@ -287,7 +777,25 @@
    "url_final": "https://chandra.si.edu/sound/",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "A Universe of Sound",
-   "bytes": 45833
+   "bytes": 45833,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 3",
@@ -298,7 +806,25 @@
    "url_final": "https://trek.nasa.gov/",
    "tipo": "text/html",
    "titulo": "NASA Solar System Treks",
-   "bytes": 55726
+   "bytes": 55726,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 3",
@@ -309,7 +835,25 @@
    "url_final": "https://pds.nasa.gov/",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "Welcome to the Planetary Data System",
-   "bytes": 61709
+   "bytes": 61709,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 3",
@@ -320,7 +864,25 @@
    "url_final": "https://hirise.lpl.arizona.edu/",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "HiRISE | High Resolution Imaging Science Experiment",
-   "bytes": 15982
+   "bytes": 15982,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 3",
@@ -331,7 +893,25 @@
    "url_final": "https://nssdc.gsfc.nasa.gov/",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "NASA Space Science Data Coordinated Archive",
-   "bytes": 28345
+   "bytes": 28345,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 3",
@@ -342,21 +922,83 @@
    "url_final": "https://earthexplorer.usgs.gov/",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "EarthExplorer",
-   "bytes": 94475
+   "bytes": 94475,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 4",
    "nombre": "R12 PSI (Estación Espacial)",
    "url": "https://psi.nasa.gov",
-   "ok": false,
-   "error": "ProxyError: HTTPSConnectionPool(host='science.nasa.gov', port=443): Max retries exceeded with url: /physical-sciences-informatics-psi (Caused by ProxyError('Unable to connect to proxy', OSError('Tunne"
+   "ok": true,
+   "http": 200,
+   "url_final": "https://science.nasa.gov/biological-physical/data/",
+   "tipo": "text/html; charset=UTF-8",
+   "titulo": "BPS Data - NASA Science",
+   "bytes": 343716,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "error": "ProxyError: HTTPSConnectionPool(host='science.nasa.gov', port=443): Max retries exceeded with url: /physical-sciences-informatics-psi (Caused by ProxyError('Unable to connect to proxy', OSError('Tunne"
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 2
   },
   {
    "grupo": "Guía 4",
    "nombre": "R13 OSDR",
    "url": "https://osdr.nasa.gov",
-   "ok": false,
-   "error": "ProxyError: HTTPSConnectionPool(host='science.nasa.gov', port=443): Max retries exceeded with url: /biological-physical/data/ (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connec"
+   "ok": true,
+   "http": 200,
+   "url_final": "https://science.nasa.gov/biological-physical/data/",
+   "tipo": "text/html; charset=UTF-8",
+   "titulo": "BPS Data - NASA Science",
+   "bytes": 343716,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "error": "ProxyError: HTTPSConnectionPool(host='science.nasa.gov', port=443): Max retries exceeded with url: /biological-physical/data/ (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connec"
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 2
   },
   {
    "grupo": "Guía 4",
@@ -367,7 +1009,25 @@
    "url_final": "https://www.nasa.gov/hrp/",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "Human Research Program - NASA",
-   "bytes": 374254
+   "bytes": 374257,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 4",
@@ -378,7 +1038,25 @@
    "url_final": "https://irsa.ipac.caltech.edu/frontpage/",
    "tipo": "text/html",
    "titulo": "IRSA",
-   "bytes": 11203
+   "bytes": 11203,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 5",
@@ -389,7 +1067,25 @@
    "url_final": "https://dataspace.copernicus.eu/",
    "tipo": "text/html; charset=UTF-8",
    "titulo": "Copernicus Data Space Ecosystem | Europe&#039;s eyes on Earth",
-   "bytes": 111397
+   "bytes": 111397,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 5",
@@ -400,18 +1096,50 @@
    "url_final": "https://www.gportal.jaxa.jp/?lang=en",
    "tipo": "text/html; charset=utf-8",
    "titulo": "G-PortalTop",
-   "bytes": 1067892
+   "bytes": 1067892,
+   "intentos": 1,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "http": 200,
+     "intentos": 1
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "http": 200,
+     "intentos": 1
+    }
+   ],
+   "corridas_con_200": 3
   },
   {
    "grupo": "Guía 5",
    "nombre": "CSA",
    "url": "https://www.asc-csa.gc.ca",
-   "ok": true,
-   "http": 200,
-   "url_final": "https://www.asc-csa.gc.ca/",
-   "tipo": "text/html;charset=UTF-8",
-   "titulo": "Agence spatiale canadienne | Canadian Space Agency",
-   "bytes": 4933
+   "ok": false,
+   "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+   "intentos": 2,
+   "historial": [
+    {
+     "utc": "2026-11-14T19:30:23+00:00",
+     "http": 200
+    },
+    {
+     "utc": "2026-11-14T20:33:05+00:00",
+     "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "intentos": 2
+    },
+    {
+     "utc": "2026-11-14T20:36:21+00:00",
+     "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))",
+     "intentos": 2
+    }
+   ],
+   "corridas_con_200": 1
   }
  ],
  "sondas": {
@@ -422,7 +1150,7 @@
   "asf_conteos": {
    "ok": true,
    "datos": {
-    "NISAR": "666",
+    "NISAR": "667",
     "SENTINEL-1": "6573"
    }
   },

@@ -21,7 +21,7 @@ Esta propuesta separa con claridad lo hecho de lo prometido.
 | Categoría | Qué incluye | Evidencia |
 |---|---|---|
 | ✅ **Implementado y ejecutado** | (1) Verificación automática de 40 fuentes contra catálogos oficiales: **37 correctas**. (2) Primer análisis con datos reales (NASA POWER + NOAA ONI): tendencia, filtro ENSO, ventanas y detectabilidad en la cabecera | [`scripts/verificar_fuentes.py`](scripts/verificar_fuentes.py) → [`evidencia.json`](docs/verificacion/evidencia.json) · [`scripts/analisis_preliminar.py`](scripts/analisis_preliminar.py) → [`analisis_preliminar.json`](docs/verificacion/analisis_preliminar.json) |
-| ✅ **Revisión de enlaces** | Los 41 enlaces del reto y de la guía abiertos con consultas reales: 38 accesibles; decisión de uso para cada uno | [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) · [`scripts/revisar_enlaces.py`](scripts/revisar_enlaces.py) |
+| ✅ **Revisión de enlaces** | Los 40 enlaces del reto y de la guía consultados en tres corridas reales: 35 con HTTP 200, 2 bloquean bots (403) y 3 con certificado SSL no validable desde el proxy; decisión de uso para cada uno | [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) · [`scripts/revisar_enlaces.py`](scripts/revisar_enlaces.py) |
 | 🟦 **Verificado, aún sin implementar** | Existencia, periodo y cobertura sobre la cuenca de 29 colecciones NASA; AppEEARS, POWER, ONI/RONI, Niño3.4 de KNMI, GHCN, Sentinel-1/2, CHIRPS v3, GIBS y el reporte de AUTODEMA | [Informe de verificación](docs/verificacion/README.md) |
 | ⚠️ **Pendiente de verificar** | Giovanni, la API de FIRMS y *data rods* (conexión reiniciada); Landsat 1984–2012 automatizado; presencia de cada represa en SWOT; archivo histórico de AUTODEMA; ERA5; GSMaP | [Sección 6 del informe](docs/verificacion/README.md#6-vacíos-de-información) |
 | 🧪 **Requiere validación experimental** | Matriz de Relevancia, gemelo hidrológico, atribución, pronóstico de temporada, alerta de turbidez, priorización MERESE e IA verificada | [Plan de validación](#9-validación-experimental) |
@@ -413,7 +413,7 @@ Lo que lo hace escalable: datos globales verificados, plantillas declarativas, i
 |---|---|
 | [`docs/pipeline.md`](docs/pipeline.md) | **Especificación de construcción del pipeline** (para el responsable de datos) |
 | [`docs/verificacion/README.md`](docs/verificacion/README.md) | Verificación de fuentes, licencias, incompatibilidades y vacíos |
-| [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) | Revisión de los 41 enlaces del reto y de la guía: cuáles se usan, cuáles no y por qué |
+| [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) | Revisión de los 40 enlaces del reto y de la guía: cuáles se usan, cuáles no y por qué |
 | [`docs/variables.md`](docs/variables.md) | Variables, unidades, resoluciones, procesamiento, indicadores y relaciones físicas |
 | [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) | Módulo M1: plantillas, algoritmo, salidas y validación |
 | [`docs/diseno-tecnico.md`](docs/diseno-tecnico.md) | Ecuaciones, decisiones de arquitectura, contratos, API/MCP, IA verificada, pruebas y riesgos |

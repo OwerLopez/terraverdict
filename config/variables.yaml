@@ -1,0 +1,130 @@
+# Catálogo de variables físicas de TerraVerdict (fuente: docs/variables.md).
+# "unidad" usa el vocabulario controlado de la API (GET /api/v1/unidades-medida).
+
+variables:
+  precipitacion:
+    nombre: Precipitación
+    simbolo: P
+    unidad: mm
+    grupo: atmosfera
+    descripcion: Lámina de lluvia acumulada en el periodo de la observación.
+    relacion: Entrada principal del balance hídrico; la temporada dic–mar llena las represas.
+  temperatura_aire_2m:
+    nombre: Temperatura del aire a 2 m
+    simbolo: T2M
+    unidad: Cel
+    grupo: atmosfera
+    descripcion: Temperatura media del aire cerca de la superficie.
+    relacion: Controla la evaporación, la fusión de nieve y la demanda de agua de la vegetación.
+  radiacion_solar:
+    nombre: Radiación solar en superficie
+    simbolo: Rs
+    unidad: MJ/m2/d
+    grupo: atmosfera
+    descripcion: Irradiación solar diaria que llega a la superficie.
+    relacion: Energía disponible para la evaporación de embalses.
+  humedad_relativa:
+    nombre: Humedad relativa a 2 m
+    simbolo: HR
+    unidad: "%"
+    grupo: atmosfera
+    descripcion: Humedad relativa del aire cerca de la superficie.
+    relacion: Término aerodinámico de la evaporación.
+  viento_2m:
+    nombre: Velocidad del viento a 2 m
+    simbolo: u2
+    unidad: m/s
+    grupo: atmosfera
+    descripcion: Velocidad media del viento cerca de la superficie.
+    relacion: Término aerodinámico de la evaporación.
+  indice_oni:
+    nombre: Índice Oceánico El Niño (ONI)
+    simbolo: ONI
+    unidad: Cel
+    grupo: atmosfera
+    descripcion: Anomalía de la temperatura del mar en Niño3.4, promedio móvil de tres meses.
+    relacion: Principal modulador de la lluvia interanual en los Andes del sur.
+  temperatura_superficie:
+    nombre: Temperatura de superficie terrestre
+    simbolo: LST
+    unidad: Cel
+    grupo: superficie
+    descripcion: Temperatura radiativa de la superficie observada por satélite.
+    relacion: Corroboración física de la tendencia de temperatura.
+  ndvi:
+    nombre: Índice de vegetación de diferencia normalizada
+    simbolo: NDVI
+    unidad: "1"
+    grupo: superficie
+    descripcion: Verdor de la vegetación a partir de las bandas roja e infrarroja cercana.
+    relacion: Estado de los bofedales (la esponja de la cuenca).
+  evapotranspiracion:
+    nombre: Evapotranspiración real
+    simbolo: ET
+    unidad: mm
+    grupo: superficie
+    descripcion: Agua que vuelve a la atmósfera desde el suelo y la vegetación en el periodo.
+    relacion: Salida de agua del balance.
+  fraccion_nieve:
+    nombre: Fracción de nieve
+    simbolo: SCF
+    unidad: "%"
+    grupo: superficie
+    descripcion: Porcentaje del área cubierta por nieve.
+    relacion: Indicador térmico de los volcanes (no de volumen).
+  humedad_suelo:
+    nombre: Humedad del suelo superficial
+    simbolo: θ
+    unidad: m3/m3
+    grupo: suelo
+    descripcion: Contenido volumétrico de agua en los primeros centímetros del suelo.
+    relacion: Condición previa a los huaicos; estado de la esponja.
+  area_agua:
+    nombre: Superficie de agua
+    simbolo: A
+    unidad: km2
+    grupo: agua_superficial
+    descripcion: Área del espejo de agua de un embalse.
+    relacion: Almacenamiento y colmatación de las represas.
+  cambio_almacenamiento:
+    nombre: Cambio de almacenamiento
+    simbolo: ΔS
+    unidad: hm3
+    grupo: agua_superficial
+    descripcion: Variación del volumen almacenado entre dos observaciones.
+    relacion: Calibración del modelo de las represas.
+  volumen_util:
+    nombre: Volumen útil embalsado
+    simbolo: V
+    unidad: hm3
+    grupo: agua_superficial
+    descripcion: Volumen de agua utilizable almacenado en un embalse.
+    relacion: Disponibilidad de agua para la ciudad y el campo.
+  caudal_afluente:
+    nombre: Caudal afluente
+    simbolo: Qin
+    unidad: m3/s
+    grupo: agua_superficial
+    descripcion: Caudal que entra a un embalse.
+    relacion: Aporte de la cuenca a la represa.
+  descarga:
+    nombre: Descarga
+    simbolo: Qout
+    unidad: m3/s
+    grupo: agua_superficial
+    descripcion: Caudal liberado por un embalse.
+    relacion: Operación de la represa (decisión humana).
+  area_quemada:
+    nombre: Área quemada
+    simbolo: AQ
+    unidad: ha
+    grupo: perturbaciones
+    descripcion: Superficie afectada por fuego en el periodo.
+    relacion: Presión sobre los bofedales y la erosión.
+  turbidez:
+    nombre: Turbidez
+    simbolo: Turb
+    unidad: NTU
+    grupo: agua_superficial
+    descripcion: Turbidez del agua en la captación.
+    relacion: Determina si las plantas de potabilización pueden operar.

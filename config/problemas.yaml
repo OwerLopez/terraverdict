@@ -1,0 +1,33 @@
+# Plantillas de problema de la Matriz de Relevancia (M1). Fuente: docs/modulo-relevancia.md.
+# Son definiciones de diseño, no resultados: la matriz se llena solo con expedientes
+# de tipo "relevancia" publicados por el pipeline de ciencia de datos.
+
+problemas:
+  P1:
+    nombre: Lluvia extrema en la cabecera
+    objetivo: Días con lluvia mayor o igual al percentil 99 (IMERG Final diaria)
+    candidatas: [indice_oni, temperatura_aire_2m, humedad_suelo, humedad_relativa, viento_2m]
+    muestras: ~10 000 días (1998–2025)
+    viabilidad: alta
+    dominio_entrenamiento: andes_sur_entrenamiento
+  P2:
+    nombre: Degradación de bofedales
+    objetivo: Pendiente del NDVI de época seca por bofedal
+    candidatas: [precipitacion, temperatura_aire_2m, humedad_suelo, area_quemada, evapotranspiracion]
+    muestras: Miles de píxeles por año
+    viabilidad: alta
+    dominio_entrenamiento: andes_sur_entrenamiento
+  P3:
+    nombre: Déficit de las represas
+    objetivo: Almacenamiento al cierre de abril
+    candidatas: [precipitacion, temperatura_aire_2m, fraccion_nieve, evapotranspiracion, indice_oni, volumen_util]
+    muestras: ~25 temporadas
+    viabilidad: baja
+    dominio_entrenamiento: chili_analisis
+  P4:
+    nombre: Turbidez en la captación
+    objetivo: Cortes por turbidez documentados
+    candidatas: [precipitacion, humedad_suelo]
+    muestras: 3 eventos documentados
+    viabilidad: insuficiente
+    dominio_entrenamiento: chili_analisis

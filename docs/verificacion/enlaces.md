@@ -2,12 +2,12 @@
 
 > **Fecha:** 14 de noviembre de 2026.
 > **Método:** cada enlace se abrió con una consulta real desde el entorno del proyecto ([`scripts/revisar_enlaces.py`](../../scripts/revisar_enlaces.py) → [`enlaces.json`](enlaces.json)). En las fuentes con datos se consultó además qué hay sobre la cuenca del Chili; parte de esas consultas está en [`evidencia.json`](evidencia.json).
-> **Resultado:** 41 enlaces revisados. **38 abrieron**, 3 de ellos solo con un segundo intento: NISAR, PSI y OSDR redirigen a `science.nasa.gov`. **3 no se pudieron abrir** desde el entorno: el certificado SSL de la página del reto y del portal RCM de la CSA no se pudo validar a través del proxy de red, y GitHub bloqueó la descarga automática del tutorial. No se desactivó la verificación de seguridad para forzarlos.
+> **Resultado:** 40 enlaces únicos (Giovanni y AppEEARS aparecen dos veces en las tablas), revisados en tres corridas automáticas con reintento ante fallos de red. **35 respondieron HTTP 200** en al menos una corrida; la red del entorno corta conexiones de forma intermitente, por eso cada enlace guarda su historial en [`enlaces.json`](enlaces.json). **2 respondieron 403** porque bloquean consultas automáticas (Medium y GitHub); su contenido se revisó por otra vía. **3 no se pudieron abrir** desde el entorno: el certificado SSL de las dos páginas de spaceappschallenge.org y del portal RCM de la CSA no se pudo validar a través del proxy de red. No se desactivó la verificación de seguridad para forzarlos.
 
 ## Leyenda
 
 - **¿Se usa?** ✅ se descargan datos de esta fuente · 🔧 herramienta de validación o de apoyo (no aporta datos nuevos) · 📖 referencia metodológica · ❌ no se usa (con motivo)
-- **Revisión:** ✅ abrió con consulta real · 🔁 abrió en el segundo intento · ⚠️ no abrió desde el entorno (se indica cómo se verificó)
+- **Revisión:** ✅ abrió con consulta real · 🔁 abrió solo en algunas corridas o al reintentar · ⚠️ no abrió desde el entorno (se indica cómo se verificó)
 
 ## 1. Recursos oficiales del reto
 
@@ -37,7 +37,7 @@
 | [data.nasa.gov](https://data.nasa.gov) | ✅ 200; su API devolvió 31 conjuntos para "IMERG precipitation" | Catálogo general de NASA | 🔧 | Solo búsqueda. Los datos se descargan de los archivos originales (CMR, DAAC) |
 | [api.nasa.gov](https://api.nasa.gov) | ✅ 200; APOD con clave de prueba: 429 (límite de uso) | APIs de astronomía, asteroides, rovers | ❌ | No tiene datos de la cuenca |
 | [Earthdata](https://earthdata.nasa.gov) | ✅ 200 | Portal y documentación | 🔧 | Documentación y políticas de datos |
-| [Cuenta Earthdata (URS)](https://urs.earthdata.nasa.gov) | 🔁 200 en el segundo intento | Inicio de sesión | ✅ obligatorio | Necesaria para descargar de GES DISC, LP DAAC, NSIDC y PO.DAAC |
+| [Cuenta Earthdata (URS)](https://urs.earthdata.nasa.gov) | 🔁 200 en una de tres corridas (las otras cortaron la conexión) | Inicio de sesión | ✅ obligatorio | Necesaria para descargar de GES DISC, LP DAAC, NSIDC y PO.DAAC |
 | [Earthdata Search](https://search.earthdata.nasa.gov) | ✅ 200 | Buscador sobre CMR | ✅ (vía CMR) | 29 colecciones verificadas por la API de CMR |
 | [Worldview](https://worldview.earthdata.nasa.gov) | ✅ 200; GIBS con 1330 capas | Imágenes diarias | ✅ visual | Fondo del mapa 3D e imágenes de los días de los eventos |
 | [images.nasa.gov](https://images.nasa.gov) | ✅ 200; 6 resultados para "Arequipa" (cañones, volcán Ubinas, fotos desde la Estación Espacial) | Fotos y videos | ✅ solo pitch | Material visual; no se usa para cálculos |

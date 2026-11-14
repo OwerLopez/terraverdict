@@ -1,0 +1,18 @@
+{
+  "fuente_id": "autodema_reportes",
+  "titulo": "Reporte hídrico de AUTODEMA",
+  "url": "https://www.autodema.gob.pe/wp-content/uploads/2024/03/REPORTE-HIDRICO.pdf",
+  "fecha": "2024-03-13",
+  "hora_local": "08:00",
+  "transcripcion": "Valores transcritos del PDF oficial (verificado el 2026-11-14). null = el reporte no publica el dato.",
+  "represas": {
+    "el_pane": {"volumen_util_hm3": 90.03, "descarga_m3s": 0.03, "afluente_m3s": 11.53, "precipitacion_mm": 0.0},
+    "bamputane": {"volumen_util_hm3": 26.49, "descarga_m3s": 0.0, "afluente_m3s": null, "precipitacion_mm": 0.0},
+    "dique_espanoles": {"volumen_util_hm3": 9.26, "descarga_m3s": 0.2, "afluente_m3s": 4.99, "precipitacion_mm": 0.0},
+    "pillones": {"volumen_util_hm3": 67.64, "descarga_m3s": 0.0, "afluente_m3s": null, "precipitacion_mm": 3.9},
+    "chalhuanca": {"volumen_util_hm3": 26.3, "descarga_m3s": 0.0, "afluente_m3s": null, "precipitacion_mm": 0.9},
+    "el_frayle": {"volumen_util_hm3": 130.87, "descarga_m3s": 0.0, "afluente_m3s": 21.59, "precipitacion_mm": 1.3},
+    "aguada_blanca": {"volumen_util_hm3": 22.72, "descarga_m3s": 0.0, "afluente_m3s": 53.63, "precipitacion_mm": 8.4}
+  },
+  "total_chili_volumen_util_hm3": 373.3
+}

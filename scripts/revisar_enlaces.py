@@ -5,7 +5,11 @@ Para cada enlace: código HTTP, URL final y título de la página. Para las fuen
 con datos, además consulta qué hay disponible sobre la cuenca del Chili.
 Guarda la evidencia en JSON.
 
-Uso: python scripts/revisar_enlaces.py [--salida docs/verificacion/enlaces.json]
+Cada fallo de red o 5xx se reintenta una vez. Con ``--anterior`` se conserva el historial de
+corridas previas: la red del entorno corta conexiones de forma intermitente, y un enlace que
+respondió HTTP 200 en alguna corrida existe aunque en otra fallara.
+
+Uso: python scripts/revisar_enlaces.py --anterior docs/verificacion/enlaces.json
 """
 from __future__ import annotations
 
@@ -78,6 +82,44 @@ def revisar(s: requests.Session, url: str) -> dict[str, Any]:
         titulo = re.sub(r"\s+", " ", m.group(1)).strip()[:120] if m else None
     return {"http": r.status_code, "url_final": r.url, "tipo": r.headers.get("content-type", "")[:40],
             "titulo": titulo, "bytes": len(r.content)}
+
+
+def revisar_con_reintento(s: requests.Session, url: str, intentos: int = 2) -> dict[str, Any]:
+    """Un fallo de red o un 5xx se reintenta una vez; se registra cuántos intentos hicieron falta."""
+    d: dict[str, Any] = {}
+    for n in range(1, intentos + 1):
+        try:
+            d = {"ok": True, **revisar(s, url)}
+        except Exception as ex:
+            d = {"ok": False, "error": f"{type(ex).__name__}: {ex}"[:200]}
+        d["intentos"] = n
+        if d["ok"] and d["http"] < 500:
+            break
+    return d
+
+
+_CAMPOS_HISTORIAL = ("http", "error", "intentos")
+
+
+def fusionar_historial(anteriores: list[dict[str, Any]], actual: dict[str, Any]) -> None:
+    """Agrega a cada enlace el historial de corridas anteriores (misma URL), sin duplicar corridas.
+
+    La red del entorno de verificación corta conexiones de forma intermitente: un enlace que
+    respondió HTTP 200 en alguna corrida existe, aunque en otra fallara. El historial conserva
+    todas las respuestas para que esa conclusión sea auditable.
+    """
+    previas: dict[str, list[dict[str, Any]]] = {}
+    for previo in anteriores:
+        for e in previo.get("enlaces", []):
+            entradas = e.get("historial") or [
+                {"utc": previo["generado_utc"], **{k: e[k] for k in _CAMPOS_HISTORIAL if k in e}}
+            ]
+            previas.setdefault(e["url"], []).extend(entradas)
+    for e in actual["enlaces"]:
+        propia = {"utc": actual["generado_utc"], **{k: e[k] for k in _CAMPOS_HISTORIAL if k in e}}
+        por_corrida = {h["utc"]: h for h in [*previas.get(e["url"], []), propia]}
+        e["historial"] = sorted(por_corrida.values(), key=lambda h: h["utc"])
+        e["corridas_con_200"] = sum(1 for h in e["historial"] if h.get("http") == 200)
 
 
 def sondas(s: requests.Session) -> dict[str, Callable[[], Any]]:
@@ -154,15 +196,15 @@ def sondas(s: requests.Session) -> dict[str, Callable[[], Any]]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--salida", default="docs/verificacion/enlaces.json")
+    ap.add_argument("--anterior", nargs="*", default=[],
+                    help="Evidencias previas cuyo historial se conserva (p. ej. la misma salida).")
     a = ap.parse_args()
+    anteriores = [json.loads(Path(f).read_text()) for f in a.anterior if Path(f).exists()]
     s = requests.Session(); s.headers.update(UA)
     ev: dict[str, Any] = {"generado_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
                           "enlaces": [], "sondas": {}}
     for grupo, nombre, url in ENLACES:
-        try:
-            d = {"ok": True, **revisar(s, url)}
-        except Exception as ex:
-            d = {"ok": False, "error": f"{type(ex).__name__}: {ex}"[:200]}
+        d = revisar_con_reintento(s, url)
         ev["enlaces"].append({"grupo": grupo, "nombre": nombre, "url": url, **d})
         print(f"[{d.get('http', 'ERR')}] {nombre}", file=sys.stderr)
     for k, f in sondas(s).items():
@@ -171,6 +213,9 @@ def main() -> int:
         except Exception as ex:
             ev["sondas"][k] = {"ok": False, "error": f"{type(ex).__name__}: {ex}"[:200]}
         print(f"[{'OK ' if ev['sondas'][k]['ok'] else 'ERR'}] sonda {k}", file=sys.stderr)
+    fusionar_historial(anteriores, ev)
+    abiertos = sum(1 for e in ev["enlaces"] if e["corridas_con_200"] > 0)
+    print(f"{abiertos}/{len(ev['enlaces'])} enlaces con HTTP 200 en al menos una corrida", file=sys.stderr)
     Path(a.salida).write_text(json.dumps(ev, ensure_ascii=False, indent=1))
     return 0
 

@@ -1,0 +1,42 @@
+# Entornos y dependencias
+.venv/
+venv/
+node_modules/
+
+# Artefactos de construcción
+dist/
+build/
+*.egg-info/
+*.tsbuildinfo
+
+# Cachés de herramientas
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.vite/
+
+# Bases de datos locales (se reconstruyen con `python -m app.cli importar`)
+*.db
+*.db-wal
+*.db-shm
+*.sqlite3
+
+# Secretos y configuración local (usar .env.example como plantilla)
+.env
+.env.*
+!.env.example
+
+# Descargas crudas regenerables con los scripts (la procedencia queda en los manifiestos)
+datos/crudos/
+ciencia/.cache/
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

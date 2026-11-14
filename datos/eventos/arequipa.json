@@ -1,0 +1,165 @@
+{
+  "descripcion": "Eventos documentados del sistema hídrico de Arequipa. Cada cifra proviene de la fuente citada; 'precision' indica si la fecha es exacta (dia), del mes (mes) o solo del año (anio).",
+  "eventos": [
+    {
+      "id": "2023-11-almacenamiento-bajo",
+      "fecha": "2023-11-07",
+      "precision": "dia",
+      "categoria": "escasez",
+      "titulo": "Represas del sistema Chili con 159 de 409 hm³ útiles",
+      "descripcion": "Las siete represas acumulaban 159 hm³ de un embalse útil de 409 hm³ (cerca del 39 %), en un contexto de déficit asociado a El Niño.",
+      "cifras": [
+        {"valor": 159, "unidad": "hm3", "descripcion": "Volumen almacenado"},
+        {"valor": 409, "unidad": "hm3", "descripcion": "Capacidad útil citada"}
+      ],
+      "fuentes": [
+        {"titulo": "Arequipa: represas del sur tienen bajo nivel de almacenamiento de agua", "medio": "La República", "fecha_publicacion": "2023-11-07", "url": "https://larepublica.pe/sociedad/2023/11/07/arequipa-represas-del-sur-tienen-bajo-nivel-de-almacenamiento-de-agua-lrsd-444311"}
+      ]
+    },
+    {
+      "id": "2023-emergencia-deficit-hidrico",
+      "fecha": "2023-01-01",
+      "precision": "anio",
+      "categoria": "institucional",
+      "titulo": "Emergencia por peligro inminente de déficit hídrico (DS 122-2023-PCM)",
+      "descripcion": "El Gobierno declaró en emergencia a 70 distritos de la región Arequipa por peligro inminente de déficit hídrico asociado a El Niño 2023–2024. Fecha exacta del decreto por confirmar.",
+      "cifras": [
+        {"valor": 70, "unidad": "count", "descripcion": "Distritos declarados en emergencia"}
+      ],
+      "fuentes": [
+        {"titulo": "Déficit hídrico: estos son los 70 distritos de Arequipa declarados en emergencia", "medio": "Andina", "url": "https://andina.pe/agencia/noticia-deficit-hidrico-estos-son-los-70-distritos-arequipa-declarados-emergencia-961301.aspx"}
+      ]
+    },
+    {
+      "id": "2024-03-corte-huaicos",
+      "fecha": "2024-03-07",
+      "precision": "dia",
+      "categoria": "turbidez",
+      "titulo": "SEDAPAR paraliza sus dos plantas por huaicos y rebose de Aguada Blanca",
+      "descripcion": "Corte de agua potable en Arequipa por huaicos y el rebose de la represa Aguada Blanca.",
+      "cifras": [],
+      "fuentes": [
+        {"titulo": "Corte de agua en Arequipa: Sedapar paraliza producción en sus 2 plantas por huaicos y rebose de represa Aguada Blanca", "medio": "La República", "fecha_publicacion": "2024-03-07", "url": "https://larepublica.pe/sociedad/2024/03/07/corte-de-agua-en-arequipa-sedapar-paraliza-produccion-en-sus-2-plantas-por-huaicos-y-rebose-de-represa-aguada-blanca-lrsd-432572"}
+      ]
+    },
+    {
+      "id": "2024-03-13-reporte-autodema",
+      "fecha": "2024-03-13",
+      "precision": "dia",
+      "categoria": "almacenamiento",
+      "titulo": "AUTODEMA reporta 373,30 hm³ de volumen útil en el sistema Chili",
+      "descripcion": "Reporte hídrico oficial con volumen útil, caudal afluente, descarga y lluvia local por represa.",
+      "cifras": [
+        {"valor": 373.3, "unidad": "hm3", "descripcion": "Volumen útil total del sistema Chili"}
+      ],
+      "fuentes": [
+        {"titulo": "Reporte hídrico (13/03/2024)", "medio": "AUTODEMA", "fecha_publicacion": "2024-03-13", "url": "https://www.autodema.gob.pe/wp-content/uploads/2024/03/REPORTE-HIDRICO.pdf"}
+      ]
+    },
+    {
+      "id": "2024-03-colmatacion-aguada-blanca",
+      "fecha": "2024-03-01",
+      "precision": "mes",
+      "categoria": "colmatacion",
+      "titulo": "Aguada Blanca pierde cerca de la mitad de su capacidad por sedimentos",
+      "descripcion": "Diseñada para 43 hm³, la represa solo puede contener alrededor de 22 hm³. AUTODEMA indica que en más de 50 años no se han hecho estudios de colmatación.",
+      "cifras": [
+        {"valor": 43, "unidad": "hm3", "descripcion": "Capacidad de diseño"},
+        {"valor": 22, "unidad": "hm3", "descripcion": "Capacidad actual estimada"}
+      ],
+      "fuentes": [
+        {"titulo": "Arequipa: proyectan nueva represa ante altos niveles de colmatación en Aguada Blanca", "medio": "El Búho", "fecha_publicacion": "2024-03", "url": "https://elbuho.pe/2024/03/arequipa-proyectan-nueva-represa-ante-altos-niveles-de-colmatacion-en-aguada-blanca/"}
+      ]
+    },
+    {
+      "id": "2024-04-merese-sedapar",
+      "fecha": "2024-04-01",
+      "precision": "mes",
+      "categoria": "institucional",
+      "titulo": "Acuerdo MERESE de SEDAPAR por US$ 1,5 millones (2024–2026)",
+      "descripcion": "Acciones de protección y restauración en la cuenca Quilca-Chili y la Reserva Nacional de Salinas y Aguada Blanca, financiadas con la tarifa de agua.",
+      "cifras": [
+        {"valor": 1.5, "unidad": "MUSD", "descripcion": "Monto comprometido 2024–2026 (millones de dólares)"}
+      ],
+      "fuentes": [
+        {"titulo": "MERESE en el Perú (folleto COP)", "medio": "Forest Trends", "url": "https://www.forest-trends.org/wp-content/uploads/2024/10/Brochure-Merese-COP-14.01.25.pdf"},
+        {"titulo": "COP16: Perú presentó logros para conservar agua y biodiversidad en la Reserva de Salinas", "medio": "Trome", "url": "https://trome.com/actualidad/cop16-peru-presento-logros-para-conservar-agua-biodiversidad-reserva-salinas-arequipa-imp-noticia/"}
+      ]
+    },
+    {
+      "id": "2024-bofedales-reduccion",
+      "fecha": "2024-01-01",
+      "precision": "anio",
+      "categoria": "degradacion",
+      "titulo": "Bofedales de la Reserva de Salinas y Aguada Blanca: −8,7 % de área (2000–2024)",
+      "descripcion": "Reducción del área de bofedales estimada por una tesis de la UCSM para el periodo 2000–2024.",
+      "cifras": [
+        {"valor": -8.7, "unidad": "%", "descripcion": "Cambio de área de bofedales 2000–2024"}
+      ],
+      "fuentes": [
+        {"titulo": "Tesis sobre bofedales de la RNSAB 2000–2024", "medio": "Universidad Católica de Santa María", "url": "https://repositorio.ucsm.edu.pe/bitstreams/0eb69d01-db27-4e5d-a82c-95b19afaad40/download"}
+      ]
+    },
+    {
+      "id": "2025-02-volumen-60",
+      "fecha": "2025-02-01",
+      "precision": "mes",
+      "categoria": "almacenamiento",
+      "titulo": "Represas del Chili regulado al 60 % de volumen útil",
+      "descripcion": "El sistema regulado del Chili registra 60 % de su volumen útil, sobre una capacidad máxima útil de 404,01 hm³.",
+      "cifras": [
+        {"valor": 60, "unidad": "%", "descripcion": "Volumen útil respecto de la capacidad"},
+        {"valor": 404.01, "unidad": "hm3", "descripcion": "Capacidad máxima útil"}
+      ],
+      "fuentes": [
+        {"titulo": "Arequipa: represas de la cuenca del Chili regulado registran 60 % de volumen útil", "medio": "El Búho", "fecha_publicacion": "2025-02", "url": "https://elbuho.pe/2025/02/arequipa-represas-de-la-cuenca-del-chili-regulado-registran-60-de-volumen-util/"}
+      ]
+    },
+    {
+      "id": "2025-02-corte-turbidez",
+      "fecha": "2025-02-01",
+      "precision": "mes",
+      "categoria": "turbidez",
+      "titulo": "Turbidez de 5000 NTU detiene la producción de agua potable",
+      "descripcion": "SEDAPAR detuvo las plantas La Tomilla y Miguel de la Cuba Ibarra y pidió a la población almacenar agua. El corte afectó a más del 70 % de la población.",
+      "cifras": [
+        {"valor": 5000, "unidad": "NTU", "descripcion": "Turbidez registrada en la captación"},
+        {"valor": 70, "unidad": "%", "descripcion": "Población de la ciudad afectada", "cota": "minima"}
+      ],
+      "fuentes": [
+        {"titulo": "Lluvias en Arequipa: Sedapar detiene producción de agua potable y pide a población almacenarla", "medio": "El Búho", "fecha_publicacion": "2025-02", "url": "https://elbuho.pe/2025/02/lluvias-en-arequipa-sedapar-detiene-produccion-de-agua-potable-y-pide-a-poblacion-almacenarla/"},
+        {"titulo": "¡Arequipa sin agua potable! Corte del servicio afecta a más del 70 % de la población", "medio": "Andina", "url": "https://andina.pe/agencia/noticia-arequipa-sin-agua-potable-corte-del-servicio-afecta-a-mas-del-70-de-poblacion-977336.aspx"}
+      ]
+    },
+    {
+      "id": "2025-02-segundo-episodio",
+      "fecha": "2025-02-19",
+      "precision": "dia",
+      "categoria": "turbidez",
+      "titulo": "Segundo episodio de turbidez con el Chili a 50 m³/s",
+      "descripcion": "El incremento del caudal del río Chili elevó los sedimentos y obligó a detener de nuevo las plantas de tratamiento.",
+      "cifras": [
+        {"valor": 50, "unidad": "m3/s", "descripcion": "Caudal del río Chili"}
+      ],
+      "fuentes": [
+        {"titulo": "Arequipa: Sedapar detiene producción de agua potable por segunda vez en plantas de tratamiento", "medio": "El Búho", "url": "https://elbuho.pe/?p=375688"}
+      ]
+    },
+    {
+      "id": "2026-10-el-nino-fuerte",
+      "fecha": "2026-10-01",
+      "precision": "mes",
+      "categoria": "clima",
+      "titulo": "El Niño fuerte en curso: ONI ASO 2026 = +2,46",
+      "descripcion": "Índice ONI de agosto–octubre de 2026 según NOAA CPC (RONI +1,97), al inicio de la temporada de lluvias 2026–27. Consultado el 2026-11-14.",
+      "cifras": [
+        {"valor": 2.46, "unidad": "Cel", "descripcion": "ONI ASO 2026"},
+        {"valor": 1.97, "unidad": "Cel", "descripcion": "RONI ASO 2026"}
+      ],
+      "fuentes": [
+        {"titulo": "Oceanic Niño Index (ONI)", "medio": "NOAA Climate Prediction Center", "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt"},
+        {"titulo": "Relative Oceanic Niño Index (RONI)", "medio": "NOAA Climate Prediction Center", "url": "https://www.cpc.ncep.noaa.gov/data/indices/RONI.ascii.txt"}
+      ]
+    }
+  ]
+}
