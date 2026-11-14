@@ -26,6 +26,9 @@ Esta propuesta separa con claridad lo hecho de lo prometido.
 | ⚠️ **Pendiente de verificar** | Giovanni, la API de FIRMS y *data rods* (conexión reiniciada); Landsat 1984–2012 automatizado; presencia de cada represa en SWOT; archivo histórico de AUTODEMA; ERA5; GSMaP | [Sección 6 del informe](docs/verificacion/README.md#6-vacíos-de-información) |
 | 🧪 **Requiere validación experimental** | Matriz de Relevancia, gemelo hidrológico, atribución, pronóstico de temporada, alerta de turbidez, priorización MERESE e IA verificada | [Plan de validación](#9-validación-experimental) |
 | 📐 **Diseño** | Arquitectura, interfaz, API, servidor MCP | [Diseño técnico](docs/diseno-tecnico.md) |
+| 💻 **Software implementado** | Backend FastAPI (51 pruebas), frontend React (19 pruebas), paquete científico con Sello de Confianza, teoría del caos validada (14 pruebas), 10 redes neuronales y evaluación con incertidumbre | [Bitácora](docs/bitacora.md) |
+| 🗺️ **Cinco fenómenos** | Lluvia extrema, sequía, sismos, volcanes y deslizamientos con datos reales (POWER, ONI, GHCN, USGS, Smithsonian GVP, NASA GLC) y catálogo de variables | [`config/fenomenos.yaml`](config/fenomenos.yaml) |
+| ⏳ **Lo que falta para el 100 %** | Corrida completa de experimentos, integración ciencia → API → web, rediseño visual, CI, Docker y documentación final | [Pendientes](docs/pendientes.md) |
 
 ---
 

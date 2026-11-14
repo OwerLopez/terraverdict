@@ -1,4 +1,5 @@
-"""CLI: tv ingest-power | ingest-oni | trends | report"""
+"""CLI: tv ingest-power | ingest-oni | ingest-fenomenos | trends | report | experimentos"""
+
 from __future__ import annotations
 
 import json
@@ -17,7 +18,7 @@ app = typer.Typer(help="TerraVerdict · detective de tendencias")
 
 
 @app.command("ingest-power")
-def ingest_power(config: Path = Path("configs/chili.yaml"), raw: Path = Path("data/raw")) -> None:
+def ingest_power(config: Path = Path("config/chili.yaml"), raw: Path = Path("data/raw")) -> None:
     c = cargar_yaml(config)
     p = c["puntos"]["cabecera"]
     a, b = c["periodos"]["power"]
@@ -33,8 +34,10 @@ def _series(series_json: Path | None, raw: Path, cfg: dict):
     """Devuelve {nombre: (anios, valores, unidad)} desde un JSON de series o desde data/raw (offline)."""
     if series_json:
         j = json.loads(series_json.read_text())
-        return {k: (np.array([int(a) for a in v["serie"]]), np.array(list(v["serie"].values())), v.get("unidad", ""))
-                for k, v in j["series"].items()}, {int(k): v for k, v in j.get("oni", {}).items()}
+        return {
+            k: (np.array([int(a) for a in v["serie"]]), np.array(list(v["serie"].values())), v.get("unidad", ""))
+            for k, v in j["series"].items()
+        }, {int(k): v for k, v in j.get("oni", {}).items()}
     pw = sorted(raw.glob("power_*.json"))
     if not pw:
         raise typer.BadParameter("No hay data/raw/power_*.json: corre `tv ingest-power` o usa --series")
@@ -48,22 +51,34 @@ def _series(series_json: Path | None, raw: Path, cfg: dict):
 
 
 @app.command("trends")
-def trends(series: Path | None = typer.Option(None, help="JSON de series (modo offline/fixture)"),
-           config: Path = Path("configs/chili.yaml"), raw: Path = Path("data/raw"),
-           pre: Path = Path("preregistro.yaml"), out: Path = Path("expedientes")) -> None:
+def trends(
+    series: Path | None = typer.Option(None, help="JSON de series (modo offline/fixture)"),
+    config: Path = Path("config/chili.yaml"),
+    raw: Path = Path("data/raw"),
+    pre: Path = Path("preregistro.yaml"),
+    out: Path = Path("expedientes"),
+) -> None:
     cfg, prereg = cargar_yaml(config), cargar_preregistro(pre)
     datos, oni = _series(series, raw, cfg)
-    for nombre, (anios, x, unidad) in datos.items():
+    for nombre, (anios, x, _unidad) in datos.items():
         res = analizar_serie(anios, x, prereg, oni=oni or None)
         exp = construir_expediente(
-            id=f"TV-{cfg['cuenca'].upper()}-{nombre.upper()}-001", objeto={"cuenca": cfg["cuenca"]},
-            variable=nombre, anios=anios, valores=x, resultado=res, pre=prereg,
-            productos=[{"id": "NASA_POWER_MERRA2"}])
+            id=f"TV-{cfg['cuenca'].upper()}-{nombre.upper()}-001",
+            objeto={"cuenca": cfg["cuenca"]},
+            variable=nombre,
+            anios=anios,
+            valores=x,
+            resultado=res,
+            pre=prereg,
+            productos=[{"id": "NASA_POWER_MERRA2"}],
+        )
         ruta = guardar(exp, out)
-        typer.echo(f"{res['sello']['emoji']} {nombre}: Sen {res['sen']['sen_por_decada']:+.3f}/déc, "
-                   f"p_cons={res['mk']['p_conservador']:.4g} ({res['mk']['variante_limitante']}), "
-                   f"sello={res['sello']['codigo']} pendientes={res['sello']['pendientes']} "
-                   f"fallan={res['sello']['fallan']} -> {ruta}")
+        typer.echo(
+            f"{res['sello']['emoji']} {nombre}: Sen {res['sen']['sen_por_decada']:+.3f}/déc, "
+            f"p_cons={res['mk']['p_conservador']:.4g} ({res['mk']['variante_limitante']}), "
+            f"sello={res['sello']['codigo']} pendientes={res['sello']['pendientes']} "
+            f"fallan={res['sello']['fallan']} -> {ruta}"
+        )
 
 
 @app.command("report")
@@ -71,21 +86,56 @@ def report(expediente: Path, out: Path = Path("reports")) -> None:
     e = json.loads(expediente.read_text())
     r = e["resultado"]
     out.mkdir(parents=True, exist_ok=True)
-    L = [f"# {e['id']}", "", f"**Veredicto:** {r['sello']['emoji']} {r['sello']['codigo']}  ",
-         f"**Periodo:** {e['periodo']['desde']}–{e['periodo']['hasta']} (n={e['periodo']['n']})", "",
-         "| Prueba | Resultado |", "|---|---|",
-         f"| Sen | {r['sen']['sen_por_decada']:+.3f}/década (IC90 {r['sen']['ic_por_decada'][0]:+.3f} a {r['sen']['ic_por_decada'][1]:+.3f}) |",
-         f"| MK (p por variante) | {', '.join(f'{k}={v:.3g}' for k, v in r['mk']['p_variantes'].items())} → conservador {r['mk']['p_conservador']:.3g} |",
-         f"| Ventanas | {r['ventanas']['pct_mismo_signo']:.0f} % mismo signo (robustez ante el periodo, no independiente) |"
-         if r.get("ventanas") else "| Ventanas | pendiente |",
-         f"| ENSO | {r['enso']}" if r.get("enso") else "| ENSO | pendiente (falta ONI) |",
-         f"| Independencia | {r['independencia']}" if r.get("independencia") else "| Independencia | **pendiente** |",
-         f"| Detectabilidad | {r['detectabilidad']['anios_necesarios']:.1f} años necesarios / {r['detectabilidad']['anios_disponibles']} disponibles |",
-         "", "**Advertencias:** " + "; ".join(e["advertencias"]), "",
-         f"_preregistro `{e['procedencia']['preregistro_sha256'][:12]}` · entradas `{e['procedencia']['entradas_sha256'][:12]}`_"]
+    L = [
+        f"# {e['id']}",
+        "",
+        f"**Veredicto:** {r['sello']['emoji']} {r['sello']['codigo']}  ",
+        f"**Periodo:** {e['periodo']['desde']}–{e['periodo']['hasta']} (n={e['periodo']['n']})",
+        "",
+        "| Prueba | Resultado |",
+        "|---|---|",
+        f"| Sen | {r['sen']['sen_por_decada']:+.3f}/década (IC90 {r['sen']['ic_por_decada'][0]:+.3f} a {r['sen']['ic_por_decada'][1]:+.3f}) |",
+        f"| MK (p por variante) | {', '.join(f'{k}={v:.3g}' for k, v in r['mk']['p_variantes'].items())} → conservador {r['mk']['p_conservador']:.3g} |",
+        f"| Ventanas | {r['ventanas']['pct_mismo_signo']:.0f} % mismo signo (robustez ante el periodo, no independiente) |"
+        if r.get("ventanas")
+        else "| Ventanas | pendiente |",
+        f"| ENSO | {r['enso']}" if r.get("enso") else "| ENSO | pendiente (falta ONI) |",
+        f"| Independencia | {r['independencia']}" if r.get("independencia") else "| Independencia | **pendiente** |",
+        f"| Detectabilidad | {r['detectabilidad']['anios_necesarios']:.1f} años necesarios / {r['detectabilidad']['anios_disponibles']} disponibles |",
+        "",
+        "**Advertencias:** " + "; ".join(e["advertencias"]),
+        "",
+        f"_preregistro `{e['procedencia']['preregistro_sha256'][:12]}` · entradas `{e['procedencia']['entradas_sha256'][:12]}`_",
+    ]
     ruta = out / f"{e['id']}.md"
     ruta.write_text("\n".join(L), encoding="utf-8")
     typer.echo(ruta)
+
+
+@app.command("ingest-fenomenos")
+def ingest_fenomenos(config: Path = Path("config/fenomenos.yaml"), raw: Path = Path("data/raw")) -> None:
+    """Descarga trazable de todas las fuentes de los cinco fenómenos (con manifiesto SHA-256)."""
+    from .ingest import fenomenos, glc
+
+    cfg = cargar_yaml(config)
+    reg = fenomenos.descargar_todo(cfg, raw)
+    if reg.get("glc", {}).get("ok"):
+        reg["celdas_deslizamientos"] = fenomenos.descargar_celdas_deslizamientos(glc.cargar(raw / "glc"), cfg, raw)
+    fenomenos.guardar_registro(reg, raw / "registro_descarga.json")
+    for nombre, paso in reg.items():
+        if isinstance(paso, dict) and "ok" in paso:
+            typer.echo(f"{'OK ' if paso['ok'] else 'ERR'} {nombre} {paso.get('error') or ''}")
+
+
+@app.command("experimentos")
+def experimentos(
+    rapido: bool = typer.Option(False, help="Solo GRU y TCN con una semilla (para probar el pipeline)"),
+    solo: list[str] = typer.Option(None, help="volcanes, deslizamientos, sismos, sequia, lluvia_extrema, caos"),
+) -> None:
+    """Ejecuta los experimentos reproducibles y escribe resultados/*.json con su procedencia."""
+    from .experimentos.ejecutar import ejecutar
+
+    typer.echo(json.dumps(ejecutar(rapido=rapido, solo=solo or None), ensure_ascii=False, indent=1))
 
 
 if __name__ == "__main__":
