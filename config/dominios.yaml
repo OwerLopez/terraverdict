@@ -1,0 +1,30 @@
+# Dominios espaciales y particiones del pipeline.
+# Las cajas son aproximadas y se reemplazan por polígonos oficiales (ANA) o
+# derivados (red de drenaje de NASADEM) en la etapa E1.
+
+dominios:
+  chili_analisis:
+    descripcion: "Cabecera del sistema regulado del Chili + ciudad de Arequipa (resultados del proyecto)"
+    bbox: [-71.6, -16.5, -70.9, -15.3]      # lon_min, lat_min, lon_max, lat_max
+    poligono_oficial: "datos/cuencas/chili_regulado.geojson (pendiente: ANA + áreas de trasvase)"
+    represas: [el_frayle, el_pane, pillones, aguada_blanca, chalhuanca, bamputane, dique_espanoles]
+    captacion: la_tomilla
+    zonas_utm: [18S, 19S]
+
+  andes_sur_entrenamiento:
+    descripcion: "Región de entrenamiento para los modelos que necesitan más muestras (M1-P1, M1-P2, segmentación)"
+    bbox: [-74.0, -24.0, -66.0, -12.0]      # sur de Perú, oeste de Bolivia, norte de Chile, NO de Argentina
+    filtro: "altitud >= 3500 m (NASADEM) para altiplano y bofedales"
+    nota: "La cuenca del Chili queda SIEMPRE fuera del entrenamiento: es el conjunto de prueba final"
+
+particiones:
+  temporal:
+    entrenamiento: ["1998-01", "2015-12"]
+    validacion:    ["2016-01", "2020-12"]
+    prueba_final:  ["2021-01", "2025-09"]   # se toca una sola vez, al final
+    gemelo_calibracion: ["2001-01", "2015-12"]
+    gemelo_validacion:  ["2016-01", "2025-09"]
+  espacial:
+    metodo: "bloques de 1 x 1 grado; dejar un bloque fuera"
+    prueba_final: chili_analisis
+  regla: "Nunca ajustar normalizaciones, umbrales ni hiperparámetros con datos de prueba"

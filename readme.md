@@ -390,10 +390,28 @@ Lo que lo hace escalable: datos globales verificados, plantillas declarativas, i
 
 ---
 
-## 14. Documentación
+## 14. Estrategia de datos y pipeline
+
+**Qué datos se usan:** series y cubos numéricos de 15 fuentes verificadas (NASA Earthdata, AppEEARS, POWER, ASF, Copernicus, EarthExplorer, NOAA, KNMI, CHIRPS y AUTODEMA). Las imágenes se usan como valores por píxel; las fotos solo como fondo visual.
+
+**Cuántos datos (estimado):** recortados a la cuenca del Chili, unos **20–50 GB**, en su mayoría imágenes HLS y Sentinel-1. Para entrenar a nivel regional en los Andes del sur, unos **150–400 GB**. Lo descargado hasta hoy son unos 36 KB de series reales usadas en la verificación y en el primer análisis.
+
+**Dónde se entrena:**
+
+| Componente | Datos |
+|---|---|
+| Tendencias, sello y gemelo | Solo la cuenca del Chili |
+| Matriz de Relevancia (lluvia extrema, bofedales) y segmentación de imágenes | Andes del sur (Perú, Bolivia, Chile), con la cuenca del Chili apartada como prueba final |
+
+**Cómo se construye:** ver la especificación en [`docs/pipeline.md`](docs/pipeline.md), con etapas, contratos, trampas por producto, particiones, hitos y criterios de terminado. El catálogo de fuentes está en [`config/fuentes.yaml`](config/fuentes.yaml) y las zonas de estudio en [`config/dominios.yaml`](config/dominios.yaml).
+
+---
+
+## 15. Documentación
 
 | Documento | Contenido |
 |---|---|
+| [`docs/pipeline.md`](docs/pipeline.md) | **Especificación de construcción del pipeline** (para el responsable de datos) |
 | [`docs/verificacion/README.md`](docs/verificacion/README.md) | Verificación de fuentes, licencias, incompatibilidades y vacíos |
 | [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) | Revisión de los 41 enlaces del reto y de la guía: cuáles se usan, cuáles no y por qué |
 | [`docs/variables.md`](docs/variables.md) | Variables, unidades, resoluciones, procesamiento, indicadores y relaciones físicas |
@@ -415,7 +433,7 @@ python scripts/analisis_preliminar.py
 
 ---
 
-## 15. Equipo
+## 16. Equipo
 
 | Integrante | Formación | Rol |
 |---|---|---|
@@ -426,7 +444,7 @@ python scripts/analisis_preliminar.py
 
 ---
 
-## 16. Referencias
+## 17. Referencias
 
 - Benjamini, Y. y Hochberg, Y. (1995). Controlling the false discovery rate. *JRSS-B* 57.
 - Breiman, L. (2001). Random forests. *Machine Learning* 45.

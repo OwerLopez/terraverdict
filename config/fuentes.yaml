@@ -1,0 +1,321 @@
+# Catálogo de fuentes del pipeline de TerraVerdict.
+# Cada entrada fue verificada contra su catálogo oficial el 2026-11-14
+# (docs/verificacion/evidencia.json). Los campos "por_confirmar" no se usan
+# en producción hasta verificarlos.
+#
+# Convenciones:
+#   acceso: cmr (earthaccess), appeears, power_api, asf_api, cdse_odata, http
+#   escala/offset: valor_físico = crudo * escala + offset (después de enmascarar fill)
+#   familia: grupo de procedencia para la prueba de independencia
+
+fuentes:
+  imerg_final_mensual:
+    coleccion: GPM_3IMERGM
+    version: "07"
+    acceso: cmr
+    variable: precipitation
+    unidad_origen: mm/hr          # tasa media del mes: multiplicar por las horas del mes
+    unidad_destino: mm/mes
+    resolucion: {espacial: "0.1 deg", temporal: mensual}
+    periodo: ["1998-01", "2025-09"]   # Final publicado; se extiende cuando NASA publique
+    familia: gpm_gpcc
+    uso: [tendencias, relevancia, gemelo]
+
+  imerg_final_diaria:
+    coleccion: GPM_3IMERGDF
+    version: "07"
+    acceso: cmr
+    variable: precipitation
+    unidad_origen: mm/day
+    resolucion: {espacial: "0.1 deg", temporal: diaria}
+    periodo: ["1998-01-01", "2025-09-30"]
+    nota: "Día UTC. Arequipa es UTC-5: documentar el desfase en los extremos diarios."
+    familia: gpm_gpcc
+    uso: [extremos, relevancia_P1]
+
+  imerg_early_30min:
+    coleccion: GPM_3IMERGHHE
+    version: "07"
+    acceso: cmr
+    variable: precipitation
+    unidad_origen: mm/hr
+    resolucion: {espacial: "0.1 deg", temporal: 30min}
+    latencia: "~4 h"
+    familia: gpm_casi_tiempo_real
+    uso: [anticipacion_turbidez]   # NUNCA en series de tendencia (calibración distinta)
+
+  imerg_late_30min:
+    coleccion: GPM_3IMERGHHL
+    version: "07"
+    acceso: cmr
+    variable: precipitation
+    unidad_origen: mm/hr
+    resolucion: {espacial: "0.1 deg", temporal: 30min}
+    latencia: "~14 h"
+    familia: gpm_casi_tiempo_real
+    uso: [anticipacion_turbidez, estado_inicial_esp]
+
+  chirps_v3_mensual:
+    url: https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/latam/
+    acceso: http
+    unidad_origen: mm/mes
+    resolucion: {espacial: "0.05 deg", temporal: mensual}
+    periodo: ["1981-01", null]
+    licencia: "Dominio público / CC BY 4.0; citar DOI 10.15780/G2JQ0P"
+    familia: chirps_estaciones
+    uso: [tendencias, independencia]
+
+  power_mensual:
+    url: https://power.larc.nasa.gov/api/temporal/monthly/point
+    acceso: power_api
+    parametros: [T2M, T2M_MAX, T2M_MIN, PRECTOTCORR, ALLSKY_SFC_SW_DWN, RH2M, WS2M]
+    unidades: {T2M: C, PRECTOTCORR: mm/day, ALLSKY_SFC_SW_DWN: "MJ/m^2/day", RH2M: "%", WS2M: m/s}
+    resolucion: {espacial: "0.5 x 0.625 deg (MERRA-2)", temporal: mensual}
+    periodo: ["1981-01", "2024-12"]
+    familia: merra2
+    uso: [tendencias, gemelo_forzantes, evaporacion_embalses]
+
+  merra2_superficie_mensual:
+    coleccion: M2TMNXSLV
+    version: "5.12.4"
+    acceso: cmr
+    variables: [T2M, QV2M, U2M, V2M, TQV]
+    unidad_origen: {T2M: K}
+    familia: merra2
+    uso: [relevancia_P1, campos_grillados]
+
+  merra2_flujos_mensual:
+    coleccion: M2TMNXFLX
+    version: "5.12.4"
+    acceso: cmr
+    variables: [PRECTOTCORR]
+    unidad_origen: {PRECTOTCORR: "kg m-2 s-1"}   # x 86400 = mm/día
+    familia: merra2
+    uso: [independencia]
+
+  gldas21_mensual:
+    coleccion: GLDAS_NOAH025_M
+    version: "2.1"
+    acceso: cmr
+    variables: [SoilMoi0_10cm_inst, Qs_acc, Evap_tavg, SWE_inst]
+    periodo: ["2000-01", null]
+    familia: gldas_forzado_merra_gpcp
+    uso: [contraste_gemelo]          # no cerrar el balance con GLDAS (circular)
+
+  gldas20_mensual:
+    coleccion: GLDAS_NOAH025_M
+    version: "2.0"
+    acceso: cmr
+    periodo: ["1948-01", "2014-12"]
+    familia: gldas_princeton
+    uso: [series_largas_contraste]
+
+  fldas_chirps_mensual:
+    coleccion: FLDAS_NOAH01_C_GL_M
+    version: "001"
+    acceso: cmr
+    periodo: ["1982-01", null]
+    familia: chirps_estaciones
+    uso: [contraste_gemelo]
+
+  modis_lst_terra:
+    coleccion: MOD11A2
+    version: "061"
+    acceso: appeears
+    capas: [LST_Day_1km, LST_Night_1km, QC_Day, QC_Night]
+    escala: 0.02                     # Kelvin
+    fill: 0
+    resolucion: {espacial: 1km, temporal: 8dias}
+    periodo: ["2000-02-18", null]
+    advertencia: "Deriva de órbita de Terra desde 2020-02: probar quiebre en la prueba de sensor"
+    familia: modis_terra
+    uso: [corroboracion_temperatura]
+
+  modis_lst_aqua:
+    coleccion: MYD11A2
+    version: "061"
+    acceso: appeears
+    escala: 0.02
+    periodo: ["2002-07-04", null]
+    familia: modis_aqua
+    uso: [corroboracion_temperatura]
+
+  modis_ndvi:
+    coleccion: MOD13Q1
+    version: "061"
+    acceso: appeears
+    capas: ["250m_16_days_NDVI", "250m_16_days_EVI", "250m_16_days_pixel_reliability"]
+    escala: 0.0001
+    fill: -3000
+    periodo: ["2000-02-18", null]
+    familia: modis_terra
+    uso: [bofedales, relevancia_P2]
+
+  modis_et:
+    coleccion: MOD16A2GF
+    version: "061"
+    acceso: appeears
+    capas: [ET_500m, ET_QC_500m]
+    escala: 0.1                      # kg/m^2/8 días = mm/8 días
+    fill_rango: [32761, 32767]
+    periodo: ["2000-01-01", "2025-12-27"]  # publicación anual
+    familia: modis_terra
+    uso: [perdida_agua, contraste_gemelo]
+
+  modis_nieve:
+    coleccion: MOD10A1F
+    version: "61"
+    acceso: appeears
+    capas: [CGF_NDSI_Snow_Cover]
+    validos: [0, 100]                # >100 son códigos de clase
+    periodo: ["2000-02-24", null]
+    familia: modis_terra
+    uso: [indicador_termico]
+
+  viirs_ndvi:
+    coleccion: VNP13A1
+    version: "002"
+    acceso: appeears
+    periodo: ["2012-01-17", null]
+    familia: viirs_snpp
+    uso: [continuidad_modis]
+
+  viirs_fuegos:
+    coleccion: VNP14IMG
+    version: "002"
+    acceso: cmr
+    alternativa: "FIRMS (requiere MAP_KEY gratuita)"
+    periodo: ["2012-01-17", null]
+    familia: viirs_snpp
+    uso: [presion_bofedales]
+
+  area_quemada:
+    coleccion: MCD64A1
+    version: "061"
+    acceso: appeears
+    periodo: ["2000-11-01", null]
+    familia: modis_terra_aqua
+    uso: [presion_bofedales]
+
+  smap_l3:
+    coleccion: SPL3SMP_E
+    version: "006"
+    acceso: appeears
+    capas: [soil_moisture, retrieval_qual_flag]   # AM y PM por separado
+    unidad: "m3/m3"
+    resolucion: {espacial: 9km, temporal: diaria}
+    periodo: ["2015-03-31", null]
+    familia: smap
+    uso: [humedad_previa, relevancia]
+
+  smap_l4:
+    coleccion: SPL4SMGP
+    version: "008"
+    acceso: appeears
+    capas: [sm_surface, sm_rootzone]
+    resolucion: {espacial: 9km, temporal: 3h}
+    periodo: ["2015-03-31", null]
+    familia: smap_modelo
+    uso: [humedad_previa_turbidez]
+
+  nasadem:
+    coleccion: NASADEM_NC
+    version: "001"
+    acceso: appeears
+    resolucion: {espacial: 30m}
+    uso: [altitud, pendiente, drenaje, correccion_lapse_rate, rusle_LS]
+
+  hls_landsat:
+    coleccion: HLSL30
+    version: "2.0"
+    acceso: cmr
+    bandas: [B03, B04, B05, B06, Fmask]   # verde, rojo, NIR, SWIR1, máscara
+    escala: 0.0001
+    resolucion: {espacial: 30m, temporal: "~8 dias combinado"}
+    periodo: ["2013-04-11", null]
+    advertencia: "La cuenca cruza las zonas UTM 18S y 19S (teselas T18LZH y T19LBC): reproyectar antes de mosaicar"
+    familia: landsat
+    uso: [agua, bofedales, segmentacion_dl]
+
+  hls_sentinel2:
+    coleccion: HLSS30
+    version: "2.0"
+    acceso: cmr
+    bandas: [B03, B04, B8A, B11, Fmask]
+    escala: 0.0001
+    periodo: ["2015-11-28", null]
+    familia: sentinel2
+    uso: [agua, bofedales, segmentacion_dl]
+
+  landsat_c2_l2:
+    coleccion: "Landsat Collection 2 Level-2 (TM, ETM+, OLI)"
+    acceso: earthexplorer_m2m       # requiere cuenta USGS; acceso automático por_confirmar
+    escala: 0.0000275
+    offset: -0.2
+    periodo: ["1984-03", null]
+    armonizacion: "Roy et al. (2016) TM/ETM+ -> OLI"
+    advertencia: "Landsat 7 SLC-off desde 2003-05: franjas sin dato, no interpolar"
+    familia: landsat
+    por_confirmar: true
+    uso: [historia_larga_agua_bofedales]
+
+  sentinel1_grd:
+    acceso: [asf_api, cdse_odata]
+    productos_sobre_cuenca: 6573    # ASF, 2026-11-14
+    periodo: ["2015", null]
+    familia: sentinel1
+    uso: [agua_bajo_nubes]
+
+  swot_lagos:
+    coleccion: SWOT_L2_HR_LakeSP_obs_D
+    version: "D"
+    acceso: cmr
+    variables: [wse, area_total, ds1_l, ds1_q, ds2_l, ds2_q, quality_f]
+    periodo: ["2022-12-16", null]
+    familia: swot
+    por_confirmar: "presencia de cada represa en la base de lagos (PLD) y nombres exactos de las variables según la guía del producto"
+    uso: [cambio_almacenamiento, calibracion_gemelo]
+
+  icesat2_atl13:
+    coleccion: ATL13
+    version: "007"
+    acceso: cmr
+    periodo: ["2018-10-13", null]
+    familia: icesat2
+    uso: [altura_agua, curva_area_altura]
+
+  nisar_gcov:
+    coleccion: NISAR_L2_GCOV_V1
+    version: "1"
+    acceso: [cmr, asf_api]
+    productos_sobre_cuenca: 666     # todos los niveles, 2025-10-30 a 2026-11-01
+    uso: [monitoreo_actual]          # NO para tendencias: ~1 año de historia
+
+  oni:
+    url: https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt
+    acceso: http
+    periodo: ["1950-01", null]
+    uso: [covariable_enso]
+
+  roni:
+    url: https://www.cpc.ncep.noaa.gov/data/indices/RONI.ascii.txt
+    acceso: http
+    uso: [covariable_enso_sensibilidad]
+
+  nino34_knmi:
+    url: https://climexp.knmi.nl/data/iersst_nino3.4a.dat
+    acceso: http
+    uso: [covariable_enso_independiente]
+
+  ghcn_arequipa:
+    url: https://www.ncei.noaa.gov/pub/data/ghcn/daily/by_station/PE000084752.csv.gz
+    acceso: http
+    advertencia: "Solo 14 años de lluvia con >=90% de días (ninguno desde 2010)"
+    uso: [validacion_puntual]
+
+  autodema_reportes:
+    url_ejemplo: https://www.autodema.gob.pe/wp-content/uploads/2024/03/REPORTE-HIDRICO.pdf
+    acceso: http
+    campos: [volumen_util_hm3, caudal_afluente_m3s, descarga_m3s, precipitacion_mm]
+    por_confirmar: "archivo histórico completo"
+    uso: [verdad_terrestre_represas]
