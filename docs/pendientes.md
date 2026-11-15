@@ -99,7 +99,7 @@ Y una prueba de humo de cada experimento con datos reducidos guardados en `tests
 | ✅ `backend/README.md` | Instalación, variables `TV_*` y comandos. `backend/pyproject.toml` lo declara. **Hecho:** 15-11-2026 |
 | ✅ `docs/arquitectura.md` | Vista completa: ciencia → API → web, con diagramas mermaid y flujos. **Hecho:** 15-11-2026 |
 | ✅ `docs/metodologia.md` | Métodos estadísticos y de caos con bibliografía verificable. Las referencias ya están en los docstrings de cada módulo. **Hecho:** 15-11-2026; cada método con su módulo y su DOI o arXiv |
-| Matriz de trazabilidad | Requisito → código → prueba → resultado |
+| ✅ Matriz de trazabilidad | Requisito → código → prueba → resultado. **Hecho:** 15-11-2026, `docs/trazabilidad.md` (23 requisitos) |
 | Presentación ejecutiva | Valor tecnológico, científico y económico. Usar solo cifras citadas (p. ej. MERESE US$ 1,5 M, población afectada > 70 %); sin proyecciones inventadas |
 
 ## Bloqueos externos (no dependen del código)
