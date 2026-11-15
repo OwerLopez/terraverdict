@@ -136,3 +136,24 @@ export function useConsultarAsistente() {
       pedir(api.POST("/api/v1/asistente/consultas", { body: cuerpo })),
   });
 }
+
+export const useFenomenos = () =>
+  useQuery({ queryKey: ["fenomenos"], queryFn: () => pedir(api.GET("/api/v1/fenomenos")), staleTime: 10 * MINUTO });
+
+export const useCapaSismos = (magnitudMin: number) =>
+  useQuery({
+    queryKey: ["capa-sismos", magnitudMin],
+    queryFn: () => pedir(api.GET("/api/v1/capas/sismos", { params: { query: { magnitud_min: magnitudMin } } })),
+    placeholderData: keepPreviousData,
+  });
+
+export const useCapaVolcanes = () =>
+  useQuery({ queryKey: ["capa-volcanes"], queryFn: () => pedir(api.GET("/api/v1/capas/volcanes")) });
+
+/** Expediente vigente más reciente de un tipo (o el elegido por ID), con su detalle completo. */
+export function useExpedienteVigente(tipo: Esquemas["ExpedienteResumen"]["tipo"], id?: string) {
+  const lista = useExpedientes({ tipo });
+  const elegido = id ?? lista.data?.items[0]?.id;
+  const detalle = useExpediente(elegido);
+  return { lista, detalle, elegido };
+}

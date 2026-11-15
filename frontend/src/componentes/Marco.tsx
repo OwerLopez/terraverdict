@@ -1,18 +1,24 @@
 import { clsx } from "clsx";
 import {
+  Activity,
   BookOpenText,
   Bot,
+  BrainCircuit,
   CalendarClock,
   FileCheck2,
   Globe2,
   Grid3x3,
+  Info,
   LayoutDashboard,
+  Layers3,
   LineChart,
   LogIn,
   LogOut,
   Menu,
   Monitor,
   Moon,
+  Mountain,
+  Orbit,
   Satellite,
   Sun,
   Workflow,
@@ -36,6 +42,16 @@ const NAVEGACION: { grupo: string; items: { a: string; texto: string; icono: Luc
       { a: "/mapa", texto: "Mapa satelital", icono: Globe2 },
       { a: "/series", texto: "Series", icono: LineChart },
       { a: "/expedientes", texto: "Expedientes", icono: FileCheck2 },
+    ],
+  },
+  {
+    grupo: "Fenómenos naturales",
+    items: [
+      { a: "/fenomenos", texto: "Catálogo de fenómenos", icono: Layers3 },
+      { a: "/sismos", texto: "Sismos", icono: Activity },
+      { a: "/volcanes", texto: "Volcanes", icono: Mountain },
+      { a: "/caos", texto: "Dinámica y caos", icono: Orbit },
+      { a: "/modelos", texto: "Modelos", icono: BrainCircuit },
     ],
   },
   {
@@ -221,7 +237,7 @@ export function Marco({ children }: { children: ReactNode }) {
   const esMapa = pathname.startsWith("/mapa");
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[264px_1fr]">
-      <aside className="sticky top-0 hidden h-screen flex-col justify-between border-r border-line bg-surface px-3 py-4 lg:flex">
+      <aside className="panel-vidrio sticky top-0 hidden h-screen flex-col justify-between !border-y-0 !border-l-0 px-3 py-4 lg:flex">
         <div className="space-y-6 overflow-y-auto">
           <div className="px-2"><Marca /></div>
           <Navegacion />
@@ -238,7 +254,7 @@ export function Marco({ children }: { children: ReactNode }) {
       {menu && (
         <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label="Menú">
           <div className="absolute inset-0 bg-black/40" onClick={() => setMenu(false)} />
-          <div className="absolute inset-y-0 left-0 flex w-[280px] flex-col justify-between overflow-y-auto bg-surface p-4 shadow-flotante">
+          <div className="absolute inset-y-0 left-0 flex w-[280px] flex-col justify-between overflow-y-auto bg-surface-solida p-4 shadow-flotante">
             <div className="space-y-6">
               <div className="flex items-center justify-between"><Marca />
                 <button type="button" onClick={() => setMenu(false)} className="rounded-lg p-2 text-ink-2 hover:bg-surface-2" aria-label="Cerrar menú"><X className="h-5 w-5" /></button>
@@ -250,10 +266,26 @@ export function Marco({ children }: { children: ReactNode }) {
         </div>
       )}
 
-      <main className={clsx(esMapa ? "h-[calc(100vh-57px)] lg:h-screen" : "mx-auto w-full max-w-[1280px] px-4 py-6 md:px-8 md:py-10")}>
-        {children}
-      </main>
+      <div className="flex min-w-0 flex-col">
+        <AvisoNoOficial />
+        <main className={clsx(esMapa ? "h-[calc(100vh-57px-36px)] lg:h-[calc(100vh-36px)]" : "mx-auto w-full max-w-[1280px] px-4 py-6 md:px-8 md:py-10")}>
+          {children}
+        </main>
+      </div>
     </div>
+  );
+}
+
+/** Aviso permanente en todas las vistas: nada de lo que muestra el sistema es una alerta oficial. */
+export function AvisoNoOficial() {
+  return (
+    <p
+      role="note"
+      className="vidrio flex min-h-9 items-center justify-center gap-2 border-b border-line px-4 py-1.5 text-center text-[12.5px] font-medium text-ink-2"
+    >
+      <Info aria-hidden className="h-3.5 w-3.5 shrink-0 text-accent" />
+      Resultados experimentales. No son alertas oficiales (SENAMHI, IGP, INGEMMET, INDECI).
+    </p>
   );
 }
 

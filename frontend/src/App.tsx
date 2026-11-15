@@ -14,6 +14,11 @@ import { SeriesPagina } from "./paginas/SeriesPagina";
 
 // El mapa (MapLibre + WebGL) se carga solo cuando se visita.
 const MapaPagina = lazy(() => import("./paginas/MapaPagina").then((m) => ({ default: m.MapaPagina })));
+const SismosPagina = lazy(() => import("./paginas/SismosPagina").then((m) => ({ default: m.SismosPagina })));
+const VolcanesPagina = lazy(() => import("./paginas/VolcanesPagina").then((m) => ({ default: m.VolcanesPagina })));
+const FenomenosPagina = lazy(() => import("./paginas/FenomenosPagina").then((m) => ({ default: m.FenomenosPagina })));
+const CaosPagina = lazy(() => import("./paginas/CaosPagina").then((m) => ({ default: m.CaosPagina })));
+const ModelosPagina = lazy(() => import("./paginas/ModelosPagina").then((m) => ({ default: m.ModelosPagina })));
 
 function NoEncontrada() {
   return (
@@ -33,6 +38,11 @@ export function App() {
           <Route path="/series" element={<SeriesPagina />} />
           <Route path="/expedientes" element={<ExpedientesPagina />} />
           <Route path="/expedientes/:id" element={<ExpedientesPagina />} />
+          <Route path="/fenomenos" element={<FenomenosPagina />} />
+          <Route path="/sismos" element={<SismosPagina />} />
+          <Route path="/volcanes" element={<VolcanesPagina />} />
+          <Route path="/caos" element={<CaosPagina />} />
+          <Route path="/modelos" element={<ModelosPagina />} />
           <Route path="/relevancia" element={<RelevanciaPagina />} />
           <Route path="/procesos" element={<ProcesosPagina />} />
           <Route path="/fuentes" element={<FuentesPagina />} />

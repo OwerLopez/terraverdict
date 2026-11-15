@@ -49,7 +49,7 @@ export function Tarjeta({
   sinPadding?: boolean;
 }) {
   return (
-    <section className={clsx("rounded-2xl border border-line bg-surface shadow-tarjeta animate-aparecer", className)}>
+    <section className={clsx("panel-vidrio rounded-2xl animate-aparecer", className)}>
       {(titulo || acciones) && (
         <header className="flex items-start justify-between gap-4 px-5 pt-4">
           <div className="min-w-0">
@@ -284,7 +284,7 @@ export function Dato({
   tono?: Tono;
 }) {
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-line bg-surface p-4 shadow-tarjeta animate-aparecer">
+    <div className="panel-vidrio flex h-full flex-col rounded-2xl p-4 animate-aparecer">
       <div className="flex items-center justify-between">
         <p className="etiqueta">{etiqueta}</p>
         {Icono && <Icono aria-hidden className="h-4 w-4" style={{ color: COLOR_TONO[tono] }} />}

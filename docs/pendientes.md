@@ -72,7 +72,7 @@ Y una prueba de humo de cada experimento con datos reducidos guardados en `tests
    - capas para el mapa: sismos M ≥ 5, volcanes y deslizamientos, en GeoJSON.
 5. Pruebas, `python -m app.cli exportar-openapi`, prueba de deriva y `npm run api:tipos`.
 
-### 2.2 Frontend: rediseño *glassmorphism* monocromático azul (imagen de referencia del equipo)
+### 2.2 Frontend: rediseño *glassmorphism* monocromático azul · ✅ hecho (15-11-2026; capturas en `docs/capturas/`)
 1. Tokens monocromáticos azules con degradados.
 2. Paneles de vidrio esmerilado: `backdrop-filter`, borde blanco translúcido y sombra suave.
 3. Fondo con cintas azules difuminadas y líneas finas blancas.

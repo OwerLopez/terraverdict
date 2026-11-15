@@ -4,32 +4,41 @@
 @tailwind utilities;
 
 /*
- * Tokens de diseño. Colores de datos validados (guía de visualización):
- * superficies, tintas, rejilla, serie categórica, rampa secuencial azul y estados.
- * El modo oscuro es una selección propia de pasos, no una inversión automática.
+ * Tokens de diseño · glassmorphism monocromático azul.
+ * - Cromo de la interfaz (páginas, paneles, tintas, bordes, acento): un solo tono azul con degradados.
+ * - Colores de DATOS (serie-1…8, estados): paleta validada de la guía de visualización; no se
+ *   vuelven monocromáticos porque una categoría solo por luminosidad no es legible.
+ * - El modo oscuro es azul profundo y es una selección propia de pasos, no una inversión automática.
  */
 :root {
   color-scheme: light;
-  --page: #f9f9f7;
-  --surface: #fcfcfb;
-  --surface-2: #f3f2ee;
-  --surface-3: #ebeae4;
-  --border: rgba(11, 11, 11, 0.1);
-  --border-strong: rgba(11, 11, 11, 0.18);
-  --ink: #0b0b0b;
-  --ink-2: #52514e;
-  --ink-3: #898781;
-  --grid: #e1e0d9;
-  --axis: #c3c2b7;
-  --accent: #2a78d6;
-  --accent-soft: #e8f1fc;
-  --accent-ink: #1c5cab;
+  --page: #e9f1fc;
+  --page-1: #f4f8fe;
+  --page-2: #d9e7f9;
+  --cinta-1: rgba(84, 145, 232, 0.42);
+  --cinta-2: rgba(42, 105, 204, 0.30);
+  --cinta-3: rgba(141, 190, 246, 0.50);
+  --lineas: rgba(255, 255, 255, 0.75);
+  --surface: rgba(255, 255, 255, 0.62);
+  --surface-2: rgba(240, 246, 254, 0.70);
+  --surface-3: rgba(214, 229, 248, 0.85);
+  --surface-solida: #f7faff;
+  --border: rgba(255, 255, 255, 0.78);
+  --border-strong: rgba(30, 82, 160, 0.20);
+  --ink: #0a1d3a;
+  --ink-2: #304c76;
+  --ink-3: #5b7397;
+  --grid: rgba(30, 82, 160, 0.12);
+  --axis: rgba(30, 82, 160, 0.28);
+  --accent: #1d63c8;
+  --accent-soft: rgba(29, 99, 200, 0.12);
+  --accent-ink: #154b9a;
   --good: #0ca30c;
   --good-ink: #006300;
   --warning: #fab219;
   --serious: #ec835a;
   --critical: #d03b3b;
-  --neutral-mid: #f0efec;
+  --neutral-mid: rgba(30, 82, 160, 0.10);
   --serie-1: #2a78d6;
   --serie-2: #eb6834;
   --serie-3: #1baf7a;
@@ -38,29 +47,37 @@
   --serie-6: #008300;
   --serie-7: #6250d6;
   --serie-8: #e34948;
-  --banda: rgba(42, 120, 214, 0.14);
-  --vidrio: rgba(252, 252, 251, 0.82);
+  --banda: rgba(42, 120, 214, 0.16);
+  --vidrio: rgba(255, 255, 255, 0.55);
+  --sombra-vidrio: 0 10px 30px -12px rgba(16, 58, 124, 0.25), 0 1px 0 rgba(255, 255, 255, 0.6) inset;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:where(:not([data-theme="light"])) {
     color-scheme: dark;
-    --page: #0d0d0d;
-    --surface: #1a1a19;
-    --surface-2: #232321;
-    --surface-3: #2c2c2a;
-    --border: rgba(255, 255, 255, 0.1);
-    --border-strong: rgba(255, 255, 255, 0.18);
-    --ink: #f0efec;
-    --ink-2: #c3c2b7;
-    --ink-3: #898781;
-    --grid: #2c2c2a;
-    --axis: #383835;
-    --accent: #3987e5;
-    --accent-soft: rgba(57, 135, 229, 0.16);
-    --accent-ink: #86b6ef;
+    --page: #061428;
+    --page-1: #071a35;
+    --page-2: #030b18;
+    --cinta-1: rgba(38, 104, 214, 0.38);
+    --cinta-2: rgba(16, 64, 150, 0.45);
+    --cinta-3: rgba(77, 146, 240, 0.22);
+    --lineas: rgba(173, 205, 255, 0.16);
+    --surface: rgba(14, 36, 72, 0.55);
+    --surface-2: rgba(20, 48, 94, 0.55);
+    --surface-3: rgba(32, 66, 122, 0.65);
+    --surface-solida: #0b2145;
+    --border: rgba(160, 196, 255, 0.14);
+    --border-strong: rgba(160, 196, 255, 0.26);
+    --ink: #e8f1ff;
+    --ink-2: #afc6ea;
+    --ink-3: #7d97c0;
+    --grid: rgba(160, 196, 255, 0.12);
+    --axis: rgba(160, 196, 255, 0.28);
+    --accent: #5a9dff;
+    --accent-soft: rgba(90, 157, 255, 0.18);
+    --accent-ink: #9cc4ff;
     --good-ink: #0ca30c;
-    --neutral-mid: #383835;
+    --neutral-mid: rgba(160, 196, 255, 0.14);
     --serie-1: #3987e5;
     --serie-2: #d95926;
     --serie-3: #199e70;
@@ -69,29 +86,37 @@
     --serie-6: #0ca30c;
     --serie-7: #9085e9;
     --serie-8: #e66767;
-    --banda: rgba(57, 135, 229, 0.2);
-    --vidrio: rgba(26, 26, 25, 0.82);
+    --banda: rgba(57, 135, 229, 0.24);
+    --vidrio: rgba(10, 28, 58, 0.55);
+    --sombra-vidrio: 0 14px 36px -14px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(160, 196, 255, 0.08) inset;
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --page: #0d0d0d;
-  --surface: #1a1a19;
-  --surface-2: #232321;
-  --surface-3: #2c2c2a;
-  --border: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.18);
-  --ink: #f0efec;
-  --ink-2: #c3c2b7;
-  --ink-3: #898781;
-  --grid: #2c2c2a;
-  --axis: #383835;
-  --accent: #3987e5;
-  --accent-soft: rgba(57, 135, 229, 0.16);
-  --accent-ink: #86b6ef;
+  --page: #061428;
+  --page-1: #071a35;
+  --page-2: #030b18;
+  --cinta-1: rgba(38, 104, 214, 0.38);
+  --cinta-2: rgba(16, 64, 150, 0.45);
+  --cinta-3: rgba(77, 146, 240, 0.22);
+  --lineas: rgba(173, 205, 255, 0.16);
+  --surface: rgba(14, 36, 72, 0.55);
+  --surface-2: rgba(20, 48, 94, 0.55);
+  --surface-3: rgba(32, 66, 122, 0.65);
+  --surface-solida: #0b2145;
+  --border: rgba(160, 196, 255, 0.14);
+  --border-strong: rgba(160, 196, 255, 0.26);
+  --ink: #e8f1ff;
+  --ink-2: #afc6ea;
+  --ink-3: #7d97c0;
+  --grid: rgba(160, 196, 255, 0.12);
+  --axis: rgba(160, 196, 255, 0.28);
+  --accent: #5a9dff;
+  --accent-soft: rgba(90, 157, 255, 0.18);
+  --accent-ink: #9cc4ff;
   --good-ink: #0ca30c;
-  --neutral-mid: #383835;
+  --neutral-mid: rgba(160, 196, 255, 0.14);
   --serie-1: #3987e5;
   --serie-2: #d95926;
   --serie-3: #199e70;
@@ -100,8 +125,9 @@
   --serie-6: #0ca30c;
   --serie-7: #9085e9;
   --serie-8: #e66767;
-  --banda: rgba(57, 135, 229, 0.2);
-  --vidrio: rgba(26, 26, 25, 0.82);
+  --banda: rgba(57, 135, 229, 0.24);
+  --vidrio: rgba(10, 28, 58, 0.55);
+  --sombra-vidrio: 0 14px 36px -14px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(160, 196, 255, 0.08) inset;
 }
 
 @layer base {
@@ -112,6 +138,43 @@
   body {
     @apply bg-page font-sans text-ink;
     font-feature-settings: "cv11", "ss01";
+    background: linear-gradient(160deg, var(--page-1), var(--page-2)) fixed;
+  }
+  /* Fondo: cintas azules difuminadas y líneas finas blancas (decorativo, no interactivo). */
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  body::before {
+    inset: -15%;
+    background:
+      radial-gradient(38% 22% at 12% 18%, var(--cinta-1), transparent 70%),
+      radial-gradient(30% 28% at 88% 8%, var(--cinta-2), transparent 70%),
+      radial-gradient(46% 26% at 72% 88%, var(--cinta-3), transparent 70%),
+      radial-gradient(26% 40% at 30% 75%, var(--cinta-2), transparent 70%);
+    filter: blur(40px);
+    transform: rotate(-8deg);
+  }
+  body::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000' viewBox='0 0 1600 1000' fill='none' stroke='white' stroke-width='1'%3E%3Cpath d='M-50 720C300 560 520 820 860 640S1380 380 1660 470'/%3E%3Cpath d='M-50 760C320 600 540 860 880 680S1400 420 1660 520' opacity='.7'/%3E%3Cpath d='M-50 240C260 120 600 330 900 210S1360 40 1660 120' opacity='.6'/%3E%3Cpath d='M-50 280C280 160 610 370 920 250S1380 80 1660 170' opacity='.4'/%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    mask-image: linear-gradient(transparent, black 20%, black 80%, transparent);
+    -webkit-mask-image: linear-gradient(transparent, black 20%, black 80%, transparent);
+    filter: opacity(0.9);
+  }
+  :root[data-theme="dark"] body::after {
+    opacity: 0.18;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) body::after {
+      opacity: 0.18;
+    }
   }
   ::selection {
     background: var(--accent-soft);
@@ -142,6 +205,28 @@
     background: var(--vidrio);
     backdrop-filter: saturate(160%) blur(14px);
     -webkit-backdrop-filter: saturate(160%) blur(14px);
+  }
+  /* Panel de vidrio esmerilado: superficie translúcida, borde blanco translúcido y sombra suave. */
+  .panel-vidrio {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--sombra-vidrio);
+    backdrop-filter: saturate(150%) blur(18px);
+    -webkit-backdrop-filter: saturate(150%) blur(18px);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .panel-vidrio,
+    .vidrio {
+      background: var(--surface-solida);
+    }
+  }
+  @media (prefers-contrast: more), (forced-colors: active) {
+    .panel-vidrio,
+    .vidrio {
+      background: var(--surface-solida);
+      backdrop-filter: none;
+      border-color: var(--border-strong);
+    }
   }
   .rayado {
     background-image: repeating-linear-gradient(

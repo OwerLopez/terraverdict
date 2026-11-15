@@ -25,6 +25,47 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Rediseño glassmorphism azul y vistas de fenómenos (pendiente 2.2)
+**Autor:** MaxsForocca · **Aportes:** Ower Frank (frontend base)
+
+**Qué se hizo**
+- **Tokens monocromáticos azules** con degradados (`frontend/src/estilos/global.css`). Modo oscuro azul profundo, con pasos propios; no es una inversión automática.
+- **Paneles de vidrio esmerilado** (`.panel-vidrio`): `backdrop-filter`, borde blanco translúcido y sombra suave. Si el navegador no tiene `backdrop-filter`, o el usuario pide más contraste o colores forzados, se usa una superficie sólida.
+- **Fondo** de cintas azules difuminadas y líneas finas blancas, decorativo y sin interacción.
+- **Colores de datos:** se mantiene la paleta validada de la guía de visualización. El azul monocromático aplica al cromo de la interfaz, porque una categoría distinguida solo por luminosidad no es legible.
+- **Vistas nuevas:**
+
+  | Vista | Contenido |
+  |---|---|
+  | **Fenómenos** (`/fenomenos`) | Catálogo con justificación, fuente y limitaciones de cada variable; partición; acceso a las fuentes nacionales |
+  | **Sismos** (`/sismos`) | Mapa por magnitud (radio) y profundidad (rampa azul), valor b con IC, Mc, tasa, CV de intereventos y conteo anual |
+  | **Volcanes** (`/volcanes`) | Probabilidad anual con IC90, historia eruptiva (año de cada inicio) y mapa |
+  | **Caos** (`/caos`) | Espacio de fases, gráfico de recurrencia, distribución de sustitutos frente a la serie original y condiciones de caos |
+  | **Modelos** (`/modelos`) | Habilidad en prueba con IC90 por modelo (el elegido por validación, resaltado), confiabilidad, importancia de variables, cobertura conformal, abstención y ablaciones |
+
+- **Aviso permanente** en todas las vistas: *"Resultados experimentales. No son alertas oficiales (SENAMHI, IGP, INGEMMET, INDECI)."*
+- **Accesibilidad:**
+  - cada gráfico tiene `role="img"` con descripción y una tabla de datos (`TablaDatos`, con `caption`);
+  - los renglones de los gráficos son enfocables con teclado;
+  - los estados llevan texto y no solo color;
+  - en móvil, los gráficos de renglones se desplazan dentro de su tarjeta.
+
+**Revisión visual** (`docs/capturas/`)
+- Capturas en claro, oscuro y móvil, tomadas con Firefox sin interfaz sobre el backend con los **13 expedientes reales** publicados.
+- El mapa (MapLibre) sale en blanco en las capturas porque ese modo no tiene WebGL; en un navegador normal se dibuja.
+- Ajustes hechos tras mirarlas:
+  - formato de conteos ("4052" y no "4,052");
+  - tildes en los nombres de los estadísticos;
+  - barra de desplazamiento sobrante en escritorio;
+  - última marca del eje recortada;
+  - etiqueta "Validación".
+
+**Evidencia.** `npm run typecheck`, `lint` y `build` sin errores. 23 pruebas de frontend pasan, 4 nuevas: aviso, tabla de datos y veredictos con texto.
+
+**Pendiente.** La prueba E2E con Playwright (P3) no se pudo instalar: la descarga de Chromium no fue autorizada en este entorno.
+
+---
+
 ## 2026-11-15 · Integración ciencia → backend (pendiente 2.1)
 **Autor:** MaxsForocca · **Aportes:** Ower Frank (backend y contratos originales)
 

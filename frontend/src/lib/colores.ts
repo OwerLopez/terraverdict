@@ -23,7 +23,7 @@ export function useColores() {
 }
 
 /** Rampa secuencial azul (100 → 700), validada en la guía de visualización. */
-export const RAMPA_AZUL = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"];
+export const RAMPA_AZUL = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"] as const;
 
 /** Orden categórico fijo (nunca cíclico) para las categorías de eventos. */
 export const CATEGORIAS_EVENTO: Record<string, { color: string; texto: string }> = {
