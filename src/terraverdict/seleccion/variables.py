@@ -3,7 +3,9 @@
 mRMR (Peng, Long y Ding, 2005, doi:10.1109/TPAMI.2005.159) con información mutua estimada por
 k vecinos (Kraskov, Stögbauer y Grassberger, 2004, doi:10.1103/PhysRevE.69.066138, en scikit-learn),
 ponderada por el prior físico del catálogo (alta = 1,0; media = 0,8; baja = 0,6). Una variable
-sin señal (relevancia − redundancia ≤ 0) no entra aunque esté disponible.
+sin señal no entra aunque esté disponible: su información mutua debe superar el percentil 95 de la
+que obtiene contra el objetivo permutado (el estimador KSG es positivo incluso con ruido puro), y
+su relevancia − redundancia debe ser > 0.
 """
 
 from __future__ import annotations
@@ -24,10 +26,16 @@ def mrmr(
     siempre: list[str] | None = None,
     maximo: int = 8,
     semilla: int = 0,
+    permutaciones: int = 20,
 ) -> dict:
-    mi = (mutual_info_classif if clasificacion else mutual_info_regression)(X, y, n_neighbors=5, random_state=semilla)
+    estimar = mutual_info_classif if clasificacion else mutual_info_regression
+    mi = estimar(X, y, n_neighbors=5, random_state=semilla)
+    rng = np.random.default_rng(semilla)
+    nula = np.array([estimar(X, rng.permutation(y), n_neighbors=5, random_state=semilla) for _ in range(permutaciones)])
+    umbral = np.quantile(nula, 0.95, axis=0)
     seleccion = list(siempre or [])
-    candidatas = [i for i, n in enumerate(nombres) if n not in seleccion]
+    sin_senal = [i for i, n in enumerate(nombres) if n not in seleccion and mi[i] <= umbral[i]]
+    candidatas = [i for i, n in enumerate(nombres) if n not in seleccion and i not in sin_senal]
     tabla = []
     redundancia_cache: dict[tuple[int, int], float] = {}
 
@@ -60,10 +68,20 @@ def mrmr(
                 "puntaje": float(puntaje),
             }
         )
-    descartadas = [{"variable": nombres[i], "informacion_mutua": float(mi[i])} for i in candidatas]
+    descartadas = [
+        {
+            "variable": nombres[i],
+            "informacion_mutua": float(mi[i]),
+            "umbral_nulo_p95": float(umbral[i]),
+            "motivo": "sin señal frente al objetivo permutado" if i in sin_senal else "redundante o sin ganancia",
+        }
+        for i in sorted([*sin_senal, *candidatas])
+    ]
     return {
         "seleccionadas": [nombres[i] for i in elegidas_idx],
         "detalle": tabla,
         "descartadas": descartadas,
         "informacion_mutua": {n: float(v) for n, v in zip(nombres, mi, strict=False)},
+        "umbral_nulo_p95": {n: float(v) for n, v in zip(nombres, umbral, strict=False)},
+        "permutaciones": permutaciones,
     }

@@ -46,7 +46,7 @@ tv experimentos          # corrida completa (aprox. 30–60 min en CPU de 4 núc
 
 **Regla.** Solo cifras que estén en los JSON.
 
-### 1.4 Pruebas del motor
+### 1.4 Pruebas del motor · ✅ hecho (15-11-2026, ver bitácora)
 **Qué falta.** Hoy hay pruebas de caos y de tendencias. Faltan pruebas unitarias de:
 - `evaluacion/metricas.py`: habilidad = 0 frente a sí misma; Diebold-Mariano con pérdidas iguales;
 - `incertidumbre.py`: cobertura conformal con datos intercambiables;

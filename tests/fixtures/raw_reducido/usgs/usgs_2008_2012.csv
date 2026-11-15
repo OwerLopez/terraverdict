@@ -1,0 +1,309 @@
+time,latitude,longitude,depth,mag,magType,net,id,place,type,status
+2008-01-02T23:26:59.250Z,-15.98,-72.917,83,4.8,mb,us,usp000fvvv,"21 km SSW of Andaray, Peru",earthquake,reviewed
+2008-01-04T13:55:30.270Z,-18.372,-69.454,102.5,4.5,mb,us,usp000fvyt,"85 km SE of Palca, Peru",earthquake,reviewed
+2008-01-16T23:34:52.800Z,-16.702,-72.572,81.2,4.4,mb,us,usp000fwv7,"14 km W of Quilca, Peru",earthquake,reviewed
+2008-01-18T08:37:01.780Z,-15.8,-74.32,44.9,4.1,mb,us,usp000fwy5,"4 km E of Atiquipa, Peru",earthquake,reviewed
+2008-01-25T11:13:45.200Z,-16.612,-71.186,35,4.3,ml,us,usp000fxe7,"1 km N of Puquina, Peru",earthquake,reviewed
+2008-01-31T19:02:52.390Z,-14.176,-73.669,74.1,4.6,mb,us,usp000fxvp,"13 km SW of Pomacocha, Peru",earthquake,reviewed
+2008-02-09T09:32:51.200Z,-15.743,-71.268,134.3,4.8,mb,us,usp000fygx,"8 km E of Jatun Orcochiri, Peru",earthquake,reviewed
+2008-02-13T04:53:25.510Z,-15.311,-72.269,115.6,5.2,mwc,us,usp000fytb,"9 km ESE of Orcopampa, Peru",earthquake,reviewed
+2008-02-26T10:11:33.510Z,-17.177,-70.542,96,4.6,mb,us,usp000g006,"20 km WNW of Camilaca, Peru",earthquake,reviewed
+2008-02-28T13:11:26.770Z,-16.107,-71.896,115.1,4.3,mb,us,usp000g07d,"16 km SE of Lluta, Peru",earthquake,reviewed
+2008-03-07T05:43:50.000Z,-15.626,-74.176,68.3,4.4,mb,us,usp000g0w7,"9 km WNW of Tocota, Peru",earthquake,reviewed
+2008-03-07T22:35:00.120Z,-17.477,-70.206,82.6,5.2,mwc,us,usp000g0xy,"2 km NNE of Chipispaya, Peru",earthquake,reviewed
+2008-03-11T00:47:13.900Z,-15.899,-73.814,41.2,4,mb,us,usp000g16k,"19 km ESE of Achanizo, Peru",earthquake,reviewed
+2008-03-16T10:43:11.800Z,-17.377,-70.007,135.3,4.6,mb,us,usp000g1kt,"8 km NNE of Ticaco, Peru",earthquake,reviewed
+2008-03-20T04:54:37.700Z,-14.774,-70.695,168.4,4.2,mb,us,usp000g1ud,"10 km NE of Umachiri, Peru",earthquake,reviewed
+2008-03-20T21:08:12.870Z,-14.697,-70.242,236.3,4.6,mb,us,usp000g1vw,"23 km NNW of Azángaro, Peru",earthquake,reviewed
+2008-03-22T17:33:25.850Z,-18.353,-71.255,51.2,4.2,mb,us,usp000g22e,"78 km S of Pacocha, Peru",earthquake,reviewed
+2008-03-23T20:12:13.730Z,-15.976,-72.992,35,4.5,mb,us,usp000g25k,"15 km ESE of Iquipi, Peru",earthquake,reviewed
+2008-03-27T23:23:11.150Z,-16.542,-68.596,234.3,4.6,mb,us,usp000g2h3,"8 km E of Tiahuanaco, Bolivia",earthquake,reviewed
+2008-03-29T08:59:26.400Z,-14.391,-72.137,90.8,4.2,mb,us,usp000g2ma,"6 km SSW of Llusco, Peru",earthquake,reviewed
+2008-04-01T10:22:35.610Z,-16.976,-69.539,177.9,4.2,mb,us,usp000g2vu,Peru-Bolivia border region,earthquake,reviewed
+2008-04-05T17:33:21.920Z,-15.207,-70.489,186.9,4.2,mb,us,usp000g35q,"12 km ENE of Palca, Peru",earthquake,reviewed
+2008-04-09T00:51:27.410Z,-18.239,-68.992,115.5,4.4,mb,us,usp000g3dg,"72 km SW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2008-04-12T12:34:11.400Z,-18.388,-69.424,129.3,4,m,us,usp000g3rv,"88 km SE of Palca, Peru",earthquake,reviewed
+2008-04-12T19:09:35.150Z,-18.046,-69.742,129.2,4,mb,us,usp000g3sr,"37 km SE of Palca, Peru",earthquake,reviewed
+2008-04-17T07:24:45.740Z,-18.053,-69.568,119.5,4.7,mb,us,usp000g451,"51 km SE of Palca, Peru",earthquake,reviewed
+2008-04-19T15:50:37.000Z,-14.35,-71.189,75.5,4.1,mb,us,usp000g4b0,"2 km WNW of Maranganí, Peru",earthquake,reviewed
+2008-04-21T15:04:29.160Z,-18.416,-69.794,104.2,4,m,us,usp000g4gb,"53 km E of Arica, Chile",earthquake,reviewed
+2008-05-05T06:58:54.240Z,-17.872,-70.349,99.7,4.4,mb,us,usp000g5hv,"18 km ESE of Sama Grande, Peru",earthquake,reviewed
+2008-05-11T10:17:51.990Z,-17.632,-69.271,166.7,4.3,mb,us,usp000g639,"74 km ENE of Palca, Peru",earthquake,reviewed
+2008-05-23T00:19:05.620Z,-17.749,-69.561,153.4,4.3,mb,us,usp000g7hf,"42 km E of Palca, Peru",earthquake,reviewed
+2008-05-25T13:47:19.360Z,-13.773,-72.735,74.3,4.6,mb,us,usp000g7rq,"11 km NNE of Lambrama, Peru",earthquake,reviewed
+2008-05-26T15:53:29.020Z,-17.546,-69.323,151.5,4.2,mb,us,usp000g7uf,"72 km ENE of Palca, Peru",earthquake,reviewed
+2008-06-01T12:30:31.380Z,-18.173,-69.646,123.9,4.4,mb,us,usp000g8ac,"55 km SE of Palca, Peru",earthquake,reviewed
+2008-06-02T05:43:25.760Z,-16.135,-73.228,89.5,4.5,mb,us,usp000g8ch,"13 km SSW of Urasqui, Peru",earthquake,reviewed
+2008-06-03T21:14:35.630Z,-15.197,-73.518,49.8,4.2,mb,us,usp000g8gn,"8 km NE of Incuyo, Peru",earthquake,reviewed
+2008-06-04T16:55:17.260Z,-18.209,-69.802,137.4,4.2,mb,us,usp000g8j3,"50 km SE of Calana, Peru",earthquake,reviewed
+2008-06-15T05:44:18.000Z,-14.58,-71.57,57,4.6,mb,us,usp000g9pz,"19 km NW of Pichigua, Peru",earthquake,reviewed
+2008-07-05T13:28:07.080Z,-15.59,-73.094,102.3,4.6,mb,us,usp000gbd7,"19 km WSW of Chichas, Peru",earthquake,reviewed
+2008-07-08T09:13:07.460Z,-15.986,-71.748,123,6.2,mwc,us,usp000gbn0,"28 km E of Lluta, Peru",earthquake,reviewed
+2008-07-19T03:21:56.570Z,-18.298,-69.675,107,4,mb,us,usp000gcjp,"65 km SSE of Palca, Peru",earthquake,reviewed
+2008-07-24T02:21:34.650Z,-14.178,-71.341,54.9,4,mb,us,usp000gd10,"3 km NW of San Pablo, Peru",earthquake,reviewed
+2008-07-28T18:18:40.920Z,-14.239,-71.299,47.2,4.7,mb,us,usp000gdbg,"4 km SSE of San Pablo, Peru",earthquake,reviewed
+2008-08-06T22:03:08.750Z,-14.15,-72.916,67.5,4.9,mb,us,usp000gdzz,"13 km NE of Pachaconas, Peru",earthquake,reviewed
+2008-08-07T04:09:18.260Z,-17.842,-69.4,148.9,4,m,us,usp000ge12,"59 km E of Palca, Peru",earthquake,reviewed
+2008-08-20T17:59:38.510Z,-14.811,-72.651,96,4.7,mb,us,usp000gf3n,"27 km N of Puyca, Peru",earthquake,reviewed
+2008-08-27T10:59:50.890Z,-15.944,-69.43,231.3,4.2,mb,us,usp000gfpx,"22 km NE of Pilcuyo, Peru",earthquake,reviewed
+2008-08-29T07:05:31.610Z,-14.626,-73.45,81.5,4.4,mb,us,usp000gfx0,"26 km NW of Aniso, Peru",earthquake,reviewed
+2008-09-04T03:19:24.530Z,-15.762,-69.35,248.5,4.2,mb,us,usp000ggc8,"32 km SSE of Putina, Peru",earthquake,reviewed
+2008-09-04T14:35:16.590Z,-18.418,-69.02,134,4.6,mb,us,usp000ggdh,"87 km SW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2008-09-04T19:23:15.760Z,-18.475,-71.318,34.3,4.2,mb,us,usp000gge0,"91 km S of Pacocha, Peru",earthquake,reviewed
+2008-09-20T14:43:05.440Z,-16.125,-73.63,40.5,5.4,mwb,us,usp000ghdz,"9 km N of Atico, Peru",earthquake,reviewed
+2008-09-26T18:34:03.790Z,-15.328,-74.326,57.8,4.6,mb,us,usp000ghsc,"32 km ENE of Acarí, Peru",earthquake,reviewed
+2008-10-05T12:29:39.770Z,-16.201,-72.69,116,4.5,mb,us,usp000gjcu,"38 km S of Iray, Peru",earthquake,reviewed
+2008-10-10T05:11:17.310Z,-15.665,-74.652,59.8,4.1,m,us,usp000gjun,"26 km S of Acarí, Peru",earthquake,reviewed
+2008-10-10T11:44:25.300Z,-15.076,-72.13,106.8,4.5,mb,us,usp000gjvh,"30 km NE of Orcopampa, Peru",earthquake,reviewed
+2008-10-15T00:17:56.240Z,-15.004,-71.991,137.3,5,mwc,us,usp000gk9b,"36 km S of Cayarani, Peru",earthquake,reviewed
+2008-11-03T04:46:32.820Z,-18.381,-69.152,114.1,4.8,mb,us,usp000gmtk,"95 km SW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2008-11-15T08:49:36.730Z,-16.745,-68.774,212,4.5,mb,us,usp000gnr5,"23 km SSW of Tiahuanaco, Bolivia",earthquake,reviewed
+2008-11-27T03:04:57.330Z,-15.867,-73.453,75.3,5,mwc,us,usp000gpha,"35 km WNW of Urasqui, Peru",earthquake,reviewed
+2008-12-05T02:00:25.440Z,-15.701,-73.991,68.5,4.2,mb,us,usp000gpya,"11 km ESE of Tocota, Peru",earthquake,reviewed
+2008-12-08T15:46:37.340Z,-16.792,-71.622,81,4.3,mb,us,usp000gq6t,"31 km SSW of Yarabamba, Peru",earthquake,reviewed
+2008-12-09T23:23:07.260Z,-16.631,-69.487,184.9,4.3,mb,us,usp000gqa7,"27 km ENE of Mazo Cruz, Peru",earthquake,reviewed
+2008-12-11T20:51:22.030Z,-15.253,-71.778,120.8,4.6,mb,us,usp000gqds,"36 km WNW of Tisco, Peru",earthquake,reviewed
+2008-12-13T07:53:41.850Z,-16.71,-70.809,127.5,4.2,mb,us,usp000gqgn,"8 km ENE of Quinistaquillas, Peru",earthquake,reviewed
+2008-12-19T06:16:29.650Z,-15.349,-72.631,121.7,4.3,m,us,usp000gqx7,"27 km SSE of Alca, Peru",earthquake,reviewed
+2008-12-22T13:52:40.590Z,-17.637,-69.064,142.7,5,mwc,us,usp000gr6k,"71 km WNW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2008-12-24T03:54:23.310Z,-17.456,-69.239,168.9,4.2,mb,us,usp000grbe,"83 km E of Estique, Peru",earthquake,reviewed
+2008-12-26T06:24:51.780Z,-15.443,-70.113,223.7,4.3,mb,us,usp000grgw,"6 km NNE of Juliaca, Peru",earthquake,reviewed
+2008-12-27T05:45:48.180Z,-14.665,-71.388,112.8,4.4,mb,us,usp000grkh,"3 km ENE of Pichigua, Peru",earthquake,reviewed
+2008-12-28T02:37:33.870Z,-14.657,-72.63,96.1,4,mb,us,usp000grp0,"39 km SE of Mollebamba, Peru",earthquake,reviewed
+2009-01-07T23:16:50.570Z,-15.913,-69.324,237.4,4.4,mb,us,usp000gsbk,"23 km NW of Yumani, Bolivia",earthquake,reviewed
+2009-01-12T23:37:56.150Z,-17.631,-69.139,148.7,4.5,mb,us,usp000gshf,"79 km WNW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2009-01-15T18:37:58.060Z,-15.779,-74.326,29.2,4.9,mb,us,usp000gsn1,"4 km ENE of Atiquipa, Peru",earthquake,reviewed
+2009-02-03T03:14:21.070Z,-16.592,-72.692,73.6,4.8,mb,us,usp000gtdk,"3 km ENE of El Cardo, Peru",earthquake,reviewed
+2009-02-14T19:28:57.910Z,-16.312,-69.564,194.8,4.3,mb,us,usp000gtyx,"16 km SW of Juli, Peru",earthquake,reviewed
+2009-03-05T23:59:03.000Z,-17.67,-71.99,34,4.3,ml,us,usp000gup2,"58 km SSW of Punta de Bombón, Peru",earthquake,reviewed
+2009-03-14T05:41:03.060Z,-18.045,-70.991,43.3,4.9,mb,us,usp000guzd,"49 km WSW of Las Yaras, Peru",earthquake,reviewed
+2009-03-15T08:19:05.680Z,-14.452,-70.365,189.7,5.7,mwc,us,usp000gv0b,"29 km E of Nuñoa, Peru",earthquake,reviewed
+2009-03-20T07:14:40.920Z,-16.104,-74.001,52.9,4.2,mb,us,usp000gv6y,"33 km S of Achanizo, Peru",earthquake,reviewed
+2009-03-30T15:48:20.870Z,-17.907,-69.925,99.3,4.5,mb,us,usp000gvjy,"15 km SSE of Palca, Peru",earthquake,reviewed
+2009-04-01T02:41:28.000Z,-16.67,-71.107,99.4,4.8,mb,us,usp000gvmt,"9 km WSW of Coalaque, Peru",earthquake,reviewed
+2009-04-07T21:15:32.620Z,-19.236,-70.163,53.5,4,mb,us,usp000gvw6,"85 km S of Arica, Chile",earthquake,reviewed
+2009-04-14T17:45:40.350Z,-15.548,-74.596,40.3,4.7,mb,us,usp000gw4t,"13 km S of Acarí, Peru",earthquake,reviewed
+2009-04-15T09:41:03.000Z,-17.05,-72.13,45,4.2,m,us,usp000gw5x,Near the coast of southern Peru,earthquake,reviewed
+2009-04-25T18:51:54.600Z,-14.723,-73.346,85.7,4.3,mb,us,usp000gwk4,"11 km NNW of Aniso, Peru",earthquake,reviewed
+2009-04-28T08:11:43.020Z,-17.664,-70.4,81.3,4.3,mb,us,usp000gwn5,"17 km NE of Sama Grande, Peru",earthquake,reviewed
+2009-05-02T10:36:52.680Z,-15.597,-70.535,184.2,4.1,mb,us,usp000gws3,"13 km NE of Santa Lucía, Peru",earthquake,reviewed
+2009-05-04T23:40:51.000Z,-18.277,-71.672,15.6,4.3,mb,us,usp000gwuj,"77 km SSW of Pacocha, Peru",earthquake,reviewed
+2009-05-07T23:39:04.660Z,-16.032,-73.646,53.9,4.4,mb,us,usp000gwxc,"19 km N of Atico, Peru",earthquake,reviewed
+2009-06-02T21:37:02.990Z,-14.76,-73.348,84.4,4.9,mwc,us,usp000gxtk,central Peru,earthquake,reviewed
+2009-06-08T12:10:28.630Z,-17.059,-73.218,13.6,4.4,mb,us,usp000gxzt,"72 km SW of Camaná, Peru",earthquake,reviewed
+2009-06-11T00:42:10.130Z,-15.193,-71.851,124.5,4.3,mb,us,usp000gy2n,"43 km NNE of Tapay, Peru",earthquake,reviewed
+2009-06-13T20:10:52.060Z,-17.36,-70.804,61.4,5.2,mwc,us,usp000gy5f,"20 km SE of San Antonio, Peru",earthquake,reviewed
+2009-06-14T10:35:17.090Z,-17.521,-70.89,78,4.4,mb,us,usp000gy6j,"16 km NW of Locumba, Peru",earthquake,reviewed
+2009-06-20T04:00:17.730Z,-14.432,-72.667,74.8,4.8,mb,us,usp000gydd,"23 km SSW of Turpay, Peru",earthquake,reviewed
+2009-06-23T04:00:04.540Z,-18.74,-69.621,87,4.1,mb,us,usp000gyh7,"77 km ESE of Arica, Chile",earthquake,reviewed
+2009-06-30T11:30:07.660Z,-18.331,-71.315,52.5,4.1,mb,us,usp000gyss,"75 km S of Pacocha, Peru",earthquake,reviewed
+2009-07-02T06:10:54.000Z,-13.5,-72.19,24,4,ml,us,usp000gyuz,"5 km SW of Anta, Peru",earthquake,reviewed
+2009-07-02T20:16:24.720Z,-17.611,-69.584,135.2,4.1,mb,us,usp000gyvq,"43 km ENE of Palca, Peru",earthquake,reviewed
+2009-07-12T06:12:47.330Z,-15.041,-70.445,198.9,6.1,mwb,us,usp000gz5d,"10 km SSW of Tirapata, Peru",earthquake,reviewed
+2009-07-15T16:15:04.580Z,-18.578,-70.104,116.1,4.1,mb,us,usp000gz9b,"23 km ESE of Arica, Chile",earthquake,reviewed
+2009-08-21T06:23:52.080Z,-17.413,-72.255,38,4.4,mb,us,usp000h0py,"48 km SSW of Islay (Matarani), Peru",earthquake,reviewed
+2009-08-29T07:52:10.240Z,-15.41,-70.219,151.4,4.9,mb,us,usp000h103,"10 km S of Calapuja, Peru",earthquake,reviewed
+2009-09-05T03:58:39.460Z,-15.121,-70.248,210.2,5.8,mwc,us,usp000h18a,"12 km N of Nicasio, Peru",earthquake,reviewed
+2009-09-11T08:10:04.880Z,-16.463,-72.72,35,4.6,mb,us,usp000h1ea,"15 km N of El Cardo, Peru",earthquake,reviewed
+2009-09-15T15:22:56.190Z,-16.624,-72.351,69.4,4.6,mb,us,usp000h1j9,"13 km NE of Quilca, Peru",earthquake,reviewed
+2009-09-22T18:32:27.980Z,-17.597,-70.68,75.2,4.2,mb,us,usp000h1sf,"8 km ENE of Locumba, Peru",earthquake,reviewed
+2009-09-30T19:03:17.300Z,-15.551,-69.293,255.4,5.9,mwc,us,usp000h23y,"17 km ESE of Putina, Peru",earthquake,reviewed
+2009-10-30T14:55:59.300Z,-15.318,-70.531,182.9,4.4,mb,us,usp000h3k3,"11 km SE of Palca, Peru",earthquake,reviewed
+2009-11-04T15:15:57.520Z,-17.467,-69.676,166.3,4.5,mb,us,usp000h3r4,"37 km ENE of Estique, Peru",earthquake,reviewed
+2009-11-05T13:43:49.990Z,-15.501,-70.648,173.9,4.4,mb,us,usp000h3sg,"22 km NNW of Santa Lucía, Peru",earthquake,reviewed
+2009-11-05T23:38:09.170Z,-18.199,-69.711,126.2,4,mb,us,usp000h3ss,"53 km SSE of Palca, Peru",earthquake,reviewed
+2009-11-22T19:30:45.960Z,-16.417,-73.479,50.4,4.7,mb,us,usp000h4au,"27 km SSE of Atico, Peru",earthquake,reviewed
+2009-11-29T08:13:55.640Z,-15.849,-74.683,63.8,4.6,mb,us,usp000h4jj,"34 km W of Atiquipa, Peru",earthquake,reviewed
+2009-12-01T23:35:27.870Z,-17.233,-69.723,124.6,4.3,mb,us,usp000h4ng,"34 km E of Chuquitira, Peru",earthquake,reviewed
+2009-12-03T07:03:15.100Z,-18.485,-70.944,35,4.6,mb,us,usp000h4pw,"68 km W of Arica, Chile",earthquake,reviewed
+2009-12-19T20:56:14.130Z,-16.089,-73.745,39.6,4.6,mb,us,usp000h56u,"18 km NW of Atico, Peru",earthquake,reviewed
+2009-12-24T14:01:58.930Z,-15.766,-73.978,59.1,5.6,mwc,us,usp000h5aq,"4 km NNW of Achanizo, Peru",earthquake,reviewed
+2010-01-03T11:14:24.660Z,-15.923,-74.296,35,4.2,ml,us,usp000h5n0,"15 km SSE of Atiquipa, Peru",earthquake,reviewed
+2010-01-05T01:34:25.430Z,-16.481,-74.034,28,5.1,mwc,us,usp000h5r3,"53 km SW of Atico, Peru",earthquake,reviewed
+2010-01-17T11:09:44.600Z,-16.793,-69.397,174.5,4.6,mb,us,usp000h687,"34 km E of Mazo Cruz, Peru",earthquake,reviewed
+2010-01-17T12:15:17.300Z,-18.265,-69.946,99.4,4.3,mb,us,usp000h68b,"42 km SE of Tacna, Peru",earthquake,reviewed
+2010-01-31T03:50:48.920Z,-17.191,-69.443,149.6,4.7,mb,us,usp000h6tj,"57 km SSE of Mazo Cruz, Peru",earthquake,reviewed
+2010-02-04T01:24:30.490Z,-15.863,-72.143,99.8,4.5,mb,us,usp000h6xp,"15 km SSW of Huambo, Peru",earthquake,reviewed
+2010-02-04T11:50:34.320Z,-16.694,-73.429,59.8,4.8,mb,us,usp000h6y7,"57 km SSE of Atico, Peru",earthquake,reviewed
+2010-02-05T22:09:45.000Z,-16.83,-71.97,27,4,ml,us,usp000h6zs,"21 km NNE of Mollendo, Peru",earthquake,reviewed
+2010-02-06T01:33:51.280Z,-16.666,-73.437,53,5.2,mwc,us,usp000h6zv,"54 km SSE of Atico, Peru",earthquake,reviewed
+2010-02-10T16:36:11.820Z,-16.194,-70.274,189.1,4.3,mb,us,usp000h75a,"42 km S of Tiquillaca, Peru",earthquake,reviewed
+2010-02-28T04:31:50.720Z,-14.486,-73.139,46.1,4.4,mb,us,usp000h84g,"10 km SE of Cotaruse, Peru",earthquake,reviewed
+2010-03-02T17:21:13.040Z,-17.535,-69.515,146.7,4.4,mb,us,usp000h8hw,"53 km E of Estique, Peru",earthquake,reviewed
+2010-03-13T17:29:49.950Z,-16.181,-69.682,191.9,4.1,mb,us,usp000h9az,"10 km S of Ilave, Peru",earthquake,reviewed
+2010-03-15T18:21:59.160Z,-18.122,-69.614,134.3,4.7,mb,us,usp000h9f2,"53 km SE of Palca, Peru",earthquake,reviewed
+2010-03-22T01:00:41.200Z,-16.186,-69.515,188.7,5.3,mwc,us,usp000h9u1,"7 km WNW of Juli, Peru",earthquake,reviewed
+2010-03-23T20:19:25.060Z,-15.327,-74.56,53.4,5.2,mwc,us,usp000h9wx,"12 km NNE of Acarí, Peru",earthquake,reviewed
+2010-03-27T18:14:50.140Z,-15.439,-72.283,120.4,4.6,mb,us,usp000ha1g,"20 km SSE of Orcopampa, Peru",earthquake,reviewed
+2010-03-28T21:30:29.070Z,-15.91,-74.484,35,4.1,mb,us,usp000ha3b,"18 km SW of Atiquipa, Peru",earthquake,reviewed
+2010-04-18T03:04:27.200Z,-17.386,-69.915,140.8,4.3,mb,us,usp000hbka,"15 km ENE of Ticaco, Peru",earthquake,reviewed
+2010-04-20T05:08:26.220Z,-17.044,-69.52,139.6,4.6,mb,us,usp000hbpj,"39 km SSE of Mazo Cruz, Peru",earthquake,reviewed
+2010-04-22T23:20:34.120Z,-15.116,-73.306,81.6,4.2,mb,us,usp000hbsx,"5 km NNW of Colta, Peru",earthquake,reviewed
+2010-04-23T10:14:16.000Z,-18.24,-69.659,132.5,4.8,mb,us,usp000hbtq,"60 km SSE of Palca, Peru",earthquake,reviewed
+2010-04-24T01:17:05.770Z,-18.056,-69.678,124.3,4.6,mb,us,usp000hbu8,"43 km SE of Palca, Peru",earthquake,reviewed
+2010-04-26T00:56:55.030Z,-18.08,-69.32,136,4.1,mb,us,usp000hbwq,"75 km ESE of Palca, Peru",earthquake,reviewed
+2010-04-26T04:42:39.490Z,-16.519,-73.814,35,4.7,mb,us,usp000hbwy,"39 km SSW of Atico, Peru",earthquake,reviewed
+2010-05-06T02:42:47.940Z,-18.058,-70.547,37,6.2,mwc,us,usp000hccn,"21 km S of Las Yaras, Peru",earthquake,reviewed
+2010-05-06T02:58:06.500Z,-18.151,-70.514,35,4.1,mb,us,usp000hccp,"31 km WSW of Tacna, Peru",earthquake,reviewed
+2010-05-06T06:32:29.420Z,-18.117,-70.704,55.8,4.6,mb,us,usp000hccx,"31 km SSW of Las Yaras, Peru",earthquake,reviewed
+2010-05-06T14:51:27.000Z,-18.387,-70.721,40.2,4.1,mb,us,usp000hcdp,"45 km WNW of Arica, Chile",earthquake,reviewed
+2010-05-20T15:43:15.000Z,-18.405,-70.707,34.8,4.3,ml,us,usp000hczf,"43 km W of Arica, Chile",earthquake,reviewed
+2010-05-30T08:48:22.370Z,-15.184,-73.236,101.4,4.5,mb,us,usp000hdcy,"5 km W of Oyolo, Peru",earthquake,reviewed
+2010-06-06T03:14:37.610Z,-16.354,-73.454,59.9,4.3,mb,us,usp000hdn6,"24 km SE of Atico, Peru",earthquake,reviewed
+2010-06-08T06:32:24.070Z,-17.302,-72.593,36.3,5.1,mwc,us,usp000hdqh,"62 km WSW of Islay (Matarani), Peru",earthquake,reviewed
+2010-06-09T03:54:55.360Z,-15.122,-70.494,169.9,5,mwc,us,usp000hdrg,"16 km NE of Palca, Peru",earthquake,reviewed
+2010-06-10T22:28:40.690Z,-15.485,-70.746,161.9,4.6,mb,us,usp000hdtt,"27 km NNW of Santa Lucía, Peru",earthquake,reviewed
+2010-06-19T02:54:28.230Z,-16.156,-73.623,35.6,4.5,mb,us,usp000he8y,"5 km N of Atico, Peru",earthquake,reviewed
+2010-06-23T02:33:23.680Z,-17.311,-69.34,166,4.2,mb,us,usp000hedh,"74 km SSE of Mazo Cruz, Peru",earthquake,reviewed
+2010-07-11T08:36:28.280Z,-14.969,-73.205,90.3,4.7,mb,us,usp000hf56,"17 km E of Pacapausa, Peru",earthquake,reviewed
+2010-07-12T12:44:48.660Z,-17.014,-69.992,105.7,4.7,mb,us,usp000hf6s,"30 km N of Chuquitira, Peru",earthquake,reviewed
+2010-07-22T03:10:54.970Z,-15.93,-74.741,35,4.1,mb,us,usp000hge6,"43 km WSW of Atiquipa, Peru",earthquake,reviewed
+2010-08-04T14:02:24.720Z,-17.557,-69.83,128.8,4.4,mb,us,usp000hhgq,"20 km E of Estique, Peru",earthquake,reviewed
+2010-08-05T04:52:47.320Z,-17.373,-70.278,104.2,4.7,mb,us,usp000hhjr,"6 km E of Curibaya, Peru",earthquake,reviewed
+2010-08-10T04:52:41.360Z,-14.001,-72.719,88.6,5,mwc,us,usp000hhub,"8 km NW of Curpahuasi, Peru",earthquake,reviewed
+2010-08-11T21:36:20.940Z,-14.241,-73.17,72.1,4.8,mb,us,usp000hhz9,"1 km SSW of Yanaca, Peru",earthquake,reviewed
+2010-08-18T19:10:43.440Z,-18.254,-68.946,138.7,4.1,mb,us,usp000hjdg,"69 km SW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2010-09-08T14:47:26.840Z,-18.101,-69.157,133.3,4.8,mb,us,usp000hkf4,"80 km WSW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2010-09-13T07:15:49.630Z,-14.612,-70.777,179.8,5.9,mwb,us,usp000hknm,"21 km SW of Nuñoa, Peru",earthquake,reviewed
+2010-09-21T14:59:46.840Z,-16.976,-72.942,46.8,4,m,us,usp000hm19,"46 km SSW of Camaná, Peru",earthquake,reviewed
+2010-09-27T00:45:45.240Z,-18.06,-69.086,149.4,4.6,mb,us,usp000hm81,"72 km WSW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2010-10-22T08:26:23.620Z,-18.383,-71.218,31.4,4.4,mb,us,usp000hnde,"82 km S of Pacocha, Peru",earthquake,reviewed
+2010-10-23T12:43:12.000Z,-18.42,-71.513,20.9,4.3,ml,us,usp000hnex,"87 km SSW of Pacocha, Peru",earthquake,reviewed
+2010-11-06T10:28:54.740Z,-17.04,-72.657,53.7,4.1,mb,us,usp000hp6v,"43 km SSW of Quilca, Peru",earthquake,reviewed
+2010-11-09T02:09:54.360Z,-15.07,-71.383,133.5,4.6,mb,us,usp000hpa3,"27 km W of Ocoruro, Peru",earthquake,reviewed
+2010-11-19T01:42:52.790Z,-17.628,-69.434,131,4.1,mb,us,usp000hput,"58 km ENE of Palca, Peru",earthquake,reviewed
+2010-11-22T08:35:13.000Z,-16.43,-74.57,33,4.8,ml,us,usp000hpyn,"73 km SSW of Atiquipa, Peru",earthquake,reviewed
+2010-11-24T22:08:34.710Z,-14.861,-71.715,37.5,5.1,mwc,us,usp000hq2c,"20 km WSW of Coporaque, Peru",earthquake,reviewed
+2010-11-25T18:16:53.720Z,-16.456,-70.944,124,4.8,mb,us,usp000hq3s,"10 km SW of Ubinas, Peru",earthquake,reviewed
+2010-11-28T14:49:22.920Z,-14.76,-71.429,113.8,5,mwc,us,usp000hq8y,"3 km NNW of Yauri, Peru",earthquake,reviewed
+2010-11-29T07:55:49.000Z,-16.41,-71.86,100,4,m,us,usp000hq9x,"9 km N of El Triunfo ( El Cruce), Peru",earthquake,reviewed
+2010-12-07T04:14:39.000Z,-16.93,-71.13,123,4.8,mb,us,usp000hqm0,"19 km SSE of La Capilla, Peru",earthquake,reviewed
+2010-12-11T08:43:40.540Z,-17.777,-71.682,36.9,4.8,mb,us,usp000hqsw,"38 km WSW of Pacocha, Peru",earthquake,reviewed
+2010-12-15T18:22:23.540Z,-17.679,-69.143,136.6,5.1,mwc,us,usp000hqyu,"78 km WNW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2010-12-17T20:34:24.450Z,-17.481,-71.103,72.4,4.8,mb,us,usp000hr1q,"23 km NE of El Algarrobal, Peru",earthquake,reviewed
+2010-12-18T13:07:52.830Z,-15.284,-71.553,123.7,4.3,mb,us,usp000hr3m,"13 km WNW of Tisco, Peru",earthquake,reviewed
+2010-12-19T07:43:52.980Z,-15.069,-71.732,108.1,4.5,mb,us,usp000hr4r,"36 km SW of Coporaque, Peru",earthquake,reviewed
+2010-12-21T20:04:47.570Z,-15.31,-70.587,187.4,4.7,mb,us,usp000hrb1,"8 km S of Palca, Peru",earthquake,reviewed
+2011-02-08T22:01:16.080Z,-16.791,-73.724,20.7,5,mb,us,usp000hu8c,"65 km S of Atico, Peru",earthquake,reviewed
+2011-02-15T00:26:33.000Z,-16.12,-74.67,37,4.8,mb,us,usp000huht,"48 km SW of Atiquipa, Peru",earthquake,reviewed
+2011-02-17T10:31:05.600Z,-14.861,-73.511,76.4,4,mb,us,usp000hun2,"12 km WNW of Upahuacho, Peru",earthquake,reviewed
+2011-03-06T12:31:59.780Z,-18.021,-69.362,118,6.3,mww,us,usp000hvef,"68 km ESE of Palca, Peru",earthquake,reviewed
+2011-04-12T09:30:08.530Z,-16.434,-73.556,44.6,4.4,m,us,usp000hztf,"25 km SSE of Atico, Peru",earthquake,reviewed
+2011-04-16T17:01:39.000Z,-15.89,-72.82,44,4.2,m,us,usp000j02u,"11 km SSE of Andaray, Peru",earthquake,reviewed
+2011-04-17T09:57:31.390Z,-16.525,-72.619,120,4.3,mb,us,usp000j04p,"14 km NE of El Cardo, Peru",earthquake,reviewed
+2011-04-21T16:11:09.000Z,-15.93,-74.76,35,4.2,ml,us,usp000j0ce,"44 km WSW of Atiquipa, Peru",earthquake,reviewed
+2011-04-26T16:07:10.390Z,-14.964,-72.63,126.6,4.5,mb,us,usp000j0mw,"12 km NNE of Puyca, Peru",earthquake,reviewed
+2011-04-27T22:19:56.000Z,-18.303,-71.685,34.4,4.8,mb,us,usp000j0pn,"81 km SSW of Pacocha, Peru",earthquake,reviewed
+2011-05-02T15:30:38.740Z,-16.429,-74.647,16.2,4.1,ml,us,usp000j0x0,"76 km SSW of Atiquipa, Peru",earthquake,reviewed
+2011-05-07T10:33:45.200Z,-15.097,-74.233,59.7,4.9,mwc,us,usp000j15h,"39 km SSW of San Pedro, Peru",earthquake,reviewed
+2011-05-14T17:22:40.130Z,-13.308,-71.617,35,4.2,mb,us,usp000j1kt,"8 km NE of Colquepata, Peru",earthquake,reviewed
+2011-06-03T14:51:35.000Z,-15.93,-73.98,70,4,m,us,usp000j2nb,"13 km S of Achanizo, Peru",earthquake,reviewed
+2011-06-05T22:14:24.000Z,-18.383,-69.404,119,4.5,mb,us,usp000j2s0,"89 km SE of Palca, Peru",earthquake,reviewed
+2011-06-08T03:06:22.650Z,-17.083,-69.518,145.7,5.9,mww,us,usp000j2v6,"43 km SSE of Mazo Cruz, Peru",earthquake,reviewed
+2011-06-08T10:53:03.420Z,-16.351,-69.822,183.1,4.4,mb,us,usp000j2vm,"33 km SSW of Ilave, Peru",earthquake,reviewed
+2011-06-15T14:16:49.510Z,-15.114,-72.051,92.5,4.4,mb,us,usp000j377,"35 km ENE of Orcopampa, Peru",earthquake,reviewed
+2011-06-17T20:43:05.440Z,-18.119,-69.159,124.8,4.6,mb,us,usp000j3b9,"81 km WSW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2011-06-18T00:50:21.000Z,-15.66,-74.44,68,4,mb,us,usp000j3bg,"17 km NNW of Atiquipa, Peru",earthquake,reviewed
+2011-06-18T05:38:23.950Z,-17.641,-69.587,112.4,4.8,mb,us,usp000j3bz,"42 km ENE of Palca, Peru",earthquake,reviewed
+2011-06-25T16:09:55.260Z,-17.192,-69.603,143,4,mb,us,usp000j3rs,"48 km ENE of Chuquitira, Peru",earthquake,reviewed
+2011-06-26T00:08:23.260Z,-16.696,-69.326,164.6,4.5,mb,us,usp000j3s2,"33 km WSW of Desaguadero, Peru",earthquake,reviewed
+2011-07-07T23:40:28.830Z,-17.421,-70.516,139.3,4,mb,us,usp000j4bs,"0 km W of Ilabaya, Peru",earthquake,reviewed
+2011-07-10T11:49:08.180Z,-15.79,-72.756,96.8,4.4,mb,us,usp000j4j1,"11 km E of Andaray, Peru",earthquake,reviewed
+2011-07-13T08:23:27.130Z,-15.607,-71.651,112,4.5,mb,us,usp000j4t6,"6 km NE of Ichupampa, Peru",earthquake,reviewed
+2011-07-14T18:34:40.560Z,-15.831,-69.323,232.8,4.9,mb,us,usp000j4wq,"29 km NW of Yumani, Bolivia",earthquake,reviewed
+2011-07-14T18:57:36.130Z,-18.609,-69.26,110,5,mb,us,usp000j4wv,"110 km E of Arica, Chile",earthquake,reviewed
+2011-07-14T22:53:54.580Z,-15.95,-69.39,236.4,4.5,mb,us,usp000j4xc,"24 km NE of Pilcuyo, Peru",earthquake,reviewed
+2011-07-24T15:49:07.620Z,-14.797,-74.31,96.6,5,mwc,us,usp000j5e6,"19 km SW of San Juan, Peru",earthquake,reviewed
+2011-07-28T05:07:14.990Z,-16.811,-69.457,171.9,4.3,mb,us,usp000j5kr,"28 km ESE of Mazo Cruz, Peru",earthquake,reviewed
+2011-08-12T09:12:00.070Z,-15.789,-71.936,10,4.7,mb,us,usp000j6c0,"19 km ESE of Huambo, Peru",earthquake,reviewed
+2011-08-23T00:46:56.000Z,-17.891,-71.919,23.9,4.3,mb,us,usp000j6w7,"66 km WSW of Pacocha, Peru",earthquake,reviewed
+2011-08-25T05:04:06.290Z,-17.527,-69.404,140.7,4.2,mb,us,usp000j709,"65 km ENE of Palca, Peru",earthquake,reviewed
+2011-08-31T00:53:19.000Z,-17.903,-69.619,136.6,4.7,mb,us,usp000j79p,"38 km ESE of Palca, Peru",earthquake,reviewed
+2011-08-31T16:33:53.130Z,-15.835,-71.744,122.4,4.5,mb,us,usp000j7b1,"21 km SSW of Ichupampa, Peru",earthquake,reviewed
+2011-09-14T14:52:45.760Z,-17.437,-69.429,147.2,4.9,mb,us,usp000j81q,"63 km E of Estique, Peru",earthquake,reviewed
+2011-09-23T05:21:38.700Z,-17.286,-70.532,114.5,4.5,mb,us,usp000j8eq,"15 km N of Ilabaya, Peru",earthquake,reviewed
+2011-09-25T00:13:04.430Z,-16.183,-71.958,121.7,4.2,mb,us,usp000j8h2,"19 km SSE of Lluta, Peru",earthquake,reviewed
+2011-10-05T12:04:31.000Z,-17.18,-71.25,84,4.2,mb,us,usp000j8yc,"33 km W of Moquegua, Peru",earthquake,reviewed
+2011-10-08T12:29:25.910Z,-15.493,-70.574,166.8,4.6,mb,us,usp000j93a,"22 km N of Santa Lucía, Peru",earthquake,reviewed
+2011-10-09T09:55:16.000Z,-18.619,-69.534,116.8,4.5,mb,us,usp000j94a,"82 km E of Arica, Chile",earthquake,reviewed
+2011-10-11T23:26:01.740Z,-15.311,-74.567,42.4,4.4,mb,us,usp000j98e,"13 km NNE of Acarí, Peru",earthquake,reviewed
+2011-10-15T03:17:56.750Z,-15.927,-73.256,86.2,4.6,mb,us,usp000j9c2,"13 km W of Iquipi, Peru",earthquake,reviewed
+2011-10-22T10:07:43.090Z,-18,-69.314,129.3,5.1,mwc,us,usp000j9py,"72 km ESE of Palca, Peru",earthquake,reviewed
+2011-11-04T02:46:57.430Z,-17.532,-69.727,159.1,4.1,mb,us,usp000jaaf,"30 km E of Estique, Peru",earthquake,reviewed
+2011-11-06T15:21:23.480Z,-15.945,-71.785,125.7,4.1,mb,us,usp000jafb,"25 km ENE of Lluta, Peru",earthquake,reviewed
+2011-11-06T15:21:51.530Z,-15.611,-71.576,141.5,4.4,mb,us,usp000jafc,southern Peru,earthquake,reviewed
+2011-11-07T04:14:04.240Z,-16.438,-71.048,99.1,4.4,mb,us,usp000jagf,"19 km WSW of Ubinas, Peru",earthquake,reviewed
+2011-11-14T15:40:11.520Z,-16.429,-69.207,213.8,4.2,mb,us,usp000javq,"23 km NW of Desaguadero, Peru",earthquake,reviewed
+2011-11-22T02:18:06.520Z,-16.541,-71.904,97.3,5,mb,us,usp000jb87,"7 km SW of El Triunfo ( El Cruce), Peru",earthquake,reviewed
+2011-11-22T23:02:11.580Z,-14.056,-72.583,71.2,4.9,mb,us,usp000jb9g,"5 km ENE of Vilcabamba, Peru",earthquake,reviewed
+2011-11-30T03:23:02.170Z,-14.434,-73.36,74.9,5.1,mwc,us,usp000jbmv,"16 km W of Cotaruse, Peru",earthquake,reviewed
+2011-12-05T23:07:45.000Z,-15.71,-74.58,81,4.6,m,us,usp000jbvr,"25 km WNW of Atiquipa, Peru",earthquake,reviewed
+2011-12-11T11:14:14.380Z,-17.643,-69.272,138.1,4.7,mb,us,usp000jc2s,"74 km ENE of Palca, Peru",earthquake,reviewed
+2011-12-29T03:32:44.150Z,-15.505,-70.369,168.8,4.6,mb,us,usp000jcsr,"12 km N of Cabanilla, Peru",earthquake,reviewed
+2012-01-11T18:58:34.240Z,-14.893,-72.67,77.6,4.9,mb,us,usp000jdc5,"18 km N of Puyca, Peru",earthquake,reviewed
+2012-02-02T04:50:48.420Z,-16.186,-73.526,72.2,4.9,mb,us,usp000je9r,"10 km ENE of Atico, Peru",earthquake,reviewed
+2012-02-03T13:47:52.000Z,-16.4,-72.67,86,4.4,ml,us,usp000jee2,"23 km NNE of El Cardo, Peru",earthquake,reviewed
+2012-02-05T20:58:46.840Z,-15.62,-70.664,175.7,4.7,mb,us,usp000jejf,"10 km NW of Santa Lucía, Peru",earthquake,reviewed
+2012-02-07T14:53:15.500Z,-16.644,-72.657,64.9,4.4,mb,us,usp000jen4,"6 km ESE of Camaná, Peru",earthquake,reviewed
+2012-02-12T09:28:16.350Z,-15.64,-74.157,65.5,5,mb,us,usp000jeut,"7 km WNW of Tocota, Peru",earthquake,reviewed
+2012-02-14T02:15:38.000Z,-18.182,-69.682,120.4,4.8,mb,us,usp000jewz,"53 km SSE of Palca, Peru",earthquake,reviewed
+2012-02-14T14:08:40.650Z,-18.257,-69.408,126.1,4.6,mb,us,usp000jext,"79 km SE of Palca, Peru",earthquake,reviewed
+2012-02-24T06:50:09.000Z,-15.655,-72.757,116.4,4.7,mb,us,usp000jfa9,"18 km NE of Yanaquihua, Peru",earthquake,reviewed
+2012-02-27T02:37:28.540Z,-15.998,-69.464,241.4,4.3,mb,us,usp000jfft,"15 km NE of Pilcuyo, Peru",earthquake,reviewed
+2012-03-10T04:21:53.810Z,-16.486,-73.726,94.2,4.2,mb,us,usp000jg0u,"32 km SSW of Atico, Peru",earthquake,reviewed
+2012-03-13T21:30:57.970Z,-15.811,-70.469,177.6,4.7,mb,us,usp000jg6f,"19 km SE of Santa Lucía, Peru",earthquake,reviewed
+2012-03-24T11:46:23.000Z,-18.05,-69.741,165.4,4.5,mb,us,usp000jgqg,"38 km SE of Palca, Peru",earthquake,reviewed
+2012-03-24T14:39:25.720Z,-15.543,-70.654,163.6,4.6,mb,us,usp000jgqp,"17 km NNW of Santa Lucía, Peru",earthquake,reviewed
+2012-03-30T18:36:24.000Z,-18.407,-71.367,34.8,4.2,mb,us,usp000jh0e,"84 km S of Pacocha, Peru",earthquake,reviewed
+2012-04-07T16:40:24.000Z,-19.166,-70.257,18,4.2,mb,us,usp000jhcc,"76 km S of Arica, Chile",earthquake,reviewed
+2012-04-17T12:26:34.160Z,-15.19,-74.341,72.4,4.4,mb,us,usp000jj4k,"39 km NE of Acarí, Peru",earthquake,reviewed
+2012-04-17T21:28:19.000Z,-15.88,-74.69,60,4.2,mb,us,usp000jj5b,"36 km WSW of Atiquipa, Peru",earthquake,reviewed
+2012-04-19T23:02:45.300Z,-14.949,-71.721,110.2,4.9,mb,us,usp000jj8m,"26 km SW of Coporaque, Peru",earthquake,reviewed
+2012-04-21T11:36:05.370Z,-14.82,-71.481,111.2,5.4,mwb,us,usp000jjbu,"5 km ESE of Coporaque, Peru",earthquake,reviewed
+2012-04-22T18:04:53.330Z,-17.406,-69.143,148.6,4.3,mb,us,usp000jje5,"90 km NW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2012-04-25T16:19:36.800Z,-16.275,-71.566,100.8,4.6,mb,us,usp000jjkj,"5 km NNE of Cono Norte, Peru",earthquake,reviewed
+2012-05-02T21:57:11.000Z,-17.67,-71.43,65,4,ml,us,usp000jjxm,"9 km WSW of Pacocha, Peru",earthquake,reviewed
+2012-05-14T10:00:40.230Z,-17.678,-69.591,105.9,6.2,mww,us,usp000jkdy,"40 km ENE of Palca, Peru",earthquake,reviewed
+2012-05-15T21:20:32.000Z,-18.18,-70.33,98,4.2,mb,us,usp000jkfp,"20 km SSW of Tacna, Peru",earthquake,reviewed
+2012-05-16T01:54:09.300Z,-16.513,-72.794,63,4.3,mb,us,usp000jkfv,Near the coast of southern Peru,earthquake,reviewed
+2012-05-23T01:04:36.000Z,-16.98,-71.07,110,4.9,mb,us,usp000jkt5,"26 km WNW of Torata, Peru",earthquake,reviewed
+2012-05-23T14:36:43.970Z,-15.596,-74.386,43.3,4.6,mb,us,usp000jkty,"22 km N of Atiquipa, Peru",earthquake,reviewed
+2012-06-02T00:22:19.870Z,-17.275,-69.502,152.7,4,mb,us,usp000jm7j,"57 km E of Chuquitira, Peru",earthquake,reviewed
+2012-06-07T16:03:18.900Z,-15.877,-72.413,110,6.1,mww,us,usp000jmfp,"16 km S of Uñon, Peru",earthquake,reviewed
+2012-06-11T23:37:37.150Z,-17.824,-69.78,94.4,4.9,mb,us,usp000jmnb,"19 km ESE of Palca, Peru",earthquake,reviewed
+2012-06-12T07:23:38.060Z,-14.234,-72.728,72.4,4.3,mb,us,usp000jmnq,"8 km SW of Pataypampa, Peru",earthquake,reviewed
+2012-06-15T03:33:02.770Z,-16.288,-69.574,174.9,4.3,mb,us,usp000jmsh,"15 km WSW of Juli, Peru",earthquake,reviewed
+2012-07-05T23:36:48.770Z,-15.102,-73.017,95.3,4.6,mb,us,usp000jnnp,"14 km NW of Mungui, Peru",earthquake,reviewed
+2012-07-11T18:02:51.080Z,-17.751,-71.834,86.7,4.1,mb,us,usp000jnw6,"53 km WSW of Pacocha, Peru",earthquake,reviewed
+2012-07-13T00:57:57.240Z,-17.6,-69.648,122.4,4.6,mb,us,usp000jnya,"38 km ENE of Palca, Peru",earthquake,reviewed
+2012-07-13T21:26:13.210Z,-15.232,-73.172,88.8,5.1,mb,us,usp000jnze,"4 km NE of Corculla, Peru",earthquake,reviewed
+2012-07-28T11:48:06.620Z,-18.196,-69.389,129.6,4.6,mb,us,usp000jpj3,"76 km SE of Palca, Peru",earthquake,reviewed
+2012-07-29T14:06:01.000Z,-18.623,-69.49,110.8,4.7,mb,us,usp000jpm4,"86 km E of Arica, Chile",earthquake,reviewed
+2012-08-03T18:03:16.560Z,-16.174,-72.651,79.3,4.6,mb,us,usp000jpus,"35 km S of Iray, Peru",earthquake,reviewed
+2012-08-07T21:43:51.530Z,-17.987,-69.701,89.8,4.4,mb,us,usp000jq0u,"36 km SE of Palca, Peru",earthquake,reviewed
+2012-08-11T15:09:21.410Z,-17.887,-69.196,132.2,4.4,mb,us,usp000jq5z,"80 km W of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2012-08-11T22:00:18.890Z,-17.363,-69.577,152.2,4,mb,us,usp000jq6n,"49 km ENE of Tarata, Peru",earthquake,reviewed
+2012-09-02T10:11:48.470Z,-16.197,-70.227,152.2,4.4,mb,us,usp000jrgm,"42 km S of Tiquillaca, Peru",earthquake,reviewed
+2012-09-06T21:04:21.650Z,-16.046,-73.403,49.4,4.8,mb,us,usp000jrw2,"24 km W of Urasqui, Peru",earthquake,reviewed
+2012-09-06T23:05:19.840Z,-16.444,-73.561,35,4.4,mb,us,usp000jrwa,"26 km SSE of Atico, Peru",earthquake,reviewed
+2012-09-15T10:39:01.000Z,-18.647,-70.524,39.9,4.3,mb,us,usp000jsc5,"30 km SW of Arica, Chile",earthquake,reviewed
+2012-09-15T23:41:24.470Z,-16.726,-69.149,193.2,4.3,mb,us,usp000jscv,"21 km SSW of Desaguadero, Peru",earthquake,reviewed
+2012-09-20T06:08:06.560Z,-13.906,-72.583,87.1,4.9,mb,us,usp000jskw,"9 km WSW of Palpacachi, Peru",earthquake,reviewed
+2012-09-22T08:36:20.290Z,-17.443,-71.081,46.4,4.2,mb,us,usp000jsqa,"28 km NE of El Algarrobal, Peru",earthquake,reviewed
+2012-09-24T23:25:09.000Z,-16.72,-73.18,48,4.3,mb,us,usp000jswx,"49 km WSW of El Cardo, Peru",earthquake,reviewed
+2012-09-29T17:48:59.470Z,-17.182,-69.405,137.9,5.1,mb,us,usp000jt8m,"58 km SE of Mazo Cruz, Peru",earthquake,reviewed
+2012-10-05T17:56:01.630Z,-15.591,-70.75,184.2,4.5,mb,us,usp000jtkx,"19 km NW of Santa Lucía, Peru",earthquake,reviewed
+2012-10-17T02:25:58.960Z,-13.556,-70.255,46.7,4.7,mb,us,usp000ju2s,"51 km NE of Corani, Peru",earthquake,reviewed
+2012-11-03T09:47:02.380Z,-16.529,-71.813,118.3,4.3,mb,us,usp000juz0,"5 km SE of El Triunfo ( El Cruce), Peru",earthquake,reviewed
+2012-11-03T13:56:19.850Z,-15.507,-71.576,113.8,4.9,mb,us,usp000juza,"4 km NW of Tuti, Peru",earthquake,reviewed
+2012-11-04T06:37:38.260Z,-15.874,-71.878,137.7,5.4,mb,us,usp000jv0g,"21 km NE of Lluta, Peru",earthquake,reviewed
+2012-11-16T06:13:44.000Z,-17.736,-69.614,154.3,4.1,mb,us,usp000jvp0,"36 km E of Palca, Peru",earthquake,reviewed
+2012-11-19T16:34:26.370Z,-17.844,-70.42,57.4,4.6,mb,us,usp000jvue,"10 km SE of Sama Grande, Peru",earthquake,reviewed
+2012-11-26T22:27:39.380Z,-17.628,-69.809,130.7,4,ml,us,usp000jw42,"22 km NE of Palca, Peru",earthquake,reviewed
+2012-11-30T09:02:47.490Z,-15.215,-72.818,81,4.6,mb,us,usp000jw90,"4 km SSE of Tomepampa, Peru",earthquake,reviewed
+2012-12-06T18:58:56.130Z,-17.889,-69.252,132.8,4.9,mb,us,usp000jwhu,"76 km E of Palca, Peru",earthquake,reviewed
+2012-12-07T07:07:04.260Z,-16.42,-74.485,35,4,ml,us,usp000jwjh,"70 km S of Atiquipa, Peru",earthquake,reviewed
+2012-12-10T16:09:41.700Z,-15.544,-72.855,36.5,4.3,mb,us,usp000jwt4,"6 km E of Chichas, Peru",earthquake,reviewed
+2012-12-11T02:13:28.000Z,-17.814,-69.842,158,4.5,mb,us,usp000jwtt,"13 km ESE of Palca, Peru",earthquake,reviewed
+2012-12-24T05:31:33.760Z,-17.949,-69.906,95.5,4.8,mb,us,usp000jxbg,"20 km SSE of Palca, Peru",earthquake,reviewed
+2012-12-31T23:11:12.800Z,-17.828,-69.771,121.6,4.3,mb,us,usp000jxpc,"20 km ESE of Palca, Peru",earthquake,reviewed

@@ -75,8 +75,8 @@ def ejecutar(
     salida: Path = RAIZ / "resultados",
     rapido: bool = False,
     solo: list[str] | None = None,
+    config: Path = RAIZ / "config" / "fenomenos.yaml",
 ) -> dict[str, Any]:
-    config = RAIZ / "config" / "fenomenos.yaml"
     cfg = cargar_yaml(config)
     salida.mkdir(parents=True, exist_ok=True)
     proc = procedencia(raw, config)

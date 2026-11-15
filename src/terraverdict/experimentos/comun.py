@@ -29,7 +29,7 @@ from ..evaluacion.incertidumbre import (
     cuantil_conformal,
     intervalos_conformales,
 )
-from ..modelos.entrenamiento import entrenar, predecir
+from ..modelos.entrenamiento import entrenar, fijar_semilla, predecir
 from ..modelos.redes import ARQUITECTURAS, REFERENCIAS, contar_parametros
 
 REDES = list(ARQUITECTURAS)
@@ -273,6 +273,7 @@ def evaluar_zoo(
     for red in redes:
         pva_s, pte_s, puntajes, info = [], [], [], []
         for s in semillas:
+            fijar_semilla(s)  # la inicialización de los pesos también depende de la semilla
             modelo = ARQUITECTURAS[red](d.L, len(d.nombres), 1)
             modelo, h = entrenar(
                 modelo,

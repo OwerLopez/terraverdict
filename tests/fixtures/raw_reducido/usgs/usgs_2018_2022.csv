@@ -1,0 +1,659 @@
+time,latitude,longitude,depth,mag,magType,net,id,place,type,status
+2018-01-03T05:09:12.910Z,-14.9878,-72.2073,100.46,4.2,mb,us,us1000bz8t,"34 km NNE of Orcopampa, Peru",earthquake,reviewed
+2018-01-10T03:16:43.990Z,-18.192,-69.395,126.51,4.9,mb,us,us1000c30a,"75 km SE of Palca, Peru",earthquake,reviewed
+2018-01-12T15:03:36.370Z,-15.5301,-71.1752,166.45,4.5,mb,us,us2000civm,"14 km ENE of Jayune, Peru",earthquake,reviewed
+2018-01-14T09:18:45.540Z,-15.7675,-74.7092,39,7.1,mww,us,us2000cjfy,"37 km W of Atiquipa, Peru",earthquake,reviewed
+2018-01-14T09:50:42.810Z,-15.8614,-74.4835,47.75,4.4,mb,us,us2000cjgd,"14 km WSW of Atiquipa, Peru",earthquake,reviewed
+2018-01-15T14:27:14.150Z,-15.524,-71.3668,133.64,4.5,mb,us,us2000cjnx,"8 km WNW of Jayune, Peru",earthquake,reviewed
+2018-01-16T15:02:27.080Z,-15.7746,-74.595,47.11,4.8,mb,us,us2000cjyg,"24 km W of Atiquipa, Peru",earthquake,reviewed
+2018-01-19T04:23:14.440Z,-15.9849,-74.4826,10,4.3,mb,us,us1000cdm9,"24 km SSW of Atiquipa, Peru",earthquake,reviewed
+2018-01-19T17:44:25.210Z,-15.956,-74.7636,10,4.6,mb,us,us2000clb7,"46 km WSW of Atiquipa, Peru",earthquake,reviewed
+2018-01-22T13:56:50.000Z,-18.358,-69.457,123.2,4.2,mb,us,us2000cmg8,"83 km SE of Palca, Peru",earthquake,reviewed
+2018-01-25T11:53:47.860Z,-18.3285,-69.307,10,4.9,mb,us,us2000cp81,"92 km SE of Palca, Peru",earthquake,reviewed
+2018-01-25T16:22:22.410Z,-18.2733,-69.2638,10,4.2,mb,us,us2000cp9u,"92 km SE of Palca, Peru",earthquake,reviewed
+2018-01-26T14:31:07.430Z,-15.9873,-74.4516,35,4.3,mb,us,us2000cpt7,"23 km SSW of Atiquipa, Peru",earthquake,reviewed
+2018-01-26T22:27:08.840Z,-15.8376,-74.6775,30.04,4.6,mb,us,us2000cq4y,"33 km W of Atiquipa, Peru",earthquake,reviewed
+2018-01-27T20:26:34.390Z,-15.9063,-74.3703,44.58,4.7,mb,us,us2000cqg2,"12 km S of Atiquipa, Peru",earthquake,reviewed
+2018-01-29T10:01:48.880Z,-18.0225,-69.4518,135.18,4.5,mb,us,us2000cqvw,"60 km ESE of Palca, Peru",earthquake,reviewed
+2018-01-29T11:25:17.860Z,-15.7262,-74.2296,60.12,4.7,mb,us,us2000cqw6,"16 km ENE of Atiquipa, Peru",earthquake,reviewed
+2018-01-30T14:23:52.870Z,-15.8497,-74.6096,34,5.5,mww,us,us2000cr9m,"27 km WSW of Atiquipa, Peru",earthquake,reviewed
+2018-02-02T14:05:03.790Z,-16.5149,-69.7848,190.5,4.1,mb,us,us1000cebf,"26 km NNW of Mazo Cruz, Peru",earthquake,reviewed
+2018-02-04T21:47:28.550Z,-17.3979,-70.8098,40.45,4.7,mb,us,us1000cft6,"23 km SSE of San Antonio, Peru",earthquake,reviewed
+2018-02-05T22:30:59.220Z,-15.9,-74.7325,10,4.7,mb,us,us1000cgck,"41 km WSW of Atiquipa, Peru",earthquake,reviewed
+2018-02-08T05:40:03.990Z,-17.6199,-69.466,133.14,4.5,mb,us,us2000cyp5,"55 km ENE of Palca, Peru",earthquake,reviewed
+2018-02-11T04:11:09.680Z,-16.6587,-74.1634,10,5.4,mww,us,us2000d0gd,"76 km SW of Atico, Peru",earthquake,reviewed
+2018-02-11T18:06:34.000Z,-16.0488,-74.7822,10,4.5,mb,us,us2000d0l2,"52 km WSW of Atiquipa, Peru",earthquake,reviewed
+2018-02-19T08:56:23.720Z,-15.8761,-74.0764,52.32,4.7,mb,us,us2000d4mq,"14 km WSW of Achanizo, Peru",earthquake,reviewed
+2018-02-20T07:08:01.140Z,-16.5823,-69.7488,175.17,4.7,mb,us,us2000d57q,"17 km N of Mazo Cruz, Peru",earthquake,reviewed
+2018-02-26T06:26:56.490Z,-15.0975,-71.5136,114.11,4.7,mb,us,us2000d7zf,"28 km NNW of Tisco, Peru",earthquake,reviewed
+2018-03-05T02:54:06.610Z,-18.3737,-71.4615,21.66,4.1,mwr,us,us2000dc9v,"81 km S of Pacocha, Peru",earthquake,reviewed
+2018-03-06T11:38:46.200Z,-17.4023,-69.7612,163.47,4.2,mb,us,us2000dcut,Peru-Bolivia border region,earthquake,reviewed
+2018-03-15T05:05:10.110Z,-17.2741,-71.1561,62.26,4.2,mb,us,us1000d4l5,"24 km WSW of Moquegua, Peru",earthquake,reviewed
+2018-03-16T01:00:36.280Z,-17.0087,-71.2801,81.66,4.3,mb,us,us1000d51v,"30 km NNE of La Capilla, Peru",earthquake,reviewed
+2018-04-06T11:33:16.830Z,-15.7898,-72.1325,99.84,4.2,mb,us,us2000dvg8,"7 km SSW of Huambo, Peru",earthquake,reviewed
+2018-04-08T14:24:57.880Z,-14.0232,-72.8244,69.93,4.5,mb,us,us2000dwft,"17 km WNW of Curpahuasi, Peru",earthquake,reviewed
+2018-04-08T20:34:55.060Z,-15.2467,-72.1727,97.98,4.2,mb,us,us2000dwl9,"18 km E of Orcopampa, Peru",earthquake,reviewed
+2018-04-09T19:08:46.500Z,-15.8781,-74.4184,35,4.6,mb,us,us2000dx1x,"10 km SSW of Atiquipa, Peru",earthquake,reviewed
+2018-04-13T06:25:11.810Z,-18.2555,-69.663,136.43,4.3,mb,us,us2000dzfd,"61 km SSE of Palca, Peru",earthquake,reviewed
+2018-04-13T15:11:56.030Z,-17.3368,-71.2684,77.94,4.1,mb,us,us2000dzqv,"31 km N of El Algarrobal, Peru",earthquake,reviewed
+2018-04-15T07:35:33.070Z,-16.8734,-72.123,94.92,4,mb,us,us2000e0ix,"13 km N of Islay (Matarani), Peru",earthquake,reviewed
+2018-04-17T12:12:48.480Z,-17.4309,-69.6421,165.4,4.4,mb,us,us1000dpcu,"41 km E of Tarata, Peru",earthquake,reviewed
+2018-04-20T12:23:28.440Z,-18.129,-71.0225,49.59,4.5,mb,us,us1000dp7x,"56 km WSW of Las Yaras, Peru",earthquake,reviewed
+2018-05-05T12:46:43.310Z,-18.8308,-69.8216,103.37,4.1,mb,us,us1000dysm,"63 km SE of Arica, Chile",earthquake,reviewed
+2018-05-05T13:46:41.980Z,-18.0167,-69.6122,136.87,4.5,mb,us,us1000dyte,"45 km SE of Palca, Peru",earthquake,reviewed
+2018-05-07T11:14:12.310Z,-18.1665,-69.6561,116.23,4.4,mb,us,us1000dzv9,"53 km SE of Palca, Peru",earthquake,reviewed
+2018-05-07T11:31:27.000Z,-16.1154,-74.4588,10,4.6,mb,us,us1000e2xz,"36 km SSW of Atiquipa, Peru",earthquake,reviewed
+2018-05-10T04:01:50.470Z,-15.853,-74.2389,55.07,4.4,mb,us,us1000e1ru,"14 km ESE of Atiquipa, Peru",earthquake,reviewed
+2018-05-11T18:48:29.810Z,-16.1811,-72.2548,87.17,5,mb,us,us1000e32f,"21 km NNW of El Pedregal, Peru",earthquake,reviewed
+2018-05-20T11:05:45.630Z,-16.9765,-70.5422,117.33,4.3,mb,us,us1000e8yd,"24 km SE of Carumas, Peru",earthquake,reviewed
+2018-05-31T00:08:33.380Z,-15.8555,-69.6422,246.04,4.2,mb,us,us1000ej2y,"10 km SSE of Taquile, Peru",earthquake,reviewed
+2018-06-03T04:23:57.800Z,-15.7356,-73.0144,71.35,4.4,mb,us,us1000ehnq,"15 km WNW of Yanaquihua, Peru",earthquake,reviewed
+2018-06-08T06:51:35.760Z,-16.4902,-69.2123,211.01,4.3,mb,us,us1000el01,"20 km WNW of Desaguadero, Peru",earthquake,reviewed
+2018-06-11T05:04:33.540Z,-15.9834,-73.4609,61.65,4.6,mb,us,us1000en4f,"30 km SW of Atico, Peru",earthquake,reviewed
+2018-06-16T02:51:50.520Z,-13.491,-72.5575,10,4.6,mb,us,us1000esz1,"27 km E of Cachora, Peru",earthquake,reviewed
+2018-06-16T09:56:09.170Z,-15.8084,-73.3233,83.71,4,mb,us,us1000et39,"25 km NW of Iquipi, Peru",earthquake,reviewed
+2018-06-18T00:11:27.270Z,-17.5126,-72.4723,35,4.3,mwr,us,us1000eu1u,"69 km SW of Islay (Matarani), Peru",earthquake,reviewed
+2018-06-20T23:37:30.190Z,-16.2981,-73.2155,50.37,4.4,mb,us,us1000ewyh,"30 km S of Urasqui, Peru",earthquake,reviewed
+2018-06-26T03:51:40.140Z,-18.631,-69.6897,120.29,4.4,mwr,us,us1000f1x6,"66 km ESE of Arica, Chile",earthquake,reviewed
+2018-06-30T17:58:05.960Z,-17.2195,-69.6247,177.88,4.4,mb,us,us2000fsez,"45 km E of Chuquitira, Peru",earthquake,reviewed
+2018-07-01T04:24:56.330Z,-15.1086,-74.2791,70.33,4.3,mb,us,us2000fsrx,"42 km SSW of San Pedro, Peru",earthquake,reviewed
+2018-07-01T20:54:25.850Z,-16.1857,-69.6137,235.16,4.5,mb,us,us2000ft8p,"10 km SW of Pilcuyo, Peru",earthquake,reviewed
+2018-07-04T18:52:59.330Z,-17.688,-69.1974,145.75,4.7,mwr,us,us2000fx27,"81 km E of Palca, Peru",earthquake,reviewed
+2018-07-10T09:36:12.080Z,-18.3126,-72.5225,18.63,4.4,mwr,us,us2000g10h,"144 km WSW of Pacocha, Peru",earthquake,reviewed
+2018-07-22T16:27:41.960Z,-15.5656,-72.0332,104.92,4.3,mb,us,us2000geks,"10 km W of Tapay, Peru",earthquake,reviewed
+2018-07-24T14:56:55.140Z,-15.8607,-73.1042,68.06,4.2,mb,us,us2000gcpy,"9 km NNE of Iquipi, Peru",earthquake,reviewed
+2018-07-29T03:43:57.860Z,-14.8099,-73.7188,67.98,4.6,mb,us,us2000ggg3,"22 km E of Tambo, Peru",earthquake,reviewed
+2018-08-05T18:48:29.500Z,-16.0224,-73.3622,61.28,4.4,mb,us,us1000g3wb,"20 km W of Urasqui, Peru",earthquake,reviewed
+2018-08-12T07:21:37.610Z,-15.2684,-73.0173,76.8,4.2,mb,us,us1000g758,"0 km NE of Velinga, Peru",earthquake,reviewed
+2018-08-17T18:39:13.900Z,-15.5709,-70.2424,218.44,4.6,mb,us,us1000gbqv,"12 km NE of Cabana, Peru",earthquake,reviewed
+2018-08-20T06:13:17.200Z,-15.6147,-71.9994,10,4.5,mb,us,us1000gdqr,"7 km WSW of Tapay, Peru",earthquake,reviewed
+2018-08-23T09:44:02.940Z,-17.2288,-69.5081,157.8,5,mwr,us,us1000gfyz,"57 km E of Chuquitira, Peru",earthquake,reviewed
+2018-08-27T21:46:18.210Z,-17.6048,-69.8387,122.65,4.7,mwr,us,us1000giaa,"20 km ESE of Estique, Peru",earthquake,reviewed
+2018-09-04T19:46:58.750Z,-17.6764,-73.2216,10,4.5,mb,us,us2000h8cu,"128 km SSW of Camaná, Peru",earthquake,reviewed
+2018-09-10T01:52:56.450Z,-17.9162,-70.1926,129.34,4.2,mb,us,us2000hbnr,"2 km NNW of Calana, Peru",earthquake,reviewed
+2018-09-13T12:03:20.030Z,-15.5678,-70.1596,217.41,4.5,mb,us,us2000hdyf,"6 km W of Caracoto, Peru",earthquake,reviewed
+2018-09-14T09:08:08.180Z,-16.5207,-71.8162,50.45,4.6,mb,us,us2000hejh,"4 km SE of El Triunfo ( El Cruce), Peru",earthquake,reviewed
+2018-09-14T11:20:03.310Z,-15.9944,-71.4369,129.55,5.4,mww,us,us2000hekx,"2 km ESE of Pucara, Peru",earthquake,reviewed
+2018-09-16T07:01:12.130Z,-18.7638,-69.8781,86.34,4.1,mb,us,us2000hfde,"54 km SE of Arica, Chile",earthquake,reviewed
+2018-09-23T00:55:12.450Z,-15.3917,-73.2825,113.26,4.1,mb,us,us1000h3tf,"6 km SW of Tauria, Peru",earthquake,reviewed
+2018-09-26T14:46:07.920Z,-17.7342,-71.3309,56.55,4,mb,us,us2000hk6q,"9 km S of Pacocha, Peru",earthquake,reviewed
+2018-09-29T05:38:51.280Z,-18.3598,-69.3185,135.45,4.2,mwr,us,us1000h45r,"93 km SE of Palca, Peru",earthquake,reviewed
+2018-10-05T01:46:01.230Z,-14.546,-71.5485,10,5.2,mww,us,us1000h7da,"18 km WSW of Checca, Peru",earthquake,reviewed
+2018-10-05T14:32:48.560Z,-15.9882,-71.8717,114.88,4.4,mb,us,us1000hanc,"16 km W of Lluta, Peru",earthquake,reviewed
+2018-10-07T01:04:50.040Z,-17.193,-70.0622,155.99,4.3,mb,us,us1000h8b6,"10 km N of Chuquitira, Peru",earthquake,reviewed
+2018-10-17T02:45:19.060Z,-14.837,-71.7404,109.63,4.4,mb,us,us1000hd6j,"22 km W of Coporaque, Peru",earthquake,reviewed
+2018-10-18T15:47:53.110Z,-17.9077,-69.9869,113.96,4.7,mww,us,us1000hdya,"14 km S of Palca, Peru",earthquake,reviewed
+2018-10-18T21:05:55.290Z,-16.3139,-69.6357,213.45,4.1,mb,us,us1000he42,"22 km WSW of Juli, Peru",earthquake,reviewed
+2018-10-19T05:17:32.310Z,-18.3597,-70.4573,66.38,4.4,mb,us,us1000he9f,"21 km NW of Arica, Chile",earthquake,reviewed
+2018-10-24T07:37:44.400Z,-15.3862,-72.0527,102.4,4.4,mb,us,us1000hgew,"22 km NNE of Choco, Peru",earthquake,reviewed
+2018-10-25T06:03:43.860Z,-13.936,-71.8573,43.02,4.3,mb,us,us1000hgvk,"10 km W of Pillpinto, Peru",earthquake,reviewed
+2018-10-26T12:03:22.420Z,-17.2816,-69.9642,137.67,4.9,mww,us,us1000hhin,"8 km E of Chuquitira, Peru",earthquake,reviewed
+2018-10-27T08:11:15.900Z,-15.0278,-70.7928,19.81,4.5,mb,us,us1000hhx1,"15 km SSE of Cupi, Peru",earthquake,reviewed
+2018-11-02T14:06:53.880Z,-18.2241,-70.0731,101.65,4.2,mb,us,us2000i5we,"30 km SE of Tacna, Peru",earthquake,reviewed
+2018-11-04T11:54:14.110Z,-15.3273,-74.2429,67.33,4.9,mb,us,us2000i6q7,"40 km NNW of Tocota, Peru",earthquake,reviewed
+2018-11-05T04:36:30.190Z,-17.3914,-69.3083,166.89,4.2,mb,us,us1000hqx3,"77 km ENE of Estique, Peru",earthquake,reviewed
+2018-11-08T11:57:30.980Z,-18.5785,-70.6187,44.99,4,mb,us,us1000hp8l,"35 km WSW of Arica, Chile",earthquake,reviewed
+2018-11-11T11:11:46.100Z,-13.4004,-71.8301,46.79,4.2,mb,us,us1000hqk3,"3 km NE of Pisac, Peru",earthquake,reviewed
+2018-11-14T23:17:57.750Z,-16.4912,-71.496,87.39,4,mb,us,us1000hv3c,southern Peru,earthquake,reviewed
+2018-11-15T06:27:13.180Z,-18.3733,-69.7032,149.43,4.1,mb,us,us1000hs1w,"63 km E of Arica, Chile",earthquake,reviewed
+2018-11-20T17:02:39.550Z,-16.4193,-74.076,8.18,4.4,mb,us,us1000huh2,"53 km WSW of Atico, Peru",earthquake,reviewed
+2018-11-23T22:04:13.530Z,-14.8083,-73.9628,93.25,4.6,mb,us,us1000hvz1,"4 km WSW of Tambo, Peru",earthquake,reviewed
+2018-12-01T11:30:50.070Z,-17.6607,-72.9686,10,4.2,mb,us,us1000hzhi,"117 km SW of Islay (Matarani), Peru",earthquake,reviewed
+2018-12-12T13:13:34.040Z,-18.0289,-70.0071,129.53,4.3,mb,us,us2000isw2,"21 km ESE of Calana, Peru",earthquake,reviewed
+2018-12-14T08:40:07.740Z,-18.4517,-71.44,33.34,4.3,mb,us,us2000ivbw,"89 km S of Pacocha, Peru",earthquake,reviewed
+2018-12-15T11:08:25.800Z,-17.6174,-69.7349,10,4.2,mb,us,us2000itu3,"29 km NE of Palca, Peru",earthquake,reviewed
+2018-12-18T03:55:36.710Z,-14.8693,-72.2087,95.23,4,mb,us,us2000iumf,"29 km SW of Cayarani, Peru",earthquake,reviewed
+2018-12-20T03:03:43.770Z,-16.0034,-73.2631,54.08,4.2,mb,us,us2000iv7y,"10 km WNW of Urasqui, Peru",earthquake,reviewed
+2018-12-24T15:08:40.870Z,-18.2905,-69.4142,144.72,4.1,mb,us,us2000ix5i,"81 km SE of Palca, Peru",earthquake,reviewed
+2018-12-24T23:14:02.210Z,-18.2938,-71.2259,35,4.1,mb,us,us2000ixa4,"72 km S of Pacocha, Peru",earthquake,reviewed
+2018-12-27T08:55:42.150Z,-16.3939,-69.8565,202.94,4.4,mb,us,us2000iy0m,"39 km SSW of Ilave, Peru",earthquake,reviewed
+2018-12-31T07:45:58.670Z,-15.9143,-73.2966,84.94,4.1,mb,us,us2000j5mj,"18 km W of Iquipi, Peru",earthquake,reviewed
+2019-01-05T08:30:09.230Z,-18.6437,-69.368,129.78,4.3,mb,us,us2000j0gr,"99 km E of Arica, Chile",earthquake,reviewed
+2019-01-06T11:06:20.320Z,-15.1888,-70.8297,30.6,5,mb,us,us2000j0ss,"12 km SE of Ocuviri, Peru",earthquake,reviewed
+2019-01-13T16:53:11.960Z,-15.8636,-71.9032,117.72,4.3,mb,us,us2000j3jc,"20 km NE of Lluta, Peru",earthquake,reviewed
+2019-01-14T05:05:14.110Z,-16.6061,-69.5599,194.39,4.3,mb,us,us1000is4h,"22 km NE of Mazo Cruz, Peru",earthquake,reviewed
+2019-01-14T21:16:26.430Z,-14.9755,-72.5924,122.41,4,mb,us,us1000is51,"14 km NE of Puyca, Peru",earthquake,reviewed
+2019-01-14T22:48:08.620Z,-17.6744,-70.6526,96.3,5.2,mb,us,us1000is4x,"13 km ESE of Locumba, Peru",earthquake,reviewed
+2019-01-23T06:39:19.130Z,-14.7157,-71.9011,91.51,4.3,mb,us,us2000j7ng,"13 km ESE of Cayarani, Peru",earthquake,reviewed
+2019-01-23T06:53:06.380Z,-18.6257,-71.0399,10.42,4.1,mb,us,us2000j7nl,"80 km WSW of Arica, Chile",earthquake,reviewed
+2019-01-25T17:40:55.590Z,-15.3088,-71.6988,138.34,4.8,mb,us,us2000j8wl,"27 km W of Tisco, Peru",earthquake,reviewed
+2019-01-28T23:55:51.480Z,-15.6128,-73.1832,114.31,4.5,mb,us,us2000j9wp,"28 km S of Tauria, Peru",earthquake,reviewed
+2019-01-29T03:15:30.200Z,-18.5797,-69.5363,123.03,4.1,mb,us,us2000jhcv,"81 km E of Arica, Chile",earthquake,reviewed
+2019-01-29T23:35:00.470Z,-15.523,-72.3651,111.9,5.5,mww,us,us1000iru6,"20 km NNW of Ayo, Peru",earthquake,reviewed
+2019-02-03T20:08:36.260Z,-16.1871,-74.6484,112.6,4,mb,us,us2000jn8k,"52 km SW of Atiquipa, Peru",earthquake,reviewed
+2019-02-06T13:39:40.590Z,-17.4169,-70.1605,177.82,4.2,mb,us,us2000je66,"5 km SSW of Sitajara, Peru",earthquake,reviewed
+2019-02-07T17:24:46.730Z,-15.6936,-69.7484,238.58,4.4,mb,us,us2000jnct,"10 km ESE of Capachica, Peru",earthquake,reviewed
+2019-02-09T20:16:21.160Z,-15.0234,-70.6472,180.7,4.4,mb,us,us2000jfqu,"16 km SSW of Ayaviri, Peru",earthquake,reviewed
+2019-02-14T04:02:46.500Z,-15.1428,-71.6504,117.01,4.4,mb,us,us2000jhqs,"31 km NW of Tisco, Peru",earthquake,reviewed
+2019-02-21T22:17:33.660Z,-15.2699,-72.9909,77.17,5.2,mww,us,us2000jla7,"3 km E of Velinga, Peru",earthquake,reviewed
+2019-02-28T20:43:21.930Z,-17.5653,-69.7476,151.47,4.8,mb,us,us1000j8x8,"28 km E of Estique, Peru",earthquake,reviewed
+2019-03-01T08:50:42.591Z,-14.7131,-70.1546,267,7,mww,us,us1000j96d,"22 km NNE of Azángaro, Peru",earthquake,reviewed
+2019-03-07T05:50:36.650Z,-18.7902,-69.4234,107.98,4.9,mww,us,us1000jbqi,"98 km ESE of Arica, Chile",earthquake,reviewed
+2019-03-10T03:41:26.300Z,-15.2974,-72.4796,99.41,4.5,mb,us,us1000jd3h,southern Peru,earthquake,reviewed
+2019-03-12T12:51:07.697Z,-14.9374,-72.4633,87.12,4.5,mb,us,us1000je3g,"28 km ENE of Puyca, Peru",earthquake,reviewed
+2019-03-12T18:06:30.726Z,-14.564,-72.3854,83.92,4.5,mb,us,us1000je8b,"35 km WSW of Santo Tomas, Peru",earthquake,reviewed
+2019-03-15T04:36:01.612Z,-18.1843,-69.7096,147.08,4.2,mb,us,us1000jkc2,"52 km SSE of Palca, Peru",earthquake,reviewed
+2019-03-20T05:41:42.964Z,-15.4009,-70.5959,191.19,4.5,mb,us,us1000jj1k,"18 km S of Palca, Peru",earthquake,reviewed
+2019-03-21T10:12:46.620Z,-15.4538,-74.3016,79.5,4.4,mb,us,us1000jjpj,"32 km NW of Tocota, Peru",earthquake,reviewed
+2019-03-24T17:30:30.666Z,-18.6457,-69.4064,134.63,4.3,mb,us,us1000jl0s,"96 km E of Arica, Chile",earthquake,reviewed
+2019-03-27T00:34:52.380Z,-19.2588,-70.2961,43.9,4.5,mb,us,us1000jm5c,"86 km S of Arica, Chile",earthquake,reviewed
+2019-03-27T03:57:08.471Z,-18.4673,-69.3866,129.11,4.7,mww,us,us1000jm80,"96 km E of Arica, Chile",earthquake,reviewed
+2019-03-29T21:42:39.200Z,-18.6256,-69.3484,124.06,4.1,mb,us,us2000k7e3,"101 km E of Arica, Chile",earthquake,reviewed
+2019-03-31T07:45:23.315Z,-15.5386,-70.7192,200.23,4.5,mb,us,us2000kces,"21 km NW of Santa Lucía, Peru",earthquake,reviewed
+2019-04-02T03:36:40.555Z,-17.6336,-69.6057,162.65,4.3,mb,us,us2000k8zz,Peru-Bolivia border region,earthquake,reviewed
+2019-04-03T21:27:24.790Z,-16.4155,-71.9182,116.48,4.4,mb,us,us70001jnb,"11 km NW of El Triunfo ( El Cruce), Peru",earthquake,reviewed
+2019-04-03T21:27:24.833Z,-16.3874,-71.8288,112.96,4.6,mb,us,us2000k9xq,"11 km NNE of El Triunfo ( El Cruce), Peru",earthquake,reviewed
+2019-04-05T16:58:42.447Z,-18.5344,-70.933,30.25,4.8,mb,us,us2000kawj,"67 km W of Arica, Chile",earthquake,reviewed
+2019-04-07T01:15:01.099Z,-15.8438,-72.6246,82.15,4.7,mb,us,us2000kbl8,"1 km N of Iray, Peru",earthquake,reviewed
+2019-04-10T13:08:09.306Z,-16.0662,-69.58,224.87,4.6,mb,us,us700033mf,"5 km NNW of Pilcuyo, Peru",earthquake,reviewed
+2019-04-13T12:43:13.397Z,-18.5587,-71.1043,43.09,4.1,mb,us,us700035e5,"85 km W of Arica, Chile",earthquake,reviewed
+2019-04-23T10:16:15.082Z,-18.3824,-70.4135,74.48,4.1,mb,us,us70003alj,"15 km NW of Arica, Chile",earthquake,reviewed
+2019-05-02T03:03:39.652Z,-18.3835,-69.4533,122.41,4.4,mb,us,us70003jdc,"86 km SE of Palca, Peru",earthquake,reviewed
+2019-05-04T19:31:00.383Z,-15.0271,-71.7253,130.41,4.2,mb,us,us70003kws,"32 km SW of Coporaque, Peru",earthquake,reviewed
+2019-05-06T06:47:55.958Z,-17.0744,-73.6539,10,4.2,mb,us,us70003ll1,"95 km S of Atico, Peru",earthquake,reviewed
+2019-05-12T21:52:10.778Z,-17.6393,-69.504,158.32,4.5,mb,us,us70003k4p,"50 km ENE of Palca, Peru",earthquake,reviewed
+2019-05-14T01:39:28.860Z,-18.3519,-70.5758,69.65,4.1,mb,us,us70003ks0,"32 km WNW of Arica, Chile",earthquake,reviewed
+2019-05-14T02:04:54.632Z,-16.012,-74.0231,58.32,4.4,mb,us,us70003ksg,"23 km SSW of Achanizo, Peru",earthquake,reviewed
+2019-05-16T14:32:49.376Z,-17.8136,-70.1711,114.14,5.1,mww,us,usd000a1k6,"14 km N of Calana, Peru",earthquake,reviewed
+2019-05-16T14:32:49.949Z,-17.7629,-70.076,107.03,5.1,mww,us,us70003m17,"12 km W of Palca, Peru",earthquake,reviewed
+2019-05-16T23:49:27.865Z,-14.3884,-70.9499,32.05,4.4,mwr,us,us70003mc5,"18 km SE of Mosoc Cancha, Peru",earthquake,reviewed
+2019-05-21T12:55:31.213Z,-15.7813,-72.0183,10,4.7,mb,us,us70003nx8,"11 km ESE of Huambo, Peru",earthquake,reviewed
+2019-05-21T13:37:39.241Z,-15.8258,-72.0107,8.33,4.9,mww,us,us70003nxk,"14 km SE of Huambo, Peru",earthquake,reviewed
+2019-05-26T23:42:19.238Z,-16.0473,-72.1059,12.55,4.3,mwr,us,us70003v9y,"10 km WSW of Lluta, Peru",earthquake,reviewed
+2019-05-29T04:11:07.502Z,-17.7789,-69.7015,151.09,4.2,mb,us,us60003tgj,"27 km E of Palca, Peru",earthquake,reviewed
+2019-05-30T18:55:18.247Z,-15.0669,-72.1194,114.07,4.7,mb,us,us70003tc3,"32 km NE of Orcopampa, Peru",earthquake,reviewed
+2019-05-31T07:25:09.790Z,-18.6753,-69.3507,120.16,4.8,mb,us,us70003tk2,"102 km ESE of Arica, Chile",earthquake,reviewed
+2019-06-01T17:55:43.431Z,-14.4061,-71.1689,30.95,4.6,mb,us,us70003u6r,"5 km S of Maranganí, Peru",earthquake,reviewed
+2019-06-02T16:11:17.019Z,-17.5411,-70.6748,121.42,4.1,mb,us,us70003ufu,"12 km NE of Locumba, Peru",earthquake,reviewed
+2019-06-04T02:04:15.800Z,-15.7796,-71.5716,90.81,4.2,mb,us,us70003yh5,"12 km W of Huarancante, Peru",earthquake,reviewed
+2019-06-08T21:09:15.121Z,-17.2583,-74.5104,10,4.4,mb,us,us600040qg,"149 km SW of Atico, Peru",earthquake,reviewed
+2019-06-11T05:00:53.179Z,-18.8874,-70.3981,58.41,4.3,mwr,us,us70003xys,"46 km SSW of Arica, Chile",earthquake,reviewed
+2019-06-27T11:45:34.543Z,-18.4352,-70.0348,73.43,4.1,mb,us,us70004b84,"28 km E of Arica, Chile",earthquake,reviewed
+2019-06-27T23:37:58.745Z,-17.5662,-69.9017,164.17,4,mb,us,us700046cf,"12 km ESE of Estique, Peru",earthquake,reviewed
+2019-06-29T05:00:23.336Z,-16.0048,-74.2359,35,4.8,mb,us,us7000476b,"26 km SSE of Atiquipa, Peru",earthquake,reviewed
+2019-06-29T20:14:44.197Z,-18.5285,-69.3814,126.25,4.5,mwr,us,us700047gj,"96 km E of Arica, Chile",earthquake,reviewed
+2019-06-30T07:41:05.616Z,-17.1867,-69.5504,165.9,4.4,mb,us,us700047m2,"52 km SSE of Mazo Cruz, Peru",earthquake,reviewed
+2019-06-30T23:18:10.452Z,-17.3518,-69.3804,161.11,4.3,mb,us,us700047t1,"70 km E of Tarata, Peru",earthquake,reviewed
+2019-07-08T08:05:47.912Z,-15.8048,-73.3568,74.66,4.4,mb,us,us70004n2z,"28 km WNW of Iquipi, Peru",earthquake,reviewed
+2019-07-08T16:05:53.815Z,-18.5954,-70.0033,84.99,4.1,mb,us,us70004eun,"33 km ESE of Arica, Chile",earthquake,reviewed
+2019-07-08T21:05:37.943Z,-18.1588,-70.1765,102.57,4,mb,us,us70004f5w,"17 km SSE of Tacna, Peru",earthquake,reviewed
+2019-07-10T02:07:25.569Z,-15.6409,-70.0978,235.99,4.3,mb,us,us70004nze,"7 km NE of Atuncolla, Peru",earthquake,reviewed
+2019-07-23T11:41:19.813Z,-15.6808,-74.625,35,4.7,mb,us,us70004r5b,"28 km S of Acarí, Peru",earthquake,reviewed
+2019-07-26T01:56:52.928Z,-18.605,-71.0957,38.23,4.3,mwr,us,us60004vp6,"85 km W of Arica, Chile",earthquake,reviewed
+2019-08-04T01:34:09.469Z,-16.6727,-69.8558,187.92,4.2,mb,us,us600052yr,"16 km WNW of Mazo Cruz, Peru",earthquake,reviewed
+2019-08-09T22:27:53.335Z,-16.0521,-70.2685,195.21,4.5,mb,us,us6000536m,"27 km SSW of Tiquillaca, Peru",earthquake,reviewed
+2019-08-14T05:02:55.746Z,-16.0443,-72.3944,10,4.4,mb,us,us700058cb,"32 km SE of Iray, Peru",earthquake,reviewed
+2019-08-14T12:23:08.288Z,-18.6654,-69.5975,119.04,4.4,mb,us,us600054xu,"76 km ESE of Arica, Chile",earthquake,reviewed
+2019-08-18T21:22:20.311Z,-17.7937,-69.3373,164.44,4.1,mb,us,us700058g6,"66 km E of Palca, Peru",earthquake,reviewed
+2019-08-22T05:39:59.902Z,-15.2823,-70.3203,236.07,4.3,mb,us,us700056xd,"8 km NNE of Lampa, Peru",earthquake,reviewed
+2019-08-22T10:59:05.085Z,-17.1449,-70.216,121.37,4.8,mb,us,us70005713,"14 km NNE of Candarave, Peru",earthquake,reviewed
+2019-08-30T03:46:55.888Z,-17.3313,-70.7183,118.97,4.3,mb,us,us70005cbs,"23 km WNW of Ilabaya, Peru",earthquake,reviewed
+2019-08-30T11:25:30.450Z,-17.707,-69.6707,159.37,4.5,mb,us,us70005a69,"31 km ENE of Palca, Peru",earthquake,reviewed
+2019-09-01T21:32:16.431Z,-18.5789,-71.0334,35,5.1,mww,us,us70005b1n,"78 km W of Arica, Chile",earthquake,reviewed
+2019-09-02T16:35:27.803Z,-14.0458,-72.5498,80,5,mww,us,us70005b70,central Peru,earthquake,reviewed
+2019-09-05T11:09:01.829Z,-17.561,-69.4944,171.38,4.6,mb,us,us70005c9b,"54 km ENE of Palca, Peru",earthquake,reviewed
+2019-09-11T14:52:30.286Z,-18.0263,-70.0244,93.76,4.5,mwr,us,us70005esi,"19 km ESE of Calana, Peru",earthquake,reviewed
+2019-09-15T03:25:38.143Z,-17.9294,-69.5951,144.37,4.4,mb,us,us70005gk8,"42 km ESE of Palca, Peru",earthquake,reviewed
+2019-09-18T05:36:23.758Z,-19.2241,-70.2789,72.73,4.2,mb,us,us70005hs1,"82 km S of Arica, Chile",earthquake,reviewed
+2019-09-18T13:13:54.837Z,-15.6584,-74.0643,66.25,4.4,mb,us,us70005huy,"2 km E of Tocota, Peru",earthquake,reviewed
+2019-09-20T05:33:49.532Z,-16.495,-71.8632,127.52,4.2,mb,us,us70005mix,"1 km W of El Triunfo ( El Cruce), Peru",earthquake,reviewed
+2019-09-22T05:28:24.159Z,-14.6866,-73.5712,67.19,4.9,mb,us,us60005lxn,"30 km NW of Upahuacho, Peru",earthquake,reviewed
+2019-09-27T13:57:41.544Z,-15.2842,-72.1261,80.54,4.6,mb,us,us70005mh9,"23 km E of Orcopampa, Peru",earthquake,reviewed
+2019-10-04T04:02:26.877Z,-18.6199,-71.1568,22.2,4.9,mww,us,us70005qk0,"92 km W of Arica, Chile",earthquake,reviewed
+2019-10-08T06:18:04.246Z,-18.1057,-69.4843,138.3,4.6,mwr,us,us70005rv1,"62 km SE of Palca, Peru",earthquake,reviewed
+2019-10-09T18:08:15.512Z,-17.1201,-70.124,161.46,4.3,mb,us,us70005v23,"20 km NNW of Chuquitira, Peru",earthquake,reviewed
+2019-10-10T17:26:42.315Z,-16.0936,-73.3569,64.01,4.7,mww,us,us70005t3y,"21 km WSW of Urasqui, Peru",earthquake,reviewed
+2019-10-12T23:17:59.542Z,-15.7454,-69.8171,248.86,4.2,mb,us,us70005ts7,"11 km S of Capachica, Peru",earthquake,reviewed
+2019-10-13T13:29:20.356Z,-17.7394,-69.394,154.18,4.2,mb,us,us70005wvf,"60 km E of Palca, Peru",earthquake,reviewed
+2019-10-19T07:57:09.681Z,-17.5738,-69.3839,162.43,4.3,mb,us,us70005vw2,"65 km ENE of Palca, Peru",earthquake,reviewed
+2019-10-25T19:29:47.655Z,-18.1349,-69.3939,134.52,4.2,mb,us,us70006232,"72 km ESE of Palca, Peru",earthquake,reviewed
+2019-10-30T14:56:57.532Z,-15.5042,-70.2846,204.84,4.6,mb,us,us600064vh,"14 km NNE of Cabanilla, Peru",earthquake,reviewed
+2019-11-03T10:33:38.639Z,-17.3924,-69.965,139.28,4.2,mb,us,us700062im,"10 km NE of Ticaco, Peru",earthquake,reviewed
+2019-11-03T18:29:18.923Z,-17.7643,-69.8463,129.49,4.5,mb,us,us700062lz,"12 km E of Palca, Peru",earthquake,reviewed
+2019-11-11T09:20:15.735Z,-14.8331,-72.6093,94.45,4.2,mb,us,us60006a5r,"26 km NNE of Puyca, Peru",earthquake,reviewed
+2019-11-13T00:09:19.939Z,-15.2885,-70.4053,202.83,5.1,mww,us,us60006axf,"7 km NNW of Lampa, Peru",earthquake,reviewed
+2019-11-14T05:40:02.744Z,-18.8031,-69.4933,135.83,4.3,mb,us,us60006bdk,"92 km ESE of Arica, Chile",earthquake,reviewed
+2019-11-15T14:07:16.704Z,-17.1047,-72.3473,47.29,4.3,mb,us,us60006c04,"28 km WSW of Islay (Matarani), Peru",earthquake,reviewed
+2019-11-21T04:52:19.154Z,-18.1792,-69.5103,128.92,4,mb,us,us70006atx,"65 km SE of Palca, Peru",earthquake,reviewed
+2019-12-01T01:34:15.596Z,-15.8821,-72.1949,114.69,4.2,mb,us,us70006ewr,"19 km SSW of Huambo, Peru",earthquake,reviewed
+2019-12-03T07:16:52.545Z,-15.8194,-73.0321,71.4,4.5,mwr,us,us70006fgy,"16 km NE of Iquipi, Peru",earthquake,reviewed
+2019-12-03T08:46:35.780Z,-18.5042,-70.576,38,6,mww,us,us70006fh7,"29 km W of Arica, Chile",earthquake,reviewed
+2019-12-06T00:07:39.207Z,-17.3802,-69.6004,151.34,4.4,mb,us,us60006mqm,"47 km ENE of Tarata, Peru",earthquake,reviewed
+2019-12-09T15:43:43.631Z,-15.6417,-71.6791,133.55,4.8,mb,us,us60006p89,"1 km NE of Ichupampa, Peru",earthquake,reviewed
+2019-12-12T17:13:06.564Z,-14.0953,-72.7509,78.09,4.4,mb,us,us70006nql,"9 km WSW of Curpahuasi, Peru",earthquake,reviewed
+2019-12-15T19:23:37.471Z,-14.5096,-72.3758,103.65,4.9,mb,us,us60006rvh,"32 km WSW of Santo Tomas, Peru",earthquake,reviewed
+2019-12-16T18:07:22.641Z,-14.7276,-73.5381,88.88,4.2,mb,us,us70006tt9,"24 km NW of Upahuacho, Peru",earthquake,reviewed
+2019-12-18T12:24:58.521Z,-15.4729,-72.4428,128.7,4.6,mb,us,us60006t5u,"25 km SSW of Orcopampa, Peru",earthquake,reviewed
+2019-12-26T08:18:12.581Z,-16.2943,-72.9001,109.62,4.3,mb,us,us70006xqe,"38 km NNW of El Cardo, Peru",earthquake,reviewed
+2019-12-29T00:11:10.310Z,-14.8162,-71.9232,114.48,4.6,mb,us,us70006s1l,"19 km SSE of Cayarani, Peru",earthquake,reviewed
+2020-01-08T19:12:16.737Z,-15.7731,-70.2216,222.73,4.2,mb,us,us60007ctw,"4 km E of Vilque, Peru",earthquake,reviewed
+2020-01-08T20:08:15.525Z,-16.7059,-71.3115,123.03,4.2,mb,us,us60007cu0,"15 km WNW of La Capilla, Peru",earthquake,reviewed
+2020-01-11T11:06:49.786Z,-17.6278,-70.2023,115.47,4.2,mb,us,us70006yc1,"14 km S of Chipispaya, Peru",earthquake,reviewed
+2020-01-17T02:28:43.493Z,-15.7353,-72.3504,113.85,4.1,mb,us,us60007j7z,"8 km E of Uñon, Peru",earthquake,reviewed
+2020-01-17T17:56:06.483Z,-15.5292,-70.2253,237.65,4.5,mb,us,us60007j8m,"10 km WSW of Juliaca, Peru",earthquake,reviewed
+2020-01-18T18:01:41.214Z,-17.0713,-71.2827,92.33,4.5,mb,us,us60007a58,"36 km SSW of La Capilla, Peru",earthquake,reviewed
+2020-01-24T05:13:49.880Z,-17.3895,-71.0157,82.32,5.3,mww,us,us60007efq,"21 km SSW of San Antonio, Peru",earthquake,reviewed
+2020-01-24T17:01:06.172Z,-18.2401,-69.6678,117.32,4.7,mb,us,us60007erq,"60 km SSE of Palca, Peru",earthquake,reviewed
+2020-01-25T09:16:29.727Z,-16.5985,-69.9969,204.11,4.4,mb,us,us60007fkv,"33 km WNW of Mazo Cruz, Peru",earthquake,reviewed
+2020-01-29T09:33:43.438Z,-18.2929,-69.4286,142.43,4.2,mb,us,us60007iyk,"Tarapaca, Chile",earthquake,reviewed
+2020-02-09T02:26:48.457Z,-16.9133,-69.4967,184.6,4.1,mb,us,us70007q7b,"30 km SE of Mazo Cruz, Peru",earthquake,reviewed
+2020-02-13T03:59:52.155Z,-15.0552,-71.9604,124.72,4.3,mb,us,us70007tmf,"42 km S of Cayarani, Peru",earthquake,reviewed
+2020-02-13T04:31:52.029Z,-15.9795,-74.667,35,5.1,mww,us,us70007p6c,"38 km WSW of Atiquipa, Peru",earthquake,reviewed
+2020-02-14T13:50:44.616Z,-16.6992,-73.0849,50.45,4.9,mb,us,us70007q0f,"39 km WSW of El Cardo, Peru",earthquake,reviewed
+2020-02-18T09:05:48.840Z,-19.1429,-70.5855,54.77,4,mb,us,us70007sal,"79 km SSW of Arica, Chile",earthquake,reviewed
+2020-02-20T23:58:08.735Z,-16.7783,-72.0921,65.81,4.4,mb,us,us70007txk,"24 km N of Islay (Matarani), Peru",earthquake,reviewed
+2020-03-02T23:07:50.218Z,-18.1133,-70.544,58.14,4.9,mww,us,us6000888y,"27 km S of Las Yaras, Peru",earthquake,reviewed
+2020-03-03T06:00:10.027Z,-16.2967,-73.4064,40.52,4.9,mb,us,us600088fn,"25 km ESE of Atico, Peru",earthquake,reviewed
+2020-03-03T09:10:43.315Z,-14.771,-71.7004,131.43,4.1,mb,us,us600088iz,"18 km W of Coporaque, Peru",earthquake,reviewed
+2020-03-04T03:39:28.464Z,-15.3483,-74.4313,70.96,4.4,mb,us,us60008ckp,"21 km ENE of Acarí, Peru",earthquake,reviewed
+2020-03-04T03:40:06.931Z,-15.2213,-74.2487,75.47,4.3,mb,us,us60008cjq,"45 km W of Pullo, Peru",earthquake,reviewed
+2020-03-14T05:00:48.790Z,-18.5292,-69.7391,131.29,4.3,mb,us,us60008fib,"59 km E of Arica, Chile",earthquake,reviewed
+2020-03-18T18:19:28.985Z,-17.9086,-72.6422,10,4.4,mb,us,us70008bny,"116 km SSW of Islay (Matarani), Peru",earthquake,reviewed
+2020-03-19T01:51:28.752Z,-19.0659,-70.1252,70.27,4.3,mb,us,us70008by4,"67 km SSE of Arica, Chile",earthquake,reviewed
+2020-03-23T22:16:44.640Z,-18.8106,-70.0228,71.92,4.7,mb,us,us70008eui,"47 km SE of Arica, Chile",earthquake,reviewed
+2020-03-31T13:58:26.669Z,-17.9984,-69.9744,126.86,4.3,mb,us,us70008msx,"23 km ESE of Calana, Peru",earthquake,reviewed
+2020-04-02T10:21:39.867Z,-18.5445,-70.6699,35,4.3,mb,us,us70008lg9,"40 km W of Arica, Chile",earthquake,reviewed
+2020-04-08T18:43:51.629Z,-15.8221,-72.6483,90.33,4,mb,us,us70008rus,"4 km NNW of Iray, Peru",earthquake,reviewed
+2020-04-08T21:38:59.658Z,-15.6247,-70.2636,226.15,4.3,mb,us,us70008s0d,"6 km ENE of Cabana, Peru",earthquake,reviewed
+2020-04-09T14:06:52.104Z,-18.18,-69.611,141.89,5,mww,us,us70008se7,"58 km SE of Palca, Peru",earthquake,reviewed
+2020-04-13T13:18:27.874Z,-14.2634,-73.2125,69.79,5.2,mww,us,us70008vh3,"7 km SW of Yanaca, Peru",earthquake,reviewed
+2020-04-13T21:38:46.629Z,-15.8021,-71.8461,67.42,4.3,mb,us,us700090hq,"19 km SSW of Maca, Peru",earthquake,reviewed
+2020-04-17T08:15:46.353Z,-15.4357,-72.0479,118.47,4.2,mb,us,us70008yae,"17 km NNE of Choco, Peru",earthquake,reviewed
+2020-04-21T22:55:41.371Z,-17.6957,-69.1509,166,4.1,mb,us,us700091d3,"78 km WNW of Curahuara de Carangas, Bolivia",earthquake,reviewed
+2020-04-24T22:29:33.374Z,-18.0259,-69.4425,142.69,4.2,mb,us,us60009bv8,"61 km ESE of Palca, Peru",earthquake,reviewed
+2020-04-25T03:29:22.522Z,-18.6421,-69.7767,94.61,4.2,mb,us,us60009c0l,"58 km ESE of Arica, Chile",earthquake,reviewed
+2020-04-28T02:02:23.529Z,-14.2355,-73.475,80.32,4,mb,us,us700099yk,"9 km SE of Pampachiri, Peru",earthquake,reviewed
+2020-04-29T04:38:35.607Z,-16.2065,-71.8499,293.51,4.3,mb,us,us70009afq,"18 km WNW of Yura, Peru",earthquake,reviewed
+2020-05-01T11:45:31.090Z,-15.6248,-70.1739,247.48,4.3,mb,us,us70009b4i,"6 km NNW of Atuncolla, Peru",earthquake,reviewed
+2020-05-03T00:44:26.369Z,-15.2734,-70.4586,184.17,5.7,mww,us,us7000993j,"13 km NW of Lampa, Peru",earthquake,reviewed
+2020-05-03T02:52:56.389Z,-17.3824,-69.4703,169.09,4.2,mb,us,us70009cf1,"61 km E of Tarata, Peru",earthquake,reviewed
+2020-05-04T07:51:24.527Z,-16.9393,-72.4874,69.7,4.5,mb,us,us700099nv,"25 km SSW of Quilca, Peru",earthquake,reviewed
+2020-05-06T15:43:12.556Z,-19.3548,-70.4824,63.51,5.1,mwr,us,us70009b5z,"99 km SSW of Arica, Chile",earthquake,reviewed
+2020-05-13T08:44:25.652Z,-17.6477,-69.5694,162.83,4.2,mb,us,us70009f7v,"43 km ENE of Palca, Peru",earthquake,reviewed
+2020-05-15T11:16:04.664Z,-15.523,-74.2606,81.14,4.7,mb,us,us70009n66,"23 km NW of Tocota, Peru",earthquake,reviewed
+2020-05-16T05:55:42.126Z,-17.7024,-69.7579,149.02,4.3,mwr,us,us70009hsz,"22 km ENE of Palca, Peru",earthquake,reviewed
+2020-05-19T00:24:52.858Z,-14.4895,-72.9009,67.15,4.6,mb,us,us6000a010,"6 km SSE of Mollebamba, Peru",earthquake,reviewed
+2020-05-29T00:29:50.606Z,-18.3291,-69.2638,140.78,4.6,mb,us,us6000a6e2,"95 km SE of Palca, Peru",earthquake,reviewed
+2020-05-31T01:42:42.381Z,-16.8472,-69.5555,198.72,4.5,mb,us,us6000a6l3,"20 km SE of Mazo Cruz, Peru",earthquake,reviewed
+2020-05-31T05:09:38.593Z,-15.3256,-70.7731,186,6.1,mww,us,us6000a316,"19 km SW of Vilavila, Peru",earthquake,reviewed
+2020-06-02T10:29:15.059Z,-17.3353,-69.2858,163.5,4.9,mb,us,us6000a49q,"80 km SE of Mazo Cruz, Peru",earthquake,reviewed
+2020-06-10T11:13:42.619Z,-16.7273,-69.5449,204.19,4.5,mb,us,us6000adhm,"18 km E of Mazo Cruz, Peru",earthquake,reviewed
+2020-06-15T02:18:24.570Z,-15.08,-73.1909,89.09,4.3,mb,us,us6000abyp,"11 km N of Oyolo, Peru",earthquake,reviewed
+2020-06-28T15:33:25.716Z,-18.9386,-69.6431,116.26,4.2,mb,us,us7000ads8,"86 km SE of Arica, Chile",earthquake,reviewed
+2020-06-29T02:42:27.864Z,-15.9797,-71.8308,120.03,4.4,mb,us,us7000ae0p,"20 km E of Lluta, Peru",earthquake,reviewed
+2020-07-04T07:14:08.000Z,-18.8199,-69.5638,116.22,4.2,mb,us,us7000ahtk,"86 km ESE of Arica, Chile",earthquake,reviewed
+2020-07-08T23:30:13.151Z,-17.5151,-69.9517,10,4.3,mb,us,us7000alrg,"7 km ENE of Estique, Peru",earthquake,reviewed
+2020-07-13T04:20:14.274Z,-17.4889,-70.9339,75.82,4.5,mb,us,us7000arp4,"22 km NW of Locumba, Peru",earthquake,reviewed
+2020-07-15T22:25:22.747Z,-16.3771,-73.9259,10.88,4.4,mwr,us,us7000apdy,"37 km WSW of Atico, Peru",earthquake,reviewed
+2020-07-16T21:24:54.168Z,-16.0233,-72.4564,99.8,4.2,mb,us,us7000apz1,"25 km SE of Iray, Peru",earthquake,reviewed
+2020-07-17T05:04:02.551Z,-16.7327,-71.9099,108.23,4.3,mb,us,us7000aq5h,"27 km SSW of El Triunfo ( El Cruce), Peru",earthquake,reviewed
+2020-07-22T19:45:08.109Z,-16.4007,-73.8964,35,4.9,mb,us,us6000b25r,"36 km SW of Atico, Peru",earthquake,reviewed
+2020-07-23T13:19:26.166Z,-17.5656,-70.8449,115.07,4.2,mwr,us,us6000b2mx,"10 km WNW of Locumba, Peru",earthquake,reviewed
+2020-07-24T07:43:38.829Z,-16.3682,-73.8191,35,4.4,mb,us,us6000b38q,"27 km SW of Atico, Peru",earthquake,reviewed
+2020-07-24T10:08:36.613Z,-16.579,-74.6529,10,4.2,mb,us,us6000b66s,"91 km SSW of Atiquipa, Peru",earthquake,reviewed
+2020-07-25T16:31:15.815Z,-17.4809,-69.8895,10,4.9,mb,us,us6000b420,"15 km E of Tarata, Peru",earthquake,reviewed
+2020-07-25T19:11:37.035Z,-17.5069,-69.8917,10,4.1,mb,us,us6000b6nz,"14 km ENE of Estique, Peru",earthquake,reviewed
+2020-07-26T10:04:00.903Z,-17.5772,-69.808,17.68,4.2,mwr,us,us6000b4bs,"22 km E of Estique, Peru",earthquake,reviewed
+2020-07-26T10:07:15.059Z,-17.5285,-69.8417,10,4.5,mwr,us,us6000b4bv,"18 km E of Estique, Peru",earthquake,reviewed
+2020-07-26T10:57:25.767Z,-17.5082,-69.7816,10,4.1,mwr,us,us6000b6tu,"25 km E of Estique, Peru",earthquake,reviewed
+2020-07-26T11:06:24.589Z,-17.468,-69.8851,10,4.4,mwr,us,us6000b4cj,"15 km E of Tarata, Peru",earthquake,reviewed
+2020-07-26T11:28:49.196Z,-17.5168,-69.8323,16.84,4.8,mwr,us,us6000b4cp,"19 km E of Estique, Peru",earthquake,reviewed
+2020-07-26T12:01:32.240Z,-17.6096,-69.7437,10,4.1,mb,us,us6000b6ts,"29 km NE of Palca, Peru",earthquake,reviewed
+2020-07-26T13:14:26.072Z,-17.5498,-69.8281,10,4.5,mb,us,us6000b4e2,"20 km E of Estique, Peru",earthquake,reviewed
+2020-07-28T16:40:06.561Z,-16.8052,-72.4562,77.74,4.9,mww,us,us6000b5es,"10 km SSW of Quilca, Peru",earthquake,reviewed
+2020-07-29T16:01:54.484Z,-15.6994,-74.3119,63.5,4.3,mb,us,us6000b987,"12 km NNE of Atiquipa, Peru",earthquake,reviewed
+2020-07-31T10:03:34.412Z,-14.1413,-72.8739,56.4,5,mww,us,us6000b7d2,"17 km ENE of Pachaconas, Peru",earthquake,reviewed
+2020-08-01T08:25:26.767Z,-16.344,-72.6021,79.63,5.1,mww,us,us6000b7w3,"31 km NNE of El Cardo, Peru",earthquake,reviewed
+2020-08-04T13:57:51.231Z,-16.7565,-71.2357,114.16,4.2,mb,us,us6000b95w,"6 km W of La Capilla, Peru",earthquake,reviewed
+2020-08-14T20:34:35.468Z,-15.7132,-72.1145,10,5,mww,us,us6000beyh,"2 km NNW of Huambo, Peru",earthquake,reviewed
+2020-08-16T03:18:50.046Z,-19.2414,-70.2937,60.36,5.1,mww,us,us6000bff9,"84 km S of Arica, Chile",earthquake,reviewed
+2020-08-24T10:05:16.098Z,-14.1868,-72.8876,65.07,4.4,mb,us,us6000bjns,"14 km ENE of Pachaconas, Peru",earthquake,reviewed
+2020-08-30T00:39:06.739Z,-15.4217,-70.9778,10,4.4,mb,us,us7000bh51,"25 km NNE of Huarichancara, Peru",earthquake,reviewed
+2020-09-03T17:48:29.926Z,-17.2024,-69.7582,152.11,4.2,mb,us,us7000bhaz,"31 km ENE of Chuquitira, Peru",earthquake,reviewed
+2020-09-10T00:36:24.243Z,-14.3886,-73.5903,67.05,4.3,mb,us,us7000bktm,"22 km SSW of Pampachiri, Peru",earthquake,reviewed
+2020-09-17T10:02:58.022Z,-17.5896,-69.2226,152.37,4.5,mb,us,us7000bpbq,"80 km ENE of Palca, Peru",earthquake,reviewed
+2020-09-20T05:29:41.797Z,-15.2393,-71.5961,144.77,4.5,mb,us,us7000bqe0,"19 km NW of Tisco, Peru",earthquake,reviewed
+2020-09-21T20:18:47.522Z,-18.4945,-69.8286,102.98,4.1,mb,us,us6000bzft,"49 km E of Arica, Chile",earthquake,reviewed
+2020-09-22T06:49:36.696Z,-14.2589,-72.8441,66.33,4,mb,us,us6000c181,"10 km NNE of Huaquirca, Peru",earthquake,reviewed
+2020-10-05T12:07:35.799Z,-16.6031,-69.7616,192.31,4.3,mb,us,us6000c723,"16 km NNW of Mazo Cruz, Peru",earthquake,reviewed
+2020-10-06T13:17:39.466Z,-15.3166,-72.2307,114.9,4,mb,us,us6000c73h,"13 km ESE of Orcopampa, Peru",earthquake,reviewed
+2020-10-11T00:41:08.267Z,-14.1953,-72.9476,78.54,4.6,mb,us,us6000c7f0,"8 km ENE of Pachaconas, Peru",earthquake,reviewed
+2020-10-12T01:00:53.214Z,-14.9488,-74.0514,69.02,4.3,mb,us,us6000c7mk,"20 km SSE of San Pedro, Peru",earthquake,reviewed
+2020-10-12T21:02:56.355Z,-16.4785,-70.9327,129.45,5,mb,us,us6000c7v8,"11 km SW of Ubinas, Peru",earthquake,reviewed
+2020-10-13T05:19:49.316Z,-15.23,-71.7411,119.32,4.3,mb,us,us6000c7xy,"34 km WNW of Tisco, Peru",earthquake,reviewed
+2020-10-17T04:46:24.802Z,-16.4854,-73.4947,40.14,4.7,mb,us,us6000c8x0,"33 km SSE of Atico, Peru",earthquake,reviewed
+2020-10-20T16:54:44.564Z,-15.4041,-73.7325,77.29,4.4,mb,us,us6000ca48,"23 km SSE of Pullo, Peru",earthquake,reviewed
+2020-10-24T15:52:32.421Z,-17.745,-69.2529,158.44,4.2,mwr,us,us6000ccnb,"75 km E of Palca, Peru",earthquake,reviewed
+2020-10-25T13:38:50.749Z,-18.6242,-69.5596,118.89,4.1,mb,us,us6000cczw,"79 km ESE of Arica, Chile",earthquake,reviewed
+2020-10-26T06:09:41.599Z,-17.571,-70.9416,105.44,4.4,mb,us,us7000c818,"19 km WNW of Locumba, Peru",earthquake,reviewed
+2020-10-29T16:08:38.894Z,-17.7108,-69.8073,150.37,4.9,mww,us,us7000c7ji,"17 km ENE of Palca, Peru",earthquake,reviewed
+2020-11-01T02:47:33.542Z,-18.6705,-69.9055,86.19,4.6,mb,us,us7000c8un,"46 km ESE of Arica, Chile",earthquake,reviewed
+2020-11-03T19:26:39.985Z,-18.6532,-69.8458,134.22,4.2,mb,us,us7000c9xs,"51 km ESE of Arica, Chile",earthquake,reviewed
+2020-11-12T02:18:29.894Z,-15.2135,-72.4107,96.06,4.3,mb,us,us7000cg4e,"9 km NW of Orcopampa, Peru",earthquake,reviewed
+2020-11-12T11:21:52.782Z,-15.7085,-74.5679,46.89,4.3,mb,us,us7000cdrv,"23 km WNW of Atiquipa, Peru",earthquake,reviewed
+2020-11-13T04:38:15.261Z,-15.7698,-74.5444,67.55,4,mb,us,us7000ce68,"19 km W of Atiquipa, Peru",earthquake,reviewed
+2020-11-20T00:11:11.254Z,-14.9568,-71.2609,149.04,4.7,mb,us,us6000cql4,"17 km NW of Ocoruro, Peru",earthquake,reviewed
+2020-11-20T17:02:39.643Z,-18.1833,-69.9993,130.93,4.5,mwr,us,us6000cqwe,"32 km SE of Tacna, Peru",earthquake,reviewed
+2020-11-24T20:21:01.751Z,-16.2897,-73.791,30.87,4.3,mb,us,us6000cs58,"20 km WSW of Atico, Peru",earthquake,reviewed
+2020-11-27T01:34:36.155Z,-15.2692,-72.9932,101.1,4,mb,us,us7000ck7d,"3 km E of Velinga, Peru",earthquake,reviewed
+2020-12-02T07:37:13.086Z,-17.8248,-71.3242,69.27,4.1,mwr,us,us7000cm12,Near the coast of southern Peru,earthquake,reviewed
+2020-12-03T05:15:52.131Z,-15.002,-73.0569,110.7,4.2,mb,us,us7000cmej,"24 km NE of Oyolo, Peru",earthquake,reviewed
+2020-12-08T02:55:18.565Z,-18.0851,-69.9643,124.07,4.1,mb,us,us7000cp15,"28 km SE of Calana, Peru",earthquake,reviewed
+2020-12-11T22:11:38.687Z,-19.2495,-70.2344,51.71,4.4,mwr,us,us7000cqet,"86 km S of Arica, Chile",earthquake,reviewed
+2020-12-13T08:32:54.015Z,-14.8172,-73.6199,88.6,4,mb,us,us7000cqqw,"25 km WNW of Upahuacho, Peru",earthquake,reviewed
+2020-12-16T17:48:44.849Z,-16.5756,-71.4433,90.35,5.6,mww,us,us7000crmx,"2 km SSE of Quequeña, Peru",earthquake,reviewed
+2020-12-17T01:35:17.712Z,-16.6817,-70.1523,162.68,4.2,mb,us,us7000crq8,"46 km W of Mazo Cruz, Peru",earthquake,reviewed
+2020-12-20T15:55:08.007Z,-16.3922,-73.7091,35,4.6,mb,us,us7000csq1,"22 km SSW of Atico, Peru",earthquake,reviewed
+2020-12-20T16:36:49.724Z,-15.4757,-71.7612,112.91,4.6,mb,us,us6000d284,"15 km NNE of Madrigal, Peru",earthquake,reviewed
+2020-12-22T04:54:27.489Z,-16.2024,-73.0222,120.56,4.1,mb,us,us6000d5hc,"24 km SE of Urasqui, Peru",earthquake,reviewed
+2020-12-25T23:52:12.427Z,-17.4495,-71.2517,63.84,4.5,mb,us,us6000d32h,"19 km N of El Algarrobal, Peru",earthquake,reviewed
+2020-12-27T07:11:10.861Z,-16.0229,-74.3085,39,5.7,mww,us,us6000d3dr,"25 km SSE of Atiquipa, Peru",earthquake,reviewed
+2020-12-29T05:45:04.268Z,-18.5413,-70.9787,24.73,4,mb,us,us6000d3wx,"72 km W of Arica, Chile",earthquake,reviewed
+2020-12-31T02:28:49.503Z,-17.0503,-74.058,30.94,4.6,mb,us,us6000d4gn,"104 km SSW of Atico, Peru",earthquake,reviewed
+2021-01-01T03:09:38.659Z,-15.5297,-73.6546,73.56,4.4,mb,us,us6000d4q7,"18 km NE of Quicacha, Peru",earthquake,reviewed
+2021-01-10T03:27:50.446Z,-18.5811,-69.5384,117.29,4.2,mwr,us,us6000d74n,"81 km E of Arica, Chile",earthquake,reviewed
+2021-01-19T01:41:31.701Z,-17.2452,-72.3851,45.46,4.7,mb,us,us7000d3r5,"40 km SW of Islay (Matarani), Peru",earthquake,reviewed
+2021-01-24T04:10:55.741Z,-15.152,-71.9958,102.53,4.1,mb,us,us7000d2te,"39 km ENE of Orcopampa, Peru",earthquake,reviewed
+2021-01-30T08:22:05.723Z,-18.2553,-69.7524,116.76,4.5,mwr,us,us6000dd72,"57 km SSE of Palca, Peru",earthquake,reviewed
+2021-02-01T15:20:18.635Z,-17.3434,-70.8175,119.81,4.2,mb,us,us6000dfw2,"18 km SE of San Antonio, Peru",earthquake,reviewed
+2021-02-02T09:01:57.568Z,-15.1141,-72.0838,147.22,4.2,mb,us,us6000dduy,"32 km ENE of Orcopampa, Peru",earthquake,reviewed
+2021-02-03T13:00:18.941Z,-15.1717,-72.1367,126.08,4.1,mb,us,us6000de66,"24 km ENE of Orcopampa, Peru",earthquake,reviewed
+2021-02-04T01:57:17.352Z,-16.6564,-69.776,194.39,4.2,mb,us,us6000debv,"11 km NW of Mazo Cruz, Peru",earthquake,reviewed
+2021-02-08T21:10:59.786Z,-16.4072,-71.9155,100.09,5,mb,us,us6000dfq8,"11 km NW of El Triunfo ( El Cruce), Peru",earthquake,reviewed
+2021-02-09T11:28:20.613Z,-18.6296,-69.9899,96.15,4.8,mwr,us,us6000dfxe,"36 km ESE of Arica, Chile",earthquake,reviewed
+2021-02-10T03:10:34.812Z,-15.5175,-71.7284,143.06,4.2,mb,us,us6000dg3s,"13 km NE of Madrigal, Peru",earthquake,reviewed
+2021-02-10T22:21:07.734Z,-19.3912,-71.1981,10,4.4,mb,us,us6000dgf4,"138 km SW of Arica, Chile",earthquake,reviewed
+2021-02-15T13:44:18.826Z,-17.5833,-69.823,10,4.4,mb,us,us6000dhts,"21 km ESE of Estique, Peru",earthquake,reviewed
+2021-02-19T18:27:10.296Z,-17.9391,-69.6838,142.4,4.1,mb,us,us6000diz4,"34 km ESE of Palca, Peru",earthquake,reviewed
+2021-02-28T02:16:04.838Z,-17.581,-72.5179,14,5.5,mww,us,us7000de9a,"78 km SW of Islay (Matarani), Peru",earthquake,reviewed
+2021-03-01T01:40:52.089Z,-17.737,-72.6114,10,4.5,mb,us,us7000degb,"98 km SSW of Islay (Matarani), Peru",earthquake,reviewed
+2021-03-01T05:22:41.841Z,-17.7972,-72.7515,10,4.3,mb,us,us7000dehp,"112 km SW of Islay (Matarani), Peru",earthquake,reviewed
+2021-03-06T01:26:44.240Z,-18.688,-69.3554,143.95,4.3,mb,us,us7000dgaj,"102 km ESE of Arica, Chile",earthquake,reviewed
+2021-03-06T17:19:11.211Z,-15.9445,-72.5139,14.94,4.9,mwr,us,us7000dgk2,"15 km SE of Iray, Peru",earthquake,reviewed
+2021-03-06T17:23:40.018Z,-15.9276,-72.3425,10,4.5,mb,us,us7000disc,"23 km SSE of Uñon, Peru",earthquake,reviewed
+2021-03-07T06:49:35.234Z,-17.5591,-69.844,10,4.5,mb,us,us7000dgsc,"18 km E of Estique, Peru",earthquake,reviewed
+2021-03-07T14:05:30.531Z,-16.6599,-71.3083,135.55,4,ml,us,us7000dgw0,"13 km WSW of Puquina, Peru",earthquake,reviewed
+2021-03-10T10:57:02.846Z,-14.1876,-71.4629,10,4.2,mb,us,us7000dhn2,"3 km SSE of Tungasuca, Peru",earthquake,reviewed
+2021-03-14T03:21:15.057Z,-15.4955,-70.2397,198.34,4.5,mwr,us,us7000dj7i,"11 km W of Juliaca, Peru",earthquake,reviewed
+2021-03-14T04:45:55.082Z,-17.6312,-69.8539,3.6,4.1,mwr,us,us7000dj7s,"19 km NE of Palca, Peru",earthquake,reviewed
+2021-03-15T07:02:43.919Z,-17.4607,-69.8832,10,4.2,mb,us,us7000djfq,"15 km E of Tarata, Peru",earthquake,reviewed
+2021-03-16T05:39:32.774Z,-15.8182,-74.5489,35,4,mb,us,us7000djp8,"20 km W of Atiquipa, Peru",earthquake,reviewed
+2021-03-20T10:50:26.793Z,-15.0917,-72.3066,146.12,4.2,mb,us,us7000dl7f,"19 km N of Orcopampa, Peru",earthquake,reviewed
+2021-03-26T05:19:33.747Z,-15.7487,-71.5275,149.96,4.4,mb,us,us6000dwkn,"7 km WNW of Huarancante, Peru",earthquake,reviewed
+2021-03-28T03:16:08.065Z,-17.3194,-70.0611,139.72,4.3,mb,us,us6000dzfe,"3 km SSW of Chuquitira, Peru",earthquake,reviewed
+2021-03-28T07:14:21.265Z,-15.3528,-71.9905,123.42,4.6,mb,us,us6000dx4c,"25 km NNW of Tapay, Peru",earthquake,reviewed
+2021-03-31T07:26:07.761Z,-16.3418,-72.3209,70.86,4.3,mwr,us,us6000dxus,"13 km W of El Pedregal, Peru",earthquake,reviewed
+2021-04-01T10:50:13.732Z,-13.9584,-72.63,65.16,4.2,mb,us,us6000dy6d,"12 km NNE of Curpahuasi, Peru",earthquake,reviewed
+2021-04-07T19:33:16.595Z,-16.2338,-70.5235,162.64,4.4,mb,us,us6000e1k7,"24 km ENE of Lloque, Peru",earthquake,reviewed
+2021-04-10T23:37:21.216Z,-17.1225,-71.3209,96.74,4,mb,us,us6000e23d,"41 km WNW of Moquegua, Peru",earthquake,reviewed
+2021-04-11T21:40:37.048Z,-15.9308,-72.4695,114.33,4.3,mb,us,us6000e0wl,"18 km ESE of Iray, Peru",earthquake,reviewed
+2021-04-17T14:37:11.011Z,-18.7372,-71.3537,29.94,4.2,mb,us,us6000e2dx,"115 km WSW of Arica, Chile",earthquake,reviewed
+2021-04-17T23:45:29.797Z,-16.8456,-72.3698,44.61,4.7,mwr,us,us6000e2hd,"16 km SSE of Quilca, Peru",earthquake,reviewed
+2021-04-18T04:55:29.621Z,-15.8799,-72.2021,10,4.1,mb,us,us6000e2jd,"19 km SSW of Huambo, Peru",earthquake,reviewed
+2021-04-19T00:27:32.678Z,-17.7617,-70.5489,27.78,4.5,mwr,us,us6000e2rk,"6 km WNW of Sama Grande, Peru",earthquake,reviewed
+2021-04-19T08:27:57.305Z,-15.8791,-69.7267,248.54,4.4,mb,us,us6000e2u1,"13 km SSW of Taquile, Peru",earthquake,reviewed
+2021-04-19T20:31:50.281Z,-17.5596,-70.713,105.52,4.2,mb,us,us6000e2z1,"7 km NE of Locumba, Peru",earthquake,reviewed
+2021-04-22T07:27:36.149Z,-15.6079,-72.6422,131.17,4.2,mb,us,us6000e3kz,"26 km WNW of Uñon, Peru",earthquake,reviewed
+2021-04-24T15:28:23.132Z,-16.5092,-73.1636,63.13,4.2,mb,us,us6000e4e1,"47 km WNW of El Cardo, Peru",earthquake,reviewed
+2021-04-25T12:56:20.267Z,-17.3902,-69.9106,10,4.3,mb,us,us6000e4n5,"15 km ENE of Ticaco, Peru",earthquake,reviewed
+2021-04-25T23:50:34.142Z,-15.5615,-74.5306,35,5.4,mww,us,us6000e4sg,"17 km SSE of Acarí, Peru",earthquake,reviewed
+2021-04-26T19:54:14.233Z,-15.6443,-71.3953,130.11,4.8,mb,us,us7000dxky,"10 km W of Llongasora, Peru",earthquake,reviewed
+2021-04-29T02:49:41.948Z,-17.3999,-69.894,10,4.7,mwr,us,us7000dye7,"16 km ENE of Tarata, Peru",earthquake,reviewed
+2021-04-30T09:09:37.366Z,-17.2608,-69.941,10,4.1,mb,us,us7000dywl,"11 km ENE of Chuquitira, Peru",earthquake,reviewed
+2021-04-30T10:02:35.671Z,-17.3496,-69.7479,10,4.3,mb,us,us7000dyyb,"32 km ESE of Chuquitira, Peru",earthquake,reviewed
+2021-04-30T10:08:13.304Z,-17.4202,-69.9415,10,4.1,mb,us,us7000e0rb,"11 km ENE of Tarata, Peru",earthquake,reviewed
+2021-04-30T13:02:28.137Z,-16.8508,-73.0714,35,4.1,mb,us,us7000e0r2,"46 km SW of El Cardo, Peru",earthquake,reviewed
+2021-05-03T20:47:22.350Z,-15.0374,-72.5905,102.21,4.6,mb,us,us7000dzu1,"11 km ENE of Puyca, Peru",earthquake,reviewed
+2021-05-04T02:43:59.490Z,-14.2485,-72.7905,73.65,4.1,mb,us,us7000e222,"14 km WSW of Pataypampa, Peru",earthquake,reviewed
+2021-05-06T04:27:06.359Z,-17.0479,-70.8057,86.1,4.1,mb,us,us7000e0jc,"5 km NE of Torata, Peru",earthquake,reviewed
+2021-05-10T07:34:51.741Z,-17.3395,-69.8,10,4.2,mb,us,us7000e1r3,"26 km ESE of Chuquitira, Peru",earthquake,reviewed
+2021-05-10T08:13:10.212Z,-17.2909,-69.9089,10,4.4,mwr,us,us7000e1re,"14 km E of Chuquitira, Peru",earthquake,reviewed
+2021-05-10T17:04:35.812Z,-17.5174,-69.8277,10,4,ml,us,us7000e1um,"20 km E of Estique, Peru",earthquake,reviewed
+2021-05-11T01:29:06.532Z,-15.8784,-70.134,223.94,4.2,mb,us,us7000e44l,"9 km SE of Tiquillaca, Peru",earthquake,reviewed
+2021-05-12T00:27:39.944Z,-17.4766,-69.8525,10,4.4,mb,us,us7000e4d9,"19 km ENE of Estique, Peru",earthquake,reviewed
+2021-05-12T07:53:23.141Z,-17.2713,-70.0644,10,5.4,mww,us,us7000e2bt,"2 km NW of Chuquitira, Peru",earthquake,reviewed
+2021-05-12T09:12:03.771Z,-17.5091,-69.8165,10,4,mb,us,us7000e4dj,"21 km E of Estique, Peru",earthquake,reviewed
+2021-05-13T02:53:36.525Z,-14.8815,-73.0146,88.09,4.3,mb,us,us7000e2pa,"30 km ESE of Aniso, Peru",earthquake,reviewed
+2021-05-14T20:29:53.070Z,-17.4616,-69.8535,10,4.2,mb,us,us7000e374,"19 km E of Tarata, Peru",earthquake,reviewed
+2021-05-16T13:28:20.593Z,-17.5177,-69.8731,10,4.2,mb,us,us7000e3jy,"15 km E of Estique, Peru",earthquake,reviewed
+2021-05-18T03:54:35.267Z,-17.3512,-69.9961,10,4.1,mb,us,us7000e3zp,"8 km SE of Chuquitira, Peru",earthquake,reviewed
+2021-05-18T09:17:30.415Z,-16.2743,-72.4483,78.33,4.3,mb,us,us7000e41n,"29 km WNW of El Pedregal, Peru",earthquake,reviewed
+2021-05-18T19:49:27.753Z,-15.9794,-74.3147,39.61,4.2,mb,us,us7000e481,"20 km SSE of Atiquipa, Peru",earthquake,reviewed
+2021-05-18T20:23:32.244Z,-17.2003,-70.0868,22.18,4.6,mwr,us,us7000e48g,"10 km NNW of Chuquitira, Peru",earthquake,reviewed
+2021-05-19T02:13:54.631Z,-17.4098,-69.8248,10,4.4,mb,us,us7000e4b5,"23 km ENE of Tarata, Peru",earthquake,reviewed
+2021-05-22T07:42:18.184Z,-17.392,-69.9145,4.73,4.9,mwr,us,us7000e59k,"15 km ENE of Ticaco, Peru",earthquake,reviewed
+2021-05-22T14:35:52.333Z,-16.9879,-71.4513,51.44,4.6,mb,us,us7000e5be,"34 km ENE of Cocachacra, Peru",earthquake,reviewed
+2021-05-22T22:09:05.095Z,-17.5552,-69.8168,10,4.2,mb,us,us6000ef7g,"21 km E of Estique, Peru",earthquake,reviewed
+2021-05-29T09:04:16.691Z,-17.4226,-69.8904,10,4.7,mwr,us,us6000efsh,"16 km ENE of Tarata, Peru",earthquake,reviewed
+2021-05-30T14:54:25.462Z,-18.8779,-69.5459,115.58,4.3,mb,us,us6000eg0i,"91 km ESE of Arica, Chile",earthquake,reviewed
+2021-05-30T20:51:08.135Z,-15.9533,-73.8133,57.98,4.7,mb,us,us6000eg2l,"23 km SE of Achanizo, Peru",earthquake,reviewed
+2021-05-31T00:01:12.564Z,-18.2572,-69.7639,130.2,4.4,mwr,us,us6000eg38,"56 km SE of Calana, Peru",earthquake,reviewed
+2021-05-31T09:31:25.040Z,-16.3029,-73.8921,50.2,4.2,mb,us,us7000e9gv,"30 km WSW of Atico, Peru",earthquake,reviewed
+2021-05-31T11:15:54.288Z,-17.4437,-69.9175,17.03,4.5,mb,us,us6000eg9a,"12 km ENE of Tarata, Peru",earthquake,reviewed
+2021-06-08T07:21:46.936Z,-16.6885,-74.155,10,4.8,mb,us,us7000eb1x,"77 km SW of Atico, Peru",earthquake,reviewed
+2021-06-08T14:07:58.680Z,-16.5999,-74.0539,10,4.5,mb,us,us7000eb4s,"63 km SW of Atico, Peru",earthquake,reviewed
+2021-06-12T22:00:37.568Z,-15.5774,-70.907,202.28,4.2,mb,us,us7000ecis,"17 km ENE of Huarichancara, Peru",earthquake,reviewed
+2021-06-13T07:31:43.524Z,-16.0852,-71.4623,137.51,4.9,mb,us,us7000ecmy,"11 km S of Pucara, Peru",earthquake,reviewed
+2021-06-15T00:47:51.098Z,-14.7635,-72.5513,80.64,4.6,mb,us,us7000ed41,"36 km NNE of Puyca, Peru",earthquake,reviewed
+2021-06-24T23:02:56.820Z,-15.5729,-72.0706,134.46,4.3,mb,us,us6000eqvt,"6 km E of Choco, Peru",earthquake,reviewed
+2021-06-26T02:35:27.946Z,-18.4999,-69.379,129.85,4.5,mwr,us,us6000epvz,"97 km E of Arica, Chile",earthquake,reviewed
+2021-06-28T03:33:47.728Z,-17.5951,-69.7698,10,4.5,mb,us,us7000ei85,"27 km ESE of Estique, Peru",earthquake,reviewed
+2021-07-02T06:41:32.441Z,-18.132,-71.9832,12.6,4.3,mb,us,us7000ei5p,"86 km SW of Pacocha, Peru",earthquake,reviewed
+2021-07-06T21:40:09.856Z,-17.7051,-69.9062,157.8,4.1,mb,us,us7000ej7n,"9 km NE of Palca, Peru",earthquake,reviewed
+2021-07-08T04:13:21.172Z,-17.9343,-69.5365,132.51,4.3,mb,us,us6000et23,"48 km ESE of Palca, Peru",earthquake,reviewed
+2021-07-08T10:30:38.137Z,-18.4745,-71.3229,38.16,5.2,mww,us,us6000et4x,"91 km S of Pacocha, Peru",earthquake,reviewed
+2021-07-10T01:15:42.589Z,-13.7717,-72.5272,89.45,4.2,mb,us,us6000etya,"11 km NNW of Palpacachi, Peru",earthquake,reviewed
+2021-07-11T14:46:28.992Z,-15.611,-71.5391,125.79,4.7,mb,us,us6000eue9,"7 km ENE of Chivay, Peru",earthquake,reviewed
+2021-07-14T10:37:11.273Z,-17.9581,-69.7453,131.34,4.2,mb,us,us7000elut,"30 km SE of Palca, Peru",earthquake,reviewed
+2021-07-18T03:33:44.146Z,-14.8622,-71.5098,119.42,4.8,mww,us,us7000en2a,"7 km SSE of Coporaque, Peru",earthquake,reviewed
+2021-07-18T21:32:30.804Z,-18.995,-69.6726,108.15,4.5,mb,us,us7000en9l,"87 km SE of Arica, Chile",earthquake,reviewed
+2021-07-19T06:17:51.280Z,-17.145,-70.9943,111.7,4.7,mb,us,us7000encq,"8 km NW of Moquegua, Peru",earthquake,reviewed
+2021-07-20T15:42:34.539Z,-15.5874,-72.1546,124.83,4.1,mb,us,us7000enqu,"2 km WSW of Choco, Peru",earthquake,reviewed
+2021-07-23T14:06:05.384Z,-17.189,-70.9912,104.4,4.3,mb,us,us6000eyaj,"5 km W of Moquegua, Peru",earthquake,reviewed
+2021-07-25T22:45:29.971Z,-16.0179,-71.7987,166.41,4.1,mb,us,us6000ez14,"23 km E of Lluta, Peru",earthquake,reviewed
+2021-07-28T08:46:26.110Z,-15.6076,-72.3315,124.09,4.2,mb,us,us6000ezqt,"10 km NW of Ayo, Peru",earthquake,reviewed
+2021-07-28T11:09:51.114Z,-18.5592,-70.6779,42.63,4.4,mb,us,us6000ezrk,"41 km WSW of Arica, Chile",earthquake,reviewed
+2021-07-30T04:18:42.317Z,-15.4469,-73.6823,84.27,4.2,mb,us,us6000f0hu,"22 km WNW of Cahuacho, Peru",earthquake,reviewed
+2021-07-31T13:46:17.726Z,-16.9498,-69.6441,177.21,4.5,mb,us,us6000f0zl,"24 km SSE of Mazo Cruz, Peru",earthquake,reviewed
+2021-08-04T06:16:52.126Z,-18.4232,-69.4496,125.96,4.7,mwr,us,us6000f23q,"89 km E of Arica, Chile",earthquake,reviewed
+2021-08-04T17:51:35.784Z,-17.0387,-70.4376,20.33,4.6,mb,us,us6000f4jd,"16 km NW of Pujocucho, Peru",earthquake,reviewed
+2021-08-04T19:19:57.794Z,-15.3405,-72.2286,135.9,4.1,mb,us,us6000f28n,"14 km SE of Orcopampa, Peru",earthquake,reviewed
+2021-08-12T19:34:30.995Z,-14.5254,-73.7513,83.61,4.6,mb,us,us6000f4p0,"35 km NNE of Tambo, Peru",earthquake,reviewed
+2021-08-18T06:29:18.045Z,-18.2286,-69.8302,133.03,4.4,mb,us,us6000f7ue,"49 km SE of Calana, Peru",earthquake,reviewed
+2021-08-18T11:12:19.482Z,-16.2624,-71.7595,121.97,4,mb,us,us7000f4x2,"8 km W of Yura, Peru",earthquake,reviewed
+2021-08-21T22:07:50.278Z,-18.248,-70.2872,83.5,4.7,mb,us,us6000f9ff,"25 km N of Arica, Chile",earthquake,reviewed
+2021-08-24T08:16:54.063Z,-17.6979,-70.1017,102.01,4.3,mb,us,us7000f2y6,"17 km WNW of Palca, Peru",earthquake,reviewed
+2021-08-24T21:10:06.270Z,-16.9677,-69.5807,188.48,4.2,mb,us,us7000f3dx,"28 km SSE of Mazo Cruz, Peru",earthquake,reviewed
+2021-08-27T21:00:23.700Z,-15.8476,-70.5225,45.97,4.8,mb,us,us7000f513,"18 km SSE of Santa Lucía, Peru",earthquake,reviewed
+2021-08-27T22:23:20.863Z,-15.9561,-70.4206,78.55,4.7,mb,us,us7000f8m8,"27 km SW of Vilque, Peru",earthquake,reviewed
+2021-08-31T19:09:08.360Z,-17.6686,-69.5985,162.21,4.3,mb,us,us7000f6d0,"40 km ENE of Palca, Peru",earthquake,reviewed
+2021-09-01T23:32:32.554Z,-17.988,-69.2572,170.46,4.3,mb,us,us7000f9qb,"78 km ESE of Palca, Peru",earthquake,reviewed
+2021-09-02T20:56:19.988Z,-16.4783,-69.6187,191.69,4.3,mb,us,us7000f9s0,"30 km NNE of Mazo Cruz, Peru",earthquake,reviewed
+2021-09-04T09:07:30.833Z,-15.8466,-72.0427,17.16,4.3,mb,us,us7000f7v6,"14 km SSE of Huambo, Peru",earthquake,reviewed
+2021-09-07T13:22:14.478Z,-17.3893,-69.4032,169,4.6,mb,us,us7000f8ug,"67 km ENE of Estique, Peru",earthquake,reviewed
+2021-09-10T03:25:38.781Z,-18.2026,-69.914,96.87,4.4,mwr,us,us7000f9wf,"40 km SE of Calana, Peru",earthquake,reviewed
+2021-09-11T09:04:00.728Z,-14.1727,-72.9393,44.68,4.1,mb,us,us7000fa98,"10 km NE of Pachaconas, Peru",earthquake,reviewed
+2021-09-11T10:01:49.862Z,-18.4505,-71.4879,35,4.2,mb,us,us7000faa4,"90 km S of Pacocha, Peru",earthquake,reviewed
+2021-09-11T10:11:21.490Z,-18.436,-71.7303,35,4.3,mb,us,us7000faa8,"96 km SSW of Pacocha, Peru",earthquake,reviewed
+2021-09-11T12:26:16.716Z,-18.4655,-71.3467,35,4.4,mb,us,us7000fab2,"90 km S of Pacocha, Peru",earthquake,reviewed
+2021-09-11T16:41:24.207Z,-18.5257,-71.4376,47.08,4.3,mb,us,us7000fack,"97 km S of Pacocha, Peru",earthquake,reviewed
+2021-09-13T16:33:12.906Z,-15.6726,-70.2945,211.24,4.4,mb,us,us7000fasj,"3 km SE of Cabana, Peru",earthquake,reviewed
+2021-09-14T00:03:05.336Z,-15.2933,-73.7699,72.77,4.5,mb,us,us7000fawu,"11 km SE of Pullo, Peru",earthquake,reviewed
+2021-09-19T03:21:29.550Z,-15.7528,-72.0576,10,4.6,mb,us,us7000fcjr,"5 km ESE of Huambo, Peru",earthquake,reviewed
+2021-09-20T12:43:49.398Z,-18.2383,-71.235,50.34,4.3,mb,us,us7000fcv7,"66 km S of Pacocha, Peru",earthquake,reviewed
+2021-09-22T01:08:57.805Z,-18.6075,-69.2144,138.12,4,mb,us,us7000fdal,"115 km E of Arica, Chile",earthquake,reviewed
+2021-09-28T20:50:46.662Z,-16.1769,-70.8152,143.49,4.4,mb,us,us6000fqtn,"19 km NNW of Lloque, Peru",earthquake,reviewed
+2021-10-03T01:17:50.286Z,-16.1781,-69.6749,217.54,4.3,mb,us,us6000fr7w,"10 km S of Ilave, Peru",earthquake,reviewed
+2021-10-08T09:27:59.659Z,-15.9732,-72.1475,10,4.2,mb,us,us6000fsxb,"14 km WNW of Lluta, Peru",earthquake,reviewed
+2021-10-08T23:14:25.139Z,-15.7322,-72.3577,10,4,mb,us,us6000ft54,"7 km E of Uñon, Peru",earthquake,reviewed
+2021-10-09T04:47:49.129Z,-15.5828,-71.8421,14.16,5.7,mww,us,us6000ft6j,"4 km NW of Madrigal, Peru",earthquake,reviewed
+2021-10-09T05:21:00.488Z,-15.6174,-71.9422,10,4.3,mb,us,us6000ft6t,"4 km S of Tapay, Peru",earthquake,reviewed
+2021-10-09T05:50:11.571Z,-15.5975,-71.6721,10,4.7,mb,us,us6000ft78,"6 km NNE of Ichupampa, Peru",earthquake,reviewed
+2021-10-09T13:23:26.116Z,-15.6349,-72.1418,10,4.3,mb,us,us6000ftau,"6 km S of Choco, Peru",earthquake,reviewed
+2021-10-09T14:31:20.295Z,-15.6963,-72.2077,10,4.5,mb,us,us6000ftbc,"7 km ESE of Ayo, Peru",earthquake,reviewed
+2021-10-09T17:55:34.113Z,-15.6636,-71.759,10,4.5,mb,us,us6000ftcj,"2 km SSE of Maca, Peru",earthquake,reviewed
+2021-10-09T23:11:00.241Z,-15.6179,-72.1907,10,4.4,mb,us,us6000fte6,"8 km SW of Choco, Peru",earthquake,reviewed
+2021-10-10T00:46:59.140Z,-15.8445,-72.2282,7.74,4.5,mb,us,us6000ful5,"18 km SW of Huambo, Peru",earthquake,reviewed
+2021-10-10T09:23:25.242Z,-16.6391,-72.76,64.28,4.6,mb,us,us6000fth3,"5 km SW of El Cardo, Peru",earthquake,reviewed
+2021-10-12T04:00:04.908Z,-15.6788,-71.9801,10,4.9,mb,us,us6000ftwb,"11 km SSW of Tapay, Peru",earthquake,reviewed
+2021-10-14T03:22:00.733Z,-16.2845,-73.0828,51.43,4.4,mb,us,us6000fufg,"29 km SSE of Urasqui, Peru",earthquake,reviewed
+2021-10-15T01:51:31.621Z,-16.4336,-69.9919,182.21,4.2,mb,us,us6000fur4,"45 km NW of Mazo Cruz, Peru",earthquake,reviewed
+2021-10-22T11:06:09.492Z,-17.92,-69.2653,3.38,4.6,mb,us,us6000fwr0,"75 km ESE of Palca, Peru",earthquake,reviewed
+2021-10-29T19:55:26.515Z,-15.0457,-73.9664,70.34,5.2,mww,us,us7000fpw9,"19 km W of Coracora, Peru",earthquake,reviewed
+2021-10-29T22:43:48.414Z,-15.0544,-73.9473,75.97,4.5,mb,us,us7000fpy4,"17 km W of Coracora, Peru",earthquake,reviewed
+2021-11-06T20:31:26.075Z,-18.2861,-69.5349,130.63,4.1,mb,us,us7000fs3l,"72 km SE of Palca, Peru",earthquake,reviewed
+2021-11-11T04:33:17.449Z,-14.185,-72.8726,84.72,4.2,mb,us,us7000ft4t,"16 km ENE of Pachaconas, Peru",earthquake,reviewed
+2021-11-12T20:41:31.574Z,-16.1904,-74.5342,11.5,4.9,mb,us,us7000ftnk,"47 km SSW of Atiquipa, Peru",earthquake,reviewed
+2021-11-21T22:22:16.410Z,-16.9424,-72.0758,62.88,4.6,mb,us,us7000fw19,"6 km NNE of Islay (Matarani), Peru",earthquake,reviewed
+2021-11-27T01:46:45.860Z,-14.8845,-71.9912,102.42,4.2,mb,us,us7000fxdg,"23 km S of Cayarani, Peru",earthquake,reviewed
+2021-11-28T08:43:47.044Z,-16.9152,-69.2523,200.09,4.1,mb,us,us7000fxp5,"44 km SSW of Desaguadero, Peru",earthquake,reviewed
+2021-12-02T23:31:27.863Z,-16.5294,-74.7465,10,4.1,mb,us,us6000g8ky,"90 km SSW of Atiquipa, Peru",earthquake,reviewed
+2021-12-07T09:39:36.927Z,-18.5525,-71.0675,17.71,5.6,mww,us,us6000g9zp,"81 km W of Arica, Chile",earthquake,reviewed
+2021-12-07T09:43:17.878Z,-18.4913,-71.1254,35,4.5,mb,us,us6000ga0a,"87 km W of Arica, Chile",earthquake,reviewed
+2021-12-07T11:46:31.278Z,-18.667,-70.9087,35,4.3,mwr,us,us6000ga1x,"67 km WSW of Arica, Chile",earthquake,reviewed
+2021-12-08T06:03:51.060Z,-16.7288,-69.453,194.96,4.3,mb,us,us6000gadd,"28 km E of Mazo Cruz, Peru",earthquake,reviewed
+2021-12-09T04:48:57.438Z,-15.7337,-71.841,111.17,4.4,mb,us,us6000gar5,"12 km SW of Maca, Peru",earthquake,reviewed
+2021-12-10T09:09:12.386Z,-16.956,-70.0887,172.14,4.2,mb,us,us6000gb4c,"35 km NE of Pujocucho, Peru",earthquake,reviewed
+2021-12-10T18:59:33.440Z,-17.6673,-70.6588,95.98,4.6,mb,us,us6000gb9f,"12 km ESE of Locumba, Peru",earthquake,reviewed
+2021-12-22T19:16:03.428Z,-15.4319,-73.9816,72.71,4.4,mb,us,us6000gemq,"27 km NNE of Tocota, Peru",earthquake,reviewed
+2021-12-23T11:02:01.417Z,-17.758,-69.856,157.62,4.3,mb,us,us6000get0,"11 km E of Palca, Peru",earthquake,reviewed
+2021-12-25T02:25:49.453Z,-16.6687,-72.9186,49.9,4.3,mb,us,us6000gf51,"21 km WSW of El Cardo, Peru",earthquake,reviewed
+2022-01-07T06:04:46.875Z,-17.5277,-69.6855,10.31,4.7,mb,us,us7000g9u1,"35 km E of Estique, Peru",earthquake,reviewed
+2022-01-08T02:13:16.377Z,-17.4288,-69.7259,23.51,4.2,mb,us,us7000ga36,"32 km E of Tarata, Peru",earthquake,reviewed
+2022-01-12T21:21:50.465Z,-18.7067,-69.3354,135.94,4,mb,us,us7000gbg8,"104 km ESE of Arica, Chile",earthquake,reviewed
+2022-01-15T21:54:16.264Z,-17.514,-69.6296,167.65,4.2,mb,us,us7000gewu,"41 km E of Estique, Peru",earthquake,reviewed
+2022-01-16T16:36:46.372Z,-15.3255,-72.0759,108.6,4.3,mb,us,us7000gchh,"28 km NNE of Choco, Peru",earthquake,reviewed
+2022-01-17T09:07:50.627Z,-17.9357,-73.4233,10,4.5,mb,us,us7000gcl9,"163 km SSW of Camaná, Peru",earthquake,reviewed
+2022-01-18T09:02:47.461Z,-17.6227,-70.4224,106.48,4.1,mb,us,us7000gcue,"20 km NNE of Sama Grande, Peru",earthquake,reviewed
+2022-01-18T14:45:54.855Z,-18.4357,-71.0625,35,4.2,mb,us,us7000gcx0,"80 km W of Arica, Chile",earthquake,reviewed
+2022-01-23T04:12:32.411Z,-13.9487,-70.5734,10,4.2,mb,us,us7000gebs,central Peru,earthquake,reviewed
+2022-01-23T21:33:52.922Z,-13.9084,-70.5047,10,4.6,mb,us,us7000ggnr,"11 km ESE of Corani, Peru",earthquake,reviewed
+2022-01-24T16:37:06.299Z,-16.0335,-72.873,81.34,4.1,mb,us,us7000gelq,"26 km S of Andaray, Peru",earthquake,reviewed
+2022-01-26T14:54:52.469Z,-18.8643,-70.2096,83.99,4,mb,us,us7000gf9b,"44 km SSE of Arica, Chile",earthquake,reviewed
+2022-01-28T13:43:26.805Z,-18.7674,-69.6395,133.53,5,mwr,us,us7000gfvl,"76 km ESE of Arica, Chile",earthquake,reviewed
+2022-01-31T00:08:15.520Z,-14.9338,-73.9756,72.35,5,mww,us,us7000ggha,"15 km SSW of Tambo, Peru",earthquake,reviewed
+2022-01-31T15:27:59.098Z,-14.6128,-73.2981,122.64,4.2,mb,us,us7000ggp3,"21 km N of Aniso, Peru",earthquake,reviewed
+2022-02-02T22:16:08.694Z,-16.912,-69.173,190.92,4,mb,us,us7000gj4k,"40 km SSW of Desaguadero, Peru",earthquake,reviewed
+2022-02-09T14:30:31.614Z,-16.0311,-74.5063,10,4.7,mb,us,us7000gjc8,"30 km SSW of Atiquipa, Peru",earthquake,reviewed
+2022-02-16T06:08:04.798Z,-19.2363,-70.1464,48.79,4,mb,us,us7000gl8e,"85 km S of Arica, Chile",earthquake,reviewed
+2022-02-17T04:29:55.899Z,-15.7769,-72.0496,127.7,4.1,mb,us,us7000glkg,"8 km SE of Huambo, Peru",earthquake,reviewed
+2022-02-20T11:58:21.454Z,-18.4124,-71.2319,30.19,5.1,mww,us,us7000gmez,"85 km S of Pacocha, Peru",earthquake,reviewed
+2022-02-20T23:24:28.268Z,-18.5182,-71.4227,24.79,4.1,mwr,us,us7000gmif,"96 km S of Pacocha, Peru",earthquake,reviewed
+2022-02-22T09:32:43.537Z,-15.2121,-72.3051,127.49,4.1,mb,us,us7000gmwx,"7 km NNE of Orcopampa, Peru",earthquake,reviewed
+2022-03-02T06:26:04.961Z,-18.5788,-69.563,131.35,4.3,mb,us,us6000h1b4,"78 km E of Arica, Chile",earthquake,reviewed
+2022-03-03T19:17:47.907Z,-16.98,-70.1608,162.39,5.1,mww,us,us6000h1v2,"28 km NE of Pujocucho, Peru",earthquake,reviewed
+2022-03-07T01:54:14.176Z,-15.3699,-72.5073,117.34,4.2,mb,us,us6000h2mv,"21 km WSW of Orcopampa, Peru",earthquake,reviewed
+2022-03-12T14:30:37.896Z,-15.6031,-70.5522,203.57,4.4,mb,us,us6000h40y,"11 km NNE of Santa Lucía, Peru",earthquake,reviewed
+2022-03-15T10:20:08.046Z,-15.7764,-71.9649,10,4.7,mb,us,us6000h4nn,"16 km ESE of Huambo, Peru",earthquake,reviewed
+2022-03-15T17:37:54.469Z,-18.5926,-70.5251,47.36,4.1,mb,us,us6000h4sb,"27 km WSW of Arica, Chile",earthquake,reviewed
+2022-03-16T04:54:08.761Z,-16.1224,-72.1049,10,4.2,mb,us,us6000h4yz,Near the coast of southern Peru,earthquake,reviewed
+2022-03-16T06:06:36.198Z,-15.6703,-71.8843,12.32,5.5,mww,us,us6000h4z7,"10 km SW of Madrigal, Peru",earthquake,reviewed
+2022-03-16T06:52:35.003Z,-18.0631,-69.5243,132.12,4.1,mb,us,us6000h4zd,"56 km SE of Palca, Peru",earthquake,reviewed
+2022-03-17T07:54:45.561Z,-14.1978,-72.9271,85.86,4,mb,us,us6000h5bv,"10 km ENE of Pachaconas, Peru",earthquake,reviewed
+2022-03-17T09:38:42.353Z,-15.8854,-71.9128,10,4.6,mb,us,us6000h5c6,"17 km NE of Lluta, Peru",earthquake,reviewed
+2022-03-18T11:32:22.189Z,-16.9333,-70.9818,111.16,4.4,mb,us,us6000h5p7,"21 km NW of Torata, Peru",earthquake,reviewed
+2022-03-25T00:56:22.578Z,-15.584,-71.6312,125.35,5.3,mww,us,us7000gx3t,"6 km NNW of Chivay, Peru",earthquake,reviewed
+2022-03-29T14:53:30.086Z,-13.7019,-72.8714,68.36,4.4,mb,us,us7000gz17,"7 km S of Abancay, Peru",earthquake,reviewed
+2022-04-05T14:11:20.199Z,-16.7925,-73.0429,66.19,4.1,mb,us,us7000gzu1,"39 km WSW of El Cardo, Peru",earthquake,reviewed
+2022-04-07T04:39:48.003Z,-15.9226,-73.2117,80.53,4.2,mb,us,us7000h0aw,"8 km WNW of Iquipi, Peru",earthquake,reviewed
+2022-04-11T19:44:53.412Z,-19.136,-70.0916,56.79,4.5,mwr,us,us7000h1c0,"76 km SSE of Arica, Chile",earthquake,reviewed
+2022-04-12T09:36:08.999Z,-17.7356,-69.2208,155.37,4.4,mb,us,us7000h1g4,"78 km E of Palca, Peru",earthquake,reviewed
+2022-04-13T03:42:39.681Z,-18.7045,-69.5906,120.36,4.3,mb,us,us7000h1ms,"78 km ESE of Arica, Chile",earthquake,reviewed
+2022-04-16T19:54:17.587Z,-16.6569,-69.5175,189.8,4.3,mb,us,us7000h2qp,"23 km ENE of Mazo Cruz, Peru",earthquake,reviewed
+2022-04-24T21:46:09.847Z,-17.6922,-69.5516,142.59,4.2,mb,us,us6000hg3v,"44 km ENE of Palca, Peru",earthquake,reviewed
+2022-04-28T22:29:25.483Z,-15.0129,-71.9117,121.14,4.5,mb,us,us7000h5r1,"39 km SSE of Cayarani, Peru",earthquake,reviewed
+2022-04-29T21:56:52.102Z,-15.3931,-73.0107,81.57,4.4,mb,us,us7000h5xv,"13 km S of Velinga, Peru",earthquake,reviewed
+2022-05-03T18:07:47.145Z,-19.3607,-70.5314,61.59,4.1,mb,us,us7000h6ua,"101 km SSW of Arica, Chile",earthquake,reviewed
+2022-05-05T20:29:21.400Z,-16.0125,-72.8933,54.22,4.6,mb,us,us7000h7df,"24 km S of Andaray, Peru",earthquake,reviewed
+2022-05-06T14:02:12.219Z,-14.9224,-71.8225,123.46,4.3,mb,us,us7000h7je,"34 km WSW of Coporaque, Peru",earthquake,reviewed
+2022-05-06T23:29:01.045Z,-15.7805,-70.6146,217.58,4.4,mb,us,us7000h7np,"9 km S of Santa Lucía, Peru",earthquake,reviewed
+2022-05-07T06:31:11.027Z,-17.9232,-69.7864,145.42,4.1,mb,us,us7000h7qq,"24 km SE of Palca, Peru",earthquake,reviewed
+2022-05-10T02:18:31.309Z,-17.5708,-70.3673,96.85,4.6,mb,us,us7000h88f,"17 km WSW of Chipispaya, Peru",earthquake,reviewed
+2022-05-10T05:22:45.224Z,-17.6045,-70.1306,133.43,4.3,mb,us,us7000h89i,"13 km S of Chucatamani, Peru",earthquake,reviewed
+2022-05-13T19:01:17.086Z,-15.6837,-72.0376,128.51,4,mb,us,us6000hmd5,"9 km NE of Huambo, Peru",earthquake,reviewed
+2022-05-16T13:02:55.608Z,-18.0672,-72.9044,10,4.2,mb,us,us6000hlgc,"146 km SW of Islay (Matarani), Peru",earthquake,reviewed
+2022-05-16T13:30:03.807Z,-17.8897,-73.0888,10,4.3,mb,us,us6000hlgi,"144 km SW of Islay (Matarani), Peru",earthquake,reviewed
+2022-05-16T13:33:44.526Z,-17.918,-73.0711,10,4.6,mb,us,us6000hlgl,"145 km SW of Islay (Matarani), Peru",earthquake,reviewed
+2022-05-18T11:27:08.428Z,-17.9816,-69.828,135.63,4.6,mwr,us,us6000hlz1,"26 km SSE of Palca, Peru",earthquake,reviewed
+2022-05-24T12:57:59.372Z,-17.6213,-69.5902,156,5.5,mww,us,us7000hc71,"42 km ENE of Palca, Peru",earthquake,reviewed
+2022-05-26T12:02:21.110Z,-14.9076,-70.2924,236,7.2,mww,us,us7000hcmn,"10 km W of Azángaro, Peru",earthquake,reviewed
+2022-05-29T22:10:12.434Z,-15.9327,-74.3423,35,4.2,mb,us,us7000hdhs,"15 km S of Atiquipa, Peru",earthquake,reviewed
+2022-06-02T03:24:01.515Z,-17.9278,-69.8582,114.98,4.1,mb,us,us7000he8u,"20 km SSE of Palca, Peru",earthquake,reviewed
+2022-06-04T06:48:33.883Z,-15.2856,-71.5504,133.01,4.5,mb,us,us7000hevn,"12 km WNW of Tisco, Peru",earthquake,reviewed
+2022-06-11T09:23:53.427Z,-14.7797,-72.4557,99.6,4.6,mb,us,us7000hgpu,central Peru,earthquake,reviewed
+2022-06-17T02:50:53.750Z,-16.6388,-71.0904,120.8,4.2,mb,us,us7000hi0t,"7 km W of Coalaque, Peru",earthquake,reviewed
+2022-06-19T22:16:49.265Z,-17.2867,-70.8086,106,4.6,mb,us,us7000hilh,"14 km ESE of San Antonio, Peru",earthquake,reviewed
+2022-06-21T07:33:55.501Z,-16.2524,-74.1978,35,4.8,mb,us,us7000hixu,Near the coast of southern Peru,earthquake,reviewed
+2022-06-23T14:29:46.585Z,-17.7046,-69.7354,151.24,4.5,mwr,us,us7000hjlu,"25 km ENE of Palca, Peru",earthquake,reviewed
+2022-06-26T02:02:34.927Z,-17.177,-73.7809,9.03,5.7,mww,us,us7000hk9n,"108 km S of Atico, Peru",earthquake,reviewed
+2022-06-28T00:13:59.452Z,-15.5387,-73.0059,106.482,4.3,mb,us,us7000hkql,"9 km W of Chichas, Peru",earthquake,reviewed
+2022-06-28T11:59:05.406Z,-18.3221,-70.9911,65.48,4.8,mwr,us,us7000hktz,"68 km SW of Las Yaras, Peru",earthquake,reviewed
+2022-06-30T05:21:16.758Z,-17.03,-70.1403,154.255,5.1,mww,us,us6000hyq6,"26 km ENE of Pujocucho, Peru",earthquake,reviewed
+2022-06-30T06:37:19.663Z,-18.6524,-69.3168,132.5,4.2,mb,us,us6000hyql,"105 km E of Arica, Chile",earthquake,reviewed
+2022-07-01T08:57:03.840Z,-17.1586,-69.7758,182.05,4.2,mb,us,us6000hz2q,"31 km ENE of Chuquitira, Peru",earthquake,reviewed
+2022-07-06T10:15:46.756Z,-15.0664,-72.9899,83.21,4.4,mb,us,us6000i08k,"15 km NW of Mungui, Peru",earthquake,reviewed
+2022-07-07T18:32:11.844Z,-15.8564,-73.4181,89.36,4.1,mb,us,us6000i0n5,"32 km WNW of Iquipi, Peru",earthquake,reviewed
+2022-07-09T17:25:41.613Z,-17.3244,-69.878,153.985,4.1,mb,us,us6000i192,"18 km ESE of Chuquitira, Peru",earthquake,reviewed
+2022-07-12T23:36:12.967Z,-16.7782,-71.2091,24.937,5.5,mww,us,us6000i1yw,"3 km SW of La Capilla, Peru",earthquake,reviewed
+2022-07-13T00:08:18.230Z,-16.8195,-71.4438,10,4.5,mb,us,us7000hsem,"28 km S of Quequeña, Peru",earthquake,reviewed
+2022-07-13T01:30:04.996Z,-16.8521,-71.505,25.131,4.6,mb,us,us6000i1zn,"32 km S of Quequeña, Peru",earthquake,reviewed
+2022-07-13T09:13:33.954Z,-16.8461,-71.5427,21.132,5,mb,us,us6000i220,southern Peru,earthquake,reviewed
+2022-07-13T16:05:29.975Z,-16.8283,-71.5691,22.95,4.4,mwr,us,us6000i24m,southern Peru,earthquake,reviewed
+2022-07-13T17:56:16.055Z,-16.9962,-71.418,69.035,5,mb,us,us6000i25c,southern Peru,earthquake,reviewed
+2022-07-15T11:03:17.534Z,-16.3323,-73.95,43.71,4.4,mb,us,us6000i2n6,"37 km WSW of Atico, Peru",earthquake,reviewed
+2022-07-27T17:44:08.869Z,-15.8526,-72.2937,9.777,4.5,mb,us,us6000i5yr,"19 km S of Ayo, Peru",earthquake,reviewed
+2022-07-28T19:34:42.657Z,-16.7885,-72.3682,72.317,4.6,mb,us,us6000i69t,"10 km SE of Quilca, Peru",earthquake,reviewed
+2022-07-29T17:35:23.654Z,-15.3688,-72.0962,124.5,4.4,mb,us,us6000i6kp,"23 km N of Choco, Peru",earthquake,reviewed
+2022-07-30T07:21:40.765Z,-17.2076,-69.8504,164.455,4.3,mb,us,us6000i9en,"22 km ENE of Chuquitira, Peru",earthquake,reviewed
+2022-07-30T15:31:36.998Z,-18.4324,-69.8838,130.039,4.4,mwr,us,us6000i6su,"43 km E of Arica, Chile",earthquake,reviewed
+2022-07-31T14:31:08.431Z,-14.9392,-72.2236,103.745,4.4,mb,us,us6000i6zg,"36 km SW of Cayarani, Peru",earthquake,reviewed
+2022-08-01T15:18:17.216Z,-16.2267,-73.5108,65.298,4.4,mb,us,us6000i75t,"12 km E of Atico, Peru",earthquake,reviewed
+2022-08-05T20:20:00.226Z,-19.1363,-70.0567,66.486,4.5,mwr,us,us6000i8i8,"77 km SSE of Arica, Chile",earthquake,reviewed
+2022-08-08T09:19:15.546Z,-18.7488,-69.492,111.455,4.3,mwr,us,us6000i916,"90 km ESE of Arica, Chile",earthquake,reviewed
+2022-08-08T20:57:54.974Z,-14.3539,-72.2342,108.441,4.6,mb,us,us6000i96q,"11 km WSW of Quiñota, Peru",earthquake,reviewed
+2022-08-14T19:09:18.719Z,-15.7923,-74.5085,44.528,4.4,mb,us,us7000i21a,"15 km W of Atiquipa, Peru",earthquake,reviewed
+2022-08-16T04:47:13.902Z,-16.8353,-70.5903,10.699,4.5,mb,us,us6000ib8a,"11 km ESE of Carumas, Peru",earthquake,reviewed
+2022-08-21T00:50:39.584Z,-15.9402,-70.5588,185.806,4.1,mb,us,us6000icgg,"27 km S of Santa Lucía, Peru",earthquake,reviewed
+2022-08-26T16:36:54.848Z,-15.0404,-70.6156,206.811,4.1,mb,us,us7000i2qt,"17 km NNE of Vilavila, Peru",earthquake,reviewed
+2022-08-28T03:54:34.878Z,-18.8202,-69.7316,96.933,4.4,mwr,us,us7000i313,"70 km ESE of Arica, Chile",earthquake,reviewed
+2022-08-28T22:26:05.325Z,-15.7318,-72.9764,79.318,4.2,mb,us,us7000i37b,"11 km WNW of Yanaquihua, Peru",earthquake,reviewed
+2022-08-29T21:34:05.844Z,-14.5553,-71.698,109.332,4.2,mb,us,us7000i3j9,central Peru,earthquake,reviewed
+2022-08-31T20:14:19.599Z,-19.1074,-70.6612,43.062,4.2,mb,us,us7000i446,"79 km SSW of Arica, Chile",earthquake,reviewed
+2022-09-01T20:56:59.344Z,-16.3722,-74.3488,35,4.2,mb,us,us7000i4fy,"63 km S of Atiquipa, Peru",earthquake,reviewed
+2022-09-03T13:02:32.459Z,-14.0504,-72.7469,79.037,4.6,mb,us,us7000i4xi,"8 km W of Curpahuasi, Peru",earthquake,reviewed
+2022-09-08T21:59:41.963Z,-16.131,-73.4037,57.381,5.4,mww,us,us6000iiai,"24 km ENE of Atico, Peru",earthquake,reviewed
+2022-09-17T10:50:44.730Z,-18.4638,-69.8509,121.407,4.4,mwr,us,us7000i8tr,"47 km E of Arica, Chile",earthquake,reviewed
+2022-09-17T18:21:46.259Z,-16.0882,-72.3247,90.541,4.1,mb,us,us7000i8w5,"33 km NNW of El Pedregal, Peru",earthquake,reviewed
+2022-09-22T03:35:00.109Z,-16.3754,-74.1282,35,4,mb,us,us6000ip0s,"57 km WSW of Atico, Peru",earthquake,reviewed
+2022-09-23T01:39:24.689Z,-18.5218,-72.0669,21.24,4.5,mb,us,us7000iacc,"123 km SW of Pacocha, Peru",earthquake,reviewed
+2022-09-28T20:03:59.521Z,-14.2805,-73.6718,82.919,4.6,mb,us,us6000ip2d,"17 km SW of Pampachiri, Peru",earthquake,reviewed
+2022-10-02T07:55:13.606Z,-15.6087,-74.0013,59.383,4.2,mb,us,us6000irth,Near the coast of southern Peru,earthquake,reviewed
+2022-10-10T11:10:38.058Z,-17.5379,-69.5405,169.213,4.3,mb,us,us6000isgc,Peru-Bolivia border region,earthquake,reviewed
+2022-10-12T03:54:41.478Z,-15.9249,-72.7095,91.964,4.1,mb,us,us6000isx3,"11 km SW of Iray, Peru",earthquake,reviewed
+2022-10-15T05:37:08.191Z,-17.3886,-70.1349,129.222,4.4,mb,us,us6000itvx,Southern Peru,earthquake,reviewed
+2022-10-17T13:38:22.671Z,-18.4248,-69.2668,130.736,5.2,mww,us,us6000iuad,"Tarapaca, Chile",earthquake,reviewed
+2022-10-21T10:53:39.799Z,-18.4416,-69.5271,133.197,4.2,mb,us,us6000ivgz,"81 km E of Arica, Chile",earthquake,reviewed
+2022-10-28T18:33:01.312Z,-17.6795,-69.2882,155.249,4.5,mb,us,us7000il0u,"72 km E of Palca, Peru",earthquake,reviewed
+2022-10-29T22:18:38.248Z,-15.3808,-70.7495,184.565,4.5,mb,us,us7000il84,southern Peru,earthquake,reviewed
+2022-10-30T13:03:45.759Z,-15.9824,-71.8862,138.155,4.6,mb,us,us7000ilbn,"14 km ENE of Lluta, Peru",earthquake,reviewed
+2022-10-31T03:50:02.856Z,-16.3138,-74.0939,33.357,4.4,mb,us,us7000iley,"51 km WSW of Atico, Peru",earthquake,reviewed
+2022-11-02T22:19:24.826Z,-19.2208,-70.1092,66.421,4,mb,us,us7000im2c,"Near the coast of Tarapaca, Chile",earthquake,reviewed
+2022-11-03T20:56:35.023Z,-14.2593,-73.1249,77.47,4.4,mb,us,us7000inbm,"5 km SE of Yanaca, Peru",earthquake,reviewed
+2022-11-04T05:40:43.095Z,-17.8207,-69.6521,154.541,4.4,mb,us,us7000imfm,"33 km E of Palca, Peru",earthquake,reviewed
+2022-11-06T07:08:07.185Z,-17.5594,-70.2162,28.896,5,mww,us,us7000imvt,Southern Peru,earthquake,reviewed
+2022-11-09T21:33:42.487Z,-18.2382,-69.7704,125.445,4.3,mb,us,us7000inni,"54 km SE of Calana, Peru",earthquake,reviewed
+2022-11-17T17:51:00.850Z,-18.4315,-69.9085,89.162,4,mb,us,us7000iqii,"41 km E of Arica, Chile",earthquake,reviewed
+2022-11-19T06:50:58.517Z,-17.8092,-70.9345,76.253,4.5,mb,us,us7000iqxu,"28 km SW of Locumba, Peru",earthquake,reviewed
+2022-11-22T05:17:47.113Z,-14.31,-70.6383,10,4.6,mb,us,us7000irgf,"18 km N of Nuñoa, Peru",earthquake,reviewed
+2022-11-23T04:07:18.002Z,-15.5585,-70.4767,211.536,4.5,mb,us,us7000irqr,southern Peru,earthquake,reviewed
+2022-11-24T16:22:23.443Z,-16.031,-73.7071,57.035,4.9,mb,us,us7000is44,"21 km NNW of Atico, Peru",earthquake,reviewed
+2022-12-03T11:45:29.201Z,-17.7438,-69.4939,159.018,4.8,mwr,us,us6000j6n4,Peru-Bolivia border region,earthquake,reviewed
+2022-12-08T23:18:58.208Z,-15.7027,-72.2282,10,5,mww,us,us6000j81n,"5 km ESE of Ayo, Peru",earthquake,reviewed
+2022-12-12T04:27:56.559Z,-16.7535,-69.4558,200.064,4.2,mb,us,us6000j8pv,"27 km E of Mazo Cruz, Peru",earthquake,reviewed
+2022-12-18T01:49:03.207Z,-17.8504,-69.9444,116.443,4.1,mb,us,us6000ja2s,"8 km SSE of Palca, Peru",earthquake,reviewed
+2022-12-19T00:11:05.590Z,-15.5465,-72.8986,91.475,4.4,mb,us,us6000ja7e,"2 km E of Chichas, Peru",earthquake,reviewed
+2022-12-25T05:45:36.141Z,-18.8123,-69.5225,117.429,4.1,mb,us,us6000jbjl,"89 km ESE of Arica, Chile",earthquake,reviewed
+2022-12-26T14:30:08.286Z,-17.6605,-69.6286,157.426,4.3,mb,us,us6000jbsy,"37 km ENE of Palca, Peru",earthquake,reviewed
+2022-12-28T13:57:39.318Z,-19.0143,-69.713,93.453,4.5,mwr,us,us7000j0md,"85 km SE of Arica, Chile",earthquake,reviewed
+2022-12-28T21:11:04.642Z,-16.5084,-72.2643,74.573,5.3,mww,us,us7000j0ps,"17 km SSW of El Pedregal, Peru",earthquake,reviewed
+2022-12-31T23:04:12.381Z,-16.5013,-69.659,190.386,4.9,mww,us,us7000j1b1,"27 km NNE of Mazo Cruz, Peru",earthquake,reviewed

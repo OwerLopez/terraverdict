@@ -25,6 +25,32 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Pruebas del motor y de humo de cada experimento (pendiente 1.4)
+**Autor:** MaxsForocca · **Aportes:** Ower Frank (motor original)
+
+**Qué se hizo**
+- `tests/motor/`: 38 pruebas unitarias con datos sintéticos de respuesta conocida.
+  - **Métricas.** Habilidad = 0 frente a sí misma. Diebold-Mariano: con pérdidas iguales no hay prueba (varianza nula); con pérdidas de igual distribución rechaza cerca del 10 % nominal; detecta un modelo mejor.
+  - **Bootstrap, contingencia, ECE y Poisson.**
+  - **Incertidumbre.** Cobertura conformal ≥ 90 % con datos intercambiables (50 réplicas, errores t de Student), corrección de muestra finita, calibración isotónica, PSI/KS y reglas de abstención.
+  - **Selección y señales.** mRMR descarta ruido y redundancia. SPI ≈ N(0,1) en el entrenamiento y sin fuga del futuro. Climatología armónica sin fuga. PELT, wavelets y ventana adaptativa.
+  - **Sin fuga entre particiones.** Particiones disjuntas por la fecha del objetivo; normalización solo con el entrenamiento; cambiar el objetivo de prueba no cambia ninguna decisión tomada con validación.
+  - **Las 10 redes.** Forma de salida y referencia; entrenamiento reproducible.
+- `tests/experimentos/test_humo.py`: los seis experimentos y el orquestador corren de punta a punta sobre `tests/fixtures/raw_reducido/` (unos 34 s).
+  - Es un recorte **real** de `data/raw` (2008–2020, 3,7 MB) generado por `scripts/generar_fixtures_experimentos.py`.
+  - `origen.json` guarda el SHA-256 de cada crudo original.
+- `tv experimentos` acepta otro archivo de configuración (`config=`), para poder probar el orquestador.
+
+**Defectos encontrados y corregidos al escribir las pruebas**
+1. **Redes no reproducibles.** En `evaluar_zoo`, la red se creaba **antes** de fijar la semilla: los pesos iniciales dependían del estado previo del generador. Con las mismas entradas, el MLP daba 0,6371 en una corrida y 0,6325 en otra. Ahora se fija la semilla antes de crear cada red.
+2. **mRMR admitía ruido.** El estimador KSG de información mutua es positivo incluso con ruido puro (0,0077 en la prueba), así que una variable de ruido entraba. Ahora una variable solo entra si su información mutua supera el percentil 95 del objetivo permutado (20 permutaciones). Las descartadas indican el motivo.
+
+Ambos cambios afectan a las cifras preliminares del 14-11; la corrida completa (1.1) se hace ya con el código corregido.
+
+**Evidencia.** `pytest`: 75 pruebas pasan y 1 se omite (requiere R). `ruff` y `mypy` limpios.
+
+---
+
 ## 2026-11-15 · Preregistro y partición temporal congelados
 **Autor:** MaxsForocca · **Aportes:** Ower Frank
 
