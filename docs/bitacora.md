@@ -38,6 +38,22 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Prueba de punta a punta con Playwright
+**Autor:** MaxsForocca · **Aportes:** Ower Frank
+
+**Qué se hizo**
+- `frontend/e2e/recorrido.e2e.ts` (`npm run e2e`), con dos pruebas:
+  1. Panel con el aviso permanente → iniciar sesión → abrir un expediente y ver su procedencia (hash) → el verificador aprueba el texto respaldado y marca como **sin respaldo** una cifra inventada ("987,65").
+  2. Las cinco vistas de fenómenos cargan con su título y el aviso, sin errores de JavaScript.
+- `playwright.config.ts` levanta su propio backend (`e2e/servidor-api.sh`: SQLite temporal, datos reales importados y un admin) y el build del frontend.
+  - Con `E2E_BASE_URL`, `E2E_EMAIL` y `E2E_CONTRASENA` prueba cualquier otro despliegue.
+  - Navegador: `PLAYWRIGHT_CHROMIUM`, `/usr/bin/chromium` si existe, o el de Playwright.
+- Trabajo `e2e` en CI, con el reporte HTML como artefacto si falla.
+
+**Evidencia.** 2 de 2 pasan localmente (Chromium 156) y 2 de 2 contra el despliegue de docker compose (`E2E_BASE_URL=http://localhost:8080`).
+
+---
+
 ## 2026-11-15 · Calidad, despliegue y documentación (prioridad 3)
 **Autor:** MaxsForocca · **Aportes:** Ower Frank
 
