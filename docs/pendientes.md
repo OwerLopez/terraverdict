@@ -92,7 +92,7 @@ Y una prueba de humo de cada experimento con datos reducidos guardados en `tests
 | Tarea | Detalle |
 |---|---|
 | ✅ CI | `.github/workflows/ci.yml` en tres trabajos. Backend: ruff, mypy y pytest. Ciencia: ruff, mypy y pytest. Frontend: typecheck, lint, test y build. **Hecho:** 15-11-2026; también verifica que los tipos del frontend coinciden con el OpenAPI |
-| Docker | `backend/Dockerfile`: migrar, importar y uvicorn. `frontend/Dockerfile`: build con nginx y proxy de `/api`. `docker-compose.yml` con perfil PostgreSQL. `.env.example` |
+| ✅ Docker | `backend/Dockerfile`: migrar, importar y uvicorn. `frontend/Dockerfile`: build con nginx y proxy de `/api`. `docker-compose.yml` con perfil PostgreSQL. `.env.example`. **Hecho:** 15-11-2026; `docker compose config` válido. Las imágenes no se construyeron en este entorno (sin daemon de Docker): verificar con `docker compose up --build` |
 | Extremo a extremo | Playwright: iniciar sesión, ver el panel, abrir un expediente y comprobar que el verificador marca una cifra sin respaldo |
 | `docs/api/README.md` | Endpoints, autenticación y códigos de error con anclas `#errores-<codigo>`. Las URL `type` de los errores ya apuntan ahí |
 | `docs/integracion-ciencia-datos.md` | Contratos de series, expedientes y procesos; protocolo del trabajador; unidades e identificadores. `backend/app/main.py` ya lo enlaza |

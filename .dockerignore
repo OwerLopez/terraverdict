@@ -1,0 +1,11 @@
+**/.venv
+**/node_modules
+**/__pycache__
+**/*.db
+.git
+data/raw
+resultados
+frontend
+web
+.env
+.env.*

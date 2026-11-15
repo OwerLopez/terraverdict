@@ -1,0 +1,54 @@
+# TerraVerdict completo: API + interfaz.
+#   docker compose up --build                      # SQLite en un volumen
+#   docker compose --profile postgres up --build   # con PostgreSQL (definir TV_DATABASE_URL, ver .env.example)
+# Variables: copiar .env.example a .env.compose y ajustar (docker compose --env-file .env.compose …).
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      TV_ENTORNO: ${TV_ENTORNO:-desarrollo}
+      TV_DATABASE_URL: ${TV_DATABASE_URL:-sqlite:////datos/terraverdict.db}
+      TV_JWT_SECRETO: ${TV_JWT_SECRETO:-solo-para-desarrollo-cambiar-en-produccion}
+      TV_CORS_ORIGENES: ${TV_CORS_ORIGENES:-["http://localhost:8080"]}
+      TV_ANTHROPIC_API_KEY: ${TV_ANTHROPIC_API_KEY:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+        required: false               # solo con --profile postgres
+    volumes:
+      - datos_api:/datos
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  web:
+    build: frontend
+    environment:
+      API_UPSTREAM: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    profiles: [postgres]
+    environment:
+      POSTGRES_DB: terraverdict
+      POSTGRES_USER: ${POSTGRES_USER:-terraverdict}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cambiar-esta-clave}
+    volumes:
+      - datos_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-terraverdict}"]
+      interval: 10s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  datos_api:
+  datos_postgres:
