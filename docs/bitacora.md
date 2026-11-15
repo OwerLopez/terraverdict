@@ -25,6 +25,52 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Corrida completa de experimentos (pendiente 1.1)
+**Autor:** MaxsForocca · **Aportes:** Ower Frank
+
+**Qué se hizo**
+- Se corrió `tv experimentos` completo sobre los datos reales:
+  - código `41198fe`; preregistro congelado `c40676fd…`;
+  - 10 redes, con 2 semillas en lluvia y 3 en sequía y sismos;
+  - 73 crudos con SHA-256 en la procedencia.
+- `resultados/indice.json` lista 9 experimentos: volcanes, deslizamientos, sismos, fuentes, sequía (POWER y CHIRPS), lluvia extrema (POWER y CHIRPS) y caos.
+- Tiempo total: unos 8 minutos en 20 núcleos.
+
+**Resultados.** Todas las cifras salen de `resultados/*.json`; la prueba (2021–2026) se usó una sola vez.
+
+| Tarea | Elegido en validación | Habilidad en prueba (IC90) | Diebold-Mariano | Lectura |
+|---|---|---|---|---|
+| Sequía, SPI-3 a 1 mes, POWER | N-BEATS | 0,776 (0,675–0,843) | p = 0,017 | Confirmada. Supera a la persistencia (0,587); cobertura conformal 90 % |
+| Sequía, SPI-3 a 1 mes, CHIRPS | Ensamble | 0,616 (0,491–0,770) | — | Confirmada; cobertura 93 % |
+| Sequía, SPI-3 a 3 meses, POWER | iTransformer | 0,198 (0,119–0,263) | p = 0,013 | Confirmada, pero menor que la persistencia frente a la climatología (0,386) |
+| Sequía, SPI-3 a 3 meses, CHIRPS | DLinear | 0,087 (0,048–0,114) | — | Confirmada y pequeña |
+| Lluvia fuerte a 1 día, POWER (≥ 3,22 mm) | SSM selectivo | 0,080 (0,003–0,151) | p = 0,15 | Apenas confirmada; no significativa por DM. Deriva PSI > 0,25 |
+| Lluvia fuerte a 1 día, CHIRPS (≥ 8,33 mm) | Ensamble | 0,046 (−0,007 a 0,090) | p = 0,16 | **No confirmada** |
+| Conteo sísmico mensual | Ensamble | 0,253 bits/mes (0,066–0,492) | p = 0,074 | Agrupamiento de réplicas, **no pronóstico de sismos** |
+
+- **Selección de variables (lluvia):** con mRMR corregido se eligen la historia de lluvia, el ONI, la humedad (relativa en POWER, específica en CHIRPS) y la radiación. Antes se elegía solo la historia de lluvia.
+- **Sismos (USGS, 4 052 eventos):**
+  - Mc 4,5 y b = 0,997 (IC90 0,962–1,031).
+  - Desagrupados con Gardner-Knopoff: 1 257 independientes y b = 0,900 (0,863–0,938).
+  - CV de los intereventos: 1,07.
+- **Volcanes** (frecuencia histórica desde 1550, % anual, IC90):
+  - Ubinas 4,51 (3,07–6,37);
+  - Sabancaya 1,87 (0,98–3,24);
+  - Misti 0,84 (0,29–1,90), a 17,8 km de la ciudad.
+- **Deslizamientos:** 28 detonados por lluvia en el sur (58 en Perú). **Abstención**, porque se necesitan 30. La mediana del percentil de lluvia de 3 días es 67,8.
+- **Contraste de fuentes:**
+  - Lluvia de dic–mar en la cabecera hasta la temporada 2025–26: POWER +21,2 mm/década (p = 0,036); CHIRPS en la celda de POWER +31,6 (p = 0,035); CHIRPS a 0,1° +21,2 (p = 0,117).
+  - El signo coincide, pero la significancia depende del producto.
+  - IGP frente a USGS: 1 097 sismos emparejados; M IGP − M USGS = −0,08 ± 0,26.
+
+**Limitaciones que el informe hace explícitas**
+- La Mc por década fue mayor que 4,5 antes de 2000 (4,9 en los 70, 5,1 en los 80, 4,6 en los 90): el conteo de esos años está incompleto. **No se cambió el método después de ver la prueba**; queda como limitación.
+- La habilidad de la lluvia cae de la validación (0,23) a la prueba (0,08), con deriva de las entradas. Se informa, no se corrige mirando la prueba.
+
+**Pendiente.** MODIS (ORNL saturado) e IMERG (EULA de GES DISC). Cuando lleguen, solo se vuelve a correr `fuentes`, que es control de calidad y no evalúa la prueba de ningún modelo.
+
+---
+
 ## 2026-11-15 · Más fuentes reales: CHIRPS, IGP, MODIS e IMERG, y experimentos multi-fuente
 **Autor:** MaxsForocca · **Aportes:** Ower Frank
 

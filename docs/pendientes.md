@@ -6,7 +6,7 @@
 
 ## Prioridad 1 · Resultados científicos completos
 
-### 1.1 Corrida completa de experimentos
+### 1.1 Corrida completa de experimentos · ✅ hecho (15-11-2026, commit de código `41198fe`; ver bitácora)
 **Qué falta**
 - `tv experimentos` con las 10 redes y varias semillas: lluvia 2 semillas; sequía y sismos 3.
 - Resultado esperado: `resultados/*.json` con la procedencia de cada experimento.

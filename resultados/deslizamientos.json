@@ -1,0 +1,1085 @@
+{
+ "fenomeno": "deslizamientos",
+ "tarea": "lluvia_antecedente",
+ "fuente": "NASA Global Landslide Catalog + NASA POWER",
+ "dominio_bbox": [
+  -76.0,
+  -19.0,
+  -68.0,
+  -12.0
+ ],
+ "eventos_peru": 58,
+ "eventos_dominio": 30,
+ "eventos_por_lluvia_analizados": 28,
+ "regiones": {
+  "Cusco": 14,
+  "Arequipa": 5,
+  "Puno": 4,
+  "Apurímac": 3,
+  "Ayacucho": 2,
+  "Huancavelica": 2
+ },
+ "resumen_percentiles": {
+  "1d": {
+   "mediana_percentil": 59.984917,
+   "fraccion_sobre_p75": 0.25
+  },
+  "3d": {
+   "mediana_percentil": 67.774515,
+   "fraccion_sobre_p75": 0.464286
+  },
+  "10d": {
+   "mediana_percentil": 60.550459,
+   "fraccion_sobre_p75": 0.357143
+  },
+  "30d": {
+   "mediana_percentil": 64.566929,
+   "fraccion_sobre_p75": 0.321429
+  }
+ },
+ "eventos": [
+  {
+   "id": "2947",
+   "fecha": "2011-01-09",
+   "lat": -12.3325,
+   "lon": -73.1219,
+   "region": "Cusco",
+   "lugar": "road between Kepashiato(?) and Valley of the Apurimac and Ene(?) rivers(VRAE), La Convencion province, Cusco region",
+   "precision_ubicacion": "unknown",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 3.0,
+   "percentil_1d": 53.225806,
+   "lluvia_3d_mm": 4.93,
+   "percentil_3d": 24.087079,
+   "lluvia_10d_mm": 14.14,
+   "percentil_10d": 8.821454,
+   "lluvia_30d_mm": 96.75,
+   "percentil_30d": 38.725841
+  },
+  {
+   "id": "6678",
+   "fecha": "2014-01-10",
+   "lat": -13.4862,
+   "lon": -71.7832,
+   "region": "Cusco",
+   "lugar": "Vinchos, distrito de San Salvador",
+   "precision_ubicacion": "25km",
+   "detonante": "rain",
+   "categoria": "rock_fall",
+   "muertes": "4",
+   "lluvia_1d_mm": 1.31,
+   "percentil_1d": 35.343619,
+   "lluvia_3d_mm": 3.48,
+   "percentil_3d": 18.75,
+   "lluvia_10d_mm": 41.76,
+   "percentil_10d": 55.328158,
+   "lluvia_30d_mm": 138.93,
+   "percentil_30d": 65.282749
+  },
+  {
+   "id": "1422",
+   "fecha": "2010-01-20",
+   "lat": -13.1409,
+   "lon": -74.2155,
+   "region": "Ayacucho",
+   "lugar": "Ayacucho Region",
+   "precision_ubicacion": "25km",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "3",
+   "lluvia_1d_mm": 0.75,
+   "percentil_1d": 39.551192,
+   "lluvia_3d_mm": 0.97,
+   "percentil_3d": 14.676966,
+   "lluvia_10d_mm": 21.33,
+   "percentil_10d": 38.95554,
+   "lluvia_30d_mm": 97.76,
+   "percentil_30d": 64.352183
+  },
+  {
+   "id": "5804",
+   "fecha": "2014-01-20",
+   "lat": -12.432,
+   "lon": -75.0369,
+   "region": "Huancavelica",
+   "lugar": "cerro Cuenca, entre los kilómetro 56 y 58 de la carretera Huancayo-Huancavelica",
+   "precision_ubicacion": "exact",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "1",
+   "lluvia_1d_mm": 0.68,
+   "percentil_1d": 49.228612,
+   "lluvia_3d_mm": 3.95,
+   "percentil_3d": 50.140449,
+   "lluvia_10d_mm": 28.66,
+   "percentil_10d": 77.628793,
+   "lluvia_30d_mm": 110.35,
+   "percentil_30d": 90.909091
+  },
+  {
+   "id": "1445",
+   "fecha": "2010-01-23",
+   "lat": -13.2122,
+   "lon": -72.3902,
+   "region": "Cusco",
+   "lugar": "Inca Trail near Machu Picchu",
+   "precision_ubicacion": "25km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "2",
+   "lluvia_1d_mm": 6.33,
+   "percentil_1d": 74.403927,
+   "lluvia_3d_mm": 28.02,
+   "percentil_3d": 90.660112,
+   "lluvia_10d_mm": 40.85,
+   "percentil_10d": 52.717008,
+   "lluvia_30d_mm": 137.11,
+   "percentil_30d": 63.063708
+  },
+  {
+   "id": "1447",
+   "fecha": "2010-01-23",
+   "lat": -12.7823,
+   "lon": -74.9756,
+   "region": "Huancavelica",
+   "lugar": "Huancavelica,",
+   "precision_ubicacion": "25km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 1.31,
+   "percentil_1d": 61.009818,
+   "lluvia_3d_mm": 2.12,
+   "percentil_3d": 36.30618,
+   "lluvia_10d_mm": 10.42,
+   "percentil_10d": 29.216655,
+   "lluvia_30d_mm": 56.38,
+   "percentil_30d": 57.265569
+  },
+  {
+   "id": "1446",
+   "fecha": "2010-01-23",
+   "lat": -13.2873,
+   "lon": -72.1137,
+   "region": "Cusco",
+   "lugar": "province of Urubamba, Cusco",
+   "precision_ubicacion": "25km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "2",
+   "lluvia_1d_mm": 8.34,
+   "percentil_1d": 82.819074,
+   "lluvia_3d_mm": 32.75,
+   "percentil_3d": 93.539326,
+   "lluvia_10d_mm": 45.54,
+   "percentil_10d": 60.550459,
+   "lluvia_30d_mm": 137.49,
+   "percentil_30d": 64.566929
+  },
+  {
+   "id": "1443",
+   "fecha": "2010-01-23",
+   "lat": -13.1809,
+   "lon": -72.5273,
+   "region": "Cusco",
+   "lugar": "Train line between Cuzco and Machu Picchu",
+   "precision_ubicacion": "50km",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 6.33,
+   "percentil_1d": 74.403927,
+   "lluvia_3d_mm": 28.02,
+   "percentil_3d": 90.660112,
+   "lluvia_10d_mm": 40.85,
+   "percentil_10d": 52.717008,
+   "lluvia_30d_mm": 137.11,
+   "percentil_30d": 63.063708
+  },
+  {
+   "id": "1444",
+   "fecha": "2010-01-23",
+   "lat": -13.3342,
+   "lon": -72.0826,
+   "region": "Cusco",
+   "lugar": "Sacred Valley near Machu Picchu",
+   "precision_ubicacion": "25km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "2",
+   "lluvia_1d_mm": 8.34,
+   "percentil_1d": 82.819074,
+   "lluvia_3d_mm": 32.75,
+   "percentil_3d": 93.539326,
+   "lluvia_10d_mm": 45.54,
+   "percentil_10d": 60.550459,
+   "lluvia_30d_mm": 137.49,
+   "percentil_30d": 64.566929
+  },
+  {
+   "id": "1476",
+   "fecha": "2010-02-06",
+   "lat": -13.445968,
+   "lon": -72.26001,
+   "region": "Cusco",
+   "lugar": "Zurite district",
+   "precision_ubicacion": "10km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 2.28,
+   "percentil_1d": 44.880677,
+   "lluvia_3d_mm": 5.72,
+   "percentil_3d": 31.023865,
+   "lluvia_10d_mm": 20.59,
+   "percentil_10d": 16.628176,
+   "lluvia_30d_mm": 177.02,
+   "percentil_30d": 82.371055
+  },
+  {
+   "id": "1495",
+   "fecha": "2010-02-09",
+   "lat": -13.447999,
+   "lon": -72.259849,
+   "region": "Cusco",
+   "lugar": "Zurite district, near Cusco",
+   "precision_ubicacion": "10km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 3.64,
+   "percentil_1d": 59.661278,
+   "lluvia_3d_mm": 10.53,
+   "percentil_3d": 50.808314,
+   "lluvia_10d_mm": 16.74,
+   "percentil_10d": 11.778291,
+   "lluvia_30d_mm": 152.96,
+   "percentil_30d": 69.591994
+  },
+  {
+   "id": "3124",
+   "fecha": "2011-02-15",
+   "lat": -13.8158,
+   "lon": -70.2659,
+   "region": "Puno",
+   "lugar": "Puno, Interoceánica road between Macusani and Puerto Maldonado",
+   "precision_ubicacion": "unknown",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "",
+   "lluvia_1d_mm": 4.47,
+   "percentil_1d": 56.505004,
+   "lluvia_3d_mm": 38.8,
+   "percentil_3d": 93.071594,
+   "lluvia_10d_mm": 86.5,
+   "percentil_10d": 86.297152,
+   "lluvia_30d_mm": 169.55,
+   "percentil_30d": 62.047729
+  },
+  {
+   "id": "3123",
+   "fecha": "2011-02-15",
+   "lat": -14.0731,
+   "lon": -72.9562,
+   "region": "Apurímac",
+   "lugar": "Madre di Dios, Arequipa, Puno, Apurimac, Ica, Ucayali, La Libertad and Huancavelica provinces",
+   "precision_ubicacion": "unknown",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "5",
+   "lluvia_1d_mm": 1.81,
+   "percentil_1d": 41.724403,
+   "lluvia_3d_mm": 13.25,
+   "percentil_3d": 64.511162,
+   "lluvia_10d_mm": 52.66,
+   "percentil_10d": 72.979215,
+   "lluvia_30d_mm": 181.59,
+   "percentil_30d": 83.063895
+  },
+  {
+   "id": "1536",
+   "fecha": "2010-02-28",
+   "lat": -15.2086,
+   "lon": -72.8973,
+   "region": "Arequipa",
+   "lugar": "Near Cochahuasi (Cotahuasi) village, Taray District, Cusco region ",
+   "precision_ubicacion": "1km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "6",
+   "lluvia_1d_mm": 5.48,
+   "percentil_1d": 87.374904,
+   "lluvia_3d_mm": 22.74,
+   "percentil_3d": 94.842186,
+   "lluvia_10d_mm": 54.07,
+   "percentil_10d": 91.993841,
+   "lluvia_30d_mm": 81.75,
+   "percentil_30d": 61.585835
+  },
+  {
+   "id": "992",
+   "fecha": "2009-03-02",
+   "lat": -13.917,
+   "lon": -70.233,
+   "region": "Puno",
+   "lugar": "Huanchumay, Ituata district  in Carabaya Province",
+   "precision_ubicacion": "50km",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "10",
+   "lluvia_1d_mm": 3.39,
+   "percentil_1d": 60.308555,
+   "lluvia_3d_mm": 10.58,
+   "percentil_3d": 53.786816,
+   "lluvia_10d_mm": 66.24,
+   "percentil_10d": 81.837307,
+   "lluvia_30d_mm": 178.44,
+   "percentil_30d": 71.528752
+  },
+  {
+   "id": "994",
+   "fecha": "2009-03-07",
+   "lat": -16.3556,
+   "lon": -71.4842,
+   "region": "Arequipa",
+   "lugar": "Urco, Province of Arequipa",
+   "precision_ubicacion": "50km",
+   "detonante": "rain",
+   "categoria": "mudslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 1.46,
+   "percentil_1d": 86.676017,
+   "lluvia_3d_mm": 10.36,
+   "percentil_3d": 96.002805,
+   "lluvia_10d_mm": 19.63,
+   "percentil_10d": 87.587658,
+   "lluvia_30d_mm": 57.1,
+   "percentil_30d": 78.892006
+  },
+  {
+   "id": "4250",
+   "fecha": "2012-03-09",
+   "lat": -15.746,
+   "lon": -73.8721,
+   "region": "Arequipa",
+   "lugar": "Cuatro Horas, Chaparra district, Arequipa",
+   "precision_ubicacion": "25km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "3",
+   "lluvia_1d_mm": 0.61,
+   "percentil_1d": 74.123422,
+   "lluvia_3d_mm": 4.38,
+   "percentil_3d": 85.834502,
+   "lluvia_10d_mm": 21.17,
+   "percentil_10d": 91.654979,
+   "lluvia_30d_mm": 50.02,
+   "percentil_30d": 85.69425
+  },
+  {
+   "id": "4273",
+   "fecha": "2012-03-18",
+   "lat": -13.6291,
+   "lon": -72.8718,
+   "region": "Apurímac",
+   "lugar": "Abancay, Apurimac District",
+   "precision_ubicacion": "5km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 2.76,
+   "percentil_1d": 59.046283,
+   "lluvia_3d_mm": 12.58,
+   "percentil_3d": 71.037868,
+   "lluvia_10d_mm": 45.21,
+   "percentil_10d": 71.879383,
+   "lluvia_30d_mm": 124.61,
+   "percentil_30d": 59.186536
+  },
+  {
+   "id": "4274",
+   "fecha": "2012-03-18",
+   "lat": -13.5168,
+   "lon": -73.7262,
+   "region": "Apurímac",
+   "lugar": "Choccepuquio, Chincheros",
+   "precision_ubicacion": "10km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 1.35,
+   "percentil_1d": 49.789621,
+   "lluvia_3d_mm": 8.72,
+   "percentil_3d": 62.131837,
+   "lluvia_10d_mm": 38.3,
+   "percentil_10d": 71.037868,
+   "lluvia_30d_mm": 121.2,
+   "percentil_30d": 67.461431
+  },
+  {
+   "id": "1594",
+   "fecha": "2010-03-26",
+   "lat": -14.1232,
+   "lon": -70.1217,
+   "region": "Puno",
+   "lugar": "Carabaya Province, Puno region, Southeast Andes",
+   "precision_ubicacion": "unknown",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "5",
+   "lluvia_1d_mm": 0.17,
+   "percentil_1d": 13.043478,
+   "lluvia_3d_mm": 25.84,
+   "percentil_3d": 88.28892,
+   "lluvia_10d_mm": 28.6,
+   "percentil_10d": 32.258065,
+   "lluvia_30d_mm": 140.08,
+   "percentil_30d": 52.734923
+  },
+  {
+   "id": "3335",
+   "fecha": "2011-04-03",
+   "lat": -13.5138,
+   "lon": -71.9911,
+   "region": "Cusco",
+   "lugar": "Ayajuyco hiss(?), Villa Maria Baja neighborhood, Cuzco city",
+   "precision_ubicacion": "1km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "9",
+   "lluvia_1d_mm": 61.36,
+   "percentil_1d": 99.855072,
+   "lluvia_3d_mm": 83.22,
+   "percentil_3d": 99.42029,
+   "lluvia_10d_mm": 129.97,
+   "percentil_10d": 98.695652,
+   "lluvia_30d_mm": 209.39,
+   "percentil_30d": 99.565217
+  },
+  {
+   "id": "1620",
+   "fecha": "2010-04-05",
+   "lat": -12.9655,
+   "lon": -71.4216,
+   "region": "Cusco",
+   "lugar": "near Cock-of-the-Rock lodge(?), Tres Cruces",
+   "precision_ubicacion": "10km",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 0.26,
+   "percentil_1d": 39.492754,
+   "lluvia_3d_mm": 2.45,
+   "percentil_3d": 43.333333,
+   "lluvia_10d_mm": 9.05,
+   "percentil_10d": 23.695652,
+   "lluvia_30d_mm": 68.67,
+   "percentil_30d": 37.463768
+  },
+  {
+   "id": "1618",
+   "fecha": "2010-04-05",
+   "lat": -13.1171,
+   "lon": -71.5841,
+   "region": "Cusco",
+   "lugar": "near Wayqecha Research Center(?), Tres Cruces",
+   "precision_ubicacion": "10km",
+   "detonante": "downpour",
+   "categoria": "landslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 0.26,
+   "percentil_1d": 52.246377,
+   "lluvia_3d_mm": 0.56,
+   "percentil_3d": 30.724638,
+   "lluvia_10d_mm": 6.42,
+   "percentil_10d": 30.0,
+   "lluvia_30d_mm": 50.08,
+   "percentil_30d": 37.246377
+  },
+  {
+   "id": "2032",
+   "fecha": "2010-07-02",
+   "lat": -13.3219,
+   "lon": -72.2308,
+   "region": "Cusco",
+   "lugar": "km 49 on rails from Cuzco to Machu Picchu",
+   "precision_ubicacion": "25km",
+   "detonante": "rain",
+   "categoria": "mudslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 0.0,
+   "percentil_1d": 0.0,
+   "lluvia_3d_mm": 0.0,
+   "percentil_3d": 0.0,
+   "lluvia_10d_mm": 0.43,
+   "percentil_10d": 59.817672,
+   "lluvia_30d_mm": 0.43,
+   "percentil_30d": 23.001403
+  },
+  {
+   "id": "827",
+   "fecha": "2008-10-04",
+   "lat": -14.0,
+   "lon": -70.4,
+   "region": "Puno",
+   "lugar": "Macusani district, Puno",
+   "precision_ubicacion": "25km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "7",
+   "lluvia_1d_mm": 2.21,
+   "percentil_1d": 68.02244,
+   "lluvia_3d_mm": 3.58,
+   "percentil_3d": 43.969144,
+   "lluvia_10d_mm": 9.38,
+   "percentil_10d": 22.370266,
+   "lluvia_30d_mm": 19.45,
+   "percentil_30d": 7.43338
+  },
+  {
+   "id": "2609",
+   "fecha": "2010-10-17",
+   "lat": -13.3042,
+   "lon": -72.1167,
+   "region": "Cusco",
+   "lugar": "Urubamba, near Cuzco",
+   "precision_ubicacion": "5km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 5.26,
+   "percentil_1d": 89.200561,
+   "lluvia_3d_mm": 76.2,
+   "percentil_3d": 99.929874,
+   "lluvia_10d_mm": 77.51,
+   "percentil_10d": 98.737728,
+   "lluvia_30d_mm": 87.23,
+   "percentil_30d": 94.109397
+  },
+  {
+   "id": "1366",
+   "fecha": "2009-12-17",
+   "lat": -13.1583,
+   "lon": -74.2239,
+   "region": "Ayacucho",
+   "lugar": "Huamanga, Ayacucho, Peru",
+   "precision_ubicacion": "25km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "10",
+   "lluvia_1d_mm": 2.42,
+   "percentil_1d": 69.677419,
+   "lluvia_3d_mm": 17.3,
+   "percentil_3d": 88.673835,
+   "lluvia_10d_mm": 52.67,
+   "percentil_10d": 93.620072,
+   "lluvia_30d_mm": 100.24,
+   "percentil_30d": 88.243728
+  },
+  {
+   "id": "1375",
+   "fecha": "2009-12-29",
+   "lat": -15.345,
+   "lon": -71.489,
+   "region": "Arequipa",
+   "lugar": "La Oroya–Huancayo sector, near the town of Chacapalca",
+   "precision_ubicacion": "5km",
+   "detonante": "downpour",
+   "categoria": "mudslide",
+   "muertes": "0",
+   "lluvia_1d_mm": 4.65,
+   "percentil_1d": 93.763441,
+   "lluvia_3d_mm": 6.9,
+   "percentil_3d": 85.376344,
+   "lluvia_10d_mm": 18.85,
+   "percentil_10d": 84.946237,
+   "lluvia_30d_mm": 40.81,
+   "percentil_30d": 85.591398
+  }
+ ],
+ "abstencion": {
+  "publicar": false,
+  "abstencion": true,
+  "motivos": [
+   "Solo 28 deslizamientos detonados por lluvia en el dominio: se necesitan al menos 30 para estimar un umbral de lluvia."
+  ],
+  "advertencias": [
+   "El catálogo GLC se basa en noticias: subregistra eventos rurales y su cobertura principal es 2007–2017."
+  ]
+ },
+ "umbral": null,
+ "procedencia": {
+  "generado_utc": "2026-11-15T06:18:31+00:00",
+  "commit": "41198fee2d6f1e8ef3b333a241aed8def4f56cab",
+  "config_sha256": "3cbb05a406bb35a4f344266fe65c7addd7e4b6ee22e3d00981d8b1ea5444b571",
+  "preregistro_sha256": "c40676fd76ab55434bb8f0a89fe6c1bcf8845551dd884b41444682f3bd00d596",
+  "crudos": {
+   "chirps": [
+    {
+     "archivo": "chirps_ciudad_local_1981_1990.json",
+     "sha256": "b34772f0e33024bd512ec3b2afead35890b0d74030b74a8dd7f486e3f754f899",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:33:05+00:00"
+    },
+    {
+     "archivo": "chirps_ciudad_local_1991_2000.json",
+     "sha256": "cc12c0da75b7edc23ab244f4c28a14eb4ddce9b524d388144012906cd7a50fad",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:33:37+00:00"
+    },
+    {
+     "archivo": "chirps_ciudad_local_2001_2010.json",
+     "sha256": "f6a6b59f7df461a516e82d3dbaed4593620ec5cd6150b5a36459c3448fe01f4f",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:34:10+00:00"
+    },
+    {
+     "archivo": "chirps_ciudad_local_2011_2020.json",
+     "sha256": "efd08f2cb9e26cb74ff97c319522173161e5950170479353b0ab1a1e1fe13063",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:34:41+00:00"
+    },
+    {
+     "archivo": "chirps_ciudad_local_2021_2026.json",
+     "sha256": "5cbe3d78861fe7931539cf2740b581c9ce27b1b9fc211ea8d2777158b652712e",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:35:07+00:00"
+    },
+    {
+     "archivo": "chirps_ciudad_celda_power_1981_1990.json",
+     "sha256": "d19cdb49562f401bae20f9d811a68b6842f205866b95b5678d2a0685b0f09edb",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:35:46+00:00"
+    },
+    {
+     "archivo": "chirps_ciudad_celda_power_1991_2000.json",
+     "sha256": "4ee66d60b4cd35a59e61a88e5a2ad26145376d512af7092b26bacb4acc71db98",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:36:25+00:00"
+    },
+    {
+     "archivo": "chirps_ciudad_celda_power_2001_2010.json",
+     "sha256": "0a829f3f156312f4ac92fed988ec8f2ddd1773e4f5bf59893f7bd86ea99140e4",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:36:59+00:00"
+    },
+    {
+     "archivo": "chirps_ciudad_celda_power_2011_2020.json",
+     "sha256": "a9c40d2420e150f3fce011d0f119f348a938e00efc6928bce45359c8556b54e5",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:37:38+00:00"
+    },
+    {
+     "archivo": "chirps_ciudad_celda_power_2021_2026.json",
+     "sha256": "7ae4ea5da437dfd74294d1a41a5d6291e80caebbcd6cf3b912528f8b2f003daa",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:38:12+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_local_1981_1990.json",
+     "sha256": "14e2fd15166fe5c21e257e61d6060e7eae88a726e757dae451c02877ae6ce18d",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:38:45+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_local_1991_2000.json",
+     "sha256": "fa3c25da4e643eecd0f3bf4f630e7fd1173b5eb629829c06851f3657c02d624f",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:39:18+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_local_2001_2010.json",
+     "sha256": "a05107ad61a065f9fb672af6a9152a2551e4f25264b7dd177375b0403e3e979a",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:39:56+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_local_2011_2020.json",
+     "sha256": "7fc0a7c0d0e19df40109674a089b9b1e2d8f328e88d73834aaa48d3b5b4e5ef6",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:40:29+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_local_2021_2026.json",
+     "sha256": "699f1ebbd5e7d4231a6b2b8102408143428865597c214b311ad39f239fe4d9fb",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:40:56+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_celda_power_1981_1990.json",
+     "sha256": "8d15a8f5f384a7c613790173d9818748314cb32320a20c866c5d7e6420a537b9",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:41:35+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_celda_power_1991_2000.json",
+     "sha256": "b0902e5b0eff75ea2bfb295e6e9042e2ff8d20cf93e67cb114f15be2edfb8995",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:42:14+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_celda_power_2001_2010.json",
+     "sha256": "341247c4b7cdaf86eca85064611bcdd9487fed3a561112deffb67a6b33e1b666",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:42:53+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_celda_power_2011_2020.json",
+     "sha256": "d11dbf1911a66d271301a7c407ceaade8c729f5f7e9fdffe669fda4c026ae39d",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:43:31+00:00"
+    },
+    {
+     "archivo": "chirps_cabecera_celda_power_2021_2026.json",
+     "sha256": "301c7db6b5f00f230661c22f381836c3bc598b2d0dd9652efed7ebf03a4fe0ab",
+     "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+     "descargado_utc": "2026-11-15T05:43:58+00:00"
+    }
+   ],
+   "ghcn": [
+    {
+     "archivo": "ghcn_PE000084752.csv",
+     "sha256": "1963def04a0c425d2dad4511d7ae6f88f733485645f30dd44acbc526e8edfd88",
+     "url": "https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/PE000084752.csv",
+     "descargado_utc": "2026-11-15T05:05:50+00:00"
+    }
+   ],
+   "glc": [
+    {
+     "archivo": "glc.csv",
+     "sha256": "2c4898899dd4f373c4320e121c5b655ebb5394d431fa42e57ec4828d07d48b04",
+     "url": "https://data.nasa.gov/docs/legacy/Global_Landslide_Catalog_Export/Global_Landslide_Catalog_Export_rows.csv",
+     "descargado_utc": "2026-11-15T05:07:20+00:00"
+    }
+   ],
+   "gvp": [
+    {
+     "archivo": "gvp_volcanes.geojson",
+     "sha256": "ca537d1fc0619b06f11ae62d16df0b75162a17706d75bf8541e290eb3b8c8778",
+     "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Volcanoes&outputFormat=application%2Fjson&CQL_FILTER=Country%3D%27Peru%27",
+     "descargado_utc": "2026-11-15T05:05:57+00:00"
+    },
+    {
+     "archivo": "gvp_erupciones.geojson",
+     "sha256": "7af6c4421fe0086a9ce13fac2b9c4007d0b27f80be50b0461bb3a2113b45f16b",
+     "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Eruptions&outputFormat=application%2Fjson&CQL_FILTER=Volcano_Number+IN+%28354000%2C354001%2C354003%2C354004%2C354005%2C354006%2C354010%2C354020%2C354031%2C354030%2C354040%2C354050%2C354060%29",
+     "descargado_utc": "2026-11-15T05:05:57+00:00"
+    }
+   ],
+   "igp": [
+    {
+     "archivo": "igp_2012.json",
+     "sha256": "5a56bd7dff31e85c043710310d4c4789be228f958dcbe8bf36f9523a647ce0a6",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2012",
+     "descargado_utc": "2026-11-15T05:43:58+00:00"
+    },
+    {
+     "archivo": "igp_2013.json",
+     "sha256": "78dd9a9e47171ab143c8bbdeab46c2a6e6d98a78bd3b510c4dd393f3347553f9",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2013",
+     "descargado_utc": "2026-11-15T05:43:59+00:00"
+    },
+    {
+     "archivo": "igp_2014.json",
+     "sha256": "cd80fe325c376fa7f3c7d69fef7ce7285e8d5e112aa9124237264a81c22ff72a",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2014",
+     "descargado_utc": "2026-11-15T05:43:59+00:00"
+    },
+    {
+     "archivo": "igp_2015.json",
+     "sha256": "770f27dbbb4fda2f29451274a610edb574f2f5b0fe34f50108b97b6e8768c915",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2015",
+     "descargado_utc": "2026-11-15T05:43:59+00:00"
+    },
+    {
+     "archivo": "igp_2016.json",
+     "sha256": "7af111ea2ef569b2fd0bb384683c3dcbc566140a1b2b63bb9443c601e8404229",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2016",
+     "descargado_utc": "2026-11-15T05:44:00+00:00"
+    },
+    {
+     "archivo": "igp_2017.json",
+     "sha256": "528e8bbfb1cc03553a7985a83319266ac20007e719688119919292aa933f44de",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2017",
+     "descargado_utc": "2026-11-15T05:44:00+00:00"
+    },
+    {
+     "archivo": "igp_2018.json",
+     "sha256": "fe13c341f4f201b84e6439b801b5a62189ef8092cbedb9733c439652760911a9",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2018",
+     "descargado_utc": "2026-11-15T05:44:01+00:00"
+    },
+    {
+     "archivo": "igp_2019.json",
+     "sha256": "10d25d977ff5a0ac05fbfec9780e1d386fc057c0dfed94e7d9db9ec15f87dd41",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2019",
+     "descargado_utc": "2026-11-15T05:44:02+00:00"
+    },
+    {
+     "archivo": "igp_2020.json",
+     "sha256": "b620ea2d19d389a3c7a2928ffa73a4b797d6b9b3fd9d76a3e706fbb8827d6ffa",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2020",
+     "descargado_utc": "2026-11-15T05:44:03+00:00"
+    },
+    {
+     "archivo": "igp_2021.json",
+     "sha256": "3221703053ba50e3531c94583cdf09332d0321c49b09928308f6d90e585a73f0",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2021",
+     "descargado_utc": "2026-11-15T05:44:03+00:00"
+    },
+    {
+     "archivo": "igp_2022.json",
+     "sha256": "0512ee920b19ca14edd62256827d9ea0e05de4faed497f2521bdffb5ad8f9707",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2022",
+     "descargado_utc": "2026-11-15T05:44:04+00:00"
+    },
+    {
+     "archivo": "igp_2023.json",
+     "sha256": "6a1ad500373b9370b9e0d5070de07d0545dc1ecbe4359316a9995b8e486f1882",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2023",
+     "descargado_utc": "2026-11-15T05:44:05+00:00"
+    },
+    {
+     "archivo": "igp_2024.json",
+     "sha256": "ebe59cb0a0ee472e630961374a6878edb4603cff71b52fdd9c63d41abfc6a0d8",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2024",
+     "descargado_utc": "2026-11-15T05:44:06+00:00"
+    },
+    {
+     "archivo": "igp_2025.json",
+     "sha256": "cf1564646eefcfb999caefe38706ef19cb1f5892dc988452decddbaf97af2716",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2025",
+     "descargado_utc": "2026-11-15T05:44:06+00:00"
+    },
+    {
+     "archivo": "igp_2026.json",
+     "sha256": "6c1d7c0195999e70887c86ffabc9c3723771853774e02ccafb3bebdcfc9f1bea",
+     "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2026",
+     "descargado_utc": "2026-11-15T05:44:07+00:00"
+    }
+   ],
+   "noaa": [
+    {
+     "archivo": "oni.ascii.txt",
+     "sha256": "118c563331335c8649cdc2677e6be7ae89d1259d901345fcddbc2857af280f7f",
+     "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+     "descargado_utc": "2026-11-15T05:05:47+00:00"
+    }
+   ],
+   "power": [
+    {
+     "archivo": "power_diario_ciudad.json",
+     "sha256": "dffe19e526277b9a478a56f9f3cd5ca88ec13d9eeaa9c5a84e24e8d9ac13d9b9",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.535&latitude=-16.4&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:05:42+00:00"
+    },
+    {
+     "archivo": "power_diario_cabecera.json",
+     "sha256": "5f2d72eb0a4dde1585081aefa694908a4a9a9f8bb4546aaf7fcecf69fcbfaff6",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.25&latitude=-15.95&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:05:45+00:00"
+    },
+    {
+     "archivo": "power_-71.25_-15.95_1981_2025.json",
+     "sha256": "7fae526361348299f42bbf814b8cd4a6fbd2e88e23919d119cd9b170f1000c7b",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M&community=AG&longitude=-71.25&latitude=-15.95&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T05:05:46+00:00"
+    }
+   ],
+   "power_celdas": [
+    {
+     "archivo": "power_diario_celda_-75.0_-13.0.json",
+     "sha256": "322bbe04fe70a904ffc0d742b69931757cdd67b2dd3773c321c176a7af361faf",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:22+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-75.0_-12.5.json",
+     "sha256": "99b0c98aa3417bf5d4f9bb22cbd8edec605c50208d574e57b942bedefc220aa8",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-12.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:23+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-74.375_-13.0.json",
+     "sha256": "44b74ecc4fd8e7019d1aa9581e92a71d5b22c25de47427d56a23b2741487f520",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-74.375&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:24+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-73.75_-15.5.json",
+     "sha256": "1d2321997236bd79568f9e869fe63fadd76782a3ecded9c8dd974bb353b7e811",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-15.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:25+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-73.75_-13.5.json",
+     "sha256": "7e7d94666113ff111099180fbc63f95eb6c869f067d46ff1b0a799eb91f02c9f",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-13.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:26+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-73.125_-15.0.json",
+     "sha256": "a97a02c807ce2509e729487331ee8af4e4b7199dd15f459a75dbd58ddc8ec8e1",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-15.0&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:27+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-73.125_-14.0.json",
+     "sha256": "9edff17a055c10d9ea33aac8a8998624327a0e50f1358b28c970baca4d27b364",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-14.0&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:28+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-73.125_-13.5.json",
+     "sha256": "0be7429291c02b5ae67edfc27fa91b9f936e1fba3ed97ca511507affb2353458",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-13.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:30+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-73.125_-12.5.json",
+     "sha256": "b221a7338a406cfd2eb61223264fa97d57a6324d19bda7e3109b71c55980fbd9",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-12.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:31+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-72.5_-13.5.json",
+     "sha256": "f9a34899fac7006226becbefc9bcefd74c48c6f07dedbce1cde00982a6c5b686",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:32+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-72.5_-13.0.json",
+     "sha256": "e082dcdbf281ceab46581ca6c920d3d4fc91de8552171026692ce8694ce72a0b",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:33+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-71.875_-15.5.json",
+     "sha256": "42276470c44bf17d43b286b01cd0c81a4143e44e7f4ed5b2e2ca3645d7e49720",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-15.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:34+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-71.875_-13.5.json",
+     "sha256": "3d51535b58de0d18011f34fc90ae869f8c5c1021fba073e73fdb7dd492b3d104",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:36+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-71.875_-13.0.json",
+     "sha256": "d696d1700825490c0c88d0ebbc88c789452746b9f7e13127b59ce1cbacd44bb4",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:37+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-71.25_-16.5.json",
+     "sha256": "4ff33962125f4d28be1d0ff8ed82de851f1b9f230f80cf1298efce4ee521a050",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-16.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:38+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-71.25_-15.5.json",
+     "sha256": "1cf6f453dd8cf278a6ecf6bc062fa552978afaad1bb5f0d6ce805e2bbd70d97c",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-15.5&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:39+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-71.25_-13.0.json",
+     "sha256": "0fdf339d7546d96b84cefc4c40703b3c8f7545eca59fecd699176d05079eba83",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-13.0&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:40+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-70.625_-14.0.json",
+     "sha256": "f87ec1b30d7595da48124688febb7c2ea064538f6f800a6a23481a27030221d5",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.625&latitude=-14.0&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:41+00:00"
+    },
+    {
+     "archivo": "power_diario_celda_-70.0_-14.0.json",
+     "sha256": "bc6609e74667948ad4c7f0ab6f6c784337c6a2edcde03db2b77bc8786516f251",
+     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.0&latitude=-14.0&start=19810101&end=20261031&format=JSON",
+     "descargado_utc": "2026-11-15T05:07:42+00:00"
+    }
+   ],
+   "usgs": [
+    {
+     "archivo": "usgs_1973_1977.csv",
+     "sha256": "b195959730b48df2e75aa6717fb4f3756c757bb082ae7469a71e910673c600f7",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:50+00:00"
+    },
+    {
+     "archivo": "usgs_1978_1982.csv",
+     "sha256": "f5275542fa290568268cc283c383960d0fb0aca64196f1f95d6b608d6ca1dda1",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:51+00:00"
+    },
+    {
+     "archivo": "usgs_1983_1987.csv",
+     "sha256": "a48602fb11ae60cb2f92b54e1184f8749216244fe24556a0f4e3774902898d6f",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:51+00:00"
+    },
+    {
+     "archivo": "usgs_1988_1992.csv",
+     "sha256": "d8fbf64991aaff8006c81f70969123d39a6d5e6734994ef1804fe30679705ac1",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:52+00:00"
+    },
+    {
+     "archivo": "usgs_1993_1997.csv",
+     "sha256": "bca383f30e8896dbd442ee4ac540a72d98032ceb638733d3f7dbd6cb37635091",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:53+00:00"
+    },
+    {
+     "archivo": "usgs_1998_2002.csv",
+     "sha256": "c577f921f4848c1f48ce6620d6768ceaf7a0b02a625f2b6bb51d7d46e9ee7bc1",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:53+00:00"
+    },
+    {
+     "archivo": "usgs_2003_2007.csv",
+     "sha256": "06081ab1876bf0e64f82bead8c9db41413781969d68729c83515156f0be28f3d",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:54+00:00"
+    },
+    {
+     "archivo": "usgs_2008_2012.csv",
+     "sha256": "d53710ae5b3c6aa725ce50edd488b0130eddaeed2bc2c2167e4de8ee0723a3eb",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:54+00:00"
+    },
+    {
+     "archivo": "usgs_2013_2017.csv",
+     "sha256": "d33196222084b31a4e1cfb3d0148d0e4f02041e09f2c36852b650761c08e7b82",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:55+00:00"
+    },
+    {
+     "archivo": "usgs_2018_2022.csv",
+     "sha256": "72b239f770ea156f37966ec04fa7ca0d2646f44dfd306f91d5be517712f45f6c",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:55+00:00"
+    },
+    {
+     "archivo": "usgs_2023_2026.csv",
+     "sha256": "dbe080e268a56779c5d3d14a658202be8a11f5ac16fdc8b9718b3a1ad4317231",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
+     "descargado_utc": "2026-11-15T05:05:56+00:00"
+    }
+   ]
+  },
+  "versiones": {
+   "python": "3.13.15",
+   "numpy": "2.5.4",
+   "torch": "2.15.0+cpu",
+   "scikit_learn": "1.9.1"
+  },
+  "segundos": 0.3,
+  "modo": "completo"
+ }
+}
