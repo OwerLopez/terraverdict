@@ -32,3 +32,21 @@ def test_la_funcion_no_excluye_los_datos_que_importa_la_api() -> None:
     assert (RAIZ / "resultados" / "contrato" / "expedientes.json").exists()
     destinos = {r["source"]: r["destination"] for r in config["rewrites"]}
     assert destinos["/api/(.*)"] == "/api/index"
+
+
+def test_csp_del_frontend_autoriza_exactamente_el_script_en_linea() -> None:
+    """La CSP de vercel.json permite el script en línea de index.html solo por su hash SHA-256."""
+    import base64
+    import hashlib
+    import re
+
+    raiz = Path(__file__).resolve().parents[2]
+    html = (raiz / "frontend" / "index.html").read_text(encoding="utf-8")
+    scripts = re.findall(r"<script>(.*?)</script>", html, re.S)
+    cabeceras = json.loads((raiz / "vercel.json").read_text(encoding="utf-8"))["headers"]
+    csp = next(h["value"] for c in cabeceras for h in c["headers"] if h["key"] == "Content-Security-Policy")
+    for s in scripts:
+        huella = "sha256-" + base64.b64encode(hashlib.sha256(s.encode("utf-8")).digest()).decode()
+        assert f"'{huella}'" in csp, "index.html cambió: actualizar el hash del script en la CSP de vercel.json"
+    assert "'unsafe-inline'" not in csp.split("script-src", 1)[1].split(";", 1)[0]
+    assert "frame-ancestors 'none'" in csp

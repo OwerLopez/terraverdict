@@ -254,3 +254,19 @@ Los crudos de entrenamiento no cambiaron (las informaciones mutuas de la selecci
 4. **Primer corte del historial (2016).** El SPI y el umbral de lluvia se ajustaron hasta 2015, el año que en ese corte sirve de validación. Solo afecta al régimen "validación del diseño", que ya se lee como optimista.
 5. **39 sustitutos por ventana.** Bastan para el diagnóstico descriptivo, no para sobrevivir a Holm con decenas de ventanas. Subirlos a 999 multiplicaría el tiempo por 25.
 6. **Redes con el 85 % del entrenamiento.** La parada temprana honesta reserva el 15 % final; los clásicos usan el 100 %. Es una desventaja declarada de las redes, no una fuga.
+
+## 12. Decisiones sobre los riesgos abiertos (15-11-2026, tarde)
+
+Tomadas al cerrar el proyecto, con el criterio de no tocar lo preregistrado después de ver resultados.
+
+1. **Completitud sísmica (riesgo 1): se mantiene Mc = 4,5 como limitación declarada.** La tarea de
+   conteo sísmico y su Mc están en `preregistro.yaml`, congelado el 15-11. Cambiar la Mc (variable por
+   década) o recortar la serie al año 2000 *después* de ver que el conteo no se confirma sería una
+   decisión post hoc. El sesgo conocido (conteos anteriores a 2000 incompletos, tasa aparente creciente)
+   afecta al entrenamiento de las ventanas más antiguas; como la tarea se lee como **no confirmada** y la
+   web la marca así, ninguna conclusión publicada depende de ella.
+2. **Sustitutos del caos en ventanas (riesgo 5): se mantienen 39.** Con 39 sustitutos el p mínimo es
+   0,025 y ninguna ventana sobrevive a Holm: el diagnóstico en ventanas es **descriptivo** y así se
+   presenta (la corrección por comparaciones múltiples aparece en la web). Subirlo a 999 multiplica el
+   tiempo por unas 25 veces sin cambiar ninguna conclusión del veredicto global, que usa su propio
+   número de sustitutos.

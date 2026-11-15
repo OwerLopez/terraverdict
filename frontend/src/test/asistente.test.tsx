@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import type { Esquemas } from "../api/cliente";
-import { SelloRespuesta, TextoConCitas } from "../paginas/AsistentePagina";
+import { SelloRespuesta, TextoConCitas } from "../componentes/RespuestaAsistente";
 
 const ID = "TV-CMP-C7137FFC877E";
 
