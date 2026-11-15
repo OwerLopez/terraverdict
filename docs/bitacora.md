@@ -38,6 +38,25 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Revisión del despliegue con docker compose
+**Autor:** MaxsForocca · **Aportes:** Ower Frank
+
+**Verificado** (imágenes construidas por el equipo, contenedores levantados de nuevo)
+- API `healthy`: migra e importa al arrancar. Interfaz en `:8080`: nginx sirve la SPA (`/sismos` → 200) y redirige `/api`, con las cabeceras de seguridad y `X-Request-ID`.
+- Publicación de los resultados reales en el contenedor:
+  1. `docker compose exec api python -m app.cli crear-clave --nombre pipeline --alcance ingesta`;
+  2. `tv publicar --api http://localhost:8080` → 13 × 201; al repetir, 13 × 200 (idempotente).
+- Persistencia: tras `docker compose restart api` siguen los 15 expedientes (13 + 2 importados); la reimportación no duplica.
+- La prueba E2E pasa 2 de 2 contra este despliegue.
+
+**Ajustes tras la revisión**
+- `backend/Dockerfile`: uvicorn con `--no-access-log`. Cada solicitud se registraba dos veces (texto de uvicorn y JSON de la app), y el healthcheck llenaba el registro cada 30 s.
+- `nginx.conf.template`: búferes de 4 MB para el cuerpo y para el proxy. El expediente de caos pesa ~1–2 MB y nginx lo escribía en archivos temporales, con advertencias. Tras el cambio, 0 advertencias.
+
+**Pendiente.** Probar el perfil `--profile postgres` con `TV_DATABASE_URL=postgresql+psycopg://…`.
+
+---
+
 ## 2026-11-15 · Prueba de punta a punta con Playwright
 **Autor:** MaxsForocca · **Aportes:** Ower Frank
 

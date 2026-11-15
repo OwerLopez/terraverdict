@@ -12,6 +12,11 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_read_timeout 120s;
         client_max_body_size 20m;
+        # Los expedientes de caos pesan ~1–2 MB: búferes en memoria para no escribir temporales.
+        client_body_buffer_size 4m;
+        proxy_buffer_size 64k;
+        proxy_buffers 32 64k;
+        proxy_busy_buffers_size 256k;
     }
 
     location /assets/ {
