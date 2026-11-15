@@ -111,17 +111,25 @@ function marcarCifras(texto: string, cifras: Esquemas["CifraDetectada"][]) {
   return partes;
 }
 
+/** Con más valores que esto, la tolerancia relativa (0,5 %) cubre buena parte de cualquier rango y una
+ *  coincidencia deja de ser evidencia de respaldo. Un expediente de tendencia aporta decenas de valores. */
+const VALORES_RESPALDO_MAXIMOS = 1000;
+
 function Verificador() {
   const expedientes = useExpedientes();
   const lista = useMemo(() => expedientes.data?.items ?? [], [expedientes.data]);
   const [seleccion, setSeleccion] = useState<string[]>([]);
-  const primero = useExpediente(lista[0]?.id);
+  // El texto de ejemplo cita un expediente de tendencia; se verifica solo contra ese por defecto.
+  // Respaldar con todos a la vez debilita el verificador: con decenas de miles de valores (series y
+  // métricas de los modelos), casi cualquier cifra coincide por azar dentro de la tolerancia.
+  const base = useMemo(() => lista.find((e) => e.tipo === "tendencia") ?? lista[0], [lista]);
+  const primero = useExpediente(base?.id);
   const [texto, setTexto] = useState("");
   const verificar = useVerificarTexto();
 
   useEffect(() => {
-    if (lista.length && seleccion.length === 0) setSeleccion(lista.map((e) => e.id));
-  }, [lista, seleccion.length]);
+    if (base && seleccion.length === 0) setSeleccion([base.id]);
+  }, [base, seleccion.length]);
 
   useEffect(() => {
     const r = primero.data?.resultado;
@@ -207,6 +215,14 @@ function Verificador() {
           <p className="text-[12px] text-ink-3">
             {t("Subrayado verde: cifra respaldada. Subrayado rojo: cifra sin respaldo. Valores permitidos evaluados:", "Green underline: backed figure. Red underline: unbacked figure. Allowed values evaluated:")} {verificar.data.valores_permitidos}.
           </p>
+          {verificar.data.valores_permitidos > VALORES_RESPALDO_MAXIMOS && (
+            <p role="alert" className="text-[12px]" style={{ color: "var(--warning)" }}>
+              {t(
+                "Con tantos valores de respaldo, una coincidencia puede ser azar. Verifique contra el expediente que cita el texto.",
+                "With this many backing values a match may be chance. Verify against the case file the text cites.",
+              )}
+            </p>
+          )}
         </div>
       )}
     </Tarjeta>

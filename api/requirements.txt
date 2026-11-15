@@ -1,0 +1,13 @@
+# Dependencias de la función de Vercel (API). Versiones con las que pasan las 67 pruebas del backend.
+# Se fijan aquí, junto a la entrada, para que Vercel no tome el pyproject.toml de la raíz
+# (paquete científico, con numpy/scipy/torch, que la API no necesita).
+fastapi==0.163.0
+starlette==1.10.0
+pydantic==2.14.3
+pydantic-settings==2.16.3
+SQLAlchemy==2.1.8
+alembic==1.20.1
+PyJWT==2.15.1
+argon2-cffi==25.1.0
+PyYAML==6.0.3
+python-multipart==0.0.33

@@ -24,10 +24,10 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Backend (API REST) | ✅ Tipos M6 y M7, capas, catálogo, importación del contrato | 67 pruebas; OpenAPI sin deriva | `cd backend && pytest` |
 | Publicación ciencia → backend | ✅ Idempotente y por contrato (`resultados/contrato/expedientes.json`) | `tests/integracion/` | `tv publicar --exportar …` |
 | Frontend | ✅ Glassmorphism azul, vistas de fenómenos y Perú; bilingüe español/inglés | 27 pruebas; `docs/capturas/` | `cd frontend && npm test` |
-| Paquete científico | ✅ 106 pruebas pasan (2 omitidas por diseño) | `tests/` | `pytest` |
+| Paquete científico | ✅ 108 pruebas pasan (2 omitidas por diseño) | `tests/` | `pytest` |
 | CI, Docker y E2E | ✅ Docker verificado con `docker compose up`; E2E Playwright 2 de 2 | `.github/`, `docker-compose.yml`, `frontend/e2e/` | ver `pendientes.md` |
 | Licencias | ✅ Código MIT; cita y términos de cada fuente; inventario de dependencias | `LICENSE`, `docs/licencias-*.md`, `tests/integridad/test_licencias.py` | `python scripts/inventario_licencias.py …` |
-| Despliegue público | ⏳ En curso | — | ver `pendientes.md` |
+| Despliegue público | ✅ Listo para Vercel y verificado en local (arranque en frío de 3,1 s, E2E 2 de 2) · ⏳ falta conectar el repositorio a Vercel (acción de cuenta) | `vercel.json`, `api/`, `docs/despliegue.md` | ver `despliegue.md` |
 
 ---|---|---|---|
 | Preregistro y partición temporal | ✅ Congelados el 15-11 | Prueba que falla ante cualquier cambio | `pytest tests/unit/test_preregistro_congelado.py` |
@@ -41,6 +41,37 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Frontend | ✅ Glassmorphism azul y 5 vistas nuevas | 23 pruebas; `docs/capturas/` | `cd frontend && npm test` |
 | CI, Docker y documentación | ✅ · ⏳ falta construir las imágenes y ver la primera ejecución de CI | `.github/`, `docker-compose.yml`, `docs/` | ver `pendientes.md` |
 | Prueba E2E (Playwright) | ⏳ Bloqueada: la descarga del navegador no fue autorizada en este entorno | — | ver `pendientes.md` |
+
+---
+
+## 2026-11-15 · Despliegue en Vercel listo y verificador numérico endurecido
+
+**Autor:** Ower Frank
+
+**Qué se hizo**
+- **Vercel:**
+  - `vercel.json`: compila el frontend, define la función `api/index.py`, envía `/api/*` a la función y el resto a la SPA.
+  - `backend/app/serverless.py`: en cada arranque en frío migra, importa el contrato científico y, si hay variables, crea el administrador.
+  - `api/requirements.txt` fija las versiones probadas.
+  - Producción por defecto: sin `TV_JWT_SECRETO` la función no arranca.
+- **Defecto encontrado y corregido en el verificador numérico (el guardarraíl de la IA):**
+  - La página marcaba por defecto **todos** los expedientes como respaldo. Desde que el backend importa los resultados científicos, eso son decenas de miles de valores, y con la tolerancia de 0,5 % una cifra inventada (987,65 mm) coincidía por azar. Lo detectó la E2E.
+  - Ahora se verifica contra el expediente que cita el texto, y la página advierte cuando hay más de 1000 valores de respaldo.
+- **Docker:** la imagen no copiaba `resultados/contrato/` y `.dockerignore` excluía `resultados`. Un despliegue con Docker habría arrancado sin las vistas M6 y M7. Corregido. Además, la importación ahora registra una advertencia si falta el contrato, en vez de ignorarlo en silencio.
+- `docs/despliegue.md`: las tres opciones, qué está verificado y la acción pendiente.
+
+**Evidencia**
+- Función en Python 3.12 (el de Vercel), con un entorno nuevo creado solo con `api/requirements.txt`:
+  - lista en 3,1 s;
+  - `/nacional` con 25 departamentos; capas con 625 sismos, 13 volcanes y 28 deslizamientos;
+  - inicio de sesión del administrador; HSTS activo.
+- Emulación del enrutado de `vercel.json`: E2E de Playwright 2 de 2, después de la corrección. Antes, 1 de 2.
+- Contexto Docker: `expedientes.json` entra con el mismo SHA-256.
+- La imagen completa no compiló en este entorno porque el proxy usa una CA propia que el contenedor no reconoce. El equipo ya la había compilado en su máquina.
+- `tests/integridad/test_despliegue.py`: `api/requirements.txt` cubre `backend/pyproject.toml` y la función no excluye los datos que importa la API.
+- Paquete científico: 108 pruebas; backend: 67; frontend: 27.
+
+**Pendiente (acción de una persona):** Vercel respondió que falta instalar su integración de GitHub para `DiegoNiS/terraverdict`. Pasos en `docs/despliegue.md` §A.1.
 
 ---
 

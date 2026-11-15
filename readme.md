@@ -26,9 +26,9 @@ Esta propuesta separa con claridad lo hecho de lo prometido.
 | ⚠️ **Pendiente de verificar** | Giovanni, la API de FIRMS y *data rods* (conexión reiniciada); Landsat 1984–2012 automatizado; presencia de cada represa en SWOT; archivo histórico de AUTODEMA; ERA5; GSMaP | [Sección 6 del informe](docs/verificacion/README.md#6-vacíos-de-información) |
 | 🧪 **Requiere validación experimental** | Matriz de Relevancia, gemelo hidrológico, atribución, pronóstico de temporada, alerta de turbidez, priorización MERESE e IA verificada | [Plan de validación](#9-validación-experimental) |
 | 📐 **Diseño** | Arquitectura, interfaz, API, servidor MCP | [Diseño técnico](docs/diseno-tecnico.md) |
-| 💻 **Software implementado** | Backend FastAPI (51 pruebas), frontend React (19 pruebas), paquete científico con Sello de Confianza, teoría del caos validada (14 pruebas), 10 redes neuronales y evaluación con incertidumbre | [Bitácora](docs/bitacora.md) |
-| 🗺️ **Cinco fenómenos** | Lluvia extrema, sequía, sismos, volcanes y deslizamientos con datos reales (POWER, ONI, GHCN, USGS, Smithsonian GVP, NASA GLC) y catálogo de variables | [`config/fenomenos.yaml`](config/fenomenos.yaml) |
-| ⏳ **Lo que falta para el 100 %** | Corrida completa de experimentos, integración ciencia → API → web, rediseño visual, CI, Docker y documentación final | [Pendientes](docs/pendientes.md) |
+| 💻 **Software implementado** | Backend FastAPI (67 pruebas), frontend React bilingüe español/inglés (27 pruebas + E2E 2 de 2), paquete científico (108 pruebas) con Sello de Confianza, teoría del caos validada, 10 redes neuronales con IC90, Diebold-Mariano, conformal y abstención; cadena de custodia SHA-256 de los crudos a la web | [Bitácora](docs/bitacora.md) |
+| 🗺️ **Cinco fenómenos, escala nacional** | Lluvia extrema, sequía, sismos, volcanes y deslizamientos con datos reales (POWER, ONI, GHCN, USGS, Smithsonian GVP, NASA GLC); Sello de Confianza, SPI y sismicidad en los **25 departamentos del Perú** | [`config/fenomenos.yaml`](config/fenomenos.yaml) · [`config/nacional.yaml`](config/nacional.yaml) · [`docs/experimentos.md`](docs/experimentos.md) |
+| ⏳ **Lo que falta para el 100 %** | Conectar el repositorio a Vercel (acción de cuenta, [`despliegue.md`](docs/despliegue.md)); completar IMERG con el token Earthdata del equipo; MODIS cuando ORNL responda; datos de SENAMHI, IGP e INGEMMET por convenio | [Pendientes](docs/pendientes.md) |
 
 ---
 
@@ -416,6 +416,7 @@ Lo que lo hace escalable: datos globales verificados, plantillas declarativas, i
 |---|---|
 | [`docs/pipeline.md`](docs/pipeline.md) | **Especificación de construcción del pipeline** (para el responsable de datos) |
 | [`docs/verificacion/README.md`](docs/verificacion/README.md) | Verificación de fuentes, licencias, incompatibilidades y vacíos |
+| [`docs/despliegue.md`](docs/despliegue.md) | Despliegue en Vercel (función Python + estáticos) y con Docker Compose: qué está verificado y qué falta |
 | [`docs/licencias-y-atribuciones.md`](docs/licencias-y-atribuciones.md) | Licencia del código, términos y cita obligatoria de cada fuente de datos, consecuencias para el uso comercial |
 | [`docs/licencias-terceros.md`](docs/licencias-terceros.md) | Inventario generado de las licencias de todas las dependencias (ciencia, backend y frontend) |
 | [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) | Revisión de los 40 enlaces del reto y de la guía: cuáles se usan, cuáles no y por qué |

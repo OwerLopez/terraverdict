@@ -21,6 +21,8 @@ RUN pip install ".[postgres]"
 COPY config /srv/terraverdict/config
 COPY datos /srv/terraverdict/datos
 COPY docs/verificacion /srv/terraverdict/docs/verificacion
+# Contrato exportado por el pipeline (`tv publicar --exportar`): vistas M6/M7 listas al arrancar
+COPY resultados/contrato /srv/terraverdict/resultados/contrato
 
 RUN useradd --system --uid 10001 tv && mkdir -p /datos && chown tv /datos
 USER tv

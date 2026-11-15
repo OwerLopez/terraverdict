@@ -733,6 +733,8 @@ def importar_expedientes_ciencia(sesion: Session, raiz: Path) -> dict[str, int]:
     """
     ruta = raiz / "resultados" / "contrato" / "expedientes.json"
     if not ruta.exists():
+        # No es un error (un despliegue puede no traer ciencia), pero no debe pasar inadvertido.
+        log.warning("contrato_ciencia_ausente", extra={"ruta": str(ruta)})
         return {"leidos": 0, "nuevos": 0}
     lista = _leer_json(ruta)
     nuevos = 0

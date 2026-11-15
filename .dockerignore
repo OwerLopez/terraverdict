@@ -4,7 +4,9 @@
 **/*.db
 .git
 data/raw
-resultados
+# De resultados solo entra el contrato que importa la API
+resultados/*
+!resultados/contrato
 frontend
 web
 .env
