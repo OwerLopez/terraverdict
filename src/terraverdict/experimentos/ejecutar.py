@@ -116,10 +116,17 @@ def ejecutar(
     if rs is None and (not solo or "caos" in solo):
         rs = sismos.ejecutar(cfg, raw, redes=[], semillas=(0,))
     correr("caos", lambda: caos_real.ejecutar(cfg, raw, rs))
+    # Índice acumulativo: una corrida parcial (--solo) actualiza sus experimentos y conserva el resto.
+    previo = json.loads((salida / "indice.json").read_text()) if (salida / "indice.json").exists() else {}
+    corridas = {k: v for k, v in previo.get("corridas", {}).items() if k not in hechos}
+    corridas.update(
+        {k: {"commit": proc["commit"], "generado_utc": proc["generado_utc"], "segundos": tiempos[k]} for k in hechos}
+    )
     indice = {
         "generado_utc": proc["generado_utc"],
         "commit": proc["commit"],
-        "tiempos_segundos": tiempos,
+        "tiempos_segundos": {**previo.get("tiempos_segundos", {}), **tiempos},
+        "corridas": dict(sorted(corridas.items())),
         "experimentos": sorted(p.stem for p in salida.glob("*.json") if p.stem != "indice"),
     }
     (salida / "indice.json").write_text(json.dumps(indice, ensure_ascii=False, indent=1), encoding="utf-8")

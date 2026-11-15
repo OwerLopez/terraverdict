@@ -162,3 +162,6 @@ def test_orquestador_guarda_procedencia(tmp_path: Path) -> None:
     p = r["procedencia"]
     assert p["config_sha256"] and p["versiones"]["torch"] and p["modo"] == "completo"
     assert json.loads((tmp_path / "res" / "indice.json").read_text())["commit"] == p["commit"]
+    ejecutar.ejecutar(raw=RAW, salida=tmp_path / "res", solo=["volcanes"], config=config)
+    indice = json.loads((tmp_path / "res" / "indice.json").read_text())
+    assert set(indice["corridas"]) == {"deslizamientos", "volcanes"}  # la corrida parcial conserva lo anterior
