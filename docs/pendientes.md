@@ -25,7 +25,7 @@ tv experimentos          # corrida completa (aprox. 30–60 min en CPU de 4 núc
 - `resultados/indice.json` lista seis experimentos: volcanes, deslizamientos, sismos, sequía, lluvia y caos.
 - Cada uno con `procedencia.commit` y los hashes de los crudos.
 
-### 1.2 Caos en series reales
+### 1.2 Caos en series reales · ✅ hecho (15-11-2026; ver bitácora)
 **Qué falta.** Está incluido en `tv experimentos`, salida `resultados/caos.json`. Series:
 - lluvia por péntadas;
 - temperatura diaria;

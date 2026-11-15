@@ -25,6 +25,31 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Caos en series reales (pendiente 1.2)
+**Autor:** MaxsForocca · **Aportes:** Ower Frank (método validado)
+
+**Qué se hizo.** Se aplicó el diagnóstico integrado (`caos/diagnostico.py`, validado con Lorenz, Hénon, el mapa logístico, AR(1) y un seno) a 7 series reales: las 6 previstas más las péntadas de CHIRPS, para comprobar si el veredicto depende del producto. Las series son anomalías respecto del ciclo anual del entrenamiento. Salida: `resultados/caos.json` (misma corrida, código `41198fe`).
+
+**Resultados.** Los p-valores salen de los sustitutos IAAFT (99); la regla es conservadora, con corrección de Holm.
+
+| Serie | n | p asimetría temporal | p predicción por análogos | Veredicto |
+|---|---|---|---|---|
+| Lluvia por péntadas, POWER | 3 348 | 0,53 | 0,05 | Lineal estocástica |
+| Lluvia por péntadas, CHIRPS | 3 341 | 0,72 | 0,09 | Lineal estocástica (el mismo veredicto con las dos fuentes) |
+| Temperatura diaria, cabecera | 16 740 | 0,01 | 0,08 | No lineal, sin caos demostrado |
+| SPI-3 mensual | 538 | 0,10 | 0,54 | Lineal estocástica |
+| ONI mensual | 921 | 0,01 | 0,01 | No lineal, sin caos demostrado |
+| Conteo sísmico mensual (desagrupado) | 646 | 0,86 | 0,71 | Lineal estocástica |
+| Intereventos sísmicos (log) | 1 256 | 0,96 | 0,01 | No lineal, sin caos demostrado |
+
+- **Ninguna serie es compatible con caos de baja dimensión.**
+- En todas, la prueba 0-1 da K ≈ 1 (0,993–0,999). Es lo esperable en señales estocásticas: K no distingue caos de ruido, y por eso nunca decide sola.
+- La no linealidad del ONI es coherente con la asimetría conocida entre El Niño y La Niña. La de la temperatura y los intereventos queda como hallazgo descriptivo, no como determinismo.
+
+**Lectura para el producto.** Ninguna serie muestra caos determinista. La lluvia y el SPI se comportan como procesos lineales estocásticos, que es lo que justifica usar modelos probabilísticos y referencias climatológicas.
+
+---
+
 ## 2026-11-15 · Corrida completa de experimentos (pendiente 1.1)
 **Autor:** MaxsForocca · **Aportes:** Ower Frank
 
