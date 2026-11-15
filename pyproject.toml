@@ -3,6 +3,7 @@ name = "terraverdict"
 version = "0.1.0"
 description = "Detective de tendencias con Sello de Confianza para cuencas de montaña"
 requires-python = ">=3.10"
+license = { text = "MIT" }
 dependencies = [
   "requests>=2.31", "numpy>=1.26", "scipy>=1.11", "pymannkendall>=1.4",
   "statsmodels>=0.14", "pydantic>=2.5", "pyyaml>=6", "typer>=0.12",

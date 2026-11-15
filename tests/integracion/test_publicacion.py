@@ -56,7 +56,7 @@ def backend(tmp_path_factory: pytest.TempPathFactory) -> Any:
     app = create_app(Settings(entorno="pruebas", database_url=f"sqlite:///{tmp / 'p.db'}", raiz_datos=RAIZ_REPO))
     Base.metadata.create_all(app.state.motor)
     with app.state.fabrica_sesiones() as s:
-        importar_todo(s, RAIZ_REPO)
+        importar_todo(s, RAIZ_REPO, incluir_ciencia=False)  # este test publica él mismo
         _, clave = usuarios.crear_clave(s, ClaveCrear(nombre="pipeline-integracion", alcances=[Alcance.ingesta]), None)
     yield fastapi_testclient.TestClient(app), clave
     app.state.motor.dispose()

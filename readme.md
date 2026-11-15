@@ -416,6 +416,8 @@ Lo que lo hace escalable: datos globales verificados, plantillas declarativas, i
 |---|---|
 | [`docs/pipeline.md`](docs/pipeline.md) | **Especificación de construcción del pipeline** (para el responsable de datos) |
 | [`docs/verificacion/README.md`](docs/verificacion/README.md) | Verificación de fuentes, licencias, incompatibilidades y vacíos |
+| [`docs/licencias-y-atribuciones.md`](docs/licencias-y-atribuciones.md) | Licencia del código, términos y cita obligatoria de cada fuente de datos, consecuencias para el uso comercial |
+| [`docs/licencias-terceros.md`](docs/licencias-terceros.md) | Inventario generado de las licencias de todas las dependencias (ciencia, backend y frontend) |
 | [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) | Revisión de los 40 enlaces del reto y de la guía: cuáles se usan, cuáles no y por qué |
 | [`docs/variables.md`](docs/variables.md) | Variables, unidades, resoluciones, procesamiento, indicadores y relaciones físicas |
 | [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) | Módulo M1: plantillas, algoritmo, salidas y validación |
@@ -438,12 +440,13 @@ python scripts/analisis_preliminar.py
 
 ## 16. Equipo
 
-| Integrante | Formación | Rol |
-|---|---|---|
-| Ower López | Ingeniería de Sistemas (UNSA) | Arquitectura, ingesta, API, MCP e IA |
-| *[Nombre]* | Ingeniería de Sistemas, datos | Sello de Confianza y Matriz de Relevancia |
-| *[Nombre]* | *[Por definir]* | Gemelo hidrológico, anticipación y teledetección |
-| *[Nombre]* | Comunicación | Interfaz, historia y pitch |
+Sede Arequipa, NASA Space Apps Challenge 2026. Los aportes de cada integrante salen del historial de `main` (`git shortlog -sn`). El detalle de cada aporte está en [`docs/bitacora.md`](docs/bitacora.md).
+
+| Integrante (GitHub) | Aportes verificables en el historial |
+|---|---|
+| **Ower Frank** (Ower López, UNSA) | Planteamiento y propuesta; backend FastAPI; frontend; motor científico (Sello, caos, zoológico de modelos); escala nacional; interfaz bilingüe; cadena de custodia; licencias |
+| **MaxsForocca** (UNSA) | Arquitectura y estructura del proyecto (`feat/architecture`); corrida completa de experimentos; caos en series reales; integración ciencia → backend; CI; Docker; E2E; documentación (API, arquitectura, metodología, trazabilidad, presentación); ingesta de IMERG |
+| **DiegoNiS** | Propietario del repositorio y de la organización del equipo en GitHub |
 
 ---
 
@@ -478,7 +481,7 @@ python scripts/analisis_preliminar.py
 - Xu, H. (2006). Modification of normalised difference water index (MNDWI). *Int. J. Remote Sens.* 27.
 - Zhang, X. et al. (2011). Indices for monitoring changes in extremes (ETCCDI). *WIREs Climate Change* 2.
 
-**Licencias y atribuciones:** código MIT (propuesto). Datos NASA y USGS de uso libre, citados con su DOI. Copernicus Sentinel: *"Contains modified Copernicus Sentinel data [año]"*. CHIRPS v3: DOI 10.15780/G2JQ0P. PISCOp solo para validación interna (CC BY-NC-ND). NASA GIBS: *"We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS)."*
+**Licencias y atribuciones:** código bajo licencia MIT ([`LICENSE`](LICENSE)). Las licencias de terceros están en [`docs/licencias-terceros.md`](docs/licencias-terceros.md). La cita obligatoria de cada fuente está en [`docs/licencias-y-atribuciones.md`](docs/licencias-y-atribuciones.md). Los resultados de volcanes derivan del Smithsonian GVP, que permite el uso no comercial con cita. Datos NASA y USGS de uso libre, citados con su DOI. Copernicus Sentinel: *"Contains modified Copernicus Sentinel data [año]"*. CHIRPS v3: DOI 10.15780/G2JQ0P. PISCOp solo para validación interna (CC BY-NC-ND). NASA GIBS: *"We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS)."*
 
 <div align="center">
 

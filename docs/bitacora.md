@@ -14,6 +14,23 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Parte | Estado | Evidencia | Cómo correrlo |
 |---|---|---|---|
 | Preregistro y partición temporal | ✅ Congelados el 15-11 | Prueba que falla ante cualquier cambio | `pytest tests/unit/test_preregistro_congelado.py` |
+| Ingesta de fuentes reales | ✅ POWER (Arequipa, celdas y 25 departamentos), USGS (Arequipa y Perú), GVP, GLC, GHCN y ONI con SHA-256 · ⏳ IMERG (solo 1998; falta token Earthdata), MODIS (ORNL con 502), CHIRPS e IGP (bloqueados por el proxy de este entorno) | `data/raw/*/manifiesto.json` | `tv ingest-fenomenos` |
+| Cadena de custodia | ✅ Crudos verificados contra su manifiesto antes de entrenar; resultados sellados; el publicador rechaza lo alterado | `tests/integridad/` | `tv verificar-integridad` |
+| Motor (modelos, evaluación, incertidumbre, selección) | ✅ 10 redes, IC90, Diebold-Mariano, conformal y abstención | `tests/motor/` | `pytest tests/motor` |
+| Corrida completa de experimentos | ✅ 10 experimentos con procedencia, incluida la escala nacional | `resultados/*.json`, `resultados/indice.json` | `tv experimentos` |
+| Escala nacional | ✅ 25 departamentos: Sello de temperatura y lluvia, SPI y sismicidad por celda | `resultados/nacional.json`, vista `/peru` | `tv experimentos --solo nacional` |
+| Caos en series reales | ✅ 7 series, ninguna caótica | `resultados/caos.json` | (incluido en `tv experimentos`) |
+| Informe de resultados | ✅ Solo cifras de los JSON | `docs/experimentos.md` | `tv informe` |
+| Backend (API REST) | ✅ Tipos M6 y M7, capas, catálogo, importación del contrato | 67 pruebas; OpenAPI sin deriva | `cd backend && pytest` |
+| Publicación ciencia → backend | ✅ Idempotente y por contrato (`resultados/contrato/expedientes.json`) | `tests/integracion/` | `tv publicar --exportar …` |
+| Frontend | ✅ Glassmorphism azul, vistas de fenómenos y Perú; bilingüe español/inglés | 27 pruebas; `docs/capturas/` | `cd frontend && npm test` |
+| Paquete científico | ✅ 106 pruebas pasan (2 omitidas por diseño) | `tests/` | `pytest` |
+| CI, Docker y E2E | ✅ Docker verificado con `docker compose up`; E2E Playwright 2 de 2 | `.github/`, `docker-compose.yml`, `frontend/e2e/` | ver `pendientes.md` |
+| Licencias | ✅ Código MIT; cita y términos de cada fuente; inventario de dependencias | `LICENSE`, `docs/licencias-*.md`, `tests/integridad/test_licencias.py` | `python scripts/inventario_licencias.py …` |
+| Despliegue público | ⏳ En curso | — | ver `pendientes.md` |
+
+---|---|---|---|
+| Preregistro y partición temporal | ✅ Congelados el 15-11 | Prueba que falla ante cualquier cambio | `pytest tests/unit/test_preregistro_congelado.py` |
 | Ingesta de fuentes reales | ✅ POWER, CHIRPS, USGS, IGP, GVP, GLC, GHCN y ONI con SHA-256 · ⏳ IMERG (EULA de GES DISC) y MODIS (ORNL con 502) | `data/raw/registro_descarga.json` | `tv ingest-fenomenos` |
 | Motor (modelos, evaluación, incertidumbre, selección) | ✅ 3 defectos corregidos al probarlo | `tests/motor/` | `pytest tests/motor` |
 | Corrida completa de experimentos | ✅ 9 experimentos con procedencia | `resultados/*.json` | `tv experimentos` |
@@ -24,6 +41,29 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Frontend | ✅ Glassmorphism azul y 5 vistas nuevas | 23 pruebas; `docs/capturas/` | `cd frontend && npm test` |
 | CI, Docker y documentación | ✅ · ⏳ falta construir las imágenes y ver la primera ejecución de CI | `.github/`, `docker-compose.yml`, `docs/` | ver `pendientes.md` |
 | Prueba E2E (Playwright) | ⏳ Bloqueada: la descarga del navegador no fue autorizada en este entorno | — | ver `pendientes.md` |
+
+---
+
+## 2026-11-15 · Licencias del código, de los datos y de las dependencias
+
+**Autor:** Ower Frank
+
+**Qué se hizo**
+- `LICENSE` (MIT) en la raíz, coherente con lo que ya declaraban el backend y el OpenAPI. Deja explícito que no cambia la licencia de los datos de terceros.
+- `license` declarada en `pyproject.toml` (ciencia) y en `frontend/package.json`.
+- `docs/licencias-y-atribuciones.md`: términos y cita obligatoria de cada fuente que usa el sistema, con enlace a la fuente oficial de la verificación.
+  - Lo no comprobado queda marcado ⚠️: el texto vigente de Mapzen Terrain Tiles, el IGP y AUTODEMA.
+  - Hallazgo: el Smithsonian GVP permite el uso no comercial con cita; un uso comercial exige su permiso escrito o retirar el módulo de volcanes.
+- `scripts/inventario_licencias.py` genera `docs/licencias-terceros.md` desde los metadatos de cada paquete instalado (no se escribe a mano).
+  - Ciencia `[ml]`: 46 paquetes. Backend: 27. Frontend: 89.
+  - Todos permisivos, salvo `certifi` (MPL-2.0, usado sin modificar, compatible con MIT).
+- El mapa ahora atribuye el relieve como lo exige su fuente: *"Mapzen Terrain Tiles · 3DEP, SRTM, GMTED2010 (USGS), ETOPO1 (NOAA)"*.
+- README: sección de equipo sin marcadores `[Nombre]`. Los aportes salen del historial de `git`.
+- Corrección: `tests/integracion/test_publicacion.py` fallaba desde que el backend importa el contrato científico al iniciar (los expedientes ya existían). Ahora la prueba desactiva esa importación porque publica ella misma.
+
+**Evidencia**
+- `tests/integridad/test_licencias.py`: falla si aparece una carpeta en `data/raw` sin fila de licencia, o si `LICENSE` y los manifiestos de paquetes no coinciden.
+- Paquete científico: 106 pruebas pasan (2 omitidas). Backend: 67 de 67. Frontend: 27 de 27 y `tsc` limpio.
 
 ---
 

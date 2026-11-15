@@ -1,6 +1,7 @@
 {
   "name": "terraverdict-frontend",
   "private": true,
+  "license": "MIT",
   "version": "0.1.0",
   "type": "module",
   "description": "Interfaz de TerraVerdict: mapa satelital 3D, series, expedientes, relevancia y procesos.",

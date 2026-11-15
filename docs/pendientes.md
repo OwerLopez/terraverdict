@@ -100,6 +100,7 @@ Y una prueba de humo de cada experimento con datos reducidos guardados en `tests
 | ✅ `docs/arquitectura.md` | Vista completa: ciencia → API → web, con diagramas mermaid y flujos. **Hecho:** 15-11-2026 |
 | ✅ `docs/metodologia.md` | Métodos estadísticos y de caos con bibliografía verificable. Las referencias ya están en los docstrings de cada módulo. **Hecho:** 15-11-2026; cada método con su módulo y su DOI o arXiv |
 | ✅ Matriz de trazabilidad | Requisito → código → prueba → resultado. **Hecho:** 15-11-2026, `docs/trazabilidad.md` (23 requisitos) |
+| ✅ Licencias | `LICENSE` MIT; términos y cita de cada fuente en `docs/licencias-y-atribuciones.md`; inventario generado de las dependencias en `docs/licencias-terceros.md`; prueba que exige atribución para cada fuente de `data/raw`. **Hecho:** 15-11-2026. Queda ⚠️ confirmar el texto vigente de Mapzen Terrain Tiles y la licencia del IGP antes de usar sus datos |
 | ✅ Presentación ejecutiva | Valor tecnológico, científico y económico. Usar solo cifras citadas (p. ej. MERESE US$ 1,5 M, población afectada > 70 %); sin proyecciones inventadas. **Hecho:** 15-11-2026, `docs/presentacion-ejecutiva.md` |
 
 ## Bloqueos externos (no dependen del código)

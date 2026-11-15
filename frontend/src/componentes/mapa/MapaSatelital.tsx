@@ -78,7 +78,11 @@ export function MapaSatelital({
           encoding: "terrarium",
           tileSize: 256,
           maxzoom: 13,
-          attribution: t("Relieve: AWS Terrain Tiles", "Terrain: AWS Terrain Tiles"),
+          // Atribución exigida por tilezen/joerd (docs/licencias-y-atribuciones.md).
+          attribution: t(
+            "Relieve: Mapzen Terrain Tiles · 3DEP, SRTM, GMTED2010 (USGS), ETOPO1 (NOAA)",
+            "Terrain: Mapzen Terrain Tiles · 3DEP, SRTM, GMTED2010 (USGS), ETOPO1 (NOAA)",
+          ),
         },
         sombras: {
           type: "raster-dem",
