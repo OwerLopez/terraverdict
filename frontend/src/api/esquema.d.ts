@@ -816,8 +816,8 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Preguntar al asistente (módulo pendiente de conexión)
-         * @description Hoy responde **503** con `codigo = servicio_no_disponible`: el proveedor todavía no está conectado. Cuando lo esté, cada respuesta pasará por el verificador numérico antes de devolverse.
+         * Preguntar al asistente (Gemini, anclado en expedientes publicados y verificado)
+         * @description Elige los expedientes publicados más pertinentes (o los indicados), pide a Google Gemini una respuesta que solo use esas cifras y cite sus IDs, y verifica cada cifra contra los expedientes citados. Si alguna no tiene respaldo, pide una reescritura. La respuesta incluye siempre el informe de verificación. **429** si se supera el límite por IP o global; **503** si el proveedor no está configurado o no responde.
          */
         post: operations["consultar_api_v1_asistente_consultas_post"];
         delete?: never;
@@ -1196,7 +1196,10 @@ export interface components {
         ConsultaAsistente: {
             /** Pregunta */
             pregunta: string;
-            /** Expediente Ids */
+            /**
+             * Expediente Ids
+             * @description Expedientes a usar como contexto. Vacío: el sistema elige los más pertinentes.
+             */
             expediente_ids?: string[];
         };
         /** ConteoPorClave */
@@ -1544,6 +1547,15 @@ export interface components {
             magnitud: number;
             /** Profundidad Km */
             profundidad_km?: number | null;
+        };
+        /** ExpedienteConsultado */
+        ExpedienteConsultado: {
+            /** Id */
+            id: string;
+            /** Tipo */
+            tipo: string;
+            /** Titulo */
+            titulo: string;
         };
         /** ExpedienteCrear */
         ExpedienteCrear: {
@@ -2411,10 +2423,35 @@ export interface components {
         };
         /** RespuestaAsistenteSalida */
         RespuestaAsistenteSalida: {
-            /** Texto */
+            /**
+             * Texto
+             * @description Respuesta generada. Sus cifras están en `verificacion`.
+             */
             texto: string;
-            /** Expedientes Citados */
+            /**
+             * Expedientes Citados
+             * @description IDs citados en el texto y presentes en el contexto.
+             */
             expedientes_citados: string[];
+            /**
+             * Expedientes Consultados
+             * @description Expedientes publicados que se dieron como contexto al modelo.
+             */
+            expedientes_consultados: components["schemas"]["ExpedienteConsultado"][];
+            /** @description Verificación numérica de cada cifra contra los expedientes citados. */
+            verificacion: components["schemas"]["ResultadoVerificacionTexto"];
+            /**
+             * Modelo
+             * @description Modelo de Gemini que generó la respuesta final.
+             */
+            modelo: string;
+            /**
+             * Intentos
+             * @description 2 si hubo que reescribir por cifras sin respaldo.
+             */
+            intentos: number;
+            /** Latencia S */
+            latencia_s: number;
         };
         /** ResultadoAlerta */
         ResultadoAlerta: {
@@ -3549,6 +3586,16 @@ export interface operations {
             };
             /** @description Se superó el límite de solicitudes. */
             429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": unknown;
+                    "application/json": components["schemas"]["ProblemaHTTP"];
+                };
+            };
+            /** @description Servicio o módulo todavía no conectado. */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -5701,8 +5748,28 @@ export interface operations {
                     "application/json": components["schemas"]["RespuestaAsistenteSalida"];
                 };
             };
+            /** @description El recurso no existe. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": unknown;
+                    "application/json": components["schemas"]["ProblemaHTTP"];
+                };
+            };
             /** @description Los datos no cumplen el contrato o una regla de publicación científica. */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": unknown;
+                    "application/json": components["schemas"]["ProblemaHTTP"];
+                };
+            };
+            /** @description Se superó el límite de solicitudes. */
+            429: {
                 headers: {
                     [name: string]: unknown;
                 };

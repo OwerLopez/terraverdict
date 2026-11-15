@@ -80,14 +80,13 @@ class ResumenSistema(Esquema):
     trabajadores_activos: int
 
 
-class RespuestaAsistenteSalida(Esquema):
-    texto: str
-    expedientes_citados: list[str]
-
-
 class ConsultaAsistente(Esquema):
     pregunta: str = Field(min_length=3, max_length=2000)
-    expediente_ids: list[str] = Field(default_factory=list, max_length=20)
+    expediente_ids: list[str] = Field(
+        default_factory=list,
+        max_length=4,
+        description="Expedientes a usar como contexto. Vacío: el sistema elige los más pertinentes.",
+    )
 
 
 class SolicitudVerificacion(Esquema):
@@ -124,3 +123,23 @@ class ResultadoVerificacionTexto(Esquema):
         default_factory=list,
         description="Cifras respaldadas cuya coincidencia sería probable por azar (> alfa_coincidencia).",
     )
+
+
+class ExpedienteConsultado(Esquema):
+    id: str
+    tipo: str
+    titulo: str
+
+
+class RespuestaAsistenteSalida(Esquema):
+    texto: str = Field(description="Respuesta generada. Sus cifras están en `verificacion`.")
+    expedientes_citados: list[str] = Field(description="IDs citados en el texto y presentes en el contexto.")
+    expedientes_consultados: list[ExpedienteConsultado] = Field(
+        description="Expedientes publicados que se dieron como contexto al modelo."
+    )
+    verificacion: ResultadoVerificacionTexto = Field(
+        description="Verificación numérica de cada cifra contra los expedientes citados."
+    )
+    modelo: str = Field(description="Modelo de Gemini que generó la respuesta final.")
+    intentos: int = Field(ge=1, le=2, description="2 si hubo que reescribir por cifras sin respaldo.")
+    latencia_s: float = Field(ge=0)

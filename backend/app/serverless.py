@@ -51,7 +51,7 @@ def preparar() -> FastAPI:
             sesion, settings.raiz_datos, incluir_ciencia=settings.importar_resultados_ciencia
         )
         email, contrasena = os.environ.get("TV_ADMIN_EMAIL"), os.environ.get("TV_ADMIN_PASSWORD")
-        if email and contrasena:
+        if email and contrasena and settings.sesiones_habilitadas:
             usuarios.asegurar_admin(sesion, email, contrasena)
     log.info(
         "arranque_en_frio",

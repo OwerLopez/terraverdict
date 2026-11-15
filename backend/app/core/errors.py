@@ -20,7 +20,7 @@ from app.core.logging import request_id_actual
 
 log = logging.getLogger("terraverdict.errores")
 
-TIPO_BASE = "https://github.com/DiegoNiS/terraverdict/blob/main/docs/api/README.md#errores"
+TIPO_BASE = "https://github.com/OwerLopez/terraverdict/blob/main/docs/api/README.md#errores"
 
 
 class ErrorDominio(Exception):

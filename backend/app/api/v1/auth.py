@@ -10,7 +10,7 @@ from sqlalchemy import select
 
 from app.api.deps import Admin, ConfigDep, PrincipalDep, SesionDep
 from app.core.errors import NoAutenticado
-from app.core.security import LimitadorVentana, crear_token
+from app.core.security import LimitadorVentana, crear_token, exigir_sesiones
 from app.db.models import ClaveApi, Usuario
 from app.domain.vocabulario import Rol
 from app.schemas.auth import (
@@ -34,7 +34,7 @@ router = APIRouter(tags=["Autenticación y acceso"])
     response_model=Token,
     summary="Iniciar sesión (OAuth2, flujo de contraseña)",
     description="Envíe `username` (correo) y `password` como formulario. Devuelve un JWT Bearer.",
-    responses=errores(401, 429),
+    responses=errores(401, 429, 503),
 )
 def iniciar_sesion(
     request: Request,
@@ -42,6 +42,7 @@ def iniciar_sesion(
     sesion: SesionDep,
     settings: ConfigDep,
 ) -> Token:
+    exigir_sesiones(settings)
     limitador: LimitadorVentana = request.app.state.limitador_login
     limitador.verificar(request.client.host if request.client else "desconocido")
     usuario = servicio.autenticar(sesion, form.username, form.password)

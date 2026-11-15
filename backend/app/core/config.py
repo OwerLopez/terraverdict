@@ -36,13 +36,34 @@ class Settings(BaseSettings):
         description="Al importar, publicar resultados/contrato/expedientes.json (vistas M6/M7 listas al desplegar).",
     )
     log_nivel: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
-    anthropic_api_key: SecretStr | None = None
+    gemini_api_key: SecretStr | None = Field(
+        None, description="Clave de Google Gemini (solo servidor). Sin ella el asistente responde 503."
+    )
+    gemini_modelo: str = Field("gemini-flash-latest", pattern=r"^[a-z0-9.\-]+$")
+    gemini_modelos_respaldo: list[str] = ["gemini-flash-lite-latest"]
+    gemini_timeout_s: float = Field(12.0, ge=2, le=50, description="Tiempo máximo por llamada y modelo.")
+    asistente_consultas_por_minuto: int = Field(6, ge=1, le=600, description="Por IP.")
+    asistente_consultas_globales_por_minuto: int = Field(
+        40, ge=1, le=6000, description="Tope global por instancia (protege la cuota de la clave)."
+    )
+
+    @property
+    def sesiones_habilitadas(self) -> bool:
+        """En producción solo hay sesiones con un secreto propio de 32 caracteres o más.
+
+        Sin él, la API arranca en **modo solo lectura**: no emite ni acepta tokens (falla cerrada), pero
+        la consulta pública y el asistente siguen disponibles. Nunca se firma con el secreto de desarrollo.
+        """
+        if self.entorno != "produccion":
+            return True
+        secreto = self.jwt_secreto.get_secret_value()
+        return secreto != _SECRETO_DESARROLLO and len(secreto) >= 32
 
     @model_validator(mode="after")
     def _exigir_secretos_en_produccion(self) -> Settings:
         if self.entorno == "produccion":
             secreto = self.jwt_secreto.get_secret_value()
-            if secreto == _SECRETO_DESARROLLO or len(secreto) < 32:
+            if secreto != _SECRETO_DESARROLLO and len(secreto) < 32:
                 raise ValueError("TV_JWT_SECRETO debe tener al menos 32 caracteres en producción.")
             if "*" in self.cors_origenes:
                 raise ValueError("TV_CORS_ORIGENES no puede contener '*' en producción.")

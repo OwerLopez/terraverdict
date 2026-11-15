@@ -62,13 +62,15 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         redoc_url="/api/redoc",
         openapi_tags=ETIQUETAS,
         license_info={"name": "MIT"},
-        contact={"name": "TerraVerdict", "url": "https://github.com/DiegoNiS/terraverdict"},
+        contact={"name": "TerraVerdict", "url": "https://github.com/OwerLopez/terraverdict"},
         swagger_ui_parameters={"persistAuthorization": True, "displayRequestDuration": True},
     )
     app.state.settings = settings
     app.state.motor = motor
     app.state.fabrica_sesiones = crear_fabrica_sesiones(motor)
     app.state.limitador_login = LimitadorVentana(settings.login_intentos_por_minuto, 60)
+    app.state.limitador_asistente = LimitadorVentana(settings.asistente_consultas_por_minuto, 60)
+    app.state.limitador_asistente_global = LimitadorVentana(settings.asistente_consultas_globales_por_minuto, 60)
 
     # El último en añadirse es el más externo: CORS → cabeceras de seguridad → request_id → app.
     # Así, incluso el 500 que genera IdSolicitudMiddleware lleva las cabeceras de seguridad.

@@ -1,33 +1,99 @@
 import { clsx } from "clsx";
 import { Bot, CheckCircle2, PlugZap, Send, ShieldCheck, XCircle } from "lucide-react";
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { ErrorApi, type Esquemas } from "../api/cliente";
-import { useConsultarAsistente, useExpediente, useExpedientes, useVerificarTexto } from "../api/consultas";
+import { useConsultarAsistente, useExpediente, useExpedientes, useResumen, useVerificarTexto } from "../api/consultas";
 import { Boton, Encabezado, Insignia, Tarjeta } from "../componentes/ui";
 import { numero, numeroEs } from "../lib/formato";
 import { t } from "../lib/i18n";
 
-type Mensaje = { rol: "persona" | "sistema"; texto: string; tono?: "neutral" | "critical" };
+type Respuesta = Esquemas["RespuestaAsistenteSalida"];
+type Mensaje = { rol: "persona" | "sistema"; texto: string; tono?: "neutral" | "critical"; respuesta?: Respuesta };
 
 const SUGERENCIAS: [string, string][] = [
-  ["¿Llueve menos en la cabecera del Chili?", "Is it raining less in the Chili headwaters?"],
+  ["¿Qué tan bien se pronostica la sequía a 1 y 3 meses?", "How well is drought forecast at 1 and 3 months?"],
+  ["¿Hubo más sismos en Arequipa con los años?", "Have earthquakes near Arequipa increased over the years?"],
+  ["¿La lluvia de la cabecera del Chili muestra caos?", "Does rainfall in the Chili headwaters show chaos?"],
   ["¿Qué tan confiable es la tendencia de temperatura?", "How reliable is the temperature trend?"],
-  ["¿Qué variables importan para las lluvias extremas?", "Which variables matter for extreme rain?"],
 ];
+
+const PATRON_CITA = /\[((?:TV-[A-Z]{2,4}-[0-9A-F]{12})(?:\s*,\s*TV-[A-Z]{2,4}-[0-9A-F]{12})*)\]/g;
+
+/** Texto con las citas [TV-…] convertidas en enlaces al expediente que respalda cada cifra. */
+export function TextoConCitas({ texto }: { texto: string }) {
+  const partes: ReactNode[] = [];
+  let ultimo = 0;
+  for (const m of texto.matchAll(PATRON_CITA)) {
+    partes.push(texto.slice(ultimo, m.index));
+    const ids = (m[1] ?? "").split(/\s*,\s*/);
+    partes.push(
+      <span key={`${m.index}`} className="whitespace-nowrap">
+        [
+        {ids.map((id, i) => (
+          <span key={id}>
+            {i > 0 && ", "}
+            <Link to={`/expedientes/${id}`} className="font-mono text-[11.5px] text-accent underline-offset-2 hover:underline">{id}</Link>
+          </span>
+        ))}
+        ]
+      </span>,
+    );
+    ultimo = (m.index ?? 0) + m[0].length;
+  }
+  partes.push(texto.slice(ultimo));
+  return <span className="whitespace-pre-line">{partes}</span>;
+}
+
+export function SelloRespuesta({ r }: { r: Respuesta }) {
+  const v = r.verificacion;
+  const total = v.cifras.length;
+  const trazables = v.cifras.filter((c) => c.trazable).length;
+  return (
+    <div className="mt-2 space-y-1.5 border-t border-line pt-2 text-[11.5px] text-ink-2">
+      <div className="flex flex-wrap items-center gap-1.5">
+        <Insignia tono={v.aprobado ? "good" : "critical"} icono={v.aprobado ? CheckCircle2 : XCircle}>
+          {v.aprobado
+            ? t(`Verificado: ${trazables}/${total} cifras respaldadas`, `Verified: ${trazables}/${total} figures backed`)
+            : t(`Sin respaldo: ${v.no_trazables.join(", ")}`, `Unbacked: ${v.no_trazables.join(", ")}`)}
+        </Insignia>
+        {(v.coincidencias_debiles ?? []).length > 0 && (
+          <Insignia tono="warning">{t(`Coincidencia débil: ${(v.coincidencias_debiles ?? []).join(", ")}`, `Weak match: ${(v.coincidencias_debiles ?? []).join(", ")}`)}</Insignia>
+        )}
+        <span className="text-ink-3">
+          {r.modelo} · {numero(r.latencia_s, 1)} s{r.intentos > 1 ? t(" · reescrita 1 vez", " · rewritten once") : ""}
+        </span>
+      </div>
+      {r.expedientes_consultados.length > 0 && (
+        <p className="text-ink-3">
+          {t("Contexto: ", "Context: ")}
+          {r.expedientes_consultados.map((e, i) => (
+            <span key={e.id}>
+              {i > 0 && " · "}
+              <Link to={`/expedientes/${e.id}`} className="hover:text-ink hover:underline">{e.titulo}</Link>
+            </span>
+          ))}
+        </p>
+      )}
+    </div>
+  );
+}
 
 function Conversacion() {
   const consultar = useConsultarAsistente();
+  const resumen = useResumen();
+  const conectado = resumen.data?.asistente_conectado;
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
   const [texto, setTexto] = useState("");
 
   const enviar = (pregunta: string) => {
-    if (!pregunta.trim()) return;
+    if (!pregunta.trim() || consultar.isPending) return;
     setMensajes((m) => [...m, { rol: "persona", texto: pregunta }]);
     setTexto("");
     consultar.mutate(
       { pregunta, expediente_ids: [] },
       {
-        onSuccess: (r) => setMensajes((m) => [...m, { rol: "sistema", texto: r.texto }]),
+        onSuccess: (r) => setMensajes((m) => [...m, { rol: "sistema", texto: r.texto, respuesta: r }]),
         onError: (e) =>
           setMensajes((m) => [
             ...m,
@@ -35,9 +101,11 @@ function Conversacion() {
               rol: "sistema",
               tono: "critical",
               texto:
-                e instanceof ErrorApi && e.status === 503
-                  ? t("El asistente todavía no está conectado. Cuando lo esté, responderá solo con herramientas del sistema y cada cifra pasará por el verificador numérico. No se genera ninguna respuesta de relleno.", "The assistant is not connected yet. When it is, it will answer only with system tools and every figure will pass the numeric verifier. No filler answer is generated.")
-                  : e.message,
+                e instanceof ErrorApi && e.status === 429
+                  ? t("Demasiadas consultas seguidas. Espere un minuto e intente de nuevo.", "Too many queries in a row. Wait a minute and try again.")
+                  : e instanceof ErrorApi && e.status === 503
+                    ? t("El proveedor de IA no está disponible en este momento. No se genera ninguna respuesta de relleno; intente de nuevo en unos segundos.", "The AI provider is unavailable right now. No filler answer is generated; try again in a few seconds.")
+                    : e.message,
             },
           ]),
       },
@@ -46,20 +114,25 @@ function Conversacion() {
 
   return (
     <Tarjeta
-      titulo={<span className="flex items-center gap-2"><Bot className="h-4 w-4 text-accent" /> {t("Conversación", "Conversation")}</span>}
-      acciones={<Insignia icono={PlugZap}>{t("No conectado", "Not connected")}</Insignia>}
+      titulo={<span className="flex items-center gap-2"><Bot className="h-4 w-4 text-accent" /> {t("Conversación con Gemini", "Conversation with Gemini")}</span>}
+      subtitulo={t("Responde solo con expedientes publicados, cita cada fuente y verifica cada cifra.", "Answers only from published case files, cites every source and verifies every figure.")}
+      acciones={
+        <Insignia tono={conectado ? "good" : "neutral"} icono={conectado ? ShieldCheck : PlugZap}>
+          {conectado === undefined ? "…" : conectado ? t("Conectado", "Connected") : t("No configurado", "Not configured")}
+        </Insignia>
+      }
       sinPadding
     >
-      <div className="flex h-[440px] flex-col">
+      <div className="flex h-[520px] flex-col">
         <div className="flex-1 space-y-3 overflow-y-auto px-5 py-4" aria-live="polite">
           {mensajes.length === 0 && (
             <div className="grid h-full place-items-center text-center">
               <div>
-                <p className="font-semibold text-ink">{t("Pregunte sobre el agua de Arequipa", "Ask about Arequipa's water")}</p>
-                <p className="mt-1 text-[13px] text-ink-2">{t("La respuesta solo podrá citar expedientes publicados.", "The answer can only cite published case files.")}</p>
+                <p className="font-semibold text-ink">{t("Pregunte sobre los fenómenos de Arequipa y el Perú", "Ask about natural hazards in Arequipa and Peru")}</p>
+                <p className="mt-1 text-[13px] text-ink-2">{t("Cada cifra de la respuesta se comprueba contra el expediente que cita.", "Every figure in the answer is checked against the case file it cites.")}</p>
                 <div className="mt-4 flex flex-wrap justify-center gap-2">
                   {SUGERENCIAS.map(([es, en]) => (
-                    <button key={es} type="button" onClick={() => enviar(t(es, en))} className="rounded-full border border-line px-3 py-1.5 text-[12.5px] text-ink-2 hover:bg-surface-2 hover:text-ink">
+                    <button key={es} type="button" disabled={consultar.isPending} onClick={() => enviar(t(es, en))} className="rounded-full border border-line px-3 py-1.5 text-[12.5px] text-ink-2 hover:bg-surface-2 hover:text-ink disabled:opacity-50">
                       {t(es, en)}
                     </button>
                   ))}
@@ -69,18 +142,19 @@ function Conversacion() {
           )}
           {mensajes.map((m, i) => (
             <div key={i} className={clsx("flex", m.rol === "persona" ? "justify-end" : "justify-start")}>
-              <p
+              <div
                 className={clsx(
-                  "max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed",
+                  "max-w-[88%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed",
                   m.rol === "persona" ? "bg-accent text-white" : "border border-line bg-surface-2 text-ink",
                 )}
               >
                 {m.tono === "critical" && <PlugZap aria-hidden className="mb-0.5 mr-1.5 inline h-3.5 w-3.5 text-ink-3" />}
-                {m.texto}
-              </p>
+                {m.rol === "sistema" ? <TextoConCitas texto={m.texto} /> : m.texto}
+                {m.respuesta && <SelloRespuesta r={m.respuesta} />}
+              </div>
             </div>
           ))}
-          {consultar.isPending && <p className="animate-pulso text-[13px] text-ink-3">{t("Consultando…", "Querying…")}</p>}
+          {consultar.isPending && <p className="animate-pulso text-[13px] text-ink-3">{t("Consultando expedientes y verificando cifras…", "Querying case files and verifying figures…")}</p>}
         </div>
         <form
           onSubmit={(e: FormEvent) => {
@@ -90,7 +164,7 @@ function Conversacion() {
           className="flex gap-2 border-t border-line p-3"
         >
           <label className="sr-only" htmlFor="pregunta">{t("Pregunta", "Question")}</label>
-          <input id="pregunta" value={texto} onChange={(e) => setTexto(e.target.value)} placeholder={t("Escriba su pregunta…", "Type your question…")} className="h-10 flex-1 rounded-lg border border-line bg-surface-2 px-3 text-sm text-ink" />
+          <input id="pregunta" maxLength={2000} value={texto} onChange={(e) => setTexto(e.target.value)} placeholder={t("Escriba su pregunta…", "Type your question…")} className="h-10 min-w-0 flex-1 rounded-lg border border-line bg-surface-2 px-3 text-sm text-ink" />
           <Boton type="submit" variante="primario" icono={Send} disabled={!texto.trim() || consultar.isPending}>{t("Enviar", "Send")}</Boton>
         </form>
       </div>

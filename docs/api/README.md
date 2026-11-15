@@ -81,7 +81,7 @@ Todas las respuestas de error tienen esta forma:
 
 ```json
 {
-  "type": "https://github.com/DiegoNiS/terraverdict/blob/main/docs/api/README.md#errores-regla_cientifica",
+  "type": "https://github.com/OwerLopez/terraverdict/blob/main/docs/api/README.md#errores-regla_cientifica",
   "title": "El resultado no cumple una regla de publicación",
   "status": 422,
   "detail": "…",

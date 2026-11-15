@@ -118,7 +118,7 @@ def test_resumen_refleja_datos_reales(cliente: TestClient) -> None:
     assert r["fuentes_total"] >= 30
     assert r["verificacion_fuentes"]["correctas"] == 37
     assert r["eventos_documentados"] >= 10
-    assert r["asistente_conectado"] is False
+    assert r["asistente_conectado"] is False  # sin TV_GEMINI_API_KEY en pruebas
     assert {"clave": "tendencia", "total": 2} in r["expedientes_por_tipo"]
 
 

@@ -5,7 +5,7 @@
     "description": "\nAPI de **TerraVerdict**: ciencia de datos geoespaciales para saber qué cambia en una cuenca de\nmontaña, por qué, con cuánta confianza y dónde actuar (caso piloto: Arequipa, Perú).\n\n* **Lectura pública:** catálogo de fuentes verificadas, series, expedientes, eventos y procesos.\n* **Escritura del pipeline:** cuentas de servicio con clave `X-API-Key` (alcances `ingesta` y `trabajador`).\n* **Personas:** token Bearer (`POST /api/v1/auth/token`) con roles `lector`, `analista` y `admin`.\n* **Errores:** `application/problem+json` (RFC 9457) con un `codigo` estable.\n* **Contratos de integración:** ver `docs/integracion-ciencia-datos.md`.\n\nNingún dato científico se genera en esta API: solo se publica lo que el pipeline calcula y valida.\n",
     "contact": {
       "name": "TerraVerdict",
-      "url": "https://github.com/DiegoNiS/terraverdict"
+      "url": "https://github.com/OwerLopez/terraverdict"
     },
     "license": {
       "name": "MIT"
@@ -154,6 +154,17 @@
           },
           "429": {
             "description": "Se superó el límite de solicitudes.",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemaHTTP"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Servicio o módulo todavía no conectado.",
             "content": {
               "application/problem+json": {},
               "application/json": {
@@ -3313,8 +3324,8 @@
         "tags": [
           "Asistente"
         ],
-        "summary": "Preguntar al asistente (módulo pendiente de conexión)",
-        "description": "Hoy responde **503** con `codigo = servicio_no_disponible`: el proveedor todavía no está conectado. Cuando lo esté, cada respuesta pasará por el verificador numérico antes de devolverse.",
+        "summary": "Preguntar al asistente (Gemini, anclado en expedientes publicados y verificado)",
+        "description": "Elige los expedientes publicados más pertinentes (o los indicados), pide a Google Gemini una respuesta que solo use esas cifras y cite sus IDs, y verifica cada cifra contra los expedientes citados. Si alguna no tiene respaldo, pide una reescritura. La respuesta incluye siempre el informe de verificación. **429** si se supera el límite por IP o global; **503** si el proveedor no está configurado o no responde.",
         "operationId": "consultar_api_v1_asistente_consultas_post",
         "requestBody": {
           "content": {
@@ -3337,8 +3348,30 @@
               }
             }
           },
+          "404": {
+            "description": "El recurso no existe.",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemaHTTP"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Los datos no cumplen el contrato o una regla de publicación científica.",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemaHTTP"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Se superó el límite de solicitudes.",
             "content": {
               "application/problem+json": {},
               "application/json": {
@@ -4425,8 +4458,9 @@
               "type": "string"
             },
             "type": "array",
-            "maxItems": 20,
-            "title": "Expediente Ids"
+            "maxItems": 4,
+            "title": "Expediente Ids",
+            "description": "Expedientes a usar como contexto. Vacío: el sistema elige los más pertinentes."
           }
         },
         "additionalProperties": false,
@@ -5334,6 +5368,30 @@
           "magnitud"
         ],
         "title": "EventoSismico"
+      },
+      "ExpedienteConsultado": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "tipo",
+          "titulo"
+        ],
+        "title": "ExpedienteConsultado"
       },
       "ExpedienteCrear": {
         "properties": {
@@ -8108,21 +8166,57 @@
         "properties": {
           "texto": {
             "type": "string",
-            "title": "Texto"
+            "title": "Texto",
+            "description": "Respuesta generada. Sus cifras están en `verificacion`."
           },
           "expedientes_citados": {
             "items": {
               "type": "string"
             },
             "type": "array",
-            "title": "Expedientes Citados"
+            "title": "Expedientes Citados",
+            "description": "IDs citados en el texto y presentes en el contexto."
+          },
+          "expedientes_consultados": {
+            "items": {
+              "$ref": "#/components/schemas/ExpedienteConsultado"
+            },
+            "type": "array",
+            "title": "Expedientes Consultados",
+            "description": "Expedientes publicados que se dieron como contexto al modelo."
+          },
+          "verificacion": {
+            "$ref": "#/components/schemas/ResultadoVerificacionTexto",
+            "description": "Verificación numérica de cada cifra contra los expedientes citados."
+          },
+          "modelo": {
+            "type": "string",
+            "title": "Modelo",
+            "description": "Modelo de Gemini que generó la respuesta final."
+          },
+          "intentos": {
+            "type": "integer",
+            "maximum": 2.0,
+            "minimum": 1.0,
+            "title": "Intentos",
+            "description": "2 si hubo que reescribir por cifras sin respaldo."
+          },
+          "latencia_s": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Latencia S"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
           "texto",
-          "expedientes_citados"
+          "expedientes_citados",
+          "expedientes_consultados",
+          "verificacion",
+          "modelo",
+          "intentos",
+          "latencia_s"
         ],
         "title": "RespuestaAsistenteSalida"
       },

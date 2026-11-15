@@ -16,7 +16,7 @@ from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHashError, VerificationError, VerifyMismatchError
 
 from app.core.config import Settings
-from app.core.errors import DemasiadasSolicitudes, NoAutenticado
+from app.core.errors import DemasiadasSolicitudes, NoAutenticado, ServicioNoDisponible
 
 _hasher = PasswordHasher()
 PREFIJO_CLAVE = "tv_"
@@ -38,7 +38,15 @@ def necesita_rehash(hash_guardado: str) -> bool:
     return _hasher.check_needs_rehash(hash_guardado)
 
 
+def exigir_sesiones(settings: Settings) -> None:
+    if not settings.sesiones_habilitadas:
+        raise ServicioNoDisponible(
+            "Inicio de sesión deshabilitado en este despliegue (modo solo lectura: falta TV_JWT_SECRETO)."
+        )
+
+
 def crear_token(settings: Settings, *, sujeto: str, rol: str) -> tuple[str, int]:
+    exigir_sesiones(settings)
     ahora = datetime.now(UTC)
     vence = ahora + timedelta(minutes=settings.jwt_minutos)
     carga = {"sub": sujeto, "rol": rol, "iat": ahora, "exp": vence, "iss": "terraverdict", "typ": "access"}
@@ -47,6 +55,7 @@ def crear_token(settings: Settings, *, sujeto: str, rol: str) -> tuple[str, int]
 
 
 def decodificar_token(settings: Settings, token: str) -> dict[str, Any]:
+    exigir_sesiones(settings)
     try:
         carga: dict[str, Any] = jwt.decode(
             token,
