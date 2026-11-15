@@ -1,15 +1,18 @@
 # PREREGISTRO · TerraVerdict
 # Congelar (estado: congelado) ANTES de correr S1 sobre IMERG/CHIRPS.
 # Cada expediente guarda el SHA-256 de este archivo. Cambiar un valor = nuevo hash = nueva versión.
-# Los valores marcados (propuesto) son del equipo de revisión y deben ser aprobados.
+# Congelado el 2026-11-15 por decisión del equipo: los valores antes marcados (propuesto) quedan aprobados.
+# Desde aquí, cualquier cambio exige subir `version` y registrar el motivo en docs/bitacora.md.
 version: 1
-estado: borrador
-alpha: 0.10                     # (propuesto) nivel de significancia de las tendencias
+estado: congelado
+congelado: "2026-11-15"
+aprobado_por: [MaxsForocca, Ower Frank]
+alpha: 0.10                     # (aprobado) nivel de significancia de las tendencias
 ic_nivel: 0.90
 mk_variantes: [original, hamed_rao, prewhitening]   # p conservador = máximo de las tres
 ventanas:
   L_min: 20
-  u_ventanas: 0.90              # (propuesto) fracción mínima con el mismo signo
+  u_ventanas: 0.90              # (aprobado) fracción mínima con el mismo signo
 enso:
   indice: ONI_DJF
   lags_meses: [0]               # el análisis preliminar usa lag 0; ampliar a 0-3 con ONI mensual
@@ -21,7 +24,7 @@ sensor:
     IMERG_FINAL: {trmm_a_gpm: 2014.5}
     MODIS_LST_TERRA: {terra_deriva_orbital: 2020.1}
     LANDSAT: {l5_a_l7: 1999.0, l7_a_l8: 2013.3}
-  tol_cambio_pendiente: 0.5     # (propuesto) |Δb|/|b| por encima de esto = falla
+  tol_cambio_pendiente: 0.5     # (aprobado) |Δb|/|b| por encima de esto = falla
 palanca:
   quitar_ultimos_anios: 2       # sensibilidad: ¿la tendencia sobrevive sin los últimos N años?
 independencia:
@@ -32,10 +35,10 @@ detectabilidad:
 temperatura:
   gamma_C_por_km: 6.5           # sensibilidad 5.5 y 7.5; verificar si POWER ya corrige elevación
 gemelo:
-  kge_min: 0.5                  # (propuesto) por debajo, el gemelo no alimenta atribución
+  kge_min: 0.5                  # (aprobado) por debajo, el gemelo no alimenta atribución
   x2_rango: [0.2, 2.0]          # ampliado respecto del diseño original (0.2-1)
   beta_lluvia_rango: [0.7, 1.3]
   calentamiento_meses: 24
 pronostico:
-  h_enso: 0.5                   # (propuesto) ancho del kernel sobre ONI
+  h_enso: 0.5                   # (aprobado) ancho del kernel sobre ONI
   regla_publicacion: crpss_ic90_inferior_mayor_que_0

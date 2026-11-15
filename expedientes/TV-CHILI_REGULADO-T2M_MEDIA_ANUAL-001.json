@@ -131,9 +131,9 @@
     "id": "NASA_POWER_MERRA2"
    }
   ],
-  "preregistro_sha256": "b0ae0fa67fd7efcb1383b915299d535eb08a1f9ddee2c3a9b26327af6b8a9855",
-  "codigo_commit": null,
-  "entradas_sha256": "c64f5d59bcc400f3d81f316f16fd987e55ceb0e45654ba0078f5ed657991068a",
-  "generado_utc": "2026-11-14T18:57:14+00:00"
+  "preregistro_sha256": "c40676fd76ab55434bb8f0a89fe6c1bcf8845551dd884b41444682f3bd00d596",
+  "codigo_commit": "ccd1e69",
+  "entradas_sha256": "28a167da3eeb70684f941c82e8bcf6442426a69344a0e1dad919da8affc51517",
+  "generado_utc": "2026-11-15T05:04:28+00:00"
  }
 }

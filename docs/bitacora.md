@@ -25,6 +25,25 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Preregistro y partición temporal congelados
+**Autor:** MaxsForocca · **Aportes:** Ower Frank
+
+**Qué se hizo**
+- `preregistro.yaml` pasa a `estado: congelado` (2026-11-15). Los cinco valores que estaban *(propuesto)* quedan *(aprobado)* sin cambiar sus cifras.
+- La partición temporal de `config/fenomenos.yaml` queda congelada: entrenamiento 1981–2015, validación 2016–2020, prueba 2021–2026-10.
+- Se regeneraron los dos expedientes de tendencias: el hash del preregistro es parte de su procedencia.
+
+**Evidencia**
+- SHA-256 del preregistro congelado: `c40676fd76ab…d596`.
+- `tests/unit/test_preregistro_congelado.py` falla si cambia un solo byte del preregistro o una fecha de la partición. 30 pruebas pasan.
+- Los expedientes regenerados dan el mismo resultado que antes (T2M +0,226 °C/década, sello *frágil*; lluvia dic–mar sin tendencia). Solo cambian los hashes y la fecha.
+
+**Decisiones**
+- Se congela **antes** de la corrida completa, para que el periodo de prueba se use una sola vez con reglas fijadas de antemano.
+- Cambiar un valor ahora exige subir `version` y anotar el motivo aquí.
+
+---
+
 ## 2026-11-14 · Motor de pronóstico, evaluación e incertidumbre
 **Autor:** Ower Frank
 

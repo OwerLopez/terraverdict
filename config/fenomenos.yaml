@@ -22,7 +22,7 @@ descarga:
   ghcn_estacion: PE000084752          # AREQUIPA (aeropuerto Rodríguez Ballón)
   sismos: {radio_km: 350, mag_min: 4.0, desde: 1973, hasta: 2026}
 
-particion_temporal:                    # misma regla que config/dominios.yaml: la prueba se usa una sola vez
+particion_temporal:                    # CONGELADA 2026-11-15 (equipo). Misma regla que config/dominios.yaml: la prueba se usa una sola vez
   entrenamiento: ["1981-01-01", "2015-12-31"]
   validacion:    ["2016-01-01", "2020-12-31"]
   prueba:        ["2021-01-01", "2026-10-31"]

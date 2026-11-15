@@ -1,6 +1,6 @@
 # Qué falta para terminar TerraVerdict al 100 %
 
-> Actualizado: **14-11-2026**. Lo hecho y su evidencia está en [`bitacora.md`](bitacora.md).
+> Actualizado: **15-11-2026**. Lo hecho y su evidencia está en [`bitacora.md`](bitacora.md).
 > Regla para cerrar una tarea: código + pruebas que pasan + entrada en la bitácora + commit en `main`.
 > Nada se da por terminado sin evidencia ejecutada.
 
@@ -113,7 +113,7 @@ Y una prueba de humo de cada experimento con datos reducidos guardados en `tests
 
 ## Decisiones pendientes del equipo
 
-- [ ] ¿Retirar `web/`? Está superado por `frontend/` (ADR-016, paso 2).
-- [ ] ¿Borrar la rama remota `feat/architecture`? Su aporte ya está en `main` (`c3722cc`).
-- [ ] Congelar `preregistro.yaml`: hoy está en `estado: borrador` y tiene valores *propuestos*.
-- [ ] Confirmar las particiones temporales de `config/fenomenos.yaml`. La prueba se usa una sola vez.
+- [ ] ¿Retirar `web/`? Está superado por `frontend/` (ADR-016, paso 2). Por ahora se conserva.
+- [ ] ¿Borrar la rama remota `feat/architecture`? Su aporte ya está en `main` (`c3722cc`). Por ahora se conserva.
+- [x] Congelar `preregistro.yaml` (2026-11-15, `estado: congelado`).
+- [x] Confirmar las particiones temporales de `config/fenomenos.yaml` (congeladas el 2026-11-15).
