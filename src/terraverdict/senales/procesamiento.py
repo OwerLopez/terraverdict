@@ -55,6 +55,15 @@ def spi(lluvia_mensual: pd.Series, escala: int, hasta: str) -> pd.Series:
 def regimenes(serie: pd.Series, tamano_minimo: int = 24, penalizacion: float | None = None) -> dict:
     """Puntos de cambio en media y varianza (PELT, costo normal) con penalización tipo BIC."""
     s = serie.dropna()
+    if len(s) < 2 * tamano_minimo:
+        return {
+            "metodo": "PELT costo normal (ruptures)",
+            "tamano_minimo": tamano_minimo,
+            "puntos_cambio": [],
+            "segmentos": [],
+            "evaluado": False,
+            "nota": f"Serie demasiado corta ({len(s)} < {2 * tamano_minimo}): no se buscan cambios de régimen.",
+        }
     x = ((s - s.mean()) / s.std()).to_numpy()[:, None]
     pen = penalizacion if penalizacion is not None else 3 * np.log(len(x))
     cortes = rpt.Pelt(model="normal", min_size=tamano_minimo).fit(x).predict(pen=pen)
@@ -77,6 +86,7 @@ def regimenes(serie: pd.Series, tamano_minimo: int = 24, penalizacion: float | N
         "tamano_minimo": tamano_minimo,
         "puntos_cambio": [str(s.index[c].date()) for c in cortes[:-1]],
         "segmentos": segmentos,
+        "evaluado": True,
     }
 
 

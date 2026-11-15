@@ -13,7 +13,7 @@ from functools import partial
 from pathlib import Path
 from typing import Any
 
-from . import ghcn, glc, gvp, noaa, power, usgs
+from . import chirps, earthdata, ghcn, glc, gvp, igp, modis, noaa, power, usgs
 from .http import sesion
 
 
@@ -71,7 +71,78 @@ def descargar_todo(cfg: dict[str, Any], raw: str | Path = "data/raw") -> dict[st
     )
     _paso(reg, "gvp", lambda: gvp.descargar(raw / "gvp", pais="Peru"))
     _paso(reg, "glc", lambda: glc.descargar(raw / "glc"))
+    descargar_fuentes_adicionales(cfg, raw, reg)
     reg["fin_utc"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    return reg
+
+
+ADICIONALES = ("chirps", "igp", "imerg", "modis")
+
+
+def descargar_fuentes_adicionales(
+    cfg: dict[str, Any], raw: Path, reg: dict[str, Any], fuentes: tuple[str, ...] = ADICIONALES
+) -> dict[str, Any]:
+    """CHIRPS (local 0,1° y celda de POWER), sismos del IGP, IMERG y MODIS LST para los dos puntos."""
+    d = cfg["descarga"]
+    ch = d["chirps"]
+    for nombre, p in cfg["puntos"].items() if "chirps" in fuentes else ():
+        lon_c, lat_c = celdas_power(p["lon"], p["lat"])
+        for sufijo, geometria in (
+            ("local", chirps.caja(p["lon"], p["lat"], ch["caja_local_grados"], ch["caja_local_grados"])),
+            ("celda_power", chirps.caja(lon_c, lat_c, 0.625, 0.5)),
+        ):
+            _paso(
+                reg,
+                f"chirps_{nombre}_{sufijo}",
+                partial(
+                    chirps.descargar,
+                    f"{nombre}_{sufijo}",
+                    geometria,
+                    ch["desde"],
+                    ch["hasta"],
+                    raw / "chirps",
+                    hasta_fecha=ch["hasta_fecha"],
+                ),
+            )
+    if "igp" in fuentes:
+        _paso(reg, "igp", lambda: igp.descargar(d["igp"]["desde"], d["igp"]["hasta"], raw / "igp"))
+    indices = [earthdata.indice_imerg(p["lon"], p["lat"]) for p in cfg["puntos"].values()]
+    lon = (min(i[0] for i in indices), max(i[0] for i in indices))
+    lat = (min(i[1] for i in indices), max(i[1] for i in indices))
+    if "imerg" in fuentes:
+        _paso(
+            reg,
+            "imerg",
+            lambda: earthdata.descargar_imerg(
+                lon,
+                lat,
+                dt.date.fromisoformat(d["imerg"]["desde"]),
+                dt.date.fromisoformat(d["imerg"]["hasta"]),
+                raw / "imerg",
+            ),
+        )
+    for nombre, p in cfg["puntos"].items() if "modis" in fuentes else ():
+        _paso(
+            reg,
+            f"modis_lst_{nombre}",
+            partial(modis.descargar, nombre, p["lat"], p["lon"], raw / "modis", d["modis_lst"]["desde"]),
+        )
+    return reg
+
+
+def registrar_desde_manifiestos(reg: dict[str, Any], raw: Path) -> dict[str, Any]:
+    """Completa el registro con las fuentes adicionales ya descargadas en una corrida anterior que no
+    llegó a escribir el registro (p. ej., interrumpida). La evidencia es su manifiesto SHA-256."""
+    for carpeta in ("chirps", "igp"):
+        man = raw / carpeta / "manifiesto.json"
+        if not man.exists():
+            continue
+        for e in json.loads(man.read_text()):
+            clave = carpeta if carpeta == "igp" else "_".join(e["archivo"].split("_")[:-2]).removesuffix(".json")
+            if clave not in reg:
+                reg[clave] = {"ok": True, "salida": [], "nota": "Tomado del manifiesto de una corrida anterior."}
+            if reg[clave].get("nota") and e not in reg[clave]["salida"]:
+                reg[clave]["salida"].append(e)
     return reg
 
 

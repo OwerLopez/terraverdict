@@ -1,0 +1,742 @@
+[
+ {
+  "archivo": "chirps_ciudad_local_1981_1990.json",
+  "sha256": "b34772f0e33024bd512ec3b2afead35890b0d74030b74a8dd7f486e3f754f899",
+  "bytes": 609552,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:33:05+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.585,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.45
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_ciudad_local_1991_2000.json",
+  "sha256": "cc12c0da75b7edc23ab244f4c28a14eb4ddce9b524d388144012906cd7a50fad",
+  "bytes": 610939,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:33:37+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.585,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.45
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_ciudad_local_2001_2010.json",
+  "sha256": "f6a6b59f7df461a516e82d3dbaed4593620ec5cd6150b5a36459c3448fe01f4f",
+  "bytes": 615810,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:34:10+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.585,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.45
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_ciudad_local_2011_2020.json",
+  "sha256": "efd08f2cb9e26cb74ff97c319522173161e5950170479353b0ab1a1e1fe13063",
+  "bytes": 619102,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:34:41+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.585,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.45
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_ciudad_local_2021_2026.json",
+  "sha256": "5cbe3d78861fe7931539cf2740b581c9ce27b1b9fc211ea8d2777158b652712e",
+  "bytes": 357135,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:35:07+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.585,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.45
+     ],
+     [
+      -71.485,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.349999999999998
+     ],
+     [
+      -71.585,
+      -16.45
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_ciudad_celda_power_1981_1990.json",
+  "sha256": "d19cdb49562f401bae20f9d811a68b6842f205866b95b5678d2a0685b0f09edb",
+  "bytes": 638525,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:35:46+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.75
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_ciudad_celda_power_1991_2000.json",
+  "sha256": "4ee66d60b4cd35a59e61a88e5a2ad26145376d512af7092b26bacb4acc71db98",
+  "bytes": 640624,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:36:25+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.75
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_ciudad_celda_power_2001_2010.json",
+  "sha256": "0a829f3f156312f4ac92fed988ec8f2ddd1773e4f5bf59893f7bd86ea99140e4",
+  "bytes": 644305,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:36:59+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.75
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_ciudad_celda_power_2011_2020.json",
+  "sha256": "a9c40d2420e150f3fce011d0f119f348a938e00efc6928bce45359c8556b54e5",
+  "bytes": 650957,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:37:38+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.75
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_ciudad_celda_power_2021_2026.json",
+  "sha256": "7ae4ea5da437dfd74294d1a41a5d6291e80caebbcd6cf3b912528f8b2f003daa",
+  "bytes": 377246,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:38:12+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.75
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -71.5625,
+      -16.75
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_local_1981_1990.json",
+  "sha256": "14e2fd15166fe5c21e257e61d6060e7eae88a726e757dae451c02877ae6ce18d",
+  "bytes": 623887,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:38:45+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.3,
+      -16.0
+     ],
+     [
+      -71.2,
+      -16.0
+     ],
+     [
+      -71.2,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -16.0
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_local_1991_2000.json",
+  "sha256": "fa3c25da4e643eecd0f3bf4f630e7fd1173b5eb629829c06851f3657c02d624f",
+  "bytes": 624330,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:39:18+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.3,
+      -16.0
+     ],
+     [
+      -71.2,
+      -16.0
+     ],
+     [
+      -71.2,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -16.0
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_local_2001_2010.json",
+  "sha256": "a05107ad61a065f9fb672af6a9152a2551e4f25264b7dd177375b0403e3e979a",
+  "bytes": 631563,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:39:56+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.3,
+      -16.0
+     ],
+     [
+      -71.2,
+      -16.0
+     ],
+     [
+      -71.2,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -16.0
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_local_2011_2020.json",
+  "sha256": "7fc0a7c0d0e19df40109674a089b9b1e2d8f328e88d73834aaa48d3b5b4e5ef6",
+  "bytes": 633025,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:40:29+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.3,
+      -16.0
+     ],
+     [
+      -71.2,
+      -16.0
+     ],
+     [
+      -71.2,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -16.0
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_local_2021_2026.json",
+  "sha256": "699f1ebbd5e7d4231a6b2b8102408143428865597c214b311ad39f239fe4d9fb",
+  "bytes": 365694,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:40:56+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.3,
+      -16.0
+     ],
+     [
+      -71.2,
+      -16.0
+     ],
+     [
+      -71.2,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -15.899999999999999
+     ],
+     [
+      -71.3,
+      -16.0
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_celda_power_1981_1990.json",
+  "sha256": "8d15a8f5f384a7c613790173d9818748314cb32320a20c866c5d7e6420a537b9",
+  "bytes": 642749,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:41:35+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -16.25
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_celda_power_1991_2000.json",
+  "sha256": "b0902e5b0eff75ea2bfb295e6e9042e2ff8d20cf93e67cb114f15be2edfb8995",
+  "bytes": 644296,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:42:14+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -16.25
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_celda_power_2001_2010.json",
+  "sha256": "341247c4b7cdaf86eca85064611bcdd9487fed3a561112deffb67a6b33e1b666",
+  "bytes": 651819,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:42:53+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -16.25
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_celda_power_2011_2020.json",
+  "sha256": "d11dbf1911a66d271301a7c407ceaade8c729f5f7e9fdffe669fda4c026ae39d",
+  "bytes": 654405,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:43:31+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -16.25
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ },
+ {
+  "archivo": "chirps_cabecera_celda_power_2021_2026.json",
+  "sha256": "301c7db6b5f00f230661c22f381836c3bc598b2d0dd9652efed7ebf03a4fe0ab",
+  "bytes": 377946,
+  "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+  "producto": "CHIRPS_DIARIO_CLIMATESERV",
+  "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+  "descargado_utc": "2026-11-15T05:43:58+00:00",
+  "geometria": {
+   "type": "Polygon",
+   "coordinates": [
+    [
+     [
+      -71.5625,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -16.25
+     ],
+     [
+      -70.9375,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -15.75
+     ],
+     [
+      -71.5625,
+      -16.25
+     ]
+    ]
+   ]
+  },
+  "operacion": "promedio areal"
+ }
+]

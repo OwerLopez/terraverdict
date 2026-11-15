@@ -16,7 +16,7 @@ import pytest
 import yaml
 
 from terraverdict.config import cargar_yaml
-from terraverdict.experimentos import caos_real, deslizamientos, ejecutar, lluvia, sequia, sismos, volcanes
+from terraverdict.experimentos import caos_real, deslizamientos, ejecutar, fuentes, lluvia, sequia, sismos, volcanes
 
 RAIZ = Path(__file__).resolve().parents[2]
 RAW = RAIZ / "tests" / "fixtures" / "raw_reducido"
@@ -91,6 +91,33 @@ def test_sequia(cfg: dict[str, Any]) -> None:
         assert 0 <= mejor["prueba"]["cobertura_90"] <= 1
 
 
+def test_sequia_con_chirps(cfg: dict[str, Any]) -> None:
+    r = _serializable(sequia.ejecutar(cfg, RAW, registro=_silencio, fuente="chirps", **RAPIDO))
+    assert r["calidad"]["fuente_lluvia"] == "chirps"
+    _zoo_valido(r["horizontes"]["h1"]["zoo"])
+
+
+def test_lluvia_con_chirps(cfg: dict[str, Any]) -> None:
+    r = _serializable(lluvia.ejecutar(cfg, RAW, registro=_silencio, fuente="chirps", **RAPIDO))
+    assert r["fuente_lluvia"].startswith("CHIRPS")
+    assert "CHIRPS" in r["definicion"]["objetivo"]
+    _zoo_valido(r["zoo"])
+
+
+def test_contraste_de_fuentes(cfg: dict[str, Any]) -> None:
+    r = _serializable(fuentes.ejecutar(cfg, RAW, registro=_silencio))
+    nombres = {c["a"] for c in r["lluvia"]["ciudad_frente_a_estacion"]}
+    assert {"power_ciudad", "chirps_ciudad_local", "chirps_ciudad_celda_power"} <= nombres
+    for c in r["lluvia"]["cabecera_entre_fuentes"]:
+        assert -1 <= c["r_diario"] <= 1 and c["dias_comunes"] > 365
+    assert set(r["temperatura"]["estacion_frente_a_power"]) == {"TMAX", "TMIN"}
+    hay_modis = any((RAW / "modis").glob("modis_*.json"))
+    assert bool(r["temperatura"]["modis_frente_a_power"]) == hay_modis  # se usa MODIS solo si se descargó
+    s = r["sismos_usgs_frente_a_igp"]
+    assert s["emparejados"] > 0 and abs(s["diferencia_magnitud_igp_menos_usgs"]["media"]) < 1
+    assert r["lluvia"]["imerg_disponible"] is False and r["lluvia"]["nota_imerg"]
+
+
 def test_lluvia(cfg: dict[str, Any]) -> None:
     r = _serializable(lluvia.ejecutar(cfg, RAW, registro=_silencio, **RAPIDO))
     assert "lluvia_log" in r["seleccion_variables"]["seleccionadas"]
@@ -105,6 +132,7 @@ def test_caos_en_series_reales(cfg: dict[str, Any], r_sismos: dict[str, Any]) ->
     r = _serializable(caos_real.ejecutar(cfg, RAW, r_sismos, registro=_silencio))
     assert set(r["series"]) == {
         "lluvia_pentadas_cabecera",
+        "lluvia_pentadas_cabecera_chirps",
         "temperatura_diaria_cabecera",
         "spi3_mensual_cabecera",
         "oni_mensual",
@@ -119,7 +147,8 @@ def test_caos_en_series_reales(cfg: dict[str, Any], r_sismos: dict[str, Any]) ->
         "insuficiente",
     }
     assert all(s["veredicto"] in validos for s in r["series"].values())
-    assert sum(r["resumen_veredictos"].values()) == 6
+    assert sum(r["resumen_veredictos"].values()) == 7
+    assert all(len(s["espacio_fases"]) > 0 for s in r["series"].values() if s["veredicto"] != "insuficiente")
 
 
 def test_orquestador_guarda_procedencia(tmp_path: Path) -> None:

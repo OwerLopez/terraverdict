@@ -109,6 +109,8 @@ def test_regimenes_detecta_cambio_de_media() -> None:
     assert abs(pd.Timestamp(r["puntos_cambio"][0]) - idx[240]) <= pd.Timedelta(days=31 * 6)
     sin_cambio = regimenes(pd.Series(g.normal(size=480), index=idx), tamano_minimo=36)
     assert sin_cambio["puntos_cambio"] == []
+    corta = regimenes(pd.Series(g.normal(size=50), index=idx[:50]), tamano_minimo=36)
+    assert corta["evaluado"] is False and corta["puntos_cambio"] == []
 
 
 def test_escalas_recupera_periodo_anual() -> None:

@@ -21,6 +21,11 @@ descarga:
   power_mensual: [1981, 2025]
   ghcn_estacion: PE000084752          # AREQUIPA (aeropuerto Rodríguez Ballón)
   sismos: {radio_km: 350, mag_min: 4.0, desde: 1973, hasta: 2026}
+  # Fuentes añadidas el 2026-11-15 (consulta real; ver docs/bitacora.md)
+  chirps: {desde: 1981, hasta: 2026, hasta_fecha: "10/31/2026", caja_local_grados: 0.1}   # ClimateSERV, sin cuenta
+  igp: {desde: 2012, hasta: 2026}                                  # sismos reportados por el IGP (API pública)
+  imerg: {desde: "2000-06-01", hasta: "2026-06-30"}                # GES DISC con token Earthdata (requiere EULA)
+  modis_lst: {desde: "2000-01-01"}                                 # MOD11A2 por ORNL DAAC, sin cuenta
 
 particion_temporal:                    # CONGELADA 2026-11-15 (equipo). Misma regla que config/dominios.yaml: la prueba se usa una sola vez
   entrenamiento: ["1981-01-01", "2015-12-31"]
@@ -148,7 +153,8 @@ fenomenos:
          fuente: USGS_COMCAT, justificacion: "La sismicidad somera cercana acompaña a menudo la reactivación.",
          limitaciones: "La red global no detecta la sismicidad volcánica pequeña (M < 3) que registra el IGP."}
       - {id: monitoreo_ovs, nombre: "Monitoreo del OVS-IGP (sismos volcánicos, SO₂, deformación)", rol: validacion, relevancia: alta,
-         fuente: IGP_OVS, limitaciones: "Sin acceso desde el entorno; publicado como reportes, no como API."}
+         fuente: IGP_OVS, limitaciones: "Sin acceso desde el entorno; publicado como reportes, no como API.",
+         justificacion: "Es la única evidencia del estado actual de un volcán: sin ella solo se describen frecuencias históricas."}
     metricas: [erupciones_por_siglo, probabilidad_anual_inicio, intervalo_recurrencia, distribucion_iev]
 
   deslizamientos:
@@ -167,12 +173,13 @@ fenomenos:
       - {id: lluvia_antecedente, nombre: "Lluvia acumulada 1, 3, 10 y 30 días antes", unidad: "mm", rol: predictor, relevancia: alta,
          fuente: NASA_POWER_MERRA2, justificacion: "La lluvia acumulada satura el suelo y reduce la resistencia al corte (Guzzetti et al., 2008)."}
       - {id: inventario_ingemmet, nombre: "Inventario de peligros geológicos (GEOCATMIN)", rol: validacion, relevancia: alta,
-         fuente: INGEMMET, limitaciones: "Certificado SSL incompleto: no se pudo consultar sin desactivar la verificación."}
+         fuente: INGEMMET, limitaciones: "Certificado SSL incompleto: no se pudo consultar sin desactivar la verificación.",
+         justificacion: "Inventario nacional con miles de eventos: daría los ≥ 30 eventos necesarios para estimar un umbral de lluvia."}
     metricas: [n_eventos, percentil_lluvia_antecedente, umbral_intensidad_duracion]
 
-acceso_fuentes_nacionales:     # consulta real del 2026-11-14 (ver docs/verificacion/fuentes_fenomenos.json)
-  SENAMHI:  {url: "https://www.senamhi.gob.pe/", estado: no_accesible, motivo: "El servidor corta la conexión (connection reset)."}
-  IGP:      {url: "https://ultimosismos.igp.gob.pe/", estado: no_accesible, motivo: "El servidor de origen no responde (502 en el proxy)."}
+acceso_fuentes_nacionales:     # consulta real del 2026-11-14 (ver docs/verificacion/fuentes_fenomenos.json); SENAMHI e IGP revisados el 2026-11-15
+  SENAMHI:  {url: "https://www.senamhi.gob.pe/", estado: portal, motivo: "Responde (HTTP 200 el 2026-11-15; el 14-11 cortaba la conexión), pero no se encontró una API de datos."}
+  IGP:      {url: "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/{anio}", estado: api_publica, motivo: "Responde (2026-11-15): API pública con los sismos reportados desde 2012; integrada en tv ingest-fenomenos."}
   IGP_OVS:  {url: "https://ovs.igp.gob.pe/", estado: no_accesible, motivo: "El servidor de origen no responde (502 en el proxy)."}
   INGEMMET: {url: "https://geocatmin.ingemmet.gob.pe/geocatmin/", estado: no_accesible, motivo: "Cadena de certificado SSL incompleta."}
   ANA:      {url: "https://snirh.ana.gob.pe/", estado: portal, motivo: "Responde, pero los datos se descargan con formularios interactivos (sin API)."}

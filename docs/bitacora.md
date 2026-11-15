@@ -25,6 +25,55 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Más fuentes reales: CHIRPS, IGP, MODIS e IMERG, y experimentos multi-fuente
+**Autor:** MaxsForocca · **Aportes:** Ower Frank
+
+**Qué se hizo**
+- **Clientes nuevos** en `src/terraverdict/ingest/`. Cada uno guarda el crudo con su SHA-256 y entra en `tv ingest-fenomenos` (y en `--solo-adicionales --fuentes …`):
+  - `chirps.py`: CHIRPS v2.0 diario por la API pública de ClimateSERV, sin cuenta, en tramos de ≤ 20 años;
+  - `igp.py`: sismos reportados por el IGP, API pública por año;
+  - `earthdata.py`: IMERG Final V07 diaria por OPeNDAP con el token de Earthdata, leído del entorno o de `.env` y nunca escrito en crudos ni registros;
+  - `modis.py`: MOD11A2 LST por la API de subconjuntos de ORNL DAAC.
+- **Experimentos multi-fuente:**
+  - lluvia extrema y sequía se repiten con CHIRPS (`lluvia_extrema_chirps`, `sequia_chirps`);
+  - el diagnóstico de caos agrega las péntadas de CHIRPS;
+  - el nuevo experimento `fuentes` contrasta lluvia (POWER, CHIRPS e IMERG frente a la estación GHCN), temperatura (POWER frente a GHCN y a MODIS LST, en anomalías y tendencias) y sismos (USGS frente a IGP, emparejados por tiempo y lugar).
+- **Procedencia:** cada resultado guarda también el SHA-256 del preregistro.
+- **Partición:** la de prueba de sequía y sismos sale de la configuración, recortada al último dato disponible. Con la configuración real es la misma de antes (2021-01 a 2025-12 y 2021-01 a 2026-10).
+- **Catálogo:**
+  - `config/fuentes.yaml` registra las fuentes nuevas;
+  - `config/fenomenos.yaml` actualiza el acceso al IGP y a SENAMHI;
+  - dos variables de validación que no tenían `justificacion` ahora la tienen (lo detectó el contrato del backend).
+- **Fixtures:** `tests/fixtures/raw_reducido` suma recortes reales de CHIRPS (1981–2020 en la cabecera, para que el SPI tenga ≥ 10 años por mes) y del IGP (2012–2020, a 400 km).
+
+**Evidencia** (`data/raw/registro_descarga.json`)
+- CHIRPS: 4 series (cabecera y ciudad; caja de 0,1° y celda de POWER), 16 709 días cada una, de 1981-01-01 a 2026-09-30, sin huecos. 12 MB.
+- IGP: 8 545 sismos reportados entre 2012-01-07 y 2026-11-15. Hasta 2018 los registros no traen `codigo`: se usa `idlistasismos`, y la prueba incluye un registro de 2013.
+- Primeras lecturas del contraste (datos completos; cifras finales en `docs/experimentos.md`):
+  - En la cabecera, CHIRPS da 448–470 mm/año y POWER 198 mm/año. r diario 0,29–0,32; r mensual 0,78–0,80.
+  - En la ciudad, frente a la estación, ningún producto reproduce la lluvia diaria (r ≈ 0,19–0,20). POWER subestima los totales (razón 0,70) y CHIRPS los sobreestima (1,69–1,87).
+  - Sismos IGP frente a USGS: 712 emparejados; M IGP − M USGS = −0,11 ± 0,27.
+- `pytest`: 88 pruebas pasan, 1 se omite (requiere R). Incluye las pruebas de humo de `fuentes`, `lluvia_extrema_chirps` y `sequia_chirps`.
+
+**Bloqueos (registrados, no ocultos)**
+- **IMERG:**
+  - El token es válido: LP DAAC y NSIDC responden 200.
+  - GES DISC respondió `403 EULA Acceptance Failure` en el archivo de datos y `401` en OPeNDAP. Al final del día, el servidor no respondía.
+  - Acción: el dueño de la cuenta debe aceptar una vez la licencia en https://urs.earthdata.nasa.gov/approve_app?client_id=e2WVk8Pw6weeLUKZYOxvTQ y correr `tv ingest-fenomenos --solo-adicionales --fuentes imerg`.
+- **MODIS (ORNL):**
+  - Cada consulta tarda cerca de 1 min y la latencia no crece con consultas simultáneas (8 en 49 s).
+  - Con 20 simultáneas el servidor respondió 502. El cliente usa ahora 4 hilos y la descarga se reintenta aparte.
+  - El contraste `fuentes` funciona con o sin MODIS.
+- **SMAP y HLS:** el token tiene acceso, pero no se usan.
+  - SMAP empieza en 2015, después del entrenamiento congelado, y solo se distribuye por gránulo global.
+  - HLS es reflectancia a 30 m, sin relación directa con estos objetivos.
+
+**Decisiones**
+- Las fuentes se agregan **antes** de la corrida completa: así la prueba se usa una vez, con todas las fuentes disponibles.
+- Los resultados con POWER y con CHIRPS se informan lado a lado. Un resultado que cambia con el producto no describe a la lluvia, sino al producto.
+
+---
+
 ## 2026-11-15 · Corrección de escala en la selección de variables (mRMR)
 **Autor:** MaxsForocca · **Aportes:** Ower Frank
 

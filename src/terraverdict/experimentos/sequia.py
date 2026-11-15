@@ -2,7 +2,8 @@
 
 SPI con parámetros gamma ajustados solo con el periodo de entrenamiento (sin fuga de datos).
 Predictores: SPI-3, SPI-6, anomalías de temperatura y humedad, ONI disponible (rezago de
-publicación de 2 meses) y estación del año.
+publicación de 2 meses) y estación del año. Con `fuente="chirps"` la lluvia mensual (y por tanto
+el SPI) sale de CHIRPS v2.0 en la cabecera; temperatura y humedad siguen siendo de POWER.
 """
 
 from __future__ import annotations
@@ -20,10 +21,14 @@ from . import datos_reales as D
 from .comun import Particion, construir, evaluar_zoo, explicar, limpiar, serie_prueba
 
 
-def preparar(raw: Path, hasta_entrenamiento: str) -> tuple[pd.DataFrame, dict[str, Any]]:
+def preparar(raw: Path, hasta_entrenamiento: str, fuente: str = "power") -> tuple[pd.DataFrame, dict[str, Any]]:
     m, qc = D.power_mensual(raw)
     dias = m.index.days_in_month
     lluvia = m["PRECTOTCORR"] * dias  # mm/día → mm/mes
+    if fuente == "chirps":
+        diaria = D.chirps_diario(raw, "cabecera_local")
+        completa = diaria.resample("MS").count() == diaria.resample("MS").size()
+        lluvia = diaria.resample("MS").sum().where(completa).reindex(m.index)
     oni = D.oni_mensual(raw)
     ent = m.index <= pd.Timestamp(hasta_entrenamiento)
     clim_t = m["T2M"][ent].groupby(m.index[ent].month).mean()
@@ -42,7 +47,11 @@ def preparar(raw: Path, hasta_entrenamiento: str) -> tuple[pd.DataFrame, dict[st
         },
         index=m.index,
     )
-    return X, {**qc, "lluvia_anual_media_mm": float(lluvia.groupby(lluvia.index.year).sum().mean())}
+    return X, {
+        **qc,
+        "fuente_lluvia": fuente,
+        "lluvia_anual_media_mm": float(lluvia.groupby(lluvia.index.year).sum().mean()),
+    }
 
 
 def ejecutar(
@@ -51,10 +60,14 @@ def ejecutar(
     registro=print,
     redes: list[str] | None = None,
     semillas: tuple[int, ...] = (0, 1, 2),
+    fuente: str = "power",
 ) -> dict[str, Any]:
     pt = cfg["particion_temporal"]
-    particion = Particion(tuple(pt["entrenamiento"]), tuple(pt["validacion"]), ("2021-01-01", "2025-12-31"))
-    X, qc = preparar(raw, pt["entrenamiento"][1])
+    X, qc = preparar(raw, pt["entrenamiento"][1], fuente)
+    # La prueba termina en el último mes con lluvia mensual disponible (POWER mensual llega a 2025-12)
+    ultimo = X["spi3"].dropna().index[-1]
+    fin_prueba = min(pd.Timestamp(pt["prueba"][1]), ultimo).strftime("%Y-%m-%d")
+    particion = Particion(tuple(pt["entrenamiento"]), tuple(pt["validacion"]), (pt["prueba"][0], fin_prueba))
     columnas = list(X.columns)
     salida: dict[str, Any] = {
         "fenomeno": "sequia",

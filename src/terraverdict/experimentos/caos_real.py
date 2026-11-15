@@ -3,7 +3,8 @@
 Series evaluadas y su preparación (siempre anomalías respecto del ciclo anual del entrenamiento,
 para no confundir la estacionalidad con dinámica):
 - Lluvia en la cabecera: totales de 5 días (péntadas) de log(1+P), anomalía. Se usan péntadas
-  porque la serie diaria tiene muchos ceros empatados, que sesgan los métodos ordinales.
+  porque la serie diaria tiene muchos ceros empatados, que sesgan los métodos ordinales. Se evalúa
+  con POWER y con CHIRPS: un veredicto que cambia con el producto no describe a la lluvia.
 - Temperatura diaria en la cabecera: anomalía.
 - SPI-3 mensual en la cabecera.
 - ONI mensual (1950–presente).
@@ -29,10 +30,12 @@ def series(
 ) -> dict[str, tuple[np.ndarray, str, str, float]]:
     hasta = cfg["particion_temporal"]["entrenamiento"][1]
     df, _ = D.power_diario(raw, "cabecera")
-    lluvia = np.log1p(df["PRECTOTCORR"]).resample("5D").sum()
-    anom_lluvia = lluvia - lluvia.groupby(lluvia.index.dayofyear // 5).transform(
-        lambda s: s[s.index <= pd.Timestamp(hasta)].mean()
-    )
+
+    def pentadas(diaria: pd.Series) -> pd.Series:
+        p = np.log1p(diaria).resample("5D").sum(min_count=5)
+        return p - p.groupby(p.index.dayofyear // 5).transform(lambda s: s[s.index <= pd.Timestamp(hasta)].mean())
+
+    anom_lluvia = pentadas(df["PRECTOTCORR"])
     t = df["T2M"]
     anom_t = t - climatologia_diaria(t, hasta=hasta)
     X, _ = preparar_sequia(raw, hasta)
@@ -41,6 +44,12 @@ def series(
             anom_lluvia.dropna().to_numpy(),
             "péntada",
             "NASA POWER (MERRA-2) PRECTOTCORR, celda de cabecera",
+            5.0,
+        ),
+        "lluvia_pentadas_cabecera_chirps": (
+            pentadas(D.chirps_diario(raw, "cabecera_local")).dropna().to_numpy(),
+            "péntada",
+            "CHIRPS v2.0 (ClimateSERV), caja de 0,1° en la cabecera",
             5.0,
         ),
         "temperatura_diaria_cabecera": (
@@ -73,6 +82,10 @@ def ejecutar(cfg: dict[str, Any], raw: Path, sismos: dict[str, Any] | None = Non
     for nombre, (x, unidad, fuente, dias) in series(cfg, raw, sismos).items():
         r = diagnosticar(x, nombre=nombre, unidad_tiempo=unidad)
         r["fuente"] = fuente
+        tau = (r.get("embedding") or {}).get("tau") or 1
+        z = (x - np.mean(x)) / (np.std(x) or 1.0)
+        paso = max(1, (len(z) - tau) // 1500)  # submuestra para el gráfico del espacio de fases
+        r["espacio_fases"] = np.round(np.column_stack([z[:-tau:paso], z[tau::paso]]), 3).tolist()
         if np.isfinite(dias) and len(x) > 64:
             r["escalas"] = escalas(x, paso_dias=dias)
         resultados[nombre] = r

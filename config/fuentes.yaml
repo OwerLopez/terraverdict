@@ -291,6 +291,61 @@ fuentes:
     productos_sobre_cuenca: 666     # todos los niveles, 2025-10-30 a 2026-11-01
     uso: [monitoreo_actual]          # NO para tendencias: ~1 año de historia
 
+  # --- Fuentes de los fenómenos naturales (M6), consulta real 2026-11-14/15 ---
+  power_diaria:
+    url: https://power.larc.nasa.gov/api/temporal/daily/point
+    acceso: power_api
+    variable: [PRECTOTCORR, T2M, T2M_MAX, T2M_MIN, RH2M, QV2M, WS2M, PS, ALLSKY_SFC_SW_DWN]
+    resolucion: {espacial: "0.5 x 0.625 deg", temporal: diaria}
+    periodo: ["1981-01-01", null]
+    familia: merra2
+    uso: [lluvia_extrema, sequia, caos, deslizamientos]
+
+  chirps_v2_diaria:
+    url: https://climateserv.servirglobal.net/api/submitDataRequest/
+    acceso: http
+    version: "2.0"
+    variable: precipitation
+    resolucion: {espacial: "0.05 deg", temporal: diaria}
+    periodo: ["1981-01-01", null]
+    familia: chirps
+    nota: "Promedio areal por polígono vía ClimateSERV (datatype 0); máximo 20 años por consulta."
+    uso: [lluvia_extrema, sequia, caos, contraste_fuentes]
+
+  usgs_comcat:
+    url: https://earthquake.usgs.gov/fdsnws/event/1/query
+    acceso: http
+    periodo: ["1973-01-01", null]
+    uso: [sismos, volcanes]
+
+  igp_sismos_reportados:
+    url: https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/{anio}
+    acceso: http
+    periodo: ["2012-01-01", null]
+    advertencia: "Sismos que el IGP reporta, no su catálogo completo de detección."
+    uso: [contraste_fuentes]
+
+  gvp_volcanes:
+    url: https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows
+    acceso: http
+    uso: [volcanes]
+
+  nasa_glc:
+    url: https://data.nasa.gov/docs/legacy/Global_Landslide_Catalog_Export/Global_Landslide_Catalog_Export_rows.csv
+    acceso: http
+    advertencia: "Basado en noticias: subregistra eventos rurales; cobertura principal 2007–2017."
+    uso: [deslizamientos]
+
+  modis_lst_ornl:
+    coleccion: MOD11A2
+    version: "061"
+    url: https://modis.ornl.gov/rst/api/v1/MOD11A2/subset
+    acceso: http
+    resolucion: {espacial: "1 km", temporal: "8 dias"}
+    periodo: ["2000-02-18", null]
+    familia: modis
+    uso: [contraste_fuentes]
+
   oni:
     url: https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt
     acceso: http

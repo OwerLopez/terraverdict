@@ -4,6 +4,10 @@ Objetivo: P(t+1) ≥ percentil 90 de los días de dic–mar del entrenamiento (c
 cabecera). Se usa la cabecera porque ahí cae la lluvia que alimenta el Chili y su turbidez; el
 control de calidad muestra que la celda de la ciudad no representa la lluvia local de la
 estación (ver `calidad` en el resultado).
+
+`fuente="chirps"` repite el experimento con la lluvia de CHIRPS v2.0 (caja de 0,1° en la cabecera)
+como objetivo e historia; las demás variables siguen siendo de POWER. Sirve para saber si la
+habilidad depende del producto de lluvia.
 """
 
 from __future__ import annotations
@@ -26,14 +30,31 @@ MESES_HUMEDOS = [11, 12, 1, 2, 3, 4]
 RAIZ = Path(__file__).resolve().parents[3]
 
 
-def preparar(raw: Path) -> tuple[pd.DataFrame, pd.Series, dict[str, Any]]:
+FUENTES_LLUVIA = {
+    "power": "NASA POWER (MERRA-2) PRECTOTCORR, celda de la cabecera",
+    "chirps": "CHIRPS v2.0 (ClimateSERV), promedio de una caja de 0,1° en la cabecera",
+}
+
+
+def preparar(raw: Path, fuente: str = "power") -> tuple[pd.DataFrame, pd.Series, dict[str, Any]]:
     df, qc = D.power_diario(raw, "cabecera")
     df = df[df.index >= "1984-01-01"]  # radiación disponible desde 1984
+    if fuente == "chirps":
+        lluvia = D.chirps_diario(raw, "cabecera_local").reindex(df.index)
+        qc = {
+            **qc,
+            "lluvia_chirps": {
+                "dias_validos": int(lluvia.notna().sum()),
+                "hasta": str(lluvia.dropna().index[-1].date()),
+            },
+        }
+    else:
+        lluvia = df["PRECTOTCORR"]
     oni = D.oni_disponible_diario(D.oni_mensual(raw), df.index)
     doy = 2 * np.pi * df.index.dayofyear / 365.25
     X = pd.DataFrame(
         {
-            "lluvia_log": np.log1p(df["PRECTOTCORR"]),
+            "lluvia_log": np.log1p(lluvia),
             "humedad_especifica": df["QV2M"],
             "humedad_relativa": df["RH2M"],
             "temperatura": df["T2M"],
@@ -47,15 +68,20 @@ def preparar(raw: Path) -> tuple[pd.DataFrame, pd.Series, dict[str, Any]]:
         },
         index=df.index,
     )
-    return X, df["PRECTOTCORR"], qc
+    return X, lluvia, qc
 
 
 def ejecutar(
-    cfg: dict[str, Any], raw: Path, registro=print, redes: list[str] | None = None, semillas: tuple[int, ...] = (0, 1)
+    cfg: dict[str, Any],
+    raw: Path,
+    registro=print,
+    redes: list[str] | None = None,
+    semillas: tuple[int, ...] = (0, 1),
+    fuente: str = "power",
 ) -> dict[str, Any]:
     pt = cfg["particion_temporal"]
     particion = Particion(tuple(pt["entrenamiento"]), tuple(pt["validacion"]), tuple(pt["prueba"]))
-    X, lluvia, qc = preparar(raw)
+    X, lluvia, qc = preparar(raw, fuente)
     ciudad, _ = D.power_diario(raw, "ciudad")
     calidad = {
         "cabecera": qc,
@@ -211,8 +237,9 @@ def ejecutar(
     return {
         "fenomeno": "lluvia_extrema",
         "tarea": "clasificacion",
+        "fuente_lluvia": FUENTES_LLUVIA[fuente],
         "definicion": {
-            "objetivo": f"lluvia diaria de la celda de cabecera ≥ {umbral:.2f} mm (p90 de dic–mar, entrenamiento)",
+            "objetivo": f"lluvia diaria en la cabecera ≥ {umbral:.2f} mm (p90 de dic–mar, entrenamiento; {fuente.upper()})",
             "horizonte_dias": 1,
             "meses_evaluados": MESES_HUMEDOS,
             "umbral_mm": umbral,

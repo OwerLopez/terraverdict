@@ -107,7 +107,11 @@ def ejecutar(
 
     # Conteos mensuales: ¿mejoran los modelos a un Poisson de tasa constante?
     pt = cfg["particion_temporal"]
-    particion = Particion(("1973-01-01", pt["entrenamiento"][1]), tuple(pt["validacion"]), ("2021-01-01", "2026-10-01"))
+    # El catálogo empieza en 1973; la prueba termina en el último mes completo (inicio de mes ≤ fin de la prueba)
+    fin_prueba = min(pd.Timestamp(pt["prueba"][1]), mensual.index[-1]).strftime("%Y-%m-%d")
+    particion = Particion(
+        ("1973-01-01", pt["entrenamiento"][1]), tuple(pt["validacion"]), (pt["prueba"][0], fin_prueba)
+    )
     maxmag = completos.set_index("tiempo").resample("MS")["magnitud"].max().reindex(mensual.index).fillna(mc - 0.5)
     X = pd.DataFrame(
         {"conteo_log": np.log1p(mensual), "conteo_independiente_log": np.log1p(mensual_ind), "magnitud_maxima": maxmag},

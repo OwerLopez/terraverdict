@@ -113,15 +113,28 @@ def report(expediente: Path, out: Path = Path("reports")) -> None:
 
 
 @app.command("ingest-fenomenos")
-def ingest_fenomenos(config: Path = Path("config/fenomenos.yaml"), raw: Path = Path("data/raw")) -> None:
+def ingest_fenomenos(
+    config: Path = Path("config/fenomenos.yaml"),
+    raw: Path = Path("data/raw"),
+    solo_adicionales: bool = typer.Option(
+        False, help="Solo CHIRPS, IGP, IMERG y MODIS; conserva el resto del registro"
+    ),
+    fuentes: str = typer.Option("chirps,igp,imerg,modis", help="Fuentes adicionales (con --solo-adicionales)"),
+) -> None:
     """Descarga trazable de todas las fuentes de los cinco fenómenos (con manifiesto SHA-256)."""
     from .ingest import fenomenos, glc
 
     cfg = cargar_yaml(config)
-    reg = fenomenos.descargar_todo(cfg, raw)
-    if reg.get("glc", {}).get("ok"):
-        reg["celdas_deslizamientos"] = fenomenos.descargar_celdas_deslizamientos(glc.cargar(raw / "glc"), cfg, raw)
-    fenomenos.guardar_registro(reg, raw / "registro_descarga.json")
+    ruta = raw / "registro_descarga.json"
+    if solo_adicionales:
+        reg = json.loads(ruta.read_text()) if ruta.exists() else {}
+        fenomenos.descargar_fuentes_adicionales(cfg, raw, reg, tuple(fuentes.split(",")))
+        fenomenos.registrar_desde_manifiestos(reg, raw)
+    else:
+        reg = fenomenos.descargar_todo(cfg, raw)
+        if reg.get("glc", {}).get("ok"):
+            reg["celdas_deslizamientos"] = fenomenos.descargar_celdas_deslizamientos(glc.cargar(raw / "glc"), cfg, raw)
+    fenomenos.guardar_registro(reg, ruta)
     for nombre, paso in reg.items():
         if isinstance(paso, dict) and "ok" in paso:
             typer.echo(f"{'OK ' if paso['ok'] else 'ERR'} {nombre} {paso.get('error') or ''}")
@@ -130,7 +143,10 @@ def ingest_fenomenos(config: Path = Path("config/fenomenos.yaml"), raw: Path = P
 @app.command("experimentos")
 def experimentos(
     rapido: bool = typer.Option(False, help="Solo GRU y TCN con una semilla (para probar el pipeline)"),
-    solo: list[str] = typer.Option(None, help="volcanes, deslizamientos, sismos, sequia, lluvia_extrema, caos"),
+    solo: list[str] = typer.Option(
+        None,
+        help="volcanes, deslizamientos, sismos, fuentes, sequia, sequia_chirps, lluvia_extrema, lluvia_extrema_chirps, caos",
+    ),
 ) -> None:
     """Ejecuta los experimentos reproducibles y escribe resultados/*.json con su procedencia."""
     from .experimentos.ejecutar import ejecutar

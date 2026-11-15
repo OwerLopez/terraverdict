@@ -131,3 +131,46 @@ def comparar_con_estacion(power: pd.DataFrame, raw: Path, estacion: str) -> dict
             "Los resultados de lluvia extrema describen la escala regional de la celda, no tormentas puntuales."
         ),
     }
+
+
+def _serie(d: dict[str, float]) -> pd.Series:
+    s = pd.Series(d, dtype=float)
+    s.index = pd.to_datetime(s.index)
+    return s.sort_index()
+
+
+def chirps_diario(raw: Path, nombre: str) -> pd.Series:
+    """Lluvia diaria CHIRPS (mm) del promedio areal `nombre` (p. ej. "cabecera_local")."""
+    from ..ingest import chirps
+
+    s = _serie(chirps.cargar(raw / "chirps", nombre))
+    if s.empty:
+        raise FileNotFoundError(f"No hay CHIRPS '{nombre}' en {raw / 'chirps'}: correr tv ingest-fenomenos")
+    return s.asfreq("D")
+
+
+def imerg_diario(raw: Path, lon: float, lat: float) -> pd.Series | None:
+    """Lluvia diaria IMERG Final (mm) en la celda de 0,1° del punto; None si no se descargó."""
+    from ..ingest import earthdata
+
+    man = raw / "imerg" / "manifiesto.json"
+    if not man.exists():
+        return None
+    entrada = json.loads(man.read_text())[0]
+    i, j = earthdata.indice_imerg(lon, lat)
+    s = _serie(earthdata.cargar_imerg(raw / "imerg", i, j, entrada["indices_lon"][0], entrada["indices_lat"][0]))
+    return None if s.empty else s.asfreq("D")
+
+
+def modis_lst(raw: Path, nombre: str) -> pd.DataFrame | None:
+    """LST diurna y nocturna MODIS (°C, compuestos de 8 días); None si no se descargó."""
+    from ..ingest import modis
+
+    if not (raw / "modis" / f"modis_{nombre}_LST_Day_1km.json").exists():
+        return None
+    return pd.DataFrame({b: _serie(modis.cargar(raw / "modis", nombre, b)) for b in modis.BANDAS})
+
+
+def ghcn_diario(raw: Path, estacion: str) -> pd.DataFrame:
+    g = ghcn.cargar(raw / "ghcn", estacion)
+    return pd.DataFrame({k: _serie(v) for k, v in g.items()})

@@ -19,7 +19,7 @@ from typing import Any
 import numpy as np
 
 from ..config import cargar_yaml
-from . import caos_real, deslizamientos, lluvia, sequia, sismos, volcanes
+from . import caos_real, deslizamientos, fuentes, lluvia, sequia, sismos, volcanes
 
 RAIZ = Path(__file__).resolve().parents[3]
 
@@ -60,6 +60,7 @@ def procedencia(raw: Path, config: Path) -> dict[str, Any]:
         "generado_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "commit": commit,
         "config_sha256": hashlib.sha256(config.read_bytes()).hexdigest(),
+        "preregistro_sha256": hashlib.sha256((RAIZ / "preregistro.yaml").read_bytes()).hexdigest(),
         "crudos": manifiestos,
         "versiones": {
             "python": platform.python_version(),
@@ -76,12 +77,14 @@ def ejecutar(
     rapido: bool = False,
     solo: list[str] | None = None,
     config: Path = RAIZ / "config" / "fenomenos.yaml",
+    redes: list[str] | None = None,
+    semillas: tuple[int, ...] | None = None,
 ) -> dict[str, Any]:
     cfg = cargar_yaml(config)
     salida.mkdir(parents=True, exist_ok=True)
     proc = procedencia(raw, config)
-    redes = ["gru", "tcn"] if rapido else None
-    semillas = (0,) if rapido else None
+    if rapido:
+        redes, semillas = redes or ["gru", "tcn"], semillas or (0,)
     tiempos: dict[str, float] = {}
     hechos: dict[str, Any] = {}
 
@@ -105,8 +108,11 @@ def ejecutar(
     correr("volcanes", lambda: volcanes.ejecutar(cfg, raw))
     correr("deslizamientos", lambda: deslizamientos.ejecutar(cfg, raw))
     rs = correr("sismos", lambda: sismos.ejecutar(cfg, raw, **opciones))
+    correr("fuentes", lambda: fuentes.ejecutar(cfg, raw))
     correr("sequia", lambda: sequia.ejecutar(cfg, raw, **opciones))
+    correr("sequia_chirps", lambda: sequia.ejecutar(cfg, raw, fuente="chirps", **opciones))
     correr("lluvia_extrema", lambda: lluvia.ejecutar(cfg, raw, **opciones))
+    correr("lluvia_extrema_chirps", lambda: lluvia.ejecutar(cfg, raw, fuente="chirps", **opciones))
     if rs is None and (not solo or "caos" in solo):
         rs = sismos.ejecutar(cfg, raw, redes=[], semillas=(0,))
     correr("caos", lambda: caos_real.ejecutar(cfg, raw, rs))

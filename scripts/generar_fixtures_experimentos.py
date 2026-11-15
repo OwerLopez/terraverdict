@@ -5,6 +5,9 @@ Los fixtures son un subconjunto exacto de los datos descargados (nunca sintétic
 - POWER mensual, ONI y GVP: completos (son pequeños).
 - USGS: eventos desde 2008, solo las columnas que usa el cargador.
 - GLC: solo filas de Perú; POWER por celda: solo las celdas de esos eventos, 2006–2018.
+- CHIRPS (ClimateSERV) y MODIS LST: 2008-01-01 a 2020-12-31 (CHIRPS de la cabecera desde 1981, para que
+  el SPI tenga ≥ 10 años por mes en el entrenamiento), solo los campos que leen los cargadores.
+- IGP: años 2012–2020, sismos a menos de 400 km de Arequipa.
 Guarda el SHA-256 de cada crudo original en ``origen.json`` para trazar de dónde salió cada recorte.
 
 Uso: python scripts/generar_fixtures_experimentos.py
@@ -16,6 +19,7 @@ import csv
 import hashlib
 import io
 import json
+import math
 import shutil
 from pathlib import Path
 
@@ -48,11 +52,18 @@ def recortar_csv(origen: Path, destino: Path, filtro, columnas: list[str] | None
         w.writerows(filas)
 
 
+def _km(lat: float, lon: float, lat0: float = -16.4, lon0: float = -71.535) -> float:
+    a = math.sin(math.radians(lat - lat0) / 2) ** 2 + math.cos(math.radians(lat0)) * math.cos(
+        math.radians(lat)
+    ) * math.sin(math.radians(lon - lon0) / 2) ** 2
+    return 2 * 6371 * math.asin(math.sqrt(a))
+
+
 def main() -> None:
     if DESTINO.exists():
         shutil.rmtree(DESTINO)
     origen: dict[str, str] = {}
-    for sub in ("power", "noaa", "ghcn", "usgs", "gvp", "glc", "power_celdas"):
+    for sub in ("power", "noaa", "ghcn", "usgs", "gvp", "glc", "power_celdas", "chirps", "igp", "modis"):
         (DESTINO / sub).mkdir(parents=True)
 
     for punto in ("ciudad", "cabecera"):
@@ -81,6 +92,35 @@ def main() -> None:
     for f in RAW.joinpath("power_celdas").glob("power_diario_celda_*.json"):
         recortar_power(f, DESTINO / "power_celdas" / f.name, "20060101", "20181231")
         origen[f"power_celdas/{f.name}"] = sha(f)
+
+    for f in sorted(RAW.joinpath("chirps").glob("chirps_*.json")):
+        datos = [
+            {"date": d["date"], "raw_value": d["raw_value"]}
+            for d in json.loads(f.read_text())["data"]
+            if ("1981" if "cabecera_local" in f.name else "2008") <= d["date"][6:10] <= "2020"
+        ]
+        if datos:
+            (DESTINO / "chirps" / f.name).write_text(json.dumps({"data": datos}, separators=(",", ":")))
+            origen[f"chirps/{f.name}"] = sha(f)
+    for f in sorted(RAW.joinpath("igp").glob("igp_*.json")):
+        if int(f.stem.split("_")[1]) > 2020:
+            continue
+        cerca = [
+            {k: e.get(k) for k in ("codigo", "idlistasismos", "fecha_local", "hora_local", "latitud", "longitud", "magnitud", "profundidad", "tipomagnitud")}
+            for e in json.loads(f.read_text())
+            if _km(float(e["latitud"]), float(e["longitud"])) <= 400
+        ]
+        (DESTINO / "igp" / f.name).write_text(json.dumps(cerca, separators=(",", ":")))
+        origen[f"igp/{f.name}"] = sha(f)
+    for f in sorted(RAW.joinpath("modis").glob("modis_*.json")):
+        j = json.loads(f.read_text())
+        j["subset"] = [
+            {"calendar_date": d["calendar_date"], "data": d["data"]}
+            for d in j["subset"]
+            if "2008-01-01" <= d["calendar_date"] <= "2020-12-31"
+        ]
+        (DESTINO / "modis" / f.name).write_text(json.dumps(j, separators=(",", ":")))
+        origen[f"modis/{f.name}"] = sha(f)
 
     (DESTINO / "origen.json").write_text(json.dumps(origen, indent=1, sort_keys=True) + "\n")
     total = sum(p.stat().st_size for p in DESTINO.rglob("*") if p.is_file())

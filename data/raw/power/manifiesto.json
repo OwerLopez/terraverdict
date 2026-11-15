@@ -1,34 +1,34 @@
 [
  {
   "archivo": "power_diario_ciudad.json",
-  "sha256": "a1e94e5a39427e6d087116654acd91dda29187d99b58a1a1d4b3c762460262b3",
+  "sha256": "dffe19e526277b9a478a56f9f3cd5ca88ec13d9eeaa9c5a84e24e8d9ac13d9b9",
   "bytes": 2469272,
   "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.535&latitude=-16.4&start=19810101&end=20261031&format=JSON",
   "producto": "NASA_POWER_MERRA2",
   "version": null,
-  "descargado_utc": "2026-11-14T20:51:18+00:00",
+  "descargado_utc": "2026-11-15T05:05:42+00:00",
   "parametros": "PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,QV2M,WS2M,PS,ALLSKY_SFC_SW_DWN",
   "punto": "ciudad"
  },
  {
   "archivo": "power_diario_cabecera.json",
-  "sha256": "43b8d51ce7dcd22822a44bb62711fa73c399a0eb05b33b544ca97aab0f128c6a",
-  "bytes": 2467407,
+  "sha256": "5f2d72eb0a4dde1585081aefa694908a4a9a9f8bb4546aaf7fcecf69fcbfaff6",
+  "bytes": 2467406,
   "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.25&latitude=-15.95&start=19810101&end=20261031&format=JSON",
   "producto": "NASA_POWER_MERRA2",
   "version": null,
-  "descargado_utc": "2026-11-14T20:51:20+00:00",
+  "descargado_utc": "2026-11-15T05:05:45+00:00",
   "parametros": "PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,QV2M,WS2M,PS,ALLSKY_SFC_SW_DWN",
   "punto": "cabecera"
  },
  {
   "archivo": "power_-71.25_-15.95_1981_2025.json",
-  "sha256": "c5980a5b862558120de13ad0a60144a002eb8c03a657453a37207eac95af5fdd",
+  "sha256": "7fae526361348299f42bbf814b8cd4a6fbd2e88e23919d119cd9b170f1000c7b",
   "bytes": 51392,
   "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M&community=AG&longitude=-71.25&latitude=-15.95&start=1981&end=2025&format=JSON",
   "producto": "NASA_POWER_MERRA2",
   "version": null,
-  "descargado_utc": "2026-11-14T20:51:21+00:00",
+  "descargado_utc": "2026-11-15T05:05:46+00:00",
   "parametros": "PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,QV2M"
  }
 ]
