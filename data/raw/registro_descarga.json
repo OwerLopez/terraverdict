@@ -542,23 +542,8 @@
  },
  "imerg": {
   "ok": false,
-  "error": "ConnectionError: HTTPSConnectionPool(host='gpm1.gesdisc.eosdis.nasa.gov', port=443): Max retries exceeded with url: /opendap/GPM_L3/GPM_3IMERGDF.07/2000/06/3B-DAY.MS.MRG.3IMERG.20000601-S000000-E235959.V07B.nc4.ascii?precipitation.precipitation%5B0:0%5D%5B1084:1087%5D%5B736:740%5D (Caused by NewConn",
-  "segundos": 23.3,
-  "observaciones_previas": [
-   {
-    "utc": "2026-11-15T05:2x",
-    "url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2020/01/…V07B.nc4",
-    "http": 403,
-    "respuesta": "EULA Acceptance Failure (resolution_url: https://urs.earthdata.nasa.gov/approve_app?client_id=e2WVk8Pw6weeLUKZYOxvTQ)"
-   },
-   {
-    "utc": "2026-11-15T05:4x",
-    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07/2020/01/…V07B.nc4.ascii?precipitation…",
-    "http": 401,
-    "respuesta": "Unauthorized (token válido para LP DAAC y NSIDC, que responden 200)"
-   }
-  ],
-  "accion_requerida": "El dueño de la cuenta Earthdata debe aceptar la licencia de GES DISC una vez; luego: tv ingest-fenomenos --solo-adicionales --fuentes imerg"
+  "error": "PermissionError: GES DISC respondió 401: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>401 Unauthorized</title>\n</head><body>\n<h1>Unauthorized</h1>\n<p>This server could not verify that you\nare authorized to access th. Si es 'EULA Acceptance Failure', el dueño de la cuenta de",
+  "segundos": 389.7
  },
  "chirps_ciudad_local": {
   "ok": true,

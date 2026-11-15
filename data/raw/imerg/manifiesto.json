@@ -1,0 +1,21 @@
+[
+ {
+  "archivo": "imerg_diaria_1998.txt",
+  "sha256": "edf074a962a197f184412ebed810d323c9b573e331361cf18413f24851c81582",
+  "bytes": 112378,
+  "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+  "producto": "GPM_3IMERGDF_V07",
+  "version": "V07B",
+  "descargado_utc": "2026-11-15T07:12:36+00:00",
+  "indices_lon": [
+   1084,
+   1087
+  ],
+  "indices_lat": [
+   736,
+   740
+  ],
+  "dias": 365,
+  "dias_faltantes": []
+ }
+]
