@@ -2254,6 +2254,170 @@
         }
       }
     },
+    "/api/v1/fenomenos": {
+      "get": {
+        "tags": [
+          "Fenómenos naturales"
+        ],
+        "summary": "Catálogo de fenómenos naturales",
+        "description": "Variables con su justificación física, fuente y limitaciones; partición temporal y reglas de abstención.",
+        "operationId": "listar_fenomenos_api_v1_fenomenos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogoFenomenos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/fenomenos/{fenomeno_id}": {
+      "get": {
+        "tags": [
+          "Fenómenos naturales"
+        ],
+        "summary": "Detalle de un fenómeno",
+        "operationId": "obtener_fenomeno_api_v1_fenomenos__fenomeno_id__get",
+        "parameters": [
+          {
+            "name": "fenomeno_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Fenomeno Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FenomenoSalida"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "El recurso no existe.",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemaHTTP"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/capas/sismos": {
+      "get": {
+        "tags": [
+          "Fenómenos naturales"
+        ],
+        "summary": "Sismos como GeoJSON (del expediente de sismicidad vigente)",
+        "operationId": "capa_sismos_api_v1_capas_sismos_get",
+        "parameters": [
+          {
+            "name": "magnitud_min",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 10,
+              "minimum": 0,
+              "description": "Magnitud mínima.",
+              "default": 5.0,
+              "title": "Magnitud Min"
+            },
+            "description": "Magnitud mínima."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapaGeoJSON"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/capas/volcanes": {
+      "get": {
+        "tags": [
+          "Fenómenos naturales"
+        ],
+        "summary": "Volcanes con su recurrencia histórica (del expediente vigente)",
+        "operationId": "capa_volcanes_api_v1_capas_volcanes_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapaGeoJSON"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/capas/deslizamientos": {
+      "get": {
+        "tags": [
+          "Fenómenos naturales"
+        ],
+        "summary": "Deslizamientos inventariados (del expediente de inventario vigente)",
+        "operationId": "capa_deslizamientos_api_v1_capas_deslizamientos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapaGeoJSON"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/relevancia/matriz": {
       "get": {
         "tags": [
@@ -3156,6 +3320,76 @@
   },
   "components": {
     "schemas": {
+      "Ablacion": {
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "maxLength": 80,
+            "title": "Nombre"
+          },
+          "variables": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Variables"
+          },
+          "mejor_validacion": {
+            "type": "number",
+            "title": "Mejor Validacion"
+          },
+          "mejor_prueba": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mejor Prueba"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "nombre",
+          "variables",
+          "mejor_validacion"
+        ],
+        "title": "Ablacion"
+      },
+      "Abstencion": {
+        "properties": {
+          "publicar": {
+            "type": "boolean",
+            "title": "Publicar"
+          },
+          "motivos": {
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "type": "array",
+            "title": "Motivos"
+          },
+          "advertencias": {
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "type": "array",
+            "title": "Advertencias"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "publicar"
+        ],
+        "title": "Abstencion",
+        "description": "Decisión explícita de publicar o abstenerse, con sus motivos (nunca una abstención muda)."
+      },
       "Alcance": {
         "type": "string",
         "enum": [
@@ -3253,6 +3487,154 @@
           "parametros_aceptables"
         ],
         "title": "CalidadGemelo"
+      },
+      "CapaGeoJSON": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type",
+            "default": "FeatureCollection"
+          },
+          "features": {
+            "items": {
+              "$ref": "#/components/schemas/Feature"
+            },
+            "type": "array",
+            "title": "Features"
+          },
+          "expediente_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expediente Id",
+            "description": "Expediente vigente del que sale la capa; null si no hay."
+          },
+          "generado_utc": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generado Utc"
+          },
+          "fuente": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fuente"
+          },
+          "nota": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nota"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "features"
+        ],
+        "title": "CapaGeoJSON",
+        "description": "FeatureCollection con metadatos de su origen (el expediente del que sale cada punto)."
+      },
+      "CatalogoFenomenos": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "verificado": {
+            "type": "string",
+            "title": "Verificado"
+          },
+          "particion_temporal": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Particion Temporal"
+          },
+          "abstencion": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Abstencion"
+          },
+          "fenomenos": {
+            "items": {
+              "$ref": "#/components/schemas/FenomenoSalida"
+            },
+            "type": "array",
+            "title": "Fenomenos"
+          },
+          "acceso_fuentes_nacionales": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Acceso Fuentes Nacionales"
+          },
+          "via_integracion_nacional": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Via Integracion Nacional"
+          },
+          "aviso": {
+            "type": "string",
+            "title": "Aviso"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "verificado",
+          "particion_temporal",
+          "abstencion",
+          "fenomenos",
+          "acceso_fuentes_nacionales",
+          "aviso"
+        ],
+        "title": "CatalogoFenomenos"
       },
       "CategoriaEvento": {
         "type": "string",
@@ -3708,6 +4090,42 @@
         ],
         "title": "CuantilesPronostico"
       },
+      "DistribucionSustitutos": {
+        "properties": {
+          "estadistico": {
+            "type": "string",
+            "title": "Estadistico"
+          },
+          "original": {
+            "type": "number",
+            "title": "Original"
+          },
+          "sustitutos": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "title": "Sustitutos"
+          },
+          "p": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "P"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "estadistico",
+          "original",
+          "sustitutos",
+          "p"
+        ],
+        "title": "DistribucionSustitutos",
+        "description": "Estadístico de la serie frente a sus sustitutos IAAFT (para el histograma de la vista Caos)."
+      },
       "DominioSalida": {
         "properties": {
           "id": {
@@ -4069,6 +4487,102 @@
         ],
         "title": "EventoDocumentadoSalida"
       },
+      "EventoInventario": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "fecha": {
+            "type": "string",
+            "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+            "title": "Fecha"
+          },
+          "lat": {
+            "type": "number",
+            "maximum": 90.0,
+            "minimum": -90.0,
+            "title": "Lat"
+          },
+          "lon": {
+            "type": "number",
+            "maximum": 180.0,
+            "minimum": -180.0,
+            "title": "Lon"
+          },
+          "lugar": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lugar"
+          },
+          "categoria": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Categoria"
+          },
+          "detonante": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detonante"
+          },
+          "lluvia_mm": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Lluvia Mm",
+            "description": "Acumulados (1d, 3d…)."
+          },
+          "percentiles": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Percentiles"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "fecha",
+          "lat",
+          "lon"
+        ],
+        "title": "EventoInventario"
+      },
       "EventoProcesoCrear": {
         "properties": {
           "nivel": {
@@ -4147,6 +4661,51 @@
           "datos"
         ],
         "title": "EventoProcesoSalida"
+      },
+      "EventoSismico": {
+        "properties": {
+          "fecha": {
+            "type": "string",
+            "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+            "title": "Fecha"
+          },
+          "lat": {
+            "type": "number",
+            "maximum": 90.0,
+            "minimum": -90.0,
+            "title": "Lat"
+          },
+          "lon": {
+            "type": "number",
+            "maximum": 180.0,
+            "minimum": -180.0,
+            "title": "Lon"
+          },
+          "magnitud": {
+            "type": "number",
+            "title": "Magnitud"
+          },
+          "profundidad_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profundidad Km"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "fecha",
+          "lat",
+          "lon",
+          "magnitud"
+        ],
+        "title": "EventoSismico"
       },
       "ExpedienteCrear": {
         "properties": {
@@ -4230,6 +4789,21 @@
               },
               {
                 "$ref": "#/components/schemas/ResultadoPriorizacion"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoCaos"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoComparacionModelos"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoRecurrencia"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoSismicidad"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoInventario"
               }
             ],
             "title": "Resultado",
@@ -4238,10 +4812,15 @@
               "mapping": {
                 "alerta": "#/components/schemas/ResultadoAlerta",
                 "atribucion": "#/components/schemas/ResultadoAtribucion",
+                "caos": "#/components/schemas/ResultadoCaos",
                 "colmatacion": "#/components/schemas/ResultadoColmatacion",
+                "comparacion_modelos": "#/components/schemas/ResultadoComparacionModelos",
+                "inventario": "#/components/schemas/ResultadoInventario",
                 "priorizacion": "#/components/schemas/ResultadoPriorizacion",
                 "pronostico": "#/components/schemas/ResultadoPronostico",
+                "recurrencia": "#/components/schemas/ResultadoRecurrencia",
                 "relevancia": "#/components/schemas/ResultadoRelevancia",
+                "sismicidad": "#/components/schemas/ResultadoSismicidad",
                 "tendencia": "#/components/schemas/ResultadoTendencia"
               }
             }
@@ -4486,6 +5065,21 @@
               },
               {
                 "$ref": "#/components/schemas/ResultadoPriorizacion"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoCaos"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoComparacionModelos"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoRecurrencia"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoSismicidad"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoInventario"
               }
             ],
             "title": "Resultado",
@@ -4494,10 +5088,15 @@
               "mapping": {
                 "alerta": "#/components/schemas/ResultadoAlerta",
                 "atribucion": "#/components/schemas/ResultadoAtribucion",
+                "caos": "#/components/schemas/ResultadoCaos",
                 "colmatacion": "#/components/schemas/ResultadoColmatacion",
+                "comparacion_modelos": "#/components/schemas/ResultadoComparacionModelos",
+                "inventario": "#/components/schemas/ResultadoInventario",
                 "priorizacion": "#/components/schemas/ResultadoPriorizacion",
                 "pronostico": "#/components/schemas/ResultadoPronostico",
+                "recurrencia": "#/components/schemas/ResultadoRecurrencia",
                 "relevancia": "#/components/schemas/ResultadoRelevancia",
+                "sismicidad": "#/components/schemas/ResultadoSismicidad",
                 "tendencia": "#/components/schemas/ResultadoTendencia"
               }
             }
@@ -4639,6 +5238,66 @@
           "features"
         ],
         "title": "FeatureCollection"
+      },
+      "FenomenoSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "procesos": {
+            "type": "string",
+            "title": "Procesos"
+          },
+          "objetivo": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Objetivo"
+          },
+          "variables": {
+            "items": {
+              "$ref": "#/components/schemas/VariableFenomeno"
+            },
+            "type": "array",
+            "title": "Variables"
+          },
+          "metricas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Metricas"
+          },
+          "dominio_bbox": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dominio Bbox"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "procesos",
+          "objetivo",
+          "variables",
+          "metricas"
+        ],
+        "title": "FenomenoSalida"
       },
       "Frecuencia": {
         "type": "string",
@@ -5004,6 +5663,31 @@
         ],
         "title": "Identidad"
       },
+      "ImportanciaVariable": {
+        "properties": {
+          "variable": {
+            "type": "string",
+            "title": "Variable"
+          },
+          "importancia": {
+            "type": "number",
+            "title": "Importancia"
+          },
+          "desviacion": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Desviacion"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "variable",
+          "importancia",
+          "desviacion"
+        ],
+        "title": "ImportanciaVariable"
+      },
       "InformeVerificacionSalida": {
         "properties": {
           "id": {
@@ -5138,6 +5822,96 @@
           "mensaje"
         ],
         "title": "Mensaje"
+      },
+      "ModeloEvaluado": {
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]{2,40}$",
+            "title": "Nombre"
+          },
+          "familia": {
+            "type": "string",
+            "enum": [
+              "referencia",
+              "clasico",
+              "red_neuronal",
+              "ensamble"
+            ],
+            "title": "Familia"
+          },
+          "puntaje_validacion": {
+            "type": "number",
+            "title": "Puntaje Validacion"
+          },
+          "puntaje_prueba": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Puntaje Prueba"
+          },
+          "intervalo_prueba": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Intervalo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "p_diebold_mariano": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P Diebold Mariano",
+            "description": "Frente a la climatología, en prueba."
+          },
+          "dispersion_semillas": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dispersion Semillas"
+          },
+          "referencia": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 300
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Referencia",
+            "description": "Artículo de la arquitectura."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "nombre",
+          "familia",
+          "puntaje_validacion"
+        ],
+        "title": "ModeloEvaluado"
       },
       "Monto": {
         "properties": {
@@ -6057,6 +6831,35 @@
         ],
         "title": "Prueba"
       },
+      "PuntoConfiabilidad": {
+        "properties": {
+          "pronosticada": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Pronosticada"
+          },
+          "observada": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Observada"
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "N"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "pronosticada",
+          "observada",
+          "n"
+        ],
+        "title": "PuntoConfiabilidad"
+      },
       "ReclamoProceso": {
         "properties": {
           "trabajador": {
@@ -6321,6 +7124,43 @@
         ],
         "title": "ResultadoAtribucion"
       },
+      "ResultadoCaos": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "const": "caos",
+            "title": "Tipo"
+          },
+          "series": {
+            "items": {
+              "$ref": "#/components/schemas/SerieDinamica"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Series"
+          },
+          "alfa": {
+            "type": "number",
+            "exclusiveMaximum": 1.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Alfa",
+            "default": 0.05
+          },
+          "metodo": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Metodo"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tipo",
+          "series",
+          "metodo"
+        ],
+        "title": "ResultadoCaos"
+      },
       "ResultadoCarga": {
         "properties": {
           "serie_id": {
@@ -6431,6 +7271,192 @@
         ],
         "title": "ResultadoColmatacion"
       },
+      "ResultadoComparacionModelos": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "const": "comparacion_modelos",
+            "title": "Tipo"
+          },
+          "fenomeno": {
+            "type": "string",
+            "title": "Fenomeno"
+          },
+          "tarea": {
+            "type": "string",
+            "enum": [
+              "clasificacion",
+              "regresion",
+              "conteo"
+            ],
+            "title": "Tarea"
+          },
+          "objetivo": {
+            "type": "string",
+            "maxLength": 300,
+            "title": "Objetivo"
+          },
+          "horizonte": {
+            "type": "string",
+            "maxLength": 40,
+            "title": "Horizonte",
+            "examples": [
+              "1 día",
+              "3 meses"
+            ]
+          },
+          "metrica_principal": {
+            "type": "string",
+            "title": "Metrica Principal"
+          },
+          "periodo_prueba": {
+            "$ref": "#/components/schemas/Periodo"
+          },
+          "modelos": {
+            "items": {
+              "$ref": "#/components/schemas/ModeloEvaluado"
+            },
+            "type": "array",
+            "minItems": 2,
+            "title": "Modelos"
+          },
+          "mejor_validacion": {
+            "type": "string",
+            "title": "Mejor Validacion"
+          },
+          "variables_seleccionadas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Variables Seleccionadas"
+          },
+          "ventana": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ventana"
+          },
+          "ablaciones": {
+            "items": {
+              "$ref": "#/components/schemas/Ablacion"
+            },
+            "type": "array",
+            "title": "Ablaciones"
+          },
+          "confiabilidad": {
+            "items": {
+              "$ref": "#/components/schemas/PuntoConfiabilidad"
+            },
+            "type": "array",
+            "title": "Confiabilidad"
+          },
+          "ece": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ece"
+          },
+          "cobertura_conformal_90": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cobertura Conformal 90"
+          },
+          "importancia": {
+            "items": {
+              "$ref": "#/components/schemas/ImportanciaVariable"
+            },
+            "type": "array",
+            "title": "Importancia"
+          },
+          "abstencion": {
+            "$ref": "#/components/schemas/Abstencion"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tipo",
+          "fenomeno",
+          "tarea",
+          "objetivo",
+          "horizonte",
+          "metrica_principal",
+          "periodo_prueba",
+          "modelos",
+          "mejor_validacion",
+          "abstencion"
+        ],
+        "title": "ResultadoComparacionModelos",
+        "description": "Zoológico de modelos: el elegido es SIEMPRE el mejor en validación; la prueba solo informa."
+      },
+      "ResultadoInventario": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "const": "inventario",
+            "title": "Tipo"
+          },
+          "fenomeno": {
+            "type": "string",
+            "title": "Fenomeno"
+          },
+          "fuente": {
+            "type": "string",
+            "title": "Fuente"
+          },
+          "eventos": {
+            "items": {
+              "$ref": "#/components/schemas/EventoInventario"
+            },
+            "type": "array",
+            "title": "Eventos"
+          },
+          "eventos_minimos_umbral": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Eventos Minimos Umbral"
+          },
+          "umbral_estimado": {
+            "type": "boolean",
+            "title": "Umbral Estimado"
+          },
+          "abstencion": {
+            "$ref": "#/components/schemas/Abstencion"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tipo",
+          "fenomeno",
+          "fuente",
+          "eventos",
+          "eventos_minimos_umbral",
+          "umbral_estimado",
+          "abstencion"
+        ],
+        "title": "ResultadoInventario"
+      },
       "ResultadoPriorizacion": {
         "properties": {
           "tipo": {
@@ -6507,6 +7533,40 @@
           "publicable": {
             "type": "boolean",
             "title": "Publicable"
+          },
+          "intervalo_conformal": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Intervalo"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Intervalo de predicción conformal (cobertura medida en prueba)."
+          },
+          "cobertura_conformal_prueba": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cobertura Conformal Prueba"
+          },
+          "abstencion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Abstencion"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -6523,6 +7583,56 @@
           "publicable"
         ],
         "title": "ResultadoPronostico"
+      },
+      "ResultadoRecurrencia": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "const": "recurrencia",
+            "title": "Tipo"
+          },
+          "fuente": {
+            "type": "string",
+            "title": "Fuente"
+          },
+          "inicio_registro": {
+            "type": "integer",
+            "title": "Inicio Registro"
+          },
+          "metodo": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Metodo"
+          },
+          "volcanes": {
+            "items": {
+              "$ref": "#/components/schemas/VolcanRecurrencia"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Volcanes"
+          },
+          "es_pronostico": {
+            "type": "boolean",
+            "const": false,
+            "title": "Es Pronostico",
+            "default": false
+          },
+          "abstencion": {
+            "$ref": "#/components/schemas/Abstencion"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tipo",
+          "fuente",
+          "inicio_registro",
+          "metodo",
+          "volcanes",
+          "abstencion"
+        ],
+        "title": "ResultadoRecurrencia"
       },
       "ResultadoRelevancia": {
         "properties": {
@@ -6572,6 +7682,101 @@
           "publicable"
         ],
         "title": "ResultadoRelevancia"
+      },
+      "ResultadoSismicidad": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "const": "sismicidad",
+            "title": "Tipo"
+          },
+          "fuente": {
+            "type": "string",
+            "title": "Fuente"
+          },
+          "periodo": {
+            "$ref": "#/components/schemas/Periodo"
+          },
+          "radio_km": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Radio Km"
+          },
+          "eventos": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Eventos"
+          },
+          "mc": {
+            "type": "number",
+            "title": "Mc"
+          },
+          "valor_b": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Valor B"
+          },
+          "intervalo_b": {
+            "$ref": "#/components/schemas/Intervalo"
+          },
+          "independientes": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Independientes"
+          },
+          "cv_intereventos": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cv Intereventos"
+          },
+          "tasa_anual_mc": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Tasa Anual Mc"
+          },
+          "conteos_anuales": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Conteos Anuales"
+          },
+          "mapa": {
+            "items": {
+              "$ref": "#/components/schemas/EventoSismico"
+            },
+            "type": "array",
+            "maxItems": 5000,
+            "title": "Mapa"
+          },
+          "es_pronostico": {
+            "type": "boolean",
+            "const": false,
+            "title": "Es Pronostico",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tipo",
+          "fuente",
+          "periodo",
+          "radio_km",
+          "eventos",
+          "mc",
+          "valor_b",
+          "intervalo_b",
+          "independientes",
+          "tasa_anual_mc"
+        ],
+        "title": "ResultadoSismicidad"
       },
       "ResultadoTendencia": {
         "properties": {
@@ -6910,6 +8115,165 @@
         "title": "SerieCrear",
         "description": "Registro de una serie publicada por el pipeline (etapa E5/E7)."
       },
+      "SerieDinamica": {
+        "properties": {
+          "serie_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]{2,80}$",
+            "title": "Serie Id"
+          },
+          "fuente": {
+            "type": "string",
+            "title": "Fuente"
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "N"
+          },
+          "unidad_tiempo": {
+            "type": "string",
+            "title": "Unidad Tiempo"
+          },
+          "veredicto": {
+            "type": "string",
+            "enum": [
+              "lineal_estocastica",
+              "no_lineal_sin_caos_demostrado",
+              "compatible_con_caos_baja_dimension",
+              "regular",
+              "insuficiente"
+            ],
+            "title": "Veredicto"
+          },
+          "condiciones": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "type": "object",
+            "title": "Condiciones"
+          },
+          "tau": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tau"
+          },
+          "m": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "M"
+          },
+          "d2": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "D2",
+            "description": "D2 saturado; null si no satura."
+          },
+          "lyapunov": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lyapunov"
+          },
+          "k_01": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "K 01"
+          },
+          "determinismo_rqa": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Determinismo Rqa"
+          },
+          "espacio_fases": {
+            "items": {
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array",
+              "maxItems": 2,
+              "minItems": 2
+            },
+            "type": "array",
+            "maxItems": 3000,
+            "title": "Espacio Fases",
+            "description": "Pares (x(t), x(t+τ)) para el gráfico."
+          },
+          "sustitutos": {
+            "items": {
+              "$ref": "#/components/schemas/DistribucionSustitutos"
+            },
+            "type": "array",
+            "title": "Sustitutos"
+          },
+          "recurrencia_miniatura": {
+            "items": {
+              "items": {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Recurrencia Miniatura",
+            "description": "Densidad de recurrencias por bloque (gráfico de recurrencia)."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "serie_id",
+          "fuente",
+          "n",
+          "unidad_tiempo",
+          "veredicto"
+        ],
+        "title": "SerieDinamica"
+      },
       "SerieSalida": {
         "properties": {
           "id": {
@@ -7109,7 +8473,12 @@
           "pronostico",
           "alerta",
           "colmatacion",
-          "priorizacion"
+          "priorizacion",
+          "caos",
+          "comparacion_modelos",
+          "recurrencia",
+          "sismicidad",
+          "inventario"
         ],
         "title": "TipoExpediente"
       },
@@ -7471,6 +8840,92 @@
         ],
         "title": "ValorConUnidad"
       },
+      "VariableFenomeno": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "unidad": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidad"
+          },
+          "rol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rol"
+          },
+          "relevancia": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Relevancia",
+            "description": "Prior físico: alta, media o baja."
+          },
+          "fuente": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fuente"
+          },
+          "justificacion": {
+            "type": "string",
+            "title": "Justificacion"
+          },
+          "limitaciones": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limitaciones"
+          },
+          "detalles": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Detalles",
+            "description": "Resolución, cobertura, parámetro…"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "justificacion"
+        ],
+        "title": "VariableFenomeno"
+      },
       "VariableRelevancia": {
         "properties": {
           "variable_id": {
@@ -7626,6 +9081,106 @@
           "estados_fuentes"
         ],
         "title": "VerificacionResumen"
+      },
+      "VolcanRecurrencia": {
+        "properties": {
+          "numero_gvp": {
+            "type": "integer",
+            "title": "Numero Gvp"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "lat": {
+            "type": "number",
+            "maximum": 90.0,
+            "minimum": -90.0,
+            "title": "Lat"
+          },
+          "lon": {
+            "type": "number",
+            "maximum": 180.0,
+            "minimum": -180.0,
+            "title": "Lon"
+          },
+          "distancia_km": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Distancia Km"
+          },
+          "erupciones": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Erupciones",
+            "description": "Inicios de erupción confirmados desde el inicio del registro."
+          },
+          "probabilidad_anual": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Probabilidad Anual"
+          },
+          "intervalo": {
+            "$ref": "#/components/schemas/Intervalo"
+          },
+          "intervalo_medio_anios": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intervalo Medio Anios"
+          },
+          "iev_maximo": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 8.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iev Maximo"
+          },
+          "ultima_erupcion": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ultima Erupcion"
+          },
+          "inicios": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Inicios",
+            "description": "Año de inicio de cada erupción contada (historia eruptiva)."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "numero_gvp",
+          "nombre",
+          "lat",
+          "lon",
+          "distancia_km",
+          "erupciones",
+          "probabilidad_anual",
+          "intervalo"
+        ],
+        "title": "VolcanRecurrencia"
       }
     },
     "securitySchemes": {
@@ -7671,6 +9226,10 @@
     {
       "name": "Expedientes",
       "description": "Resultados científicos inmutables con procedencia."
+    },
+    {
+      "name": "Fenómenos naturales",
+      "description": "Catálogo científico de fenómenos y capas GeoJSON del mapa."
     },
     {
       "name": "Ciencia de datos",

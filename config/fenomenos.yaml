@@ -47,7 +47,7 @@ fenomenos:
       (quebradas secas que cruzan la zona urbana) y los huaicos que elevan la turbidez del Chili.
     objetivo:
       variable: lluvia_diaria
-      tarea: "Probabilidad de que la lluvia del día siguiente supere el percentil 95 de los días con lluvia de dic–mar"
+      tarea: "Probabilidad de que la lluvia del día siguiente supere el percentil 90 de los días de dic–mar del entrenamiento (POWER y CHIRPS)"
       horizonte_dias: 1
     variables:
       - {id: lluvia_diaria, nombre: "Precipitación diaria", unidad: "mm/d", rol: objetivo_y_predictor, relevancia: alta,

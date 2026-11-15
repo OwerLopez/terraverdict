@@ -25,6 +25,45 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Integración ciencia → backend (pendiente 2.1)
+**Autor:** MaxsForocca · **Aportes:** Ower Frank (backend y contratos originales)
+
+**Qué se hizo**
+- **Nuevos tipos de expediente** (módulo M6), cada uno con sus reglas de publicación validadas en el esquema:
+
+  | Tipo | Regla que el backend hace cumplir |
+  |---|---|
+  | `comparacion_modelos` | Exige una referencia. El elegido debe ser el **mejor en validación** (la prueba no elige). Solo se publica si supera a la referencia en validación |
+  | `caos` | "Compatible con caos" exige las cinco condiciones, D2 < 5, λ > 0 y K > 0,8 |
+  | `recurrencia` | P anual dentro de su IC; un año de inicio por erupción; `es_pronostico: false` |
+  | `sismicidad` | b dentro de su IC; `es_pronostico: false` |
+  | `inventario` | Sin umbral con menos eventos que el mínimo |
+  | `pronostico` (revisado) | Admite intervalo conformal (debe contener la mediana) y abstención (impide publicar) |
+  | Todos | Toda abstención lleva motivo |
+
+- **Adaptador `src/terraverdict/publicar/` (`tv publicar`):**
+  - convierte `resultados/*.json` (13 expedientes) y las tendencias de `expedientes/*.json` al contrato;
+  - publica con una clave `ingesta`;
+  - es idempotente por hash de contenido (ADR-020).
+- En las tendencias, "frágil por pruebas **pendientes**" del paquete se publica como `preliminar`, porque el backend reserva `fragil` para pruebas **fallidas**.
+- **Endpoints:**
+  - `GET /api/v1/fenomenos[/{id}]`: catálogo de `config/fenomenos.yaml`;
+  - `GET /api/v1/capas/{sismos,volcanes,deslizamientos}`: GeoJSON tomado del expediente vigente, sin datos propios.
+- **Catálogo:** dominio `sur_peru_fenomenos` para los catálogos regionales; nombres de las fuentes nuevas.
+- **Contrato:** OpenAPI exportado (`docs/api/openapi.json`) y tipos del frontend regenerados (`npm run api:tipos`).
+- **Corrección de texto en el catálogo:** el objetivo de la lluvia decía "percentil 95 de los días con lluvia"; el experimento usa el **p90 de todos los días de dic–mar del entrenamiento**. Es solo descriptivo; los resultados guardan el hash de la configuración con la que se calcularon.
+
+**Evidencia**
+- Backend: 65 pruebas pasan, incluidas 14 nuevas de los tipos y endpoints de M6. La prueba de deriva del OpenAPI pasa.
+- `tests/integracion/test_publicacion.py`, de punta a punta sobre el recorte real:
+  - orquestador, informe, conversión y publicación en una instancia real del backend;
+  - todo aceptado; la segunda publicación devuelve los mismos IDs; las capas salen de los expedientes.
+- **Con los resultados reales:**
+  - 13 expedientes publicados (201) y, al repetir, 13 × 200 con los mismos IDs;
+  - capas: 625 sismos M ≥ 5, 13 volcanes y 28 deslizamientos.
+
+---
+
 ## 2026-11-15 · Informe de experimentos generado desde los resultados (pendiente 1.3)
 **Autor:** MaxsForocca · **Aportes:** Ower Frank
 

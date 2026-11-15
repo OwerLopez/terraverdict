@@ -520,6 +520,94 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/fenomenos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Catálogo de fenómenos naturales
+         * @description Variables con su justificación física, fuente y limitaciones; partición temporal y reglas de abstención.
+         */
+        get: operations["listar_fenomenos_api_v1_fenomenos_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fenomenos/{fenomeno_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Detalle de un fenómeno */
+        get: operations["obtener_fenomeno_api_v1_fenomenos__fenomeno_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/capas/sismos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Sismos como GeoJSON (del expediente de sismicidad vigente) */
+        get: operations["capa_sismos_api_v1_capas_sismos_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/capas/volcanes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Volcanes con su recurrencia histórica (del expediente vigente) */
+        get: operations["capa_volcanes_api_v1_capas_volcanes_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/capas/deslizamientos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Deslizamientos inventariados (del expediente de inventario vigente) */
+        get: operations["capa_deslizamientos_api_v1_capas_deslizamientos_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/relevancia/matriz": {
         parameters: {
             query?: never;
@@ -682,6 +770,29 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** Ablacion */
+        Ablacion: {
+            /** Nombre */
+            nombre: string;
+            /** Variables */
+            variables: string[];
+            /** Mejor Validacion */
+            mejor_validacion: number;
+            /** Mejor Prueba */
+            mejor_prueba?: number | null;
+        };
+        /**
+         * Abstencion
+         * @description Decisión explícita de publicar o abstenerse, con sus motivos (nunca una abstención muda).
+         */
+        Abstencion: {
+            /** Publicar */
+            publicar: boolean;
+            /** Motivos */
+            motivos?: string[];
+            /** Advertencias */
+            advertencias?: string[];
+        };
         /**
          * Alcance
          * @description Permisos de las cuentas de servicio (claves API) del equipo de ciencia de datos.
@@ -722,6 +833,57 @@ export interface components {
             umbral_kge: number;
             /** Parametros Aceptables */
             parametros_aceptables: number;
+        };
+        /**
+         * CapaGeoJSON
+         * @description FeatureCollection con metadatos de su origen (el expediente del que sale cada punto).
+         */
+        CapaGeoJSON: {
+            /**
+             * Type
+             * @default FeatureCollection
+             */
+            type: string;
+            /** Features */
+            features: components["schemas"]["Feature"][];
+            /**
+             * Expediente Id
+             * @description Expediente vigente del que sale la capa; null si no hay.
+             */
+            expediente_id?: string | null;
+            /** Generado Utc */
+            generado_utc?: string | null;
+            /** Fuente */
+            fuente?: string | null;
+            /** Nota */
+            nota?: string | null;
+        };
+        /** CatalogoFenomenos */
+        CatalogoFenomenos: {
+            /** Version */
+            version: number;
+            /** Verificado */
+            verificado: string;
+            /** Particion Temporal */
+            particion_temporal: {
+                [key: string]: string[];
+            };
+            /** Abstencion */
+            abstencion: {
+                [key: string]: number;
+            };
+            /** Fenomenos */
+            fenomenos: components["schemas"]["FenomenoSalida"][];
+            /** Acceso Fuentes Nacionales */
+            acceso_fuentes_nacionales: {
+                [key: string]: {
+                    [key: string]: string;
+                };
+            };
+            /** Via Integracion Nacional */
+            via_integracion_nacional?: string | null;
+            /** Aviso */
+            aviso: string;
         };
         /**
          * CategoriaEvento
@@ -897,6 +1059,20 @@ export interface components {
             /** Unidad */
             unidad: string;
         };
+        /**
+         * DistribucionSustitutos
+         * @description Estadístico de la serie frente a sus sustitutos IAAFT (para el histograma de la vista Caos).
+         */
+        DistribucionSustitutos: {
+            /** Estadistico */
+            estadistico: string;
+            /** Original */
+            original: number;
+            /** Sustitutos */
+            sustitutos: number[];
+            /** P */
+            p: number;
+        };
         /** DominioSalida */
         DominioSalida: {
             /** Id */
@@ -1050,6 +1226,34 @@ export interface components {
             /** Fuentes */
             fuentes: components["schemas"]["ReferenciaDocumental"][];
         };
+        /** EventoInventario */
+        EventoInventario: {
+            /** Id */
+            id: string;
+            /** Fecha */
+            fecha: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Lugar */
+            lugar?: string | null;
+            /** Categoria */
+            categoria?: string | null;
+            /** Detonante */
+            detonante?: string | null;
+            /**
+             * Lluvia Mm
+             * @description Acumulados (1d, 3d…).
+             */
+            lluvia_mm?: {
+                [key: string]: number | null;
+            };
+            /** Percentiles */
+            percentiles?: {
+                [key: string]: number | null;
+            };
+        };
         /** EventoProcesoCrear */
         EventoProcesoCrear: {
             /** @default info */
@@ -1080,6 +1284,19 @@ export interface components {
                 [key: string]: unknown;
             } | null;
         };
+        /** EventoSismico */
+        EventoSismico: {
+            /** Fecha */
+            fecha: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Magnitud */
+            magnitud: number;
+            /** Profundidad Km */
+            profundidad_km?: number | null;
+        };
         /** ExpedienteCrear */
         ExpedienteCrear: {
             /**
@@ -1101,7 +1318,7 @@ export interface components {
             /** Resumen */
             resumen: string;
             /** Resultado */
-            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"];
+            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"];
             procedencia: components["schemas"]["Procedencia"];
             /** Reemplaza A */
             reemplaza_a?: string | null;
@@ -1171,7 +1388,7 @@ export interface components {
              */
             creado_en: string;
             /** Resultado */
-            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"];
+            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"];
             procedencia: components["schemas"]["Procedencia"];
             /** Hash Contenido */
             hash_contenido: string;
@@ -1212,6 +1429,25 @@ export interface components {
             type: "FeatureCollection";
             /** Features */
             features: components["schemas"]["Feature"][];
+        };
+        /** FenomenoSalida */
+        FenomenoSalida: {
+            /** Id */
+            id: string;
+            /** Nombre */
+            nombre: string;
+            /** Procesos */
+            procesos: string;
+            /** Objetivo */
+            objetivo: {
+                [key: string]: unknown;
+            };
+            /** Variables */
+            variables: components["schemas"]["VariableFenomeno"][];
+            /** Metricas */
+            metricas: string[];
+            /** Dominio Bbox */
+            dominio_bbox?: number[] | null;
         };
         /**
          * Frecuencia
@@ -1323,6 +1559,15 @@ export interface components {
              */
             alcances: components["schemas"]["Alcance"][];
         };
+        /** ImportanciaVariable */
+        ImportanciaVariable: {
+            /** Variable */
+            variable: string;
+            /** Importancia */
+            importancia: number;
+            /** Desviacion */
+            desviacion: number;
+        };
         /** InformeVerificacionSalida */
         InformeVerificacionSalida: {
             /** Id */
@@ -1377,6 +1622,33 @@ export interface components {
         Mensaje: {
             /** Mensaje */
             mensaje: string;
+        };
+        /** ModeloEvaluado */
+        ModeloEvaluado: {
+            /** Nombre */
+            nombre: string;
+            /**
+             * Familia
+             * @enum {string}
+             */
+            familia: "referencia" | "clasico" | "red_neuronal" | "ensamble";
+            /** Puntaje Validacion */
+            puntaje_validacion: number;
+            /** Puntaje Prueba */
+            puntaje_prueba?: number | null;
+            intervalo_prueba?: components["schemas"]["Intervalo"] | null;
+            /**
+             * P Diebold Mariano
+             * @description Frente a la climatología, en prueba.
+             */
+            p_diebold_mariano?: number | null;
+            /** Dispersion Semillas */
+            dispersion_semillas?: number | null;
+            /**
+             * Referencia
+             * @description Artículo de la arquitectura.
+             */
+            referencia?: string | null;
         };
         /** Monto */
         Monto: {
@@ -1673,6 +1945,15 @@ export interface components {
             /** Nota */
             nota?: string | null;
         };
+        /** PuntoConfiabilidad */
+        PuntoConfiabilidad: {
+            /** Pronosticada */
+            pronosticada: number;
+            /** Observada */
+            observada: number;
+            /** N */
+            n: number;
+        };
         /** ReclamoProceso */
         ReclamoProceso: {
             /** Trabajador */
@@ -1767,6 +2048,23 @@ export interface components {
             calidad_gemelo: components["schemas"]["CalidadGemelo"];
             veredicto: components["schemas"]["Veredicto"];
         };
+        /** ResultadoCaos */
+        ResultadoCaos: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            tipo: "caos";
+            /** Series */
+            series: components["schemas"]["SerieDinamica"][];
+            /**
+             * Alfa
+             * @default 0.05
+             */
+            alfa: number;
+            /** Metodo */
+            metodo: string;
+        };
         /** ResultadoCarga */
         ResultadoCarga: {
             /** Serie Id */
@@ -1801,6 +2099,73 @@ export interface components {
             coherencia_swot?: {
                 [key: string]: number | null;
             };
+        };
+        /**
+         * ResultadoComparacionModelos
+         * @description Zoológico de modelos: el elegido es SIEMPRE el mejor en validación; la prueba solo informa.
+         */
+        ResultadoComparacionModelos: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            tipo: "comparacion_modelos";
+            /** Fenomeno */
+            fenomeno: string;
+            /**
+             * Tarea
+             * @enum {string}
+             */
+            tarea: "clasificacion" | "regresion" | "conteo";
+            /** Objetivo */
+            objetivo: string;
+            /**
+             * Horizonte
+             * @example 1 día
+             * @example 3 meses
+             */
+            horizonte: string;
+            /** Metrica Principal */
+            metrica_principal: string;
+            periodo_prueba: components["schemas"]["Periodo"];
+            /** Modelos */
+            modelos: components["schemas"]["ModeloEvaluado"][];
+            /** Mejor Validacion */
+            mejor_validacion: string;
+            /** Variables Seleccionadas */
+            variables_seleccionadas?: string[];
+            /** Ventana */
+            ventana?: number | null;
+            /** Ablaciones */
+            ablaciones?: components["schemas"]["Ablacion"][];
+            /** Confiabilidad */
+            confiabilidad?: components["schemas"]["PuntoConfiabilidad"][];
+            /** Ece */
+            ece?: number | null;
+            /** Cobertura Conformal 90 */
+            cobertura_conformal_90?: number | null;
+            /** Importancia */
+            importancia?: components["schemas"]["ImportanciaVariable"][];
+            abstencion: components["schemas"]["Abstencion"];
+        };
+        /** ResultadoInventario */
+        ResultadoInventario: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            tipo: "inventario";
+            /** Fenomeno */
+            fenomeno: string;
+            /** Fuente */
+            fuente: string;
+            /** Eventos */
+            eventos: components["schemas"]["EventoInventario"][];
+            /** Eventos Minimos Umbral */
+            eventos_minimos_umbral: number;
+            /** Umbral Estimado */
+            umbral_estimado: boolean;
+            abstencion: components["schemas"]["Abstencion"];
         };
         /** ResultadoPriorizacion */
         ResultadoPriorizacion: {
@@ -1842,6 +2207,34 @@ export interface components {
             habilidad: components["schemas"]["HabilidadPronostico"];
             /** Publicable */
             publicable: boolean;
+            /** @description Intervalo de predicción conformal (cobertura medida en prueba). */
+            intervalo_conformal?: components["schemas"]["Intervalo"] | null;
+            /** Cobertura Conformal Prueba */
+            cobertura_conformal_prueba?: number | null;
+            abstencion?: components["schemas"]["Abstencion"] | null;
+        };
+        /** ResultadoRecurrencia */
+        ResultadoRecurrencia: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            tipo: "recurrencia";
+            /** Fuente */
+            fuente: string;
+            /** Inicio Registro */
+            inicio_registro: number;
+            /** Metodo */
+            metodo: string;
+            /** Volcanes */
+            volcanes: components["schemas"]["VolcanRecurrencia"][];
+            /**
+             * Es Pronostico
+             * @default false
+             * @constant
+             */
+            es_pronostico: false;
+            abstencion: components["schemas"]["Abstencion"];
         };
         /** ResultadoRelevancia */
         ResultadoRelevancia: {
@@ -1864,6 +2257,44 @@ export interface components {
             variables: components["schemas"]["VariableRelevancia"][];
             /** Publicable */
             publicable: boolean;
+        };
+        /** ResultadoSismicidad */
+        ResultadoSismicidad: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            tipo: "sismicidad";
+            /** Fuente */
+            fuente: string;
+            periodo: components["schemas"]["Periodo"];
+            /** Radio Km */
+            radio_km: number;
+            /** Eventos */
+            eventos: number;
+            /** Mc */
+            mc: number;
+            /** Valor B */
+            valor_b: number;
+            intervalo_b: components["schemas"]["Intervalo"];
+            /** Independientes */
+            independientes: number;
+            /** Cv Intereventos */
+            cv_intereventos?: number | null;
+            /** Tasa Anual Mc */
+            tasa_anual_mc: number;
+            /** Conteos Anuales */
+            conteos_anuales?: {
+                [key: string]: number;
+            };
+            /** Mapa */
+            mapa?: components["schemas"]["EventoSismico"][];
+            /**
+             * Es Pronostico
+             * @default false
+             * @constant
+             */
+            es_pronostico: false;
         };
         /** ResultadoTendencia */
         ResultadoTendencia: {
@@ -1985,6 +2416,56 @@ export interface components {
             descripcion: string;
             procedencia: components["schemas"]["Procedencia"];
         };
+        /** SerieDinamica */
+        SerieDinamica: {
+            /** Serie Id */
+            serie_id: string;
+            /** Fuente */
+            fuente: string;
+            /** N */
+            n: number;
+            /** Unidad Tiempo */
+            unidad_tiempo: string;
+            /**
+             * Veredicto
+             * @enum {string}
+             */
+            veredicto: "lineal_estocastica" | "no_lineal_sin_caos_demostrado" | "compatible_con_caos_baja_dimension" | "regular" | "insuficiente";
+            /** Condiciones */
+            condiciones?: {
+                [key: string]: boolean;
+            };
+            /** Tau */
+            tau?: number | null;
+            /** M */
+            m?: number | null;
+            /**
+             * D2
+             * @description D2 saturado; null si no satura.
+             */
+            d2?: number | null;
+            /** Lyapunov */
+            lyapunov?: number | null;
+            /** K 01 */
+            k_01?: number | null;
+            /** Determinismo Rqa */
+            determinismo_rqa?: number | null;
+            /**
+             * Espacio Fases
+             * @description Pares (x(t), x(t+τ)) para el gráfico.
+             */
+            espacio_fases?: [
+                number,
+                number
+            ][];
+            /** Sustitutos */
+            sustitutos?: components["schemas"]["DistribucionSustitutos"][];
+            /**
+             * Recurrencia Miniatura
+             * @description Densidad de recurrencias por bloque (gráfico de recurrencia).
+             */
+            recurrencia_miniatura?: number[][];
+        };
         /** SerieSalida */
         SerieSalida: {
             /** Id */
@@ -2059,7 +2540,7 @@ export interface components {
          * TipoExpediente
          * @enum {string}
          */
-        TipoExpediente: "tendencia" | "relevancia" | "atribucion" | "pronostico" | "alerta" | "colmatacion" | "priorizacion";
+        TipoExpediente: "tendencia" | "relevancia" | "atribucion" | "pronostico" | "alerta" | "colmatacion" | "priorizacion" | "caos" | "comparacion_modelos" | "recurrencia" | "sismicidad" | "inventario";
         /**
          * TipoProceso
          * @enum {string}
@@ -2187,6 +2668,35 @@ export interface components {
             /** Unidad */
             unidad: string;
         };
+        /** VariableFenomeno */
+        VariableFenomeno: {
+            /** Id */
+            id: string;
+            /** Nombre */
+            nombre: string;
+            /** Unidad */
+            unidad?: string | null;
+            /** Rol */
+            rol?: string | null;
+            /**
+             * Relevancia
+             * @description Prior físico: alta, media o baja.
+             */
+            relevancia?: string | null;
+            /** Fuente */
+            fuente?: string | null;
+            /** Justificacion */
+            justificacion: string;
+            /** Limitaciones */
+            limitaciones?: string | null;
+            /**
+             * Detalles
+             * @description Resolución, cobertura, parámetro…
+             */
+            detalles?: {
+                [key: string]: unknown;
+            };
+        };
         /** VariableRelevancia */
         VariableRelevancia: {
             /** Variable Id */
@@ -2242,6 +2752,38 @@ export interface components {
             estados_fuentes: {
                 [key: string]: number;
             };
+        };
+        /** VolcanRecurrencia */
+        VolcanRecurrencia: {
+            /** Numero Gvp */
+            numero_gvp: number;
+            /** Nombre */
+            nombre: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Distancia Km */
+            distancia_km: number;
+            /**
+             * Erupciones
+             * @description Inicios de erupción confirmados desde el inicio del registro.
+             */
+            erupciones: number;
+            /** Probabilidad Anual */
+            probabilidad_anual: number;
+            intervalo: components["schemas"]["Intervalo"];
+            /** Intervalo Medio Anios */
+            intervalo_medio_anios?: number | null;
+            /** Iev Maximo */
+            iev_maximo?: number | null;
+            /** Ultima Erupcion */
+            ultima_erupcion?: number | null;
+            /**
+             * Inicios
+             * @description Año de inicio de cada erupción contada (historia eruptiva).
+             */
+            inicios?: number[];
         };
     };
     responses: never;
@@ -3761,6 +4303,139 @@ export interface operations {
                 content: {
                     "application/problem+json": unknown;
                     "application/json": components["schemas"]["ProblemaHTTP"];
+                };
+            };
+        };
+    };
+    listar_fenomenos_api_v1_fenomenos_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CatalogoFenomenos"];
+                };
+            };
+        };
+    };
+    obtener_fenomeno_api_v1_fenomenos__fenomeno_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fenomeno_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FenomenoSalida"];
+                };
+            };
+            /** @description El recurso no existe. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": unknown;
+                    "application/json": components["schemas"]["ProblemaHTTP"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    capa_sismos_api_v1_capas_sismos_get: {
+        parameters: {
+            query?: {
+                /** @description Magnitud mínima. */
+                magnitud_min?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CapaGeoJSON"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    capa_volcanes_api_v1_capas_volcanes_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CapaGeoJSON"];
+                };
+            };
+        };
+    };
+    capa_deslizamientos_api_v1_capas_deslizamientos_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CapaGeoJSON"];
                 };
             };
         };

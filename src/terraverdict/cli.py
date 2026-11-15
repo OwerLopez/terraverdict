@@ -163,5 +163,33 @@ def informe(resultados: Path = Path("resultados"), salida: Path = Path("docs/exp
     typer.echo(f"Informe escrito en {salida}")
 
 
+@app.command("publicar")
+def publicar(
+    api: str = typer.Option("http://localhost:8000", help="URL base del backend"),
+    resultados: Path = Path("resultados"),
+    expedientes: Path = Path("expedientes"),
+    pre: Path = Path("preregistro.yaml"),
+    config: Path = Path("config/fenomenos.yaml"),
+    simular: bool = typer.Option(False, help="Solo convierte y escribe los expedientes, sin enviarlos"),
+) -> None:
+    """Publica resultados/*.json y expedientes/*.json en el backend (idempotente por contenido)."""
+    from .publicar import cliente, convertir
+
+    minimo = cargar_yaml(config)["abstencion"]["eventos_minimos_umbral"]
+    lista = convertir.de_resultados(resultados, minimo) + convertir.de_expedientes(
+        expedientes, cargar_preregistro(pre).alpha
+    )
+    if simular:
+        typer.echo(json.dumps(lista, ensure_ascii=False, indent=1))
+        return
+    informe = cliente.publicar(lista, api, cliente.clave_ingesta())
+    for i in informe:
+        typer.echo(f"{i['http']} {i['estado']:<10} {i['id'] or '-'}  {i['titulo']}")
+        if i["errores"]:
+            typer.echo(f"    {i['errores']}")
+    if any(i["estado"] == "error" for i in informe):
+        raise typer.Exit(1)
+
+
 if __name__ == "__main__":
     app()

@@ -14,7 +14,7 @@ from typing import Annotated, Any, Literal
 from pydantic import Field, StringConstraints, model_validator
 
 from app.domain.vocabulario import EstadoExpediente, EstadoPrueba, TipoExpediente, Veredicto
-from app.schemas.comun import Esquema, Metricas, NumeroFinito
+from app.schemas.comun import Esquema, Metricas, NumeroFinito, NumeroFinitoOpcional
 from app.schemas.procedencia import Procedencia
 
 FechaParcial = Annotated[str, StringConstraints(pattern=r"^\d{4}(-\d{2}(-\d{2})?)?$")]
@@ -227,11 +227,22 @@ class ResultadoPronostico(Esquema):
     prob_bajo_umbral: Probabilidad
     habilidad: HabilidadPronostico
     publicable: bool
+    intervalo_conformal: Intervalo | None = Field(
+        None, description="Intervalo de predicción conformal (cobertura medida en prueba)."
+    )
+    cobertura_conformal_prueba: Probabilidad | None = None
+    abstencion: Abstencion | None = None
 
     @model_validator(mode="after")
     def _regla_habilidad(self) -> ResultadoPronostico:
         if self.publicable and self.habilidad.intervalo.lo <= 0:
             raise ValueError("Un pronóstico solo es publicable si el CRPSS es > 0 con su intervalo (ADR-6).")
+        if self.publicable and self.abstencion is not None and not self.abstencion.publicar:
+            raise ValueError("Un pronóstico con abstención no puede ser publicable.")
+        if self.intervalo_conformal is not None and not (
+            self.intervalo_conformal.lo <= self.cuantiles.p50 <= self.intervalo_conformal.hi
+        ):
+            raise ValueError("El intervalo conformal debe contener la mediana pronosticada.")
         return self
 
 
@@ -291,6 +302,265 @@ class ResultadoPriorizacion(Esquema):
         return self
 
 
+class Abstencion(Esquema):
+    """Decisión explícita de publicar o abstenerse, con sus motivos (nunca una abstención muda)."""
+
+    publicar: bool
+    motivos: list[Annotated[str, StringConstraints(max_length=500)]] = Field(default_factory=list)
+    advertencias: list[Annotated[str, StringConstraints(max_length=500)]] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def _motivada(self) -> Abstencion:
+        if not self.publicar and not self.motivos:
+            raise ValueError("Una abstención exige al menos un motivo.")
+        if self.publicar and self.motivos:
+            raise ValueError("Si hay motivos de abstención, 'publicar' debe ser false.")
+        return self
+
+
+VeredictoDinamica = Literal[
+    "lineal_estocastica",
+    "no_lineal_sin_caos_demostrado",
+    "compatible_con_caos_baja_dimension",
+    "regular",
+    "insuficiente",
+]
+CONDICIONES_CAOS = (
+    "no_linealidad_significativa",
+    "determinismo_prediccion_analogos",
+    "d2_satura_bajo",
+    "lyapunov_positivo",
+    "prueba_01_caotica",
+)
+
+
+class DistribucionSustitutos(Esquema):
+    """Estadístico de la serie frente a sus sustitutos IAAFT (para el histograma de la vista Caos)."""
+
+    estadistico: str
+    original: NumeroFinito
+    sustitutos: list[NumeroFinito] = Field(max_length=500)
+    p: Probabilidad
+
+
+class SerieDinamica(Esquema):
+    serie_id: Annotated[str, StringConstraints(pattern=r"^[a-z0-9_]{2,80}$")]
+    fuente: str
+    n: int = Field(ge=0)
+    unidad_tiempo: str
+    veredicto: VeredictoDinamica
+    condiciones: dict[str, bool] = Field(default_factory=dict)
+    tau: int | None = Field(None, ge=1)
+    m: int | None = Field(None, ge=1)
+    d2: NumeroFinitoOpcional = Field(None, description="D2 saturado; null si no satura.")
+    lyapunov: NumeroFinitoOpcional = None
+    k_01: NumeroFinitoOpcional = None
+    determinismo_rqa: NumeroFinitoOpcional = None
+    espacio_fases: list[tuple[NumeroFinito, NumeroFinito]] = Field(
+        default_factory=list, max_length=3000, description="Pares (x(t), x(t+τ)) para el gráfico."
+    )
+    sustitutos: list[DistribucionSustitutos] = Field(default_factory=list)
+    recurrencia_miniatura: list[list[Probabilidad]] = Field(
+        default_factory=list,
+        max_length=200,
+        description="Densidad de recurrencias por bloque (gráfico de recurrencia).",
+    )
+
+    @model_validator(mode="after")
+    def _regla_caos(self) -> SerieDinamica:
+        if self.veredicto == "compatible_con_caos_baja_dimension":
+            faltan = [c for c in CONDICIONES_CAOS if not self.condiciones.get(c)]
+            if faltan:
+                raise ValueError(
+                    f"'compatible_con_caos_baja_dimension' exige todas las condiciones; faltan: {faltan}"
+                )
+            if self.d2 is None or self.d2 >= 5 or (self.lyapunov or 0) <= 0 or (self.k_01 or 0) <= 0.8:
+                raise ValueError("Caos de baja dimensión exige D2 < 5, λ > 0 y K > 0,8.")
+        return self
+
+
+class ResultadoCaos(Esquema):
+    tipo: Literal["caos"]
+    series: list[SerieDinamica] = Field(min_length=1)
+    alfa: float = Field(0.05, gt=0, lt=1)
+    metodo: str = Field(max_length=1000)
+
+    @model_validator(mode="after")
+    def _series_unicas(self) -> ResultadoCaos:
+        ids = [s.serie_id for s in self.series]
+        if len(ids) != len(set(ids)):
+            raise ValueError("Series repetidas en el diagnóstico.")
+        return self
+
+
+FamiliaModelo = Literal["referencia", "clasico", "red_neuronal", "ensamble"]
+
+
+class ModeloEvaluado(Esquema):
+    nombre: Annotated[str, StringConstraints(pattern=r"^[a-z0-9_]{2,40}$")]
+    familia: FamiliaModelo
+    puntaje_validacion: NumeroFinito
+    puntaje_prueba: NumeroFinitoOpcional = None
+    intervalo_prueba: Intervalo | None = None
+    p_diebold_mariano: Probabilidad | None = Field(None, description="Frente a la climatología, en prueba.")
+    dispersion_semillas: NumeroFinitoOpcional = None
+    referencia: str | None = Field(None, max_length=300, description="Artículo de la arquitectura.")
+
+
+class Ablacion(Esquema):
+    nombre: str = Field(max_length=80)
+    variables: list[str]
+    mejor_validacion: NumeroFinito
+    mejor_prueba: NumeroFinitoOpcional = None
+
+
+class PuntoConfiabilidad(Esquema):
+    pronosticada: Probabilidad
+    observada: Probabilidad
+    n: int = Field(ge=1)
+
+
+class ImportanciaVariable(Esquema):
+    variable: str
+    importancia: NumeroFinito
+    desviacion: NumeroFinito = Field(ge=0)
+
+
+class ResultadoComparacionModelos(Esquema):
+    """Zoológico de modelos: el elegido es SIEMPRE el mejor en validación; la prueba solo informa."""
+
+    tipo: Literal["comparacion_modelos"]
+    fenomeno: str
+    tarea: Literal["clasificacion", "regresion", "conteo"]
+    objetivo: str = Field(max_length=300)
+    horizonte: str = Field(max_length=40, examples=["1 día", "3 meses"])
+    metrica_principal: str
+    periodo_prueba: Periodo
+    modelos: list[ModeloEvaluado] = Field(min_length=2)
+    mejor_validacion: str
+    variables_seleccionadas: list[str] = Field(default_factory=list)
+    ventana: int | None = Field(None, ge=1)
+    ablaciones: list[Ablacion] = Field(default_factory=list)
+    confiabilidad: list[PuntoConfiabilidad] = Field(default_factory=list)
+    ece: NumeroFinitoOpcional = None
+    cobertura_conformal_90: Probabilidad | None = None
+    importancia: list[ImportanciaVariable] = Field(default_factory=list)
+    abstencion: Abstencion
+
+    @model_validator(mode="after")
+    def _reglas(self) -> ResultadoComparacionModelos:
+        nombres = [m.nombre for m in self.modelos]
+        if len(nombres) != len(set(nombres)):
+            raise ValueError("Modelos repetidos.")
+        if not any(m.familia == "referencia" for m in self.modelos):
+            raise ValueError("Toda comparación exige al menos una referencia (climatología o persistencia).")
+        candidatos = {m.nombre: m for m in self.modelos if m.familia != "referencia"}
+        if self.mejor_validacion not in candidatos:
+            raise ValueError("'mejor_validacion' debe ser un modelo evaluado que no sea una referencia.")
+        maximo = max(m.puntaje_validacion for m in candidatos.values())
+        if candidatos[self.mejor_validacion].puntaje_validacion < maximo - 1e-9:
+            raise ValueError("El modelo elegido debe ser el mejor en validación: la prueba no elige modelos.")
+        if self.abstencion.publicar and candidatos[self.mejor_validacion].puntaje_validacion <= 0:
+            raise ValueError("Solo se publica si el modelo elegido supera a la referencia en validación.")
+        return self
+
+
+class VolcanRecurrencia(Esquema):
+    numero_gvp: int
+    nombre: str
+    lat: float = Field(ge=-90, le=90)
+    lon: float = Field(ge=-180, le=180)
+    distancia_km: NumeroFinito = Field(ge=0)
+    erupciones: int = Field(ge=0, description="Inicios de erupción confirmados desde el inicio del registro.")
+    probabilidad_anual: Probabilidad
+    intervalo: Intervalo
+    intervalo_medio_anios: NumeroFinitoOpcional = None
+    iev_maximo: int | None = Field(None, ge=0, le=8)
+    ultima_erupcion: int | None = None
+    inicios: list[int] = Field(
+        default_factory=list, description="Año de inicio de cada erupción contada (historia eruptiva)."
+    )
+
+    @model_validator(mode="after")
+    def _dentro_del_intervalo(self) -> VolcanRecurrencia:
+        if not self.intervalo.lo - 1e-12 <= self.probabilidad_anual <= self.intervalo.hi + 1e-12:
+            raise ValueError("La probabilidad anual debe estar dentro de su intervalo.")
+        if self.inicios and len(self.inicios) != self.erupciones:
+            raise ValueError("'inicios' debe tener un año por cada erupción contada.")
+        return self
+
+
+class ResultadoRecurrencia(Esquema):
+    tipo: Literal["recurrencia"]
+    fuente: str
+    inicio_registro: int
+    metodo: str = Field(max_length=500)
+    volcanes: list[VolcanRecurrencia] = Field(min_length=1)
+    es_pronostico: Literal[False] = False
+    abstencion: Abstencion
+
+
+class EventoSismico(Esquema):
+    fecha: FechaParcial
+    lat: float = Field(ge=-90, le=90)
+    lon: float = Field(ge=-180, le=180)
+    magnitud: NumeroFinito
+    profundidad_km: NumeroFinitoOpcional = None
+
+
+class ResultadoSismicidad(Esquema):
+    tipo: Literal["sismicidad"]
+    fuente: str
+    periodo: Periodo
+    radio_km: NumeroFinito = Field(gt=0)
+    eventos: int = Field(ge=0)
+    mc: NumeroFinito
+    valor_b: NumeroFinito = Field(gt=0)
+    intervalo_b: Intervalo
+    independientes: int = Field(ge=0)
+    cv_intereventos: NumeroFinitoOpcional = None
+    tasa_anual_mc: NumeroFinito = Field(ge=0)
+    conteos_anuales: dict[str, int] = Field(default_factory=dict)
+    mapa: list[EventoSismico] = Field(default_factory=list, max_length=5000)
+    es_pronostico: Literal[False] = False
+
+    @model_validator(mode="after")
+    def _b_en_intervalo(self) -> ResultadoSismicidad:
+        if not self.intervalo_b.lo <= self.valor_b <= self.intervalo_b.hi:
+            raise ValueError("El valor b debe estar dentro de su intervalo.")
+        return self
+
+
+class EventoInventario(Esquema):
+    id: str
+    fecha: FechaParcial
+    lat: float = Field(ge=-90, le=90)
+    lon: float = Field(ge=-180, le=180)
+    lugar: str | None = None
+    categoria: str | None = None
+    detonante: str | None = None
+    lluvia_mm: dict[str, NumeroFinitoOpcional] = Field(
+        default_factory=dict, description="Acumulados (1d, 3d…)."
+    )
+    percentiles: dict[str, NumeroFinitoOpcional] = Field(default_factory=dict)
+
+
+class ResultadoInventario(Esquema):
+    tipo: Literal["inventario"]
+    fenomeno: str
+    fuente: str
+    eventos: list[EventoInventario]
+    eventos_minimos_umbral: int = Field(ge=1)
+    umbral_estimado: bool
+    abstencion: Abstencion
+
+    @model_validator(mode="after")
+    def _umbral_con_datos(self) -> ResultadoInventario:
+        if self.umbral_estimado and len(self.eventos) < self.eventos_minimos_umbral:
+            raise ValueError("No se estima un umbral con menos eventos que el mínimo preregistrado.")
+        return self
+
+
 Resultado = Annotated[
     ResultadoTendencia
     | ResultadoRelevancia
@@ -298,7 +568,12 @@ Resultado = Annotated[
     | ResultadoPronostico
     | ResultadoAlerta
     | ResultadoColmatacion
-    | ResultadoPriorizacion,
+    | ResultadoPriorizacion
+    | ResultadoCaos
+    | ResultadoComparacionModelos
+    | ResultadoRecurrencia
+    | ResultadoSismicidad
+    | ResultadoInventario,
     Field(discriminator="tipo"),
 ]
 

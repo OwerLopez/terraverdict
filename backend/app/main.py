@@ -34,6 +34,10 @@ ETIQUETAS = [
     {"name": "Dominios y unidades", "description": "Zonas de estudio y unidades de análisis en GeoJSON."},
     {"name": "Series", "description": "Series temporales publicadas por el pipeline."},
     {"name": "Expedientes", "description": "Resultados científicos inmutables con procedencia."},
+    {
+        "name": "Fenómenos naturales",
+        "description": "Catálogo científico de fenómenos y capas GeoJSON del mapa.",
+    },
     {"name": "Ciencia de datos", "description": "Matriz de Relevancia y ejecuciones del pipeline."},
     {"name": "Procesos", "description": "Cola de procesos científicos y su bitácora."},
     {"name": "Asistente", "description": "Asistente conversacional y verificador numérico."},

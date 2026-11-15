@@ -17,6 +17,11 @@ dominios:
     filtro: "altitud >= 3500 m (NASADEM) para altiplano y bofedales"
     nota: "La cuenca del Chili queda SIEMPRE fuera del entrenamiento: es el conjunto de prueba final"
 
+  sur_peru_fenomenos:
+    descripcion: "Sur del Perú para fenómenos regionales: sismos a 350 km de Arequipa, volcanes y deslizamientos"
+    bbox: [-76.0, -19.5, -68.0, -12.0]
+    nota: "Dominio de los expedientes M6 cuyo alcance excede la cuenca (catálogos regionales)"
+
 particiones:
   temporal:
     entrenamiento: ["1998-01", "2015-12"]

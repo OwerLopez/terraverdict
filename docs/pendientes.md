@@ -58,7 +58,7 @@ Y una prueba de humo de cada experimento con datos reducidos guardados en `tests
 
 ## Prioridad 2 · Integración con el producto
 
-### 2.1 Backend
+### 2.1 Backend · ✅ hecho (15-11-2026; ver bitácora)
 1. Nuevos tipos de resultado en el contrato de expedientes:
    - `caos` (diagnóstico de dinámica);
    - `comparacion_modelos` (zoológico, ablaciones, calibración);

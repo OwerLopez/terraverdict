@@ -33,6 +33,11 @@ class TipoExpediente(StrEnum):
     alerta = "alerta"
     colmatacion = "colmatacion"
     priorizacion = "priorizacion"
+    caos = "caos"  # diagnóstico de dinámica (caos, no linealidad o ruido)
+    comparacion_modelos = "comparacion_modelos"  # zoológico de modelos con referencias, IC y abstención
+    recurrencia = "recurrencia"  # frecuencia histórica de erupciones (no es pronóstico)
+    sismicidad = "sismicidad"  # completitud, valor b y tasas (no es pronóstico)
+    inventario = "inventario"  # eventos georreferenciados (p. ej., deslizamientos) y su lluvia antecedente
 
 
 ABREVIATURA_EXPEDIENTE: dict[TipoExpediente, str] = {
@@ -43,6 +48,11 @@ ABREVIATURA_EXPEDIENTE: dict[TipoExpediente, str] = {
     TipoExpediente.alerta: "ALE",
     TipoExpediente.colmatacion: "COL",
     TipoExpediente.priorizacion: "PRI",
+    TipoExpediente.caos: "CAO",
+    TipoExpediente.comparacion_modelos: "CMP",
+    TipoExpediente.recurrencia: "REC",
+    TipoExpediente.sismicidad: "SIS",
+    TipoExpediente.inventario: "INV",
 }
 
 MODULO_POR_TIPO: dict[TipoExpediente, str] = {
@@ -53,7 +63,13 @@ MODULO_POR_TIPO: dict[TipoExpediente, str] = {
     TipoExpediente.alerta: "M4",
     TipoExpediente.colmatacion: "M5",
     TipoExpediente.priorizacion: "M5",
+    TipoExpediente.caos: "M6",
+    TipoExpediente.comparacion_modelos: "M6",
+    TipoExpediente.recurrencia: "M6",
+    TipoExpediente.sismicidad: "M6",
+    TipoExpediente.inventario: "M6",
 }
+"""M6: fenómenos naturales (lluvia extrema, sequía, sismos, volcanes, deslizamientos y dinámica)."""
 
 
 class EstadoExpediente(StrEnum):

@@ -76,6 +76,13 @@ NOMBRES_FUENTES = {
     "swot_lagos": "SWOT · lagos y embalses",
     "icesat2_atl13": "ICESat-2 ATL13 · aguas interiores",
     "nisar_gcov": "NISAR · GCOV",
+    "power_diaria": "NASA POWER · diaria por punto",
+    "chirps_v2_diaria": "CHIRPS v2.0 · diaria (ClimateSERV)",
+    "usgs_comcat": "USGS ComCat · catálogo sísmico",
+    "igp_sismos_reportados": "IGP · sismos reportados",
+    "gvp_volcanes": "Smithsonian GVP · volcanes y erupciones",
+    "nasa_glc": "NASA · Global Landslide Catalog",
+    "modis_lst_ornl": "MODIS MOD11A2 · LST por ORNL DAAC",
     "oni": "NOAA CPC · índice ONI",
     "roni": "NOAA CPC · índice RONI",
     "nino34_knmi": "KNMI · Niño3.4 (ERSST v5)",
@@ -223,6 +230,7 @@ def importar_dominios(sesion: Session, raiz: Path) -> int:
     descripciones = {
         "chili_analisis": ("Cuenca regulada del Chili", "analisis"),
         "andes_sur_entrenamiento": ("Andes del sur (entrenamiento regional)", "entrenamiento"),
+        "sur_peru_fenomenos": ("Sur del Perú (fenómenos regionales)", "analisis"),
     }
     for clave, d in dominios.items():
         nombre, tipo = descripciones.get(clave, (clave, "analisis"))
