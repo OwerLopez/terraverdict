@@ -608,6 +608,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/nacional": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Panorama nacional: 25 departamentos con el mismo motor
+         * @description Tendencias con Sello de Confianza, estado de sequía (SPI) y sismicidad nacional, del expediente `panorama_nacional` vigente. Sin expediente publicado, `resultado` es null.
+         */
+        get: operations["panorama_nacional_api_v1_nacional_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/relevancia/matriz": {
         parameters: {
             query?: never;
@@ -909,6 +929,21 @@ export interface components {
             /** Publicable */
             publicable: boolean;
         };
+        /** CeldaSismica */
+        CeldaSismica: {
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** N */
+            n: number;
+            /** Tasa Anual */
+            tasa_anual: number;
+            /** M Max */
+            m_max: number;
+            /** Profundidad Media Km */
+            profundidad_media_km?: number | null;
+        };
         /** Cifra */
         Cifra: {
             /** Valor */
@@ -1058,6 +1093,51 @@ export interface components {
             p90: number;
             /** Unidad */
             unidad: string;
+        };
+        /** DepartamentoNacional */
+        DepartamentoNacional: {
+            /** Id */
+            id: string;
+            /** Nombre */
+            nombre: string;
+            /** Capital */
+            capital: string;
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** Elevacion Celda M */
+            elevacion_celda_m?: number | null;
+            /**
+             * Comparte Celda Con
+             * @description Departamento con la misma celda POWER (mismo clima).
+             */
+            comparte_celda_con?: string | null;
+            /** Temperatura Media C */
+            temperatura_media_c: number;
+            /** Lluvia Anual Media Mm */
+            lluvia_anual_media_mm: number;
+            tendencia_temperatura: components["schemas"]["TendenciaRegional"];
+            tendencia_lluvia: components["schemas"]["TendenciaRegional"];
+            /** Spi Mes */
+            spi_mes: string;
+            /** Spi3 */
+            spi3: number;
+            /** Spi12 */
+            spi12: number;
+            /**
+             * Spi Confiable
+             * @description False en climas hiperáridos, donde el SPI no es interpretable.
+             */
+            spi_confiable: boolean;
+            /** Deslizamientos Glc */
+            deslizamientos_glc: number;
+            /** Serie Anios */
+            serie_anios?: number[];
+            /** Serie Temperatura C */
+            serie_temperatura_c?: number[];
+            /** Serie Lluvia Mm */
+            serie_lluvia_mm?: (number | null)[];
         };
         /**
          * DistribucionSustitutos
@@ -1318,7 +1398,7 @@ export interface components {
             /** Resumen */
             resumen: string;
             /** Resultado */
-            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"];
+            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"] | components["schemas"]["ResultadoPanoramaNacional"];
             procedencia: components["schemas"]["Procedencia"];
             /** Reemplaza A */
             reemplaza_a?: string | null;
@@ -1388,7 +1468,7 @@ export interface components {
              */
             creado_en: string;
             /** Resultado */
-            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"];
+            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"] | components["schemas"]["ResultadoPanoramaNacional"];
             procedencia: components["schemas"]["Procedencia"];
             /** Hash Contenido */
             hash_contenido: string;
@@ -1760,6 +1840,28 @@ export interface components {
             limite: number;
             /** Desplazamiento */
             desplazamiento: number;
+        };
+        /**
+         * PanoramaNacional
+         * @description Escala nacional vigente: el resultado completo del expediente `panorama_nacional` más reciente.
+         */
+        PanoramaNacional: {
+            /**
+             * Expediente Id
+             * @description Expediente del que sale el panorama; null si no hay.
+             */
+            expediente_id?: string | null;
+            /** Generado Utc */
+            generado_utc?: string | null;
+            /**
+             * Resultado
+             * @description Contenido validado con ResultadoPanoramaNacional al publicarse.
+             */
+            resultado?: {
+                [key: string]: unknown;
+            } | null;
+            /** Aviso */
+            aviso: string;
         };
         /**
          * Paso
@@ -2167,6 +2269,30 @@ export interface components {
             umbral_estimado: boolean;
             abstencion: components["schemas"]["Abstencion"];
         };
+        /**
+         * ResultadoPanoramaNacional
+         * @description Escala nacional: el mismo motor (Sello, SPI, sismicidad) aplicado a los 25 departamentos.
+         */
+        ResultadoPanoramaNacional: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            tipo: "panorama_nacional";
+            /** Fuente Clima */
+            fuente_clima: string;
+            /** Departamentos */
+            departamentos: components["schemas"]["DepartamentoNacional"][];
+            sismicidad?: components["schemas"]["SismicidadNacional"] | null;
+            /** Lectura */
+            lectura: string;
+            /**
+             * Es Pronostico
+             * @default false
+             * @constant
+             */
+            es_pronostico: false;
+        };
         /** ResultadoPriorizacion */
         ResultadoPriorizacion: {
             /**
@@ -2524,6 +2650,29 @@ export interface components {
              */
             alfa: number;
         };
+        /** SismicidadNacional */
+        SismicidadNacional: {
+            /** Fuente */
+            fuente: string;
+            periodo: components["schemas"]["Periodo"];
+            /** Eventos */
+            eventos: number;
+            /** Mc */
+            mc: number;
+            /** Valor B */
+            valor_b: number;
+            intervalo_b: components["schemas"]["Intervalo"];
+            /** Valor B Por Franja */
+            valor_b_por_franja?: {
+                [key: string]: number | null;
+            };
+            /** Tasa Anual Mc */
+            tasa_anual_mc: number;
+            /** Celdas */
+            celdas?: components["schemas"]["CeldaSismica"][];
+            /** Grandes Sismos */
+            grandes_sismos?: components["schemas"]["EventoSismico"][];
+        };
         /** SolicitudVerificacion */
         SolicitudVerificacion: {
             /** Texto */
@@ -2537,10 +2686,30 @@ export interface components {
             tolerancia_relativa: number;
         };
         /**
+         * TendenciaRegional
+         * @description Resumen del Sello de Confianza para una variable de un departamento.
+         */
+        TendenciaRegional: {
+            /** Sen Por Decada */
+            sen_por_decada: number;
+            intervalo: components["schemas"]["Intervalo"];
+            /** P Conservador */
+            p_conservador: number;
+            veredicto: components["schemas"]["Veredicto"];
+            /** Fallan */
+            fallan?: string[];
+            /** Pendientes */
+            pendientes?: string[];
+            /** Nota */
+            nota?: string | null;
+            /** Anios Necesarios */
+            anios_necesarios?: number | null;
+        };
+        /**
          * TipoExpediente
          * @enum {string}
          */
-        TipoExpediente: "tendencia" | "relevancia" | "atribucion" | "pronostico" | "alerta" | "colmatacion" | "priorizacion" | "caos" | "comparacion_modelos" | "recurrencia" | "sismicidad" | "inventario";
+        TipoExpediente: "tendencia" | "relevancia" | "atribucion" | "pronostico" | "alerta" | "colmatacion" | "priorizacion" | "caos" | "comparacion_modelos" | "recurrencia" | "sismicidad" | "inventario" | "panorama_nacional";
         /**
          * TipoProceso
          * @enum {string}
@@ -4436,6 +4605,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CapaGeoJSON"];
+                };
+            };
+        };
+    };
+    panorama_nacional_api_v1_nacional_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PanoramaNacional"];
                 };
             };
         };

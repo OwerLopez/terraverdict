@@ -32,6 +32,7 @@ def test_secciones_de_cada_experimento(texto: str) -> None:
         "deslizamientos": "## Deslizamientos",
         "caos": "## Dinámica",
         "fuentes": "## Contraste entre fuentes",
+        "nacional": "## Escala nacional · 25 departamentos",
     }
     for experimento in indice["experimentos"]:
         assert titulos[experimento] in texto
@@ -59,3 +60,11 @@ def test_formato_numerico() -> None:
     assert informe.n(1234) == "1 234"
     assert informe.ic([0.1, None]) == "—"
     assert informe.tabla(["a"], [["x|y"]]).splitlines()[-1] == "| x\\|y |"
+
+
+def test_regla_de_evidencia_exige_ic_y_diebold_mariano() -> None:
+    base = {"ic90_prueba": [0.01, 0.2], "diebold_mariano_vs_climatologia": {"p": 0.05}}
+    assert informe.nivel_evidencia(base) == "confirmada"
+    assert informe.nivel_evidencia({**base, "diebold_mariano_vs_climatologia": {"p": 0.15}}) == "indicio"
+    assert informe.nivel_evidencia({**base, "ic90_prueba": [-0.01, 0.2]}) == "indicio"
+    assert informe.nivel_evidencia({"ic90_prueba": [-0.01, 0.2], "diebold_mariano_vs_climatologia": {"p": 0.4}}) == "no_confirmada"

@@ -25,16 +25,29 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | CI, Docker y documentación | ✅ · ⏳ falta construir las imágenes y ver la primera ejecución de CI | `.github/`, `docker-compose.yml`, `docs/` | ver `pendientes.md` |
 | Prueba E2E (Playwright) | ⏳ Bloqueada: la descarga del navegador no fue autorizada en este entorno | — | ver `pendientes.md` |
 
----|---|---|---|
-| Propuesta y verificación de fuentes | ✅ Hecho | 37/40 consultas a catálogos; 35/40 enlaces con HTTP 200 | `docs/verificacion/` |
-| Backend (API REST) | ✅ Hecho | 51 pruebas, ruff y mypy limpios, OpenAPI exportado | `cd backend && pytest` |
-| Frontend (web) | ✅ Funcional · ⏳ falta el rediseño *glassmorphism* | tsc, eslint, 19 pruebas | `cd frontend && npm test` |
-| Paquete científico de tendencias (Sello) | ✅ Integrado (aporte de MaxsForocca) | 14 pruebas | `pytest tests/unit` |
-| Ingesta de cinco fenómenos | ✅ Descarga real con SHA-256 | `data/raw/registro_descarga.json` | `tv ingest-fenomenos` |
-| Catálogo de variables y métricas por fenómeno | ✅ | `config/fenomenos.yaml` | — |
-| Teoría del caos | ✅ Validada con sistemas de referencia · ⏳ falta correrla en series reales | 14 pruebas en `tests/caos` | `pytest tests/caos` |
-| Modelos, evaluación e incertidumbre | ✅ Código y corridas de prueba · ⏳ falta la corrida completa | ver entrada del motor | `tv experimentos` |
-| Integración ciencia → backend → frontend | ⏳ Pendiente | — | ver `pendientes.md` |
+---
+
+## 2026-11-15 · Escala nacional (25 departamentos) y regla de evidencia más estricta
+**Autor:** Ower Frank
+
+**Qué se hizo**
+- `config/nacional.yaml` y `src/terraverdict/experimentos/nacional.py`: el **mismo motor** de la cuenca del Chili aplicado a los 25 departamentos (24 + Callao). Por cada celda NASA POWER de cada capital, 1981–2025:
+  - tendencia de temperatura y lluvia con el Sello de Confianza del paquete;
+  - SPI-3 y SPI-12 con parámetros gamma de 1981–2015.
+- Sismicidad nacional: catálogo USGS en la caja que contiene al Perú (M ≥ 4,5, 1973–2026), con Mc, valor b con bootstrap, grilla de 1° y b por franja de latitud. También deslizamientos por departamento (NASA GLC) y los volcanes del país (GVP).
+- Contrato del backend: tipo `panorama_nacional` (módulo M7, dominio `peru_nacional`) con validaciones, y endpoint `GET /api/v1/nacional`. El publicador añade el hash de `config/nacional.yaml` a la procedencia.
+- Regla de evidencia unificada en el informe, la web y las pruebas. **Confirmada** exige IC90 > 0 **y** Diebold-Mariano p < 0,10; **indicio**, solo una de las dos.
+
+**Evidencia**
+- Corrida real en 69 s. 24 celdas climáticas distintas, porque Lima y Callao comparten celda y se informan una sola vez.
+- Temperatura, en el vocabulario de la API: 15 preliminares, 4 frágiles, 3 sin tendencia y 2 no decidibles.
+- Sismos: 5710 eventos; b = 1,035 (IC90 1,006–1,065). Por franja: norte 1,006, centro 1,070, sur 1,034.
+- Pruebas `tests/nacional` (5), sin red y sobre un recorte real: celda compartida, nunca 'robusta' con una sola familia, SPI no interpretable en clima árido, sismicidad y contrato del backend.
+
+**Decisiones**
+- **SPI en clima árido.** Con lluvia media < 200 mm/año el SPI se marca como no interpretable: el ajuste gamma sobre lluvias casi nulas daba SPI-12 ≈ +4,7 en Lima, Callao e Ica (OMM, guía del SPI, 2012).
+- **Lluvia fuerte a 1 día (POWER).** Pasa de "confirmada" a **indicio**: IC90 0,003–0,151 pero Diebold-Mariano p = 0,152.
+- **Mismo vocabulario de veredictos en todo el sistema.** 'preliminar' es significativa con pruebas pendientes; 'frágil' tiene alguna prueba fallida.
 
 ---
 

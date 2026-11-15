@@ -337,9 +337,7 @@ def importar_verificacion(sesion: Session, raiz: Path) -> int:
             # de verificación corta conexiones de forma intermitente (historial en el JSON).
             total = len(datos["enlaces"])
             correctas = sum(
-                1
-                for e in datos["enlaces"]
-                if e.get("corridas_con_200", 1 if e.get("http") == 200 else 0) > 0
+                1 for e in datos["enlaces"] if e.get("corridas_con_200", 1 if e.get("http") == 200 else 0) > 0
             )
         existente = sesion.scalar(
             select(InformeVerificacion).where(

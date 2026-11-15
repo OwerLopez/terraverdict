@@ -561,6 +561,84 @@ class ResultadoInventario(Esquema):
         return self
 
 
+class TendenciaRegional(Esquema):
+    """Resumen del Sello de Confianza para una variable de un departamento."""
+
+    sen_por_decada: NumeroFinito
+    intervalo: Intervalo
+    p_conservador: Probabilidad
+    veredicto: Veredicto
+    fallan: list[str] = Field(default_factory=list)
+    pendientes: list[str] = Field(default_factory=list)
+    nota: str | None = None
+    anios_necesarios: NumeroFinitoOpcional = None
+
+    @model_validator(mode="after")
+    def _coherente(self) -> TendenciaRegional:
+        if not self.intervalo.lo <= self.sen_por_decada <= self.intervalo.hi:
+            raise ValueError("La pendiente de Sen debe estar dentro de su intervalo.")
+        if self.veredicto == Veredicto.robusta and self.pendientes:
+            raise ValueError("Con pruebas pendientes el veredicto no puede ser 'robusta'.")
+        return self
+
+
+class DepartamentoNacional(Esquema):
+    id: Annotated[str, StringConstraints(pattern=r"^[a-z0-9_]{2,40}$")]
+    nombre: str
+    capital: str
+    lat: float = Field(ge=-90, le=90)
+    lon: float = Field(ge=-180, le=180)
+    elevacion_celda_m: NumeroFinitoOpcional = None
+    comparte_celda_con: str | None = Field(
+        None, description="Departamento con la misma celda POWER (mismo clima)."
+    )
+    temperatura_media_c: NumeroFinito
+    lluvia_anual_media_mm: NumeroFinito = Field(ge=0)
+    tendencia_temperatura: TendenciaRegional
+    tendencia_lluvia: TendenciaRegional
+    spi_mes: FechaParcial
+    spi3: NumeroFinito
+    spi12: NumeroFinito
+    spi_confiable: bool = Field(description="False en climas hiperáridos, donde el SPI no es interpretable.")
+    deslizamientos_glc: int = Field(ge=0)
+    serie_anios: list[int] = Field(default_factory=list, max_length=200)
+    serie_temperatura_c: list[NumeroFinito] = Field(default_factory=list, max_length=200)
+    serie_lluvia_mm: list[NumeroFinitoOpcional] = Field(default_factory=list, max_length=200)
+
+
+class CeldaSismica(Esquema):
+    lat: float = Field(ge=-90, le=90)
+    lon: float = Field(ge=-180, le=180)
+    n: int = Field(ge=1)
+    tasa_anual: NumeroFinito = Field(ge=0)
+    m_max: NumeroFinito
+    profundidad_media_km: NumeroFinitoOpcional = None
+
+
+class SismicidadNacional(Esquema):
+    fuente: str
+    periodo: Periodo
+    eventos: int = Field(ge=0)
+    mc: NumeroFinito
+    valor_b: NumeroFinito = Field(gt=0)
+    intervalo_b: Intervalo
+    valor_b_por_franja: dict[str, NumeroFinitoOpcional] = Field(default_factory=dict)
+    tasa_anual_mc: NumeroFinito = Field(ge=0)
+    celdas: list[CeldaSismica] = Field(default_factory=list, max_length=2000)
+    grandes_sismos: list[EventoSismico] = Field(default_factory=list, max_length=200)
+
+
+class ResultadoPanoramaNacional(Esquema):
+    """Escala nacional: el mismo motor (Sello, SPI, sismicidad) aplicado a los 25 departamentos."""
+
+    tipo: Literal["panorama_nacional"]
+    fuente_clima: str
+    departamentos: list[DepartamentoNacional] = Field(min_length=1, max_length=60)
+    sismicidad: SismicidadNacional | None = None
+    lectura: str = Field(max_length=1000)
+    es_pronostico: Literal[False] = False
+
+
 Resultado = Annotated[
     ResultadoTendencia
     | ResultadoRelevancia
@@ -573,7 +651,8 @@ Resultado = Annotated[
     | ResultadoComparacionModelos
     | ResultadoRecurrencia
     | ResultadoSismicidad
-    | ResultadoInventario,
+    | ResultadoInventario
+    | ResultadoPanoramaNacional,
     Field(discriminator="tipo"),
 ]
 

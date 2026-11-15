@@ -20,7 +20,13 @@ from app.core.errors import NoEncontrado
 from app.db.models import Expediente
 from app.domain.vocabulario import EstadoExpediente, TipoExpediente
 from app.schemas.comun import errores
-from app.schemas.fenomenos import CapaGeoJSON, CatalogoFenomenos, FenomenoSalida, VariableFenomeno
+from app.schemas.fenomenos import (
+    CapaGeoJSON,
+    CatalogoFenomenos,
+    FenomenoSalida,
+    PanoramaNacional,
+    VariableFenomeno,
+)
 from app.schemas.geo import Feature, Geometria
 
 router = APIRouter(tags=["Fenómenos naturales"])
@@ -203,4 +209,22 @@ def capa_deslizamientos(sesion: SesionDep) -> CapaGeoJSON:
             )
             for ev in eventos
         ],
+    )
+
+
+@router.get(
+    "/nacional",
+    response_model=PanoramaNacional,
+    summary="Panorama nacional: 25 departamentos con el mismo motor",
+    description=(
+        "Tendencias con Sello de Confianza, estado de sequía (SPI) y sismicidad nacional, del expediente "
+        "`panorama_nacional` vigente. Sin expediente publicado, `resultado` es null."
+    ),
+)
+def panorama_nacional(sesion: SesionDep) -> PanoramaNacional:
+    e = _vigente(sesion, TipoExpediente.panorama_nacional)
+    if e is None:
+        return PanoramaNacional(aviso=AVISO)
+    return PanoramaNacional(
+        expediente_id=e.id, generado_utc=e.procedencia.get("generado_utc"), resultado=e.resultado, aviso=AVISO
     )

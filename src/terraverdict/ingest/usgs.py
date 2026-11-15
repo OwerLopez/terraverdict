@@ -58,6 +58,40 @@ def descargar(
     return entradas
 
 
+def descargar_caja(
+    bbox: list[float], desde: int, hasta: int, raw: str | Path, mag_min: float = 4.5, tramo_anios: int = 5
+) -> list[dict[str, Any]]:
+    """Igual que `descargar`, pero por caja geográfica [lon_min, lat_min, lon_max, lat_max] (escala nacional)."""
+    s = sesion()
+    entradas = []
+    for a in range(desde, hasta + 1, tramo_anios):
+        b = min(a + tramo_anios - 1, hasta)
+        params: dict[str, Any] = {
+            "format": "csv",
+            "starttime": f"{a}-01-01",
+            "endtime": f"{b}-12-31T23:59:59",
+            "minlongitude": bbox[0],
+            "minlatitude": bbox[1],
+            "maxlongitude": bbox[2],
+            "maxlatitude": bbox[3],
+            "minmagnitude": mag_min,
+            "orderby": "time-asc",
+        }
+        r = s.get(URL, params=params, timeout=180)
+        r.raise_for_status()
+        entradas.append(
+            guardar_crudo(
+                raw,
+                f"usgs_{a}_{b}.csv",
+                r.content,
+                url=r.url,
+                producto=PRODUCTO,
+                extra={"bbox": bbox, "mag_min": mag_min},
+            )
+        )
+    return entradas
+
+
 def cargar(carpeta: str | Path) -> list[dict[str, Any]]:
     """Une los tramos, elimina duplicados por id y ordena por tiempo."""
     eventos: dict[str, dict[str, Any]] = {}

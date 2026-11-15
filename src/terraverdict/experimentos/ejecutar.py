@@ -19,7 +19,7 @@ from typing import Any
 import numpy as np
 
 from ..config import cargar_yaml
-from . import caos_real, deslizamientos, fuentes, lluvia, sequia, sismos, volcanes
+from . import caos_real, deslizamientos, fuentes, lluvia, nacional, sequia, sismos, volcanes
 
 RAIZ = Path(__file__).resolve().parents[3]
 
@@ -116,6 +116,16 @@ def ejecutar(
     if rs is None and (not solo or "caos" in solo):
         rs = sismos.ejecutar(cfg, raw, redes=[], semillas=(0,))
     correr("caos", lambda: caos_real.ejecutar(cfg, raw, rs))
+    # La escala nacional descarga lo que falte solo sobre los datos reales; con otro `raw` (pruebas)
+    # corre sin red y solo si ese `raw` trae su recorte nacional.
+    if raw.resolve() == (RAIZ / "data" / "raw").resolve() or (raw / "power_nacional").exists():
+        cfg_nacional = raw / "nacional.yaml" if (raw / "nacional.yaml").exists() else None
+        correr(
+            "nacional",
+            lambda: nacional.ejecutar(
+                raw, config=cfg_nacional, descargar_faltantes=raw.resolve() == (RAIZ / "data" / "raw").resolve()
+            ),
+        )
     # Índice acumulativo: una corrida parcial (--solo) actualiza sus experimentos y conserva el resto.
     previo = json.loads((salida / "indice.json").read_text()) if (salida / "indice.json").exists() else {}
     corridas = {k: v for k, v in previo.get("corridas", {}).items() if k not in hechos}

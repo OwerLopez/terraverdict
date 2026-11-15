@@ -14,6 +14,8 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
+from ..publicar.convertir import veredicto_backend
+
 NOMBRES = {
     "ref_climatologia": "Climatología (referencia)",
     "ref_persistencia": "Persistencia (referencia)",
@@ -73,12 +75,28 @@ def tabla(cabecera: list[str], filas: Iterable[list[Any]]) -> str:
     return "\n".join(lineas)
 
 
-def lectura_habilidad(m: dict[str, Any]) -> str:
-    """Regla explícita: habilidad confirmada solo si el IC90 completo está por encima de 0."""
+def nivel_evidencia(m: dict[str, Any]) -> str:
+    """Regla del proyecto (la misma que muestra la web): 'confirmada' exige IC90 por bootstrap de
+    bloques > 0 Y Diebold-Mariano p < 0,10; 'indicio' cumple solo una; si no, 'no_confirmada'.
+
+    Son dos pruebas complementarias: el bootstrap mide la incertidumbre de la habilidad y DM prueba
+    que la diferencia de pérdidas no es azar con errores autocorrelacionados (varianza HAC).
+    """
     lo = (m.get("ic90_prueba") or [None])[0]
-    if lo is None:
+    p = (m.get("diebold_mariano_vs_climatologia") or {}).get("p")
+    ic = lo is not None and lo > 0
+    dm = p is not None and p < 0.10
+    return "confirmada" if ic and dm else ("indicio" if ic or dm else "no_confirmada")
+
+
+def lectura_habilidad(m: dict[str, Any]) -> str:
+    if (m.get("ic90_prueba") or [None])[0] is None:
         return "sin IC"
-    return "confirmada (IC90 > 0)" if lo > 0 else "no confirmada (IC90 incluye 0 o es negativo)"
+    return {
+        "confirmada": "confirmada (IC90 > 0 y DM p < 0,10)",
+        "indicio": "indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10)",
+        "no_confirmada": "no confirmada (IC90 incluye 0 y DM p ≥ 0,10)",
+    }[nivel_evidencia(m)]
 
 
 def tabla_zoo(zoo: dict[str, Any]) -> str:
@@ -539,6 +557,72 @@ def seccion_fuentes(r: dict[str, Any]) -> str:
     return "\n\n".join(partes)
 
 
+def _conteo_veredictos(deps: list[dict[str, Any]]) -> dict[str, dict[str, int]]:
+    salida: dict[str, dict[str, int]] = {"temperatura": {}, "lluvia": {}}
+    for d in deps:
+        if d.get("comparte_celda_con"):
+            continue
+        for var, clave in (("temperatura", "tendencia_temperatura"), ("lluvia", "tendencia_lluvia")):
+            v = veredicto_backend(d[clave], 0.10)
+            salida[var][v] = salida[var].get(v, 0) + 1
+    return salida
+
+
+def seccion_nacional(r: dict[str, Any]) -> str:
+    deps = [d for d in r["departamentos"] if "error" not in d]
+    filas = []
+    for d in deps:
+        tt, tl, sp = d["tendencia_temperatura"], d["tendencia_lluvia"], d["spi"]
+        filas.append(
+            [
+                d["nombre"] + (f" (misma celda que {d['comparte_celda_con']})" if d.get("comparte_celda_con") else ""),
+                n(d["temperatura_media_c"], 1),
+                f"{n(tt['sen_por_decada'], 2)} [{ic(tt['ic90_por_decada'], 2)}] · {veredicto_backend(tt, 0.10)}",
+                n(d["lluvia_anual_media_mm"], 0),
+                f"{n(tl['sen_por_decada'], 1)} · {veredicto_backend(tl, 0.10)}",
+                f"{n(sp['spi12'], 2)}" + ("" if sp["confiable"] else " (no interpretable: clima árido)"),
+                d.get("deslizamientos_glc", 0),
+            ]
+        )
+    s = r.get("sismicidad")
+    partes = [
+        "## Escala nacional · 25 departamentos",
+        f"**Clima:** {r['fuente_clima']}. Tendencias 1981–2025 con el Sello de Confianza del paquete; SPI con "
+        "parámetros gamma de 1981–2015 (último mes disponible). Con una sola familia de datos el Sello no puede dar "
+        "'robusta': la independencia queda pendiente.",
+        tabla(
+            [
+                "Departamento",
+                "T media (°C)",
+                "Tendencia T (°C/década) [IC90] · Sello",
+                "Lluvia anual (mm)",
+                "Tendencia lluvia (mm/década) · Sello",
+                "SPI-12",
+                "Deslizamientos GLC",
+            ],
+            filas,
+        ),
+        "Veredictos (mismo vocabulario que la API: 'preliminar' = significativa con pruebas pendientes) por celda "
+        "climática distinta: "
+        + "; ".join(
+            f"{var} " + ", ".join(f"{k} {c}" for k, c in sorted(conteo.items()))
+            for var, conteo in _conteo_veredictos(deps).items()
+        )
+        + ".",
+    ]
+    if s:
+        partes += [
+            f"**Sismicidad nacional:** {s['fuente']}, caja {s['bbox']}, {s['desde']} a {s['hasta']}: "
+            f"{n(s['eventos'], 0)} sismos M ≥ 4,5; Mc = {n(s['mc'], 1)}; b = {n(s['valor_b']['b'], 3)} "
+            f"(IC90 {ic(s['valor_b']['ic90_bootstrap'], 3)}); tasa anual M ≥ Mc = {n(s['tasa_anual_m_mayor_mc'], 1)}.",
+            tabla(
+                ["Franja", "b", "n"], [[k, n(v.get("b"), 3), v.get("n")] for k, v in s["valor_b_por_franja"].items()]
+            ),
+            s["advertencia"],
+        ]
+    return "\n\n".join(partes)
+
+
 def resumen(res: dict[str, dict[str, Any]]) -> str:
     filas = []
 
@@ -644,8 +728,8 @@ def generar(resultados: Path) -> str:
         ),
         "**Cómo leer.** La partición es temporal y está congelada (entrenamiento 1981–2015, validación 2016–2020, "
         "prueba 2021–2026). Todo se elige con validación; la prueba se usa una vez. Una habilidad está **confirmada** "
-        "solo si su IC90 por bootstrap de bloques queda por encima de 0. Diebold-Mariano compara la pérdida del "
-        "modelo con la de la climatología.",
+        "solo si su IC90 por bootstrap de bloques queda por encima de 0 **y** la prueba de Diebold-Mariano frente a la "
+        "climatología da p < 0,10; si solo se cumple una de las dos, es un **indicio**.",
         "## Resumen",
         resumen(res),
     ]
@@ -659,6 +743,7 @@ def generar(resultados: Path) -> str:
         ("deslizamientos", seccion_deslizamientos),
         ("caos", seccion_caos),
         ("fuentes", seccion_fuentes),
+        ("nacional", seccion_nacional),
     ):
         if clave in res:
             partes.append(f(res[clave]))

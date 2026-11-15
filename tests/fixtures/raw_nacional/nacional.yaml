@@ -1,0 +1,9 @@
+# Recorte real para pruebas sin red: 3 departamentos (Lima y Callao comparten celda) y 2 tramos del catálogo USGS.
+version: 1
+periodo_power: [1981, 2025]
+spi_hasta_entrenamiento: "2015-12-31"
+sismos: {bbox: [-81.5, -18.5, -68.5, 0.0], mag_min: 4.5, desde: 2013, hasta: 2022, celda_grados: 1.0}
+departamentos:
+  - {id: arequipa, nombre: Arequipa, capital: Arequipa, lon: -71.535, lat: -16.399}
+  - {id: callao,   nombre: Callao,   capital: Callao,   lon: -77.125, lat: -12.052}
+  - {id: lima,     nombre: Lima,     capital: Lima,     lon: -77.043, lat: -12.046}

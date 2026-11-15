@@ -54,3 +54,16 @@ class CapaGeoJSON(Esquema):
     generado_utc: str | None = None
     fuente: str | None = None
     nota: str | None = None
+
+
+class PanoramaNacional(Esquema):
+    """Escala nacional vigente: el resultado completo del expediente `panorama_nacional` más reciente."""
+
+    expediente_id: str | None = Field(
+        None, description="Expediente del que sale el panorama; null si no hay."
+    )
+    generado_utc: str | None = None
+    resultado: dict[str, Any] | None = Field(
+        None, description="Contenido validado con ResultadoPanoramaNacional al publicarse."
+    )
+    aviso: str

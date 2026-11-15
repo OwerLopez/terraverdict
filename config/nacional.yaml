@@ -1,0 +1,46 @@
+# Escala nacional: los 25 departamentos del Perú (24 + Callao), analizados con el MISMO motor que la
+# cuenca del Chili (Sello de Confianza, SPI, sismicidad), para que agregar una región sea configuración y
+# no código nuevo.
+#
+# Coordenadas: centro urbano aproximado de cada capital (precisión ~0,01°). Bastan porque NASA POWER
+# resuelve celdas de 0,5° × 0,625°: cada punto representa la celda que contiene a la capital, no la
+# ciudad. Lima y Callao comparten celda (se informa una sola vez en el análisis climático).
+
+version: 1
+periodo_power: [1981, 2025]
+spi_hasta_entrenamiento: "2015-12-31"   # misma partición congelada que config/fenomenos.yaml
+
+sismos:
+  # Caja que contiene al Perú (incluye franjas de Ecuador, Brasil, Bolivia, Chile y el océano).
+  bbox: [-81.5, -18.5, -68.5, 0.0]        # lon_min, lat_min, lon_max, lat_max
+  mag_min: 4.5
+  desde: 1973
+  hasta: 2026
+  celda_grados: 1.0
+
+departamentos:
+  - {id: amazonas,      nombre: Amazonas,      capital: Chachapoyas,      lon: -77.869, lat: -6.231}
+  - {id: ancash,        nombre: Áncash,        capital: Huaraz,           lon: -77.528, lat: -9.527}
+  - {id: apurimac,      nombre: Apurímac,      capital: Abancay,          lon: -72.881, lat: -13.634}
+  - {id: arequipa,      nombre: Arequipa,      capital: Arequipa,         lon: -71.535, lat: -16.399}
+  - {id: ayacucho,      nombre: Ayacucho,      capital: Ayacucho,         lon: -74.224, lat: -13.159}
+  - {id: cajamarca,     nombre: Cajamarca,     capital: Cajamarca,        lon: -78.500, lat: -7.163}
+  - {id: callao,        nombre: Callao,        capital: Callao,           lon: -77.125, lat: -12.052}
+  - {id: cusco,         nombre: Cusco,         capital: Cusco,            lon: -71.967, lat: -13.532}
+  - {id: huancavelica,  nombre: Huancavelica,  capital: Huancavelica,     lon: -74.973, lat: -12.787}
+  - {id: huanuco,       nombre: Huánuco,       capital: Huánuco,          lon: -76.242, lat: -9.930}
+  - {id: ica,           nombre: Ica,           capital: Ica,              lon: -75.729, lat: -14.068}
+  - {id: junin,         nombre: Junín,         capital: Huancayo,         lon: -75.204, lat: -12.065}
+  - {id: la_libertad,   nombre: La Libertad,   capital: Trujillo,         lon: -79.029, lat: -8.112}
+  - {id: lambayeque,    nombre: Lambayeque,    capital: Chiclayo,         lon: -79.841, lat: -6.771}
+  - {id: lima,          nombre: Lima,          capital: Lima,             lon: -77.043, lat: -12.046}
+  - {id: loreto,        nombre: Loreto,        capital: Iquitos,          lon: -73.253, lat: -3.749}
+  - {id: madre_de_dios, nombre: Madre de Dios, capital: Puerto Maldonado, lon: -69.189, lat: -12.593}
+  - {id: moquegua,      nombre: Moquegua,      capital: Moquegua,         lon: -70.935, lat: -17.195}
+  - {id: pasco,         nombre: Pasco,         capital: Cerro de Pasco,   lon: -76.263, lat: -10.686}
+  - {id: piura,         nombre: Piura,         capital: Piura,            lon: -80.633, lat: -5.195}
+  - {id: puno,          nombre: Puno,          capital: Puno,             lon: -70.022, lat: -15.840}
+  - {id: san_martin,    nombre: San Martín,    capital: Moyobamba,        lon: -76.974, lat: -6.034}
+  - {id: tacna,         nombre: Tacna,         capital: Tacna,            lon: -70.246, lat: -18.006}
+  - {id: tumbes,        nombre: Tumbes,        capital: Tumbes,           lon: -80.451, lat: -3.567}
+  - {id: ucayali,       nombre: Ucayali,       capital: Pucallpa,         lon: -74.554, lat: -8.379}

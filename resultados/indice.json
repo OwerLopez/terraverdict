@@ -1,6 +1,6 @@
 {
- "generado_utc": "2026-11-15T06:18:31+00:00",
- "commit": "41198fee2d6f1e8ef3b333a241aed8def4f56cab",
+ "generado_utc": "2026-11-15T10:06:56+00:00",
+ "commit": "eec6c5cc8532ca0e7ecb1c616630c17a1cf75673",
  "tiempos_segundos": {
   "volcanes": 0.0,
   "deslizamientos": 0.3,
@@ -10,7 +10,8 @@
   "sequia_chirps": 27.0,
   "lluvia_extrema": 172.6,
   "lluvia_extrema_chirps": 158.8,
-  "caos": 55.0
+  "caos": 55.0,
+  "nacional": 53.2
  },
  "corridas": {
   "caos": {
@@ -37,6 +38,11 @@
    "commit": "41198fee2d6f1e8ef3b333a241aed8def4f56cab",
    "generado_utc": "2026-11-15T06:18:31+00:00",
    "segundos": 158.8
+  },
+  "nacional": {
+   "commit": "eec6c5cc8532ca0e7ecb1c616630c17a1cf75673",
+   "generado_utc": "2026-11-15T10:06:56+00:00",
+   "segundos": 53.2
   },
   "sequia": {
    "commit": "41198fee2d6f1e8ef3b333a241aed8def4f56cab",
@@ -65,6 +71,7 @@
   "fuentes",
   "lluvia_extrema",
   "lluvia_extrema_chirps",
+  "nacional",
   "sequia",
   "sequia_chirps",
   "sismos",

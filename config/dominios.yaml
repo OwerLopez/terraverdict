@@ -22,6 +22,11 @@ dominios:
     bbox: [-76.0, -19.5, -68.0, -12.0]
     nota: "Dominio de los expedientes M6 cuyo alcance excede la cuenca (catálogos regionales)"
 
+  peru_nacional:
+    descripcion: "Escala nacional: los 25 departamentos del Perú con el mismo motor (config/nacional.yaml)"
+    bbox: [-81.5, -18.5, -68.5, 0.0]
+    nota: "Clima por la celda NASA POWER de cada capital; sismicidad por la caja que contiene al Perú"
+
 particiones:
   temporal:
     entrenamiento: ["1998-01", "2015-12"]

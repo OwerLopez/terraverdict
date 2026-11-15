@@ -1,0 +1,252 @@
+[
+ {
+  "archivo": "power_-77.869_-6.231_1981_2025.json",
+  "sha256": "b511bfa3d5a1b5954af24a7d389c496db2d2606c38d6f577cce014f551b6cd15",
+  "bytes": 17414,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.869&latitude=-6.231&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:01+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-77.528_-9.527_1981_2025.json",
+  "sha256": "0af24e03290fce17d957cfbd96843218f3b6d5ecb8c52cd84365fd732bba18ae",
+  "bytes": 16828,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.528&latitude=-9.527&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:02+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-72.881_-13.634_1981_2025.json",
+  "sha256": "bcc2f0560e2a4738abf5bdd891234437d56115b11d4b689db598cd227682331d",
+  "bytes": 17386,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-72.881&latitude=-13.634&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:03+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-71.535_-16.399_1981_2025.json",
+  "sha256": "33aaa9543216e306d8d89744a8d585b6136b39f440b449ff5f56b88ea142ee42",
+  "bytes": 17236,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-71.535&latitude=-16.399&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:03+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-74.224_-13.159_1981_2025.json",
+  "sha256": "a3f1de752ed3b797b7ce98d2fd901141fe7b666996b111c151cf28256f2c1a6e",
+  "bytes": 16934,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-74.224&latitude=-13.159&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:04+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-78.5_-7.163_1981_2025.json",
+  "sha256": "db26e5c22aa86292bd6ed0322996aee118a7bb435c38d88385b424f99aa2aba3",
+  "bytes": 17406,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-78.5&latitude=-7.163&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:04+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-77.125_-12.052_1981_2025.json",
+  "sha256": "9bf0f53ad0e216146c46a2ef133c2f70437b2b019ecd643c1e7990a829d650a3",
+  "bytes": 17410,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.125&latitude=-12.052&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:05+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-71.967_-13.532_1981_2025.json",
+  "sha256": "edcca8ced91ba28808d7e40df6280e1f1469f9c7abef2847b9c49f4065c47971",
+  "bytes": 16838,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-71.967&latitude=-13.532&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:06+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-74.973_-12.787_1981_2025.json",
+  "sha256": "1861a9baa076439596632c1fb78251c3fee9e9ce22477d6119e1bf5f08b6ab0b",
+  "bytes": 16813,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-74.973&latitude=-12.787&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:07+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-76.242_-9.93_1981_2025.json",
+  "sha256": "f109236d6462d62566d324ea294b5e40aaa9250d290489ba871f8302ff57ebe6",
+  "bytes": 17060,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-76.242&latitude=-9.93&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:07+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-75.729_-14.068_1981_2025.json",
+  "sha256": "150c55c60ef301fe1090e31364bfffaf8c15ec8097867db363304b7383067658",
+  "bytes": 17376,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-75.729&latitude=-14.068&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:08+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-75.204_-12.065_1981_2025.json",
+  "sha256": "164639fd7c64b1fb1a3d8517dd5ee11d18b427b90beae234cd8099746767f8fb",
+  "bytes": 16853,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-75.204&latitude=-12.065&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:09+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-79.029_-8.112_1981_2025.json",
+  "sha256": "865fc810d97ab2d5019b7f52b54d8b2868c2d756aebf5465f63a318340680750",
+  "bytes": 17425,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-79.029&latitude=-8.112&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:09+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-79.841_-6.771_1981_2025.json",
+  "sha256": "6214a6e44fc69532bfad767636171b9aa2b9fddb4e76fa595394d48acb114abd",
+  "bytes": 17391,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-79.841&latitude=-6.771&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:10+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-77.043_-12.046_1981_2025.json",
+  "sha256": "0d2ea7f11dda2bc67a21b1a725a680ecac56218fae0aea6ac03bce63fe8eca98",
+  "bytes": 17410,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.043&latitude=-12.046&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:11+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-73.253_-3.749_1981_2025.json",
+  "sha256": "27c911a0d523cc3a83c0c1cada15963c1a1274c420986833e020b6a9299c5fd9",
+  "bytes": 17571,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-73.253&latitude=-3.749&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:11+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-69.189_-12.593_1981_2025.json",
+  "sha256": "74d437987dc87b9705c13f4399fde65767ac5da20cc5d48c2b82588c901a8837",
+  "bytes": 17491,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-69.189&latitude=-12.593&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:12+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-70.935_-17.195_1981_2025.json",
+  "sha256": "3d35e3db92d0e1afc8e48a07e13174adf0c966f5d4901ff8635530e637f59783",
+  "bytes": 16821,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-70.935&latitude=-17.195&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:12+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-76.263_-10.686_1981_2025.json",
+  "sha256": "43701e758e88d33ab3dad925165cc1c75c481f7224b3b55105f55b961ac154c2",
+  "bytes": 16805,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-76.263&latitude=-10.686&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:13+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-80.633_-5.195_1981_2025.json",
+  "sha256": "76ca6be868f18ff6086272dbf2f2577076545830c36a7ac8fc5ceb50d5ae4f4a",
+  "bytes": 17418,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-80.633&latitude=-5.195&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:14+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-70.022_-15.84_1981_2025.json",
+  "sha256": "73f50c8fecbb27756a01eb28fabe20dbe5a12de573f3f947f723541592726d8f",
+  "bytes": 16886,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-70.022&latitude=-15.84&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:14+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-76.974_-6.034_1981_2025.json",
+  "sha256": "ceeac16b6b30f9136f2f74babcc26d474df91ef4b1a067962c713cb6066cfe1a",
+  "bytes": 17417,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-76.974&latitude=-6.034&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:15+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-70.246_-18.006_1981_2025.json",
+  "sha256": "7100404badbb626924a43b6fdf107bfdf9164537d6bdc97517c360ab2cb8007f",
+  "bytes": 17370,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-70.246&latitude=-18.006&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:16+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-80.451_-3.567_1981_2025.json",
+  "sha256": "43727bfa7713484f8279127ae3fc29970b30988f1ff7da8b0a163fb677bbad5e",
+  "bytes": 17406,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-80.451&latitude=-3.567&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:16+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ },
+ {
+  "archivo": "power_-74.554_-8.379_1981_2025.json",
+  "sha256": "7c2b69dbbfb9e8b7b05fb0d762e7f78bc0a48bb757fba565c1bd4fe58ebd7730",
+  "bytes": 17430,
+  "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-74.554&latitude=-8.379&start=1981&end=2025&format=JSON",
+  "producto": "NASA_POWER_MERRA2",
+  "version": null,
+  "descargado_utc": "2026-11-15T10:03:17+00:00",
+  "parametros": "T2M,PRECTOTCORR"
+ }
+]

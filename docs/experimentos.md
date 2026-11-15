@@ -4,27 +4,27 @@
 
 | Campo | Valor |
 |---|---|
-| Generado (UTC) | 2026-11-15T06:18:31+00:00 |
-| Commit del código | `41198fee2d6f1e8ef3b333a241aed8def4f56cab` |
+| Generado (UTC) | 2026-11-15T10:06:56+00:00 |
+| Commit del código | `eec6c5cc8532ca0e7ecb1c616630c17a1cf75673` |
 | Modo | completo |
 | Configuración (SHA-256) | `3cbb05a406bb35a4…` |
 | Versiones | python 3.13.15, numpy 2.5.4, torch 2.15.0+cpu, scikit_learn 1.9.1 |
 | Crudos con hash | 73 |
-| Tiempo por experimento (s) | volcanes 0, deslizamientos 0, sismos 14, fuentes 1, sequia 56, sequia_chirps 27, lluvia_extrema 173, lluvia_extrema_chirps 159, caos 55 |
+| Tiempo por experimento (s) | volcanes 0, deslizamientos 0, sismos 14, fuentes 1, sequia 56, sequia_chirps 27, lluvia_extrema 173, lluvia_extrema_chirps 159, caos 55, nacional 53 |
 
-**Cómo leer.** La partición es temporal y está congelada (entrenamiento 1981–2015, validación 2016–2020, prueba 2021–2026). Todo se elige con validación; la prueba se usa una vez. Una habilidad está **confirmada** solo si su IC90 por bootstrap de bloques queda por encima de 0. Diebold-Mariano compara la pérdida del modelo con la de la climatología.
+**Cómo leer.** La partición es temporal y está congelada (entrenamiento 1981–2015, validación 2016–2020, prueba 2021–2026). Todo se elige con validación; la prueba se usa una vez. Una habilidad está **confirmada** solo si su IC90 por bootstrap de bloques queda por encima de 0 **y** la prueba de Diebold-Mariano frente a la climatología da p < 0,10; si solo se cumple una de las dos, es un **indicio**.
 
 ## Resumen
 
 | Tarea | Modelo elegido (validación) | Habilidad en prueba | IC90 | p DM | Lectura | Publicación |
 |---|---|---|---|---|---|---|
-| Lluvia fuerte t+1 · POWER | SSM selectivo | 0,080 | 0,003 a 0,151 | 0,152 | confirmada (IC90 > 0) | publica |
-| Lluvia fuerte t+1 · CHIRPS | Ensamble (3 mejores en validación) | 0,046 | -0,007 a 0,090 | 0,165 | no confirmada (IC90 incluye 0 o es negativo) | publica |
-| SPI-3 a 1 mes(es) · POWER | N-BEATS | 0,776 | 0,675 a 0,843 | 0,017 | confirmada (IC90 > 0) | publica |
-| SPI-3 a 3 mes(es) · POWER | iTransformer | 0,198 | 0,119 a 0,263 | 0,013 | confirmada (IC90 > 0) | publica |
-| SPI-3 a 1 mes(es) · CHIRPS | Ensamble (3 mejores en validación) | 0,616 | 0,491 a 0,770 | 0,015 | confirmada (IC90 > 0) | publica |
-| SPI-3 a 3 mes(es) · CHIRPS | DLinear | 0,087 | 0,048 a 0,114 | 0,003 | confirmada (IC90 > 0) | publica |
-| Conteo sísmico mensual | Ensamble (3 mejores en validación) | 0,253 | 0,066 a 0,492 | 0,074 | confirmada (IC90 > 0); refleja agrupamiento de réplicas, no es pronóstico de sismos | publica |
+| Lluvia fuerte t+1 · POWER | SSM selectivo | 0,080 | 0,003 a 0,151 | 0,152 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | publica |
+| Lluvia fuerte t+1 · CHIRPS | Ensamble (3 mejores en validación) | 0,046 | -0,007 a 0,090 | 0,165 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | publica |
+| SPI-3 a 1 mes(es) · POWER | N-BEATS | 0,776 | 0,675 a 0,843 | 0,017 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| SPI-3 a 3 mes(es) · POWER | iTransformer | 0,198 | 0,119 a 0,263 | 0,013 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| SPI-3 a 1 mes(es) · CHIRPS | Ensamble (3 mejores en validación) | 0,616 | 0,491 a 0,770 | 0,015 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| SPI-3 a 3 mes(es) · CHIRPS | DLinear | 0,087 | 0,048 a 0,114 | 0,003 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| Conteo sísmico mensual | Ensamble (3 mejores en validación) | 0,253 | 0,066 a 0,492 | 0,074 | confirmada (IC90 > 0 y DM p < 0,10); refleja agrupamiento de réplicas, no es pronóstico de sismos | publica |
 
 ## Lluvia fuerte a 1 día · NASA POWER
 
@@ -61,7 +61,7 @@ Métrica principal: habilidad de Brier frente a la climatología. En **negrita**
 | Gradient boosting | clasico | 0,153 | 0,086 | 0,033 a 0,134 | 0,032 |  |
 | PatchTST | red neuronal | 0,047 | 0,001 | -0,043 a 0,036 | 0,959 | 0,080 |
 
-Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0).
+Lectura (regla IC90): habilidad del modelo elegido indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10).
 
 ### Variables seleccionadas (mRMR con prior físico, solo entrenamiento)
 
@@ -176,7 +176,7 @@ Métrica principal: habilidad de Brier frente a la climatología. En **negrita**
 | DLinear | red neuronal | 0,055 | 0,012 | -0,049 a 0,061 | 0,708 | 0,203 |
 | PatchTST | red neuronal | 0,026 | -0,024 | -0,069 a 0,020 | 0,360 | 0,019 |
 
-Lectura (regla IC90): habilidad del modelo elegido no confirmada (IC90 incluye 0 o es negativo).
+Lectura (regla IC90): habilidad del modelo elegido no confirmada (IC90 incluye 0 y DM p ≥ 0,10).
 
 ### Variables seleccionadas (mRMR con prior físico, solo entrenamiento)
 
@@ -294,7 +294,7 @@ Métrica principal: habilidad (1 − ECM/ECM de la climatología). En **negrita*
 | SSM selectivo | red neuronal | 0,489 | 0,387 | 0,227 a 0,508 | 0,024 | 0,025 |
 | DLinear | red neuronal | 0,306 | 0,275 | 0,203 a 0,337 | 0,014 | 0,253 |
 
-Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0). Habilidad frente a persistencia en prueba: 0,587. Cobertura del intervalo conformal del 90 % en prueba: 0,900 (ancho 2,531).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,587. Cobertura del intervalo conformal del 90 % en prueba: 0,900 (ancho 2,531).
 
 Categoría sequía (SPI-3 ≤ −1) en prueba: aciertos 2, falsas alarmas 0, fallos 1; POD 0,667, FAR 0,000, CSI 0,667.
 
@@ -328,7 +328,7 @@ Métrica principal: habilidad (1 − ECM/ECM de la climatología). En **negrita*
 | SSM selectivo | red neuronal | 0,160 | 0,148 | 0,016 a 0,260 | 0,099 | 0,026 |
 | PatchTST | red neuronal | 0,039 | 0,135 | 0,042 a 0,168 | 0,067 | 0,084 |
 
-Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0). Habilidad frente a persistencia en prueba: 0,386. Cobertura del intervalo conformal del 90 % en prueba: 0,817 (ancho 4,277).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,386. Cobertura del intervalo conformal del 90 % en prueba: 0,817 (ancho 4,277).
 
 Categoría sequía (SPI-3 ≤ −1) en prueba: aciertos 0, falsas alarmas 0, fallos 3; POD 0,000, FAR —, CSI 0,000.
 
@@ -368,7 +368,7 @@ Métrica principal: habilidad (1 − ECM/ECM de la climatología). En **negrita*
 | PatchTST | red neuronal | 0,301 | 0,281 | 0,213 a 0,363 | 0,000 | 0,163 |
 | SSM selectivo | red neuronal | 0,276 | 0,249 | 0,151 a 0,402 | 0,005 | 0,033 |
 
-Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0). Habilidad frente a persistencia en prueba: 0,636. Cobertura del intervalo conformal del 90 % en prueba: 0,933 (ancho 2,467).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,636. Cobertura del intervalo conformal del 90 % en prueba: 0,933 (ancho 2,467).
 
 Categoría sequía (SPI-3 ≤ −1) en prueba: aciertos 1, falsas alarmas 1, fallos 1; POD 0,500, FAR 0,500, CSI 0,333.
 
@@ -402,7 +402,7 @@ Métrica principal: habilidad (1 − ECM/ECM de la climatología). En **negrita*
 | Gradient boosting | clasico | -0,144 | -0,353 | -0,682 a -0,050 | 0,051 |  |
 | Ridge | clasico | -0,167 | -0,381 | -0,626 a -0,166 | 0,019 |  |
 
-Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0). Habilidad frente a persistencia en prueba: 0,391. Cobertura del intervalo conformal del 90 % en prueba: 0,950 (ancho 4,022).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,391. Cobertura del intervalo conformal del 90 % en prueba: 0,950 (ancho 4,022).
 
 Categoría sequía (SPI-3 ≤ −1) en prueba: aciertos 0, falsas alarmas 0, fallos 2; POD 0,000, FAR —, CSI 0,000.
 
@@ -446,7 +446,7 @@ Métrica principal: ganancia de información frente a Poisson de tasa constante 
 | Gradient boosting | clasico | -0,238 | -0,074 | -0,544 a 0,306 | 0,775 |  |
 | GLM de Poisson | clasico | -0,306 | -0,494 | -0,798 a -0,120 | 0,032 |  |
 
-Lectura (regla IC90): confirmada (IC90 > 0). No es un pronóstico de sismos. Mide si hay estructura temporal (agrupamiento) más allá del azar.
+Lectura (regla IC90): confirmada (IC90 > 0 y DM p < 0,10). No es un pronóstico de sismos. Mide si hay estructura temporal (agrupamiento) más allá del azar.
 
 - Decisión: **Se publica**.
 
@@ -591,6 +591,50 @@ El IGP publica los sismos que reporta (percibidos o relevantes), no su catálogo
 - **SMAP (NSIDC)**: Acceso con token verificado, pero empieza en 2015 (después del entrenamiento) y solo se distribuye por gránulo global; no aporta a los experimentos con la partición congelada.
 - **HLS (LP DAAC)**: Acceso con token verificado; reflectancia a 30 m sin relación directa con las variables objetivo de estos experimentos.
 - **SENAMHI, ANA, CENEPRED, SINIA, INGEMMET**: Sin API pública de datos (ver docs/verificacion/fuentes_fenomenos.json); se integrarán por convenio o descarga manual verificada.
+
+## Escala nacional · 25 departamentos
+
+**Clima:** NASA POWER (MERRA-2), celda de la capital de cada departamento. Tendencias 1981–2025 con el Sello de Confianza del paquete; SPI con parámetros gamma de 1981–2015 (último mes disponible). Con una sola familia de datos el Sello no puede dar 'robusta': la independencia queda pendiente.
+
+| Departamento | T media (°C) | Tendencia T (°C/década) [IC90] · Sello | Lluvia anual (mm) | Tendencia lluvia (mm/década) · Sello | SPI-12 | Deslizamientos GLC |
+|---|---|---|---|---|---|---|
+| Amazonas | 17,0 | 0,29 [0,20 a 0,41] · preliminar | 550 | -58,2 · sin_tendencia | -0,38 | 0 |
+| Áncash | 8,1 | 0,29 [0,18 a 0,38] · preliminar | 416 | -38,6 · no_decidible | 2,15 | 5 |
+| Apurímac | 12,0 | 0,12 [0,03 a 0,23] · sin_tendencia | 672 | 37,4 · sin_tendencia | 0,83 | 3 |
+| Arequipa | 10,8 | 0,27 [0,20 a 0,34] · preliminar | 136 | 23,9 · preliminar | 2,38 (no interpretable: clima árido) | 5 |
+| Ayacucho | 9,2 | 0,09 [0,02 a 0,18] · fragil | 540 | 42,4 · fragil | 1,95 | 2 |
+| Cajamarca | 14,2 | 0,22 [0,12 a 0,31] · preliminar | 467 | 18,1 · no_decidible | 1,37 | 0 |
+| Callao | 18,2 | 0,15 [0,06 a 0,25] · preliminar | 30 | 2,5 · no_decidible | 4,74 (no interpretable: clima árido) | 0 |
+| Cusco | 8,3 | 0,15 [0,06 a 0,23] · fragil | 698 | 31,3 · sin_tendencia | 0,73 | 15 |
+| Huancavelica | 5,3 | 0,14 [0,06 a 0,23] · fragil | 345 | 16,0 · no_decidible | 1,98 | 2 |
+| Huánuco | 9,7 | 0,22 [0,15 a 0,30] · preliminar | 611 | -8,7 · no_decidible | -0,05 | 4 |
+| Ica | 18,6 | 0,18 [0,11 a 0,27] · preliminar | 82 | 22,4 · preliminar | 4,75 (no interpretable: clima árido) | 0 |
+| Junín | 8,7 | 0,17 [0,09 a 0,24] · preliminar | 370 | 14,3 · no_decidible | 2,21 | 1 |
+| La Libertad | 17,8 | 0,23 [0,14 a 0,30] · preliminar | 195 | 20,4 · fragil | 2,92 (no interpretable: clima árido) | 2 |
+| Lambayeque | 20,5 | -0,01 [-0,17 a 0,13] · no_decidible | 90 | 13,7 · fragil | 1,90 (no interpretable: clima árido) | 0 |
+| Lima (misma celda que callao) | 18,2 | 0,15 [0,06 a 0,25] · preliminar | 30 | 2,5 · no_decidible | 4,74 (no interpretable: clima árido) | 10 |
+| Loreto | 25,7 | 0,09 [0,03 a 0,15] · fragil | 2657 | 294,6 · sin_tendencia | 0,10 | 0 |
+| Madre de Dios | 25,3 | -0,03 [-0,20 a 0,12] · no_decidible | 2003 | 178,7 · preliminar | 1,50 | 0 |
+| Moquegua | 7,1 | 0,28 [0,22 a 0,34] · preliminar | 129 | 7,2 · sin_tendencia | 1,81 (no interpretable: clima árido) | 0 |
+| Pasco | 7,0 | 0,18 [0,10 a 0,24] · preliminar | 324 | 6,4 · no_decidible | 1,28 | 1 |
+| Piura | 25,4 | 0,14 [0,02 a 0,25] · sin_tendencia | 202 | -21,7 · no_decidible | 0,58 | 0 |
+| Puno | 7,9 | 0,21 [0,13 a 0,30] · preliminar | 423 | 26,6 · sin_tendencia | 1,57 | 4 |
+| San Martín | 22,3 | 0,21 [0,04 a 0,36] · sin_tendencia | 987 | -0,3 · no_decidible | -0,56 | 3 |
+| Tacna | 15,0 | 0,27 [0,22 a 0,36] · preliminar | 60 | -4,9 · no_decidible | 1,39 (no interpretable: clima árido) | 0 |
+| Tumbes | 24,7 | 0,27 [0,16 a 0,38] · preliminar | 413 | 23,3 · no_decidible | 0,05 | 0 |
+| Ucayali | 27,0 | 0,48 [0,30 a 0,66] · preliminar | 1349 | -82,9 · sin_tendencia | 0,13 | 0 |
+
+Veredictos (mismo vocabulario que la API: 'preliminar' = significativa con pruebas pendientes) por celda climática distinta: temperatura fragil 4, no_decidible 2, preliminar 15, sin_tendencia 3; lluvia fragil 3, no_decidible 11, preliminar 3, sin_tendencia 7.
+
+**Sismicidad nacional:** USGS ComCat (FDSN), caja [-81.5, -18.5, -68.5, 0.0], 1973-01-15 a 2026-11-13: 5 710 sismos M ≥ 4,5; Mc = 4,7; b = 1,035 (IC90 1,006 a 1,065); tasa anual M ≥ Mc = 69,8.
+
+| Franja | b | n |
+|---|---|---|
+| norte (0° a −8°) | 1,006 | 1110 |
+| centro (−8° a −14°) | 1,070 | 1071 |
+| sur (−14° a −18,5°) | 1,034 | 1578 |
+
+Tasas históricas del catálogo global; no son pronósticos. El IGP mantiene el catálogo nacional oficial.
 
 ## Limitaciones
 

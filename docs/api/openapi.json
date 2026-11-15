@@ -2418,6 +2418,28 @@
         }
       }
     },
+    "/api/v1/nacional": {
+      "get": {
+        "tags": [
+          "Fenómenos naturales"
+        ],
+        "summary": "Panorama nacional: 25 departamentos con el mismo motor",
+        "description": "Tendencias con Sello de Confianza, estado de sequía (SPI) y sismicidad nacional, del expediente `panorama_nacional` vigente. Sin expediente publicado, `resultado` es null.",
+        "operationId": "panorama_nacional_api_v1_nacional_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PanoramaNacional"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/relevancia/matriz": {
       "get": {
         "tags": [
@@ -3705,6 +3727,57 @@
         ],
         "title": "CeldaRelevancia"
       },
+      "CeldaSismica": {
+        "properties": {
+          "lat": {
+            "type": "number",
+            "maximum": 90.0,
+            "minimum": -90.0,
+            "title": "Lat"
+          },
+          "lon": {
+            "type": "number",
+            "maximum": 180.0,
+            "minimum": -180.0,
+            "title": "Lon"
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "N"
+          },
+          "tasa_anual": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Tasa Anual"
+          },
+          "m_max": {
+            "type": "number",
+            "title": "M Max"
+          },
+          "profundidad_media_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profundidad Media Km"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "lat",
+          "lon",
+          "n",
+          "tasa_anual",
+          "m_max"
+        ],
+        "title": "CeldaSismica"
+      },
       "Cifra": {
         "properties": {
           "valor": {
@@ -4089,6 +4162,146 @@
           "unidad"
         ],
         "title": "CuantilesPronostico"
+      },
+      "DepartamentoNacional": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]{2,40}$",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "capital": {
+            "type": "string",
+            "title": "Capital"
+          },
+          "lat": {
+            "type": "number",
+            "maximum": 90.0,
+            "minimum": -90.0,
+            "title": "Lat"
+          },
+          "lon": {
+            "type": "number",
+            "maximum": 180.0,
+            "minimum": -180.0,
+            "title": "Lon"
+          },
+          "elevacion_celda_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Elevacion Celda M"
+          },
+          "comparte_celda_con": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comparte Celda Con",
+            "description": "Departamento con la misma celda POWER (mismo clima)."
+          },
+          "temperatura_media_c": {
+            "type": "number",
+            "title": "Temperatura Media C"
+          },
+          "lluvia_anual_media_mm": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Lluvia Anual Media Mm"
+          },
+          "tendencia_temperatura": {
+            "$ref": "#/components/schemas/TendenciaRegional"
+          },
+          "tendencia_lluvia": {
+            "$ref": "#/components/schemas/TendenciaRegional"
+          },
+          "spi_mes": {
+            "type": "string",
+            "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+            "title": "Spi Mes"
+          },
+          "spi3": {
+            "type": "number",
+            "title": "Spi3"
+          },
+          "spi12": {
+            "type": "number",
+            "title": "Spi12"
+          },
+          "spi_confiable": {
+            "type": "boolean",
+            "title": "Spi Confiable",
+            "description": "False en climas hiperáridos, donde el SPI no es interpretable."
+          },
+          "deslizamientos_glc": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Deslizamientos Glc"
+          },
+          "serie_anios": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Serie Anios"
+          },
+          "serie_temperatura_c": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Serie Temperatura C"
+          },
+          "serie_lluvia_mm": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Serie Lluvia Mm"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "capital",
+          "lat",
+          "lon",
+          "temperatura_media_c",
+          "lluvia_anual_media_mm",
+          "tendencia_temperatura",
+          "tendencia_lluvia",
+          "spi_mes",
+          "spi3",
+          "spi12",
+          "spi_confiable",
+          "deslizamientos_glc"
+        ],
+        "title": "DepartamentoNacional"
       },
       "DistribucionSustitutos": {
         "properties": {
@@ -4804,6 +5017,9 @@
               },
               {
                 "$ref": "#/components/schemas/ResultadoInventario"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoPanoramaNacional"
               }
             ],
             "title": "Resultado",
@@ -4816,6 +5032,7 @@
                 "colmatacion": "#/components/schemas/ResultadoColmatacion",
                 "comparacion_modelos": "#/components/schemas/ResultadoComparacionModelos",
                 "inventario": "#/components/schemas/ResultadoInventario",
+                "panorama_nacional": "#/components/schemas/ResultadoPanoramaNacional",
                 "priorizacion": "#/components/schemas/ResultadoPriorizacion",
                 "pronostico": "#/components/schemas/ResultadoPronostico",
                 "recurrencia": "#/components/schemas/ResultadoRecurrencia",
@@ -5080,6 +5297,9 @@
               },
               {
                 "$ref": "#/components/schemas/ResultadoInventario"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoPanoramaNacional"
               }
             ],
             "title": "Resultado",
@@ -5092,6 +5312,7 @@
                 "colmatacion": "#/components/schemas/ResultadoColmatacion",
                 "comparacion_modelos": "#/components/schemas/ResultadoComparacionModelos",
                 "inventario": "#/components/schemas/ResultadoInventario",
+                "panorama_nacional": "#/components/schemas/ResultadoPanoramaNacional",
                 "priorizacion": "#/components/schemas/ResultadoPriorizacion",
                 "pronostico": "#/components/schemas/ResultadoPronostico",
                 "recurrencia": "#/components/schemas/ResultadoRecurrencia",
@@ -6244,6 +6465,57 @@
           "desplazamiento"
         ],
         "title": "Pagina[SerieSalida]"
+      },
+      "PanoramaNacional": {
+        "properties": {
+          "expediente_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expediente Id",
+            "description": "Expediente del que sale el panorama; null si no hay."
+          },
+          "generado_utc": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generado Utc"
+          },
+          "resultado": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resultado",
+            "description": "Contenido validado con ResultadoPanoramaNacional al publicarse."
+          },
+          "aviso": {
+            "type": "string",
+            "title": "Aviso"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "aviso"
+        ],
+        "title": "PanoramaNacional",
+        "description": "Escala nacional vigente: el resultado completo del expediente `panorama_nacional` más reciente."
       },
       "Paso": {
         "properties": {
@@ -7457,6 +7729,59 @@
         ],
         "title": "ResultadoInventario"
       },
+      "ResultadoPanoramaNacional": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "const": "panorama_nacional",
+            "title": "Tipo"
+          },
+          "fuente_clima": {
+            "type": "string",
+            "title": "Fuente Clima"
+          },
+          "departamentos": {
+            "items": {
+              "$ref": "#/components/schemas/DepartamentoNacional"
+            },
+            "type": "array",
+            "maxItems": 60,
+            "minItems": 1,
+            "title": "Departamentos"
+          },
+          "sismicidad": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SismicidadNacional"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lectura": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Lectura"
+          },
+          "es_pronostico": {
+            "type": "boolean",
+            "const": false,
+            "title": "Es Pronostico",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tipo",
+          "fuente_clima",
+          "departamentos",
+          "lectura"
+        ],
+        "title": "ResultadoPanoramaNacional",
+        "description": "Escala nacional: el mismo motor (Sello, SPI, sismicidad) aplicado a los 25 departamentos."
+      },
       "ResultadoPriorizacion": {
         "properties": {
           "tipo": {
@@ -8431,6 +8756,81 @@
         ],
         "title": "Significancia"
       },
+      "SismicidadNacional": {
+        "properties": {
+          "fuente": {
+            "type": "string",
+            "title": "Fuente"
+          },
+          "periodo": {
+            "$ref": "#/components/schemas/Periodo"
+          },
+          "eventos": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Eventos"
+          },
+          "mc": {
+            "type": "number",
+            "title": "Mc"
+          },
+          "valor_b": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Valor B"
+          },
+          "intervalo_b": {
+            "$ref": "#/components/schemas/Intervalo"
+          },
+          "valor_b_por_franja": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Valor B Por Franja"
+          },
+          "tasa_anual_mc": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Tasa Anual Mc"
+          },
+          "celdas": {
+            "items": {
+              "$ref": "#/components/schemas/CeldaSismica"
+            },
+            "type": "array",
+            "maxItems": 2000,
+            "title": "Celdas"
+          },
+          "grandes_sismos": {
+            "items": {
+              "$ref": "#/components/schemas/EventoSismico"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Grandes Sismos"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "fuente",
+          "periodo",
+          "eventos",
+          "mc",
+          "valor_b",
+          "intervalo_b",
+          "tasa_anual_mc"
+        ],
+        "title": "SismicidadNacional"
+      },
       "SolicitudVerificacion": {
         "properties": {
           "texto": {
@@ -8464,6 +8864,72 @@
         ],
         "title": "SolicitudVerificacion"
       },
+      "TendenciaRegional": {
+        "properties": {
+          "sen_por_decada": {
+            "type": "number",
+            "title": "Sen Por Decada"
+          },
+          "intervalo": {
+            "$ref": "#/components/schemas/Intervalo"
+          },
+          "p_conservador": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "P Conservador"
+          },
+          "veredicto": {
+            "$ref": "#/components/schemas/Veredicto"
+          },
+          "fallan": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fallan"
+          },
+          "pendientes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Pendientes"
+          },
+          "nota": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nota"
+          },
+          "anios_necesarios": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Anios Necesarios"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "sen_por_decada",
+          "intervalo",
+          "p_conservador",
+          "veredicto"
+        ],
+        "title": "TendenciaRegional",
+        "description": "Resumen del Sello de Confianza para una variable de un departamento."
+      },
       "TipoExpediente": {
         "type": "string",
         "enum": [
@@ -8478,7 +8944,8 @@
           "comparacion_modelos",
           "recurrencia",
           "sismicidad",
-          "inventario"
+          "inventario",
+          "panorama_nacional"
         ],
         "title": "TipoExpediente"
       },

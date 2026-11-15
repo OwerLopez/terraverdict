@@ -27,6 +27,10 @@ FUENTES = {
         ["power_diaria", "chirps_v2_diaria", "power_mensual", "oni", "usgs_comcat"],
         ["power", "chirps", "noaa", "usgs"],
     ),
+    "nacional": (
+        ["power_mensual", "oni", "usgs_comcat", "nasa_glc", "gvp_volcanes"],
+        ["power_nacional", "usgs_nacional", "noaa", "glc", "gvp"],
+    ),
 }
 DOMINIO = {"volcanes": "sur_peru_fenomenos", "deslizamientos": "sur_peru_fenomenos", "sismos": "sur_peru_fenomenos"}
 REPOSITORIO = "DiegoNiS/terraverdict"
@@ -440,6 +444,116 @@ def de_caos(r: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def veredicto_backend(t: dict[str, Any], alfa: float) -> str:
+    """Misma traducción que `de_tendencia`: el backend reserva 'fragil' para pruebas fallidas."""
+    significativa = t["p_conservador"] <= alfa
+    if t["fallan"] and significativa:
+        return "fragil"
+    if t["veredicto"] == "no_decidible":
+        return "no_decidible"
+    if t["pendientes"]:
+        return "preliminar" if significativa else "sin_tendencia"
+    return "robusta" if significativa else "sin_tendencia"
+
+
+def _tendencia_regional(t: dict[str, Any], alfa: float) -> dict[str, Any]:
+    return {
+        "sen_por_decada": t["sen_por_decada"],
+        "intervalo": {"lo": t["ic90_por_decada"][0], "hi": t["ic90_por_decada"][1], "nivel": 0.9},
+        "p_conservador": min(1.0, max(0.0, t["p_conservador"])),
+        "veredicto": veredicto_backend(t, alfa),
+        "fallan": t["fallan"],
+        "pendientes": t["pendientes"],
+        "nota": (t.get("nota") or None),
+        "anios_necesarios": _f(t.get("anios_necesarios")),
+    }
+
+
+def de_nacional(r: dict[str, Any], alfa: float = 0.10) -> list[dict[str, Any]]:
+    deps = []
+    for d in r["departamentos"]:
+        if "error" in d:
+            continue
+        s = d["series_anuales"]
+        deps.append(
+            {
+                **{k: d[k] for k in ("id", "nombre", "capital", "lat", "lon")},
+                "elevacion_celda_m": _f(d.get("elevacion_celda_m")),
+                "comparte_celda_con": d.get("comparte_celda_con"),
+                "temperatura_media_c": d["temperatura_media_c"],
+                "lluvia_anual_media_mm": d["lluvia_anual_media_mm"],
+                "tendencia_temperatura": _tendencia_regional(d["tendencia_temperatura"], alfa),
+                "tendencia_lluvia": _tendencia_regional(d["tendencia_lluvia"], alfa),
+                "spi_mes": d["spi"]["mes"][:7],
+                "spi3": d["spi"]["spi3"],
+                "spi12": d["spi"]["spi12"],
+                "spi_confiable": d["spi"]["confiable"],
+                "deslizamientos_glc": d["deslizamientos_glc"],
+                "serie_anios": s["anios"],
+                "serie_temperatura_c": s["temperatura_c"],
+                "serie_lluvia_mm": [_f(v) for v in s["lluvia_mm"]],
+            }
+        )
+    sis = r.get("sismicidad")
+    sismicidad = None
+    if sis:
+        b = sis["valor_b"]
+        sismicidad = {
+            "fuente": sis["fuente"],
+            "periodo": {"desde": sis["desde"], "hasta": sis["hasta"]},
+            "eventos": sis["eventos"],
+            "mc": sis["mc"],
+            "valor_b": b["b"],
+            "intervalo_b": _intervalo(b["ic90_bootstrap"]),
+            "valor_b_por_franja": {k: _f(v.get("b")) for k, v in sis["valor_b_por_franja"].items()},
+            "tasa_anual_mc": sis["tasa_anual_m_mayor_mc"],
+            "celdas": [
+                {k: c[k] for k in ("lat", "lon", "n", "tasa_anual", "m_max", "profundidad_media_km")}
+                for c in sis["grilla"]
+            ],
+            "grandes_sismos": [
+                {
+                    "fecha": g["fecha"],
+                    "lat": g["lat"],
+                    "lon": g["lon"],
+                    "magnitud": g["magnitud"],
+                    "profundidad_km": _f(g.get("profundidad_km")),
+                }
+                for g in sis["grandes_sismos"][:200]
+            ],
+        }
+    resultado = {
+        "tipo": "panorama_nacional",
+        "fuente_clima": r["fuente_clima"],
+        "departamentos": deps,
+        "sismicidad": sismicidad,
+        "lectura": r["lectura"][:1000],
+    }
+    calentamiento = sum(
+        1 for d in deps if not d["comparte_celda_con"] and d["tendencia_temperatura"]["sen_por_decada"] > 0
+    )
+    unicos = sum(1 for d in deps if not d["comparte_celda_con"])
+    pasos = _pasos(
+        ("descarga", "POWER mensual por capital y USGS nacional con SHA-256"),
+        ("sello", "Sello de Confianza por departamento"),
+        ("spi", "SPI-3 y SPI-12 con parámetros del entrenamiento"),
+        ("sismicidad", "Mc, valor b y grilla sísmica nacional"),
+    )
+    proc = procedencia("nacional", r["procedencia"], pasos)
+    if r.get("configuracion"):
+        proc["hash_entradas"][r["configuracion"]["archivo"]] = r["configuracion"]["sha256"]
+    return [
+        _expediente(
+            "peru_nacional",
+            "Panorama nacional: clima, sequía y sismicidad de los 25 departamentos",
+            f"Mismo motor en todo el país. Temperatura con pendiente positiva en {calentamiento} de {unicos} celdas "
+            "climáticas distintas; ver el veredicto del Sello de cada una. Tasas sísmicas históricas, no pronósticos.",
+            resultado,
+            proc,
+        )
+    ]
+
+
 def de_resultados(carpeta: Path, eventos_minimos: int = 30) -> list[dict[str, Any]]:
     salida: list[dict[str, Any]] = []
     for ruta in sorted(carpeta.glob("*.json")):
@@ -459,6 +573,8 @@ def de_resultados(carpeta: Path, eventos_minimos: int = 30) -> list[dict[str, An
             salida += de_deslizamientos(r, eventos_minimos)
         elif nombre == "caos":
             salida += de_caos(r)
+        elif nombre == "nacional":
+            salida += de_nacional(r)
     return salida
 
 
