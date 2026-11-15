@@ -63,7 +63,7 @@ def backend(tmp_path_factory: pytest.TempPathFactory) -> Any:
 
 
 def test_indice_con_todos_los_experimentos(resultados: Path) -> None:
-    indice = json.loads((resultados / "indice.json").read_text())
+    indice = json.loads((resultados / "indice.json").read_text(encoding="utf-8"))
     assert set(indice["experimentos"]) == {
         "volcanes",
         "deslizamientos",
@@ -77,10 +77,10 @@ def test_indice_con_todos_los_experimentos(resultados: Path) -> None:
         "historial",
     }
     # El historial (modo rápido: dos cortes) reevalúa el diseño congelado de los resultados principales
-    historial = json.loads((resultados / "historial.json").read_text())
+    historial = json.loads((resultados / "historial.json").read_text(encoding="utf-8"))
     evaluadas = [t for t in historial["pronostico"].values() if "anios" in t]
     assert evaluadas and all(a["regimen"] in ("validacion_del_diseno", "fuera_de_muestra") for t in evaluadas for a in t["anios"])
-    p = json.loads((resultados / "caos.json").read_text())["procedencia"]
+    p = json.loads((resultados / "caos.json").read_text(encoding="utf-8"))["procedencia"]
     assert p["preregistro_sha256"] == cargar_preregistro(RAIZ / "preregistro.yaml").sha256
 
 
@@ -97,7 +97,7 @@ def test_informe_solo_con_cifras_de_los_json(resultados: Path) -> None:
         "## Limitaciones",
     ):
         assert seccion in texto
-    lluvia = json.loads((resultados / "lluvia_extrema.json").read_text())
+    lluvia = json.loads((resultados / "lluvia_extrema.json").read_text(encoding="utf-8"))
     umbral = informe.n(lluvia["zoo"]["modelos"][lluvia["zoo"]["mejor_validacion"]]["puntaje_validacion"])
     assert umbral in texto  # la cifra del informe es la del JSON, con el mismo redondeo
 

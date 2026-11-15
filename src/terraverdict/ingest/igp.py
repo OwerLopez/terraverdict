@@ -39,7 +39,7 @@ def cargar(carpeta: str | Path) -> list[dict[str, Any]]:
     """Eventos con tiempo en UTC (ISO), lat, lon, profundidad (km) y magnitud; sin duplicados."""
     eventos: dict[str, dict[str, Any]] = {}
     for f in sorted(Path(carpeta).glob("igp_*.json")):
-        for e in json.loads(f.read_text()):
+        for e in json.loads(f.read_text(encoding="utf-8")):
             try:
                 fecha = dt.date.fromisoformat(e["fecha_local"][:10])
                 hora = dt.time.fromisoformat(e["hora_local"][11:19])

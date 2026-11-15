@@ -158,10 +158,10 @@ def test_orquestador_guarda_procedencia(tmp_path: Path) -> None:
     config.write_text(yaml.safe_dump(c, allow_unicode=True), encoding="utf-8")
     indice = ejecutar.ejecutar(raw=RAW, salida=tmp_path / "res", solo=["volcanes", "deslizamientos"], config=config)
     assert indice["experimentos"] == ["deslizamientos", "volcanes"]
-    r = json.loads((tmp_path / "res" / "volcanes.json").read_text())
+    r = json.loads((tmp_path / "res" / "volcanes.json").read_text(encoding="utf-8"))
     p = r["procedencia"]
     assert p["config_sha256"] and p["versiones"]["torch"] and p["modo"] == "completo"
-    assert json.loads((tmp_path / "res" / "indice.json").read_text())["commit"] == p["commit"]
+    assert json.loads((tmp_path / "res" / "indice.json").read_text(encoding="utf-8"))["commit"] == p["commit"]
     ejecutar.ejecutar(raw=RAW, salida=tmp_path / "res", solo=["volcanes"], config=config)
-    indice = json.loads((tmp_path / "res" / "indice.json").read_text())
+    indice = json.loads((tmp_path / "res" / "indice.json").read_text(encoding="utf-8"))
     assert set(indice["corridas"]) == {"deslizamientos", "volcanes"}  # la corrida parcial conserva lo anterior

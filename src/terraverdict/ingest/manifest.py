@@ -36,7 +36,7 @@ def guardar_crudo(
         **(extra or {}),
     }
     man = carpeta / "manifiesto.json"
-    lista = json.loads(man.read_text()) if man.exists() else []
+    lista = json.loads(man.read_text(encoding="utf-8")) if man.exists() else []
     lista = [e for e in lista if e["archivo"] != nombre] + [entrada]
-    man.write_text(json.dumps(lista, indent=1, ensure_ascii=False))
+    man.write_text(json.dumps(lista, indent=1, ensure_ascii=False), encoding="utf-8", newline="\n")
     return entrada

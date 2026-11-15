@@ -861,8 +861,8 @@ def seccion_historial(r: dict[str, Any]) -> str:
 
 
 def generar(resultados: Path) -> str:
-    indice = json.loads((resultados / "indice.json").read_text())
-    res = {p.stem: json.loads(p.read_text()) for p in sorted(resultados.glob("*.json")) if p.stem != "indice"}
+    indice = json.loads((resultados / "indice.json").read_text(encoding="utf-8"))
+    res = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in sorted(resultados.glob("*.json")) if p.stem != "indice"}
     proc = next(iter(res.values()))["procedencia"]
     partes = [
         "# Resultados de los experimentos",

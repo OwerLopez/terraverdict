@@ -35,7 +35,7 @@ def ejecutar(cfg: dict[str, Any], raw: Path, registro=print) -> dict[str, Any]:
         ruta = raw / "power_celdas" / f"power_diario_celda_{lon}_{lat}.json"
         if not ruta.exists():
             continue
-        serie = pd.Series(json.loads(ruta.read_text())["properties"]["parameter"]["PRECTOTCORR"])
+        serie = pd.Series(json.loads(ruta.read_text(encoding="utf-8"))["properties"]["parameter"]["PRECTOTCORR"])
         serie.index = pd.to_datetime(serie.index, format="%Y%m%d")
         serie = serie.where(serie >= 0)
         fecha = pd.to_datetime(e["fecha"], format="%m/%d/%Y %I:%M:%S %p").normalize()

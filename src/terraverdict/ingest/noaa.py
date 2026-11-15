@@ -16,7 +16,7 @@ def descargar_oni(raw: str | Path) -> dict:
 
 def cargar_oni(archivo: str | Path) -> dict[int, float]:
     """ONI de DJF indexado por el año de enero-febrero (igual que el análisis preliminar)."""
-    filas = Path(archivo).read_text().strip().splitlines()[1:]
+    filas = Path(archivo).read_text(encoding="utf-8").strip().splitlines()[1:]
     return {int(p[1]): float(p[3]) for p in (linea.split() for linea in filas) if p[0] == "DJF"}
 
 

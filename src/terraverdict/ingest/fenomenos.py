@@ -137,7 +137,7 @@ def registrar_desde_manifiestos(reg: dict[str, Any], raw: Path) -> dict[str, Any
         man = raw / carpeta / "manifiesto.json"
         if not man.exists():
             continue
-        for e in json.loads(man.read_text()):
+        for e in json.loads(man.read_text(encoding="utf-8")):
             clave = carpeta if carpeta == "igp" else "_".join(e["archivo"].split("_")[:-2]).removesuffix(".json")
             if clave not in reg:
                 reg[clave] = {"ok": True, "salida": [], "nota": "Tomado del manifiesto de una corrida anterior."}
@@ -146,7 +146,7 @@ def registrar_desde_manifiestos(reg: dict[str, Any], raw: Path) -> dict[str, Any
     # MODIS: un paso por punto, completo solo si su manifiesto tiene todas las bandas
     man = raw / "modis" / "manifiesto.json"
     if man.exists():
-        entradas = json.loads(man.read_text())
+        entradas = json.loads(man.read_text(encoding="utf-8"))
         for punto in {e["archivo"].split("_")[1] for e in entradas}:
             propias = [e for e in entradas if e["archivo"].startswith(f"modis_{punto}_")]
             clave = f"modis_lst_{punto}"
@@ -209,5 +209,5 @@ def verificar_fuentes_nacionales(fuentes: dict[str, str], timeout: int = 60) -> 
 def guardar_registro(reg: dict[str, Any], ruta: str | Path) -> Path:
     ruta = Path(ruta)
     ruta.parent.mkdir(parents=True, exist_ok=True)
-    ruta.write_text(json.dumps(reg, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+    ruta.write_text(json.dumps(reg, ensure_ascii=False, indent=1, default=str), encoding="utf-8", newline="\n")
     return ruta

@@ -49,7 +49,7 @@ def procedencia(raw: Path, config: Path) -> dict[str, Any]:
     for m in sorted(raw.glob("*/manifiesto.json")):
         manifiestos[m.parent.name] = [
             {k: e[k] for k in ("archivo", "sha256", "url", "descargado_utc") if k in e}
-            for e in json.loads(m.read_text())
+            for e in json.loads(m.read_text(encoding="utf-8"))
         ]
     try:
         commit = subprocess.run(
@@ -107,7 +107,7 @@ def ejecutar(
         r = funcion()
         tiempos[nombre] = round(time.perf_counter() - t, 1)
         r["procedencia"] = {**proc, "segundos": tiempos[nombre], "modo": "rapido" if rapido else "completo"}
-        (salida / f"{nombre}.json").write_text(json.dumps(_json(r), ensure_ascii=False, indent=1), encoding="utf-8")
+        (salida / f"{nombre}.json").write_text(json.dumps(_json(r), ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
         hechos[nombre] = r
         return r
 
@@ -140,7 +140,7 @@ def ejecutar(
             ),
         )
     # Índice acumulativo: una corrida parcial (--solo) actualiza sus experimentos y conserva el resto.
-    previo = json.loads((salida / "indice.json").read_text()) if (salida / "indice.json").exists() else {}
+    previo = json.loads((salida / "indice.json").read_text(encoding="utf-8")) if (salida / "indice.json").exists() else {}
     corridas = {k: v for k, v in previo.get("corridas", {}).items() if k not in hechos}
     corridas.update(
         {k: {"commit": proc["commit"], "generado_utc": proc["generado_utc"], "segundos": tiempos[k]} for k in hechos}
@@ -153,5 +153,5 @@ def ejecutar(
         "experimentos": sorted(p.stem for p in salida.glob("*.json") if p.stem != "indice"),
         "sellos_sha256": sellar_resultados(salida),
     }
-    (salida / "indice.json").write_text(json.dumps(indice, ensure_ascii=False, indent=1), encoding="utf-8")
+    (salida / "indice.json").write_text(json.dumps(indice, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     return indice

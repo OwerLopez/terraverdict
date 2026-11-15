@@ -63,7 +63,7 @@ def exportar_openapi(args: argparse.Namespace) -> None:
     especificacion = create_app().openapi()
     salida = Path(args.salida)
     salida.parent.mkdir(parents=True, exist_ok=True)
-    salida.write_text(json.dumps(especificacion, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    salida.write_text(json.dumps(especificacion, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(f"OpenAPI escrito en {salida}")
 
 

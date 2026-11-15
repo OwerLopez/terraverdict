@@ -16,7 +16,7 @@ def pre():
 
 @pytest.fixture(scope="session")
 def fx():
-    j = json.loads((RAIZ / "tests/fixtures/preliminar_series.json").read_text())
+    j = json.loads((RAIZ / "tests/fixtures/preliminar_series.json").read_text(encoding="utf-8"))
     s = {
         k: (np.array([int(a) for a in v["serie"]], float), np.array(list(v["serie"].values())))
         for k, v in j["series"].items()

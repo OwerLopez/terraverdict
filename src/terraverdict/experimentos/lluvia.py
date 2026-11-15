@@ -271,7 +271,7 @@ def ejecutar(
     # Eventos documentados en el periodo de prueba (datos/eventos/arequipa.json), por mes
     import json
 
-    eventos_doc = json.loads((RAIZ / "datos" / "eventos" / "arequipa.json").read_text())["eventos"]
+    eventos_doc = json.loads((RAIZ / "datos" / "eventos" / "arequipa.json").read_text(encoding="utf-8"))["eventos"]
     p_mejor = zoo["_predicciones"][mejor]["prueba"]
     fechas_obj = d.fechas["prueba"] + pd.Timedelta(days=1)
     eventos = []

@@ -34,7 +34,7 @@ def ingest_oni(raw: Path = Path("data/raw")) -> None:
 def _series(series_json: Path | None, raw: Path, cfg: dict):
     """Devuelve {nombre: (anios, valores, unidad)} desde un JSON de series o desde data/raw (offline)."""
     if series_json:
-        j = json.loads(series_json.read_text())
+        j = json.loads(series_json.read_text(encoding="utf-8"))
         return {
             k: (np.array([int(a) for a in v["serie"]]), np.array(list(v["serie"].values())), v.get("unidad", ""))
             for k, v in j["series"].items()
@@ -84,7 +84,7 @@ def trends(
 
 @app.command("report")
 def report(expediente: Path, out: Path = Path("reports")) -> None:
-    e = json.loads(expediente.read_text())
+    e = json.loads(expediente.read_text(encoding="utf-8"))
     r = e["resultado"]
     out.mkdir(parents=True, exist_ok=True)
     L = [
@@ -109,7 +109,7 @@ def report(expediente: Path, out: Path = Path("reports")) -> None:
         f"_preregistro `{e['procedencia']['preregistro_sha256'][:12]}` · entradas `{e['procedencia']['entradas_sha256'][:12]}`_",
     ]
     ruta = out / f"{e['id']}.md"
-    ruta.write_text("\n".join(L), encoding="utf-8")
+    ruta.write_text("\n".join(L), encoding="utf-8", newline="\n")
     typer.echo(ruta)
 
 
@@ -134,13 +134,13 @@ def ingest_fenomenos(
     cfg = cargar_yaml(config)
     ruta = raw / "registro_descarga.json"
     if solo_adicionales:
-        inicial = json.loads(ruta.read_text()) if ruta.exists() else {}
+        inicial = json.loads(ruta.read_text(encoding="utf-8")) if ruta.exists() else {}
         reg = copy.deepcopy(inicial)
         fenomenos.descargar_fuentes_adicionales(cfg, raw, reg, tuple(fuentes.split(",")))
         fenomenos.registrar_desde_manifiestos(reg, raw)
         # Otra ingesta pudo escribir el registro mientras esta descargaba (p. ej., IMERG y MODIS en
         # paralelo): se relee y solo se actualizan los pasos que cambió esta corrida.
-        actual = json.loads(ruta.read_text()) if ruta.exists() else {}
+        actual = json.loads(ruta.read_text(encoding="utf-8")) if ruta.exists() else {}
         actual.update({k: v for k, v in reg.items() if inicial.get(k) != v})
         reg = actual
     else:
@@ -179,7 +179,7 @@ def informe(resultados: Path = Path("resultados"), salida: Path = Path("docs/exp
     """Genera docs/experimentos.md solo con las cifras de resultados/*.json."""
     from .experimentos.informe import generar
 
-    salida.write_text(generar(resultados), encoding="utf-8")
+    salida.write_text(generar(resultados), encoding="utf-8", newline="\n")
     typer.echo(f"Informe escrito en {salida}")
 
 
@@ -207,7 +207,7 @@ def publicar(
         return
     if exportar:
         # Contrato como interfaz: el backend importa este archivo al arrancar (sin depender de este paquete).
-        exportar.write_text(json.dumps(lista, ensure_ascii=False, indent=1), encoding="utf-8")
+        exportar.write_text(json.dumps(lista, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
         typer.echo(f"{len(lista)} expedientes exportados a {exportar}")
         return
     informe = cliente.publicar(lista, api, cliente.clave_ingesta())

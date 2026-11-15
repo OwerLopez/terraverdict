@@ -21,7 +21,7 @@ def texto() -> str:
 
 
 def test_secciones_de_cada_experimento(texto: str) -> None:
-    indice = json.loads((RESULTADOS / "indice.json").read_text())
+    indice = json.loads((RESULTADOS / "indice.json").read_text(encoding="utf-8"))
     titulos = {
         "lluvia_extrema": "Lluvia fuerte a 1 día · NASA POWER",
         "lluvia_extrema_chirps": "Lluvia fuerte a 1 día · CHIRPS",
@@ -42,12 +42,12 @@ def test_secciones_de_cada_experimento(texto: str) -> None:
 
 def test_cifras_iguales_a_los_json(texto: str) -> None:
     for nombre in ("lluvia_extrema", "sismos"):
-        r = json.loads((RESULTADOS / f"{nombre}.json").read_text())
+        r = json.loads((RESULTADOS / f"{nombre}.json").read_text(encoding="utf-8"))
         zoo = r["zoo"] if "zoo" in r else r["pronostico_conteos"]["zoo"]
         m = zoo["modelos"][zoo["mejor_validacion"]]
         assert informe.n(m["prueba"][m["metrica_principal"]]) in texto
         assert informe.ic(m["ic90_prueba"]) in texto
-    v = json.loads((RESULTADOS / "volcanes.json").read_text())["volcanes"][0]
+    v = json.loads((RESULTADOS / "volcanes.json").read_text(encoding="utf-8"))["volcanes"][0]
     assert informe.n(100 * v["probabilidad_anual_inicio"], 2) in texto
 
 

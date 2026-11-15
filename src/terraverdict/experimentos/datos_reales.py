@@ -29,7 +29,7 @@ RANGOS = {  # límites físicos plausibles para la región (no climatológicos)
 
 
 def _power_df(ruta: Path, diario: bool) -> tuple[pd.DataFrame, dict[str, Any]]:
-    j = json.loads(ruta.read_text())
+    j = json.loads(ruta.read_text(encoding="utf-8"))
     par = j["properties"]["parameter"]
     df = pd.DataFrame(par)
     if diario:
@@ -86,7 +86,7 @@ def oni_mensual(raw: Path) -> pd.Series:
         "OND": 11,
         "NDJ": 12,
     }
-    filas = (raw / "noaa" / "oni.ascii.txt").read_text().strip().splitlines()[1:]
+    filas = (raw / "noaa" / "oni.ascii.txt").read_text(encoding="utf-8").strip().splitlines()[1:]
     datos = {}
     for linea in filas:
         p = linea.split()
@@ -156,7 +156,7 @@ def imerg_diario(raw: Path, lon: float, lat: float) -> pd.Series | None:
     man = raw / "imerg" / "manifiesto.json"
     if not man.exists():
         return None
-    entrada = json.loads(man.read_text())[0]
+    entrada = json.loads(man.read_text(encoding="utf-8"))[0]
     i, j = earthdata.indice_imerg(lon, lat)
     s = _serie(earthdata.cargar_imerg(raw / "imerg", i, j, entrada["indices_lon"][0], entrada["indices_lat"][0]))
     return None if s.empty else s.asfreq("D")

@@ -652,7 +652,7 @@ def de_resultados(carpeta: Path, eventos_minimos: int = 30) -> list[dict[str, An
         if nombre in ("indice", "fuentes"):
             continue
         exigir_resultado_integro(ruta)  # un resultado alterado tras la corrida no se publica
-        r = json.loads(ruta.read_text())
+        r = json.loads(ruta.read_text(encoding="utf-8"))
         if nombre.startswith("lluvia_extrema"):
             salida += de_lluvia(nombre, r)
         elif nombre.startswith("sequia"):
@@ -741,4 +741,4 @@ def de_tendencia(e: dict[str, Any], alfa: float) -> dict[str, Any]:
 
 
 def de_expedientes(carpeta: Path, alfa: float) -> list[dict[str, Any]]:
-    return [de_tendencia(json.loads(p.read_text()), alfa) for p in sorted(carpeta.glob("TV-*.json"))]
+    return [de_tendencia(json.loads(p.read_text(encoding="utf-8")), alfa) for p in sorted(carpeta.glob("TV-*.json"))]

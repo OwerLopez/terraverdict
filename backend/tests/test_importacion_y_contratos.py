@@ -36,11 +36,11 @@ def test_importacion_es_idempotente(sesion: Session) -> None:
 def test_autodema_valida_consistencia(sesion: Session, tmp_path: Path) -> None:
     (tmp_path / "datos" / "autodema").mkdir(parents=True)
     (tmp_path / "docs" / "verificacion").mkdir(parents=True)
-    original = json.loads((RAIZ_REPO / "datos" / "autodema" / "reporte_2024-03-13.json").read_text())
+    original = json.loads((RAIZ_REPO / "datos" / "autodema" / "reporte_2024-03-13.json").read_text(encoding="utf-8"))
     original["total_chili_volumen_util_hm3"] = 999.0
     (tmp_path / "datos" / "autodema" / "reporte_2024-03-13.json").write_text(json.dumps(original))
     (tmp_path / "docs" / "verificacion" / "evidencia.json").write_text(
-        (RAIZ_REPO / "docs" / "verificacion" / "evidencia.json").read_text()
+        (RAIZ_REPO / "docs" / "verificacion" / "evidencia.json").read_text(encoding="utf-8")
     )
     with pytest.raises(ValueError, match="inconsistente"):
         importar_autodema(sesion, tmp_path)
@@ -49,7 +49,7 @@ def test_autodema_valida_consistencia(sesion: Session, tmp_path: Path) -> None:
 def test_openapi_versionado_coincide_con_el_codigo() -> None:
     """Si falla: ejecute `python -m app.cli exportar-openapi` y regenere los tipos del frontend."""
     generado = create_app().openapi()
-    versionado = json.loads((RAIZ_REPO / "docs" / "api" / "openapi.json").read_text())
+    versionado = json.loads((RAIZ_REPO / "docs" / "api" / "openapi.json").read_text(encoding="utf-8"))
     assert generado == versionado
 
 

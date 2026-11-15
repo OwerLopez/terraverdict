@@ -1,0 +1,21 @@
+# Fin de línea LF en todos los sistemas. Los sellos SHA-256 de resultados/*.json, el preregistro
+# congelado y los manifiestos se calculan sobre los bytes del archivo: con CRLF (core.autocrlf=true
+# en Windows) `tv verificar-integridad` los marcaría como alterados aunque el contenido sea el mismo.
+* text=auto eol=lf
+
+# Binarios: sin conversión.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.zip binary
+*.gz binary
+*.nc binary
+*.nc4 binary
+*.tif binary

@@ -70,7 +70,7 @@ def cargar(carpeta: str | Path) -> tuple[list[dict[str, Any]], list[dict[str, An
     carpeta = Path(carpeta)
     volcanes = [
         f["properties"] | {"coordenadas": f["geometry"]["coordinates"] if f.get("geometry") else None}
-        for f in json.loads((carpeta / "gvp_volcanes.geojson").read_text())["features"]
+        for f in json.loads((carpeta / "gvp_volcanes.geojson").read_text(encoding="utf-8"))["features"]
     ]
-    erupciones = [f["properties"] for f in json.loads((carpeta / "gvp_erupciones.geojson").read_text())["features"]]
+    erupciones = [f["properties"] for f in json.loads((carpeta / "gvp_erupciones.geojson").read_text(encoding="utf-8"))["features"]]
     return volcanes, erupciones

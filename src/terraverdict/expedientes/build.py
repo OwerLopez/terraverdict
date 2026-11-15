@@ -64,5 +64,5 @@ def guardar(exp: Expediente, carpeta: str | Path) -> Path:
     carpeta = Path(carpeta)
     carpeta.mkdir(parents=True, exist_ok=True)
     ruta = carpeta / f"{exp.id}.json"
-    ruta.write_text(exp.model_dump_json(indent=1), encoding="utf-8")
+    ruta.write_text(exp.model_dump_json(indent=1), encoding="utf-8", newline="\n")
     return ruta

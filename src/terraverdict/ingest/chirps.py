@@ -92,7 +92,7 @@ def cargar(carpeta: str | Path, nombre: str) -> dict[str, float]:
     """{fecha_iso: mm/día}. Los valores negativos (sin dato en ClimateSERV) se descartan."""
     salida: dict[str, float] = {}
     for f in sorted(Path(carpeta).glob(f"chirps_{nombre}_*.json")):
-        for d in json.loads(f.read_text())["data"]:
+        for d in json.loads(f.read_text(encoding="utf-8"))["data"]:
             v = d.get("raw_value")
             if v is None or v < 0:
                 continue

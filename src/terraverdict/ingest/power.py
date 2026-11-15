@@ -37,7 +37,7 @@ def descargar(
 
 
 def cargar(archivo: str | Path) -> tuple[dict, dict]:
-    j = json.loads(Path(archivo).read_text())
+    j = json.loads(Path(archivo).read_text(encoding="utf-8"))
     return j["properties"]["parameter"], {
         "fuentes": j["header"].get("sources"),
         "elevacion_celda_m": j["geometry"]["coordinates"][2],

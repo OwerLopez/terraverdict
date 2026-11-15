@@ -69,7 +69,7 @@ def descargar(
 
 def cargar(carpeta: str | Path, nombre: str, banda: str) -> dict[str, float]:
     """{fecha_iso: °C} del compuesto de 8 días que empieza en esa fecha; sin los valores nulos."""
-    j = json.loads((Path(carpeta) / f"modis_{nombre}_{banda}.json").read_text())
+    j = json.loads((Path(carpeta) / f"modis_{nombre}_{banda}.json").read_text(encoding="utf-8"))
     return {
         d["calendar_date"]: round(d["data"][0] * 0.02 - 273.15, 2)
         for d in j["subset"]

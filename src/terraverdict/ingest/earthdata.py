@@ -33,7 +33,7 @@ def token_earthdata(ruta_env: Path = RAIZ / ".env") -> str:
     if os.environ.get("EARTHDATA_TOKEN"):
         return os.environ["EARTHDATA_TOKEN"].strip()
     if ruta_env.exists():
-        texto = ruta_env.read_text().strip()
+        texto = ruta_env.read_text(encoding="utf-8").strip()
         for linea in texto.splitlines():
             if linea.startswith("EARTHDATA_TOKEN="):
                 return linea.split("=", 1)[1].strip().strip("\"'")
@@ -112,7 +112,7 @@ def descargar_imerg(
 
     _verificar(pedir_con_reintentos(get, _url_dia(desde, lon, lat)))  # falla temprano si no hay acceso
     man = raw / "manifiesto.json"
-    previos = {e["archivo"]: e for e in json.loads(man.read_text())} if man.exists() else {}
+    previos = {e["archivo"]: e for e in json.loads(man.read_text(encoding="utf-8"))} if man.exists() else {}
     entradas: list[dict[str, Any]] = []
     for anio in range(desde.year, hasta.year + 1):
         a, b = max(desde, dt.date(anio, 1, 1)), min(hasta, dt.date(anio, 12, 31))
@@ -162,7 +162,7 @@ def cargar_imerg(carpeta: str | Path, lon: int, lat: int, lon0: int, lat0: int) 
     patron = re.compile(r"^precipitation\.precipitation\[0\]\[(\d+)\],\s*(.*)$")
     for f in sorted(Path(carpeta).glob("imerg_diaria_*.txt")):
         fecha = None
-        for linea in f.read_text().splitlines():
+        for linea in f.read_text(encoding="utf-8").splitlines():
             if linea.startswith("### "):
                 fecha = linea[4:]
                 continue
