@@ -25,6 +25,26 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Corrección de escala en la selección de variables (mRMR)
+**Autor:** MaxsForocca · **Aportes:** Ower Frank
+
+**Defecto.** En clasificación (lluvia fuerte) la relevancia es la IM con un evento binario, acotada por la entropía del evento (≈ 0,26 nats con una tasa del 7 %). La redundancia era la IM entre variables continuas, que no tiene esa cota. Al restarlas, casi toda variable salía "redundante" por la diferencia de escala, no por falta de información.
+
+Ejemplo con datos reales (recorte 2008–2020): la humedad específica tenía IM 0,032 frente a un nulo de 0,005 y aun así se descartaba. Esto explica por qué la corrida preliminar del 14-11 solo eligió la historia de lluvia.
+
+**Corrección** (`seleccion/variables.py`)
+- La redundancia pasa a ser la |ρ de Spearman| **máxima** con las variables ya elegidas, en [0, 1]. La media diluía la redundancia de una copia de una variable ya elegida.
+- Puntaje = peso físico × IM × (1 − redundancia).
+- Una variable solo entra si su IM descontada supera la máxima IM de 50 permutaciones del objetivo (≈ p98 del nulo). Con 300 permutaciones se comprobó que el nulo del estimador KSG tiene cola larga.
+
+**Evidencia** (`tests/motor/test_seleccion_senales.py`)
+- Con un evento al 9 % y una humedad correlacionada con la historia (ρ = 0,5) pero con señal propia, la humedad entra en **8 de 8** réplicas. Con el método anterior, en **1 de 8**.
+- El ruido entra como máximo en 1 de 8.
+- Una copia de una variable elegida se descarta.
+- 39 pruebas del motor pasan.
+
+---
+
 ## 2026-11-15 · Pruebas del motor y de humo de cada experimento (pendiente 1.4)
 **Autor:** MaxsForocca · **Aportes:** Ower Frank (motor original)
 

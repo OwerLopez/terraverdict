@@ -30,6 +30,30 @@ def test_mrmr_descarta_ruido_y_redundancia() -> None:
     assert "copia_a" not in r["seleccionadas"]  # redundante con a
 
 
+def test_mrmr_clasificacion_no_descarta_por_escala() -> None:
+    """Con objetivo binario la IM es pequeña; una variable informativa (aunque correlacionada con la
+    historia, ρ = 0,5) debe entrar, y el ruido solo por azar (umbral ≈ p98 del nulo)."""
+    humedad_elegida, ruido_elegido = 0, 0
+    for semilla in range(8):
+        g = np.random.default_rng(semilla)
+        n = 3000
+        historia, ruido = g.normal(size=n), g.normal(size=n)
+        humedad = 0.5 * historia + np.sqrt(0.75) * g.normal(size=n)
+        evento = (historia + humedad + g.normal(scale=0.8, size=n) > 2.6).astype(int)  # tasa ≈ 9 %
+        r = mrmr(
+            np.column_stack([historia, humedad, ruido]),
+            evento,
+            ["historia", "humedad", "ruido"],
+            {},
+            clasificacion=True,
+            siempre=["historia"],
+        )
+        humedad_elegida += "humedad" in r["seleccionadas"]
+        ruido_elegido += "ruido" in r["seleccionadas"]
+    assert humedad_elegida == 8
+    assert ruido_elegido <= 1
+
+
 def test_mrmr_respeta_prior_y_variables_fijas() -> None:
     g = np.random.default_rng(1)
     n = 1500
@@ -37,7 +61,7 @@ def test_mrmr_respeta_prior_y_variables_fijas() -> None:
     y = a + b + g.normal(scale=0.3, size=n)
     r = mrmr(np.column_stack([a, b]), y, ["a", "b"], {"a": "baja", "b": "alta"}, clasificacion=False, siempre=["a"])
     assert r["seleccionadas"] == ["a", "b"]
-    assert r["detalle"][0]["peso_fisico"] == 1.0
+    assert r["detalle"][0]["fija"] and r["detalle"][1]["peso_fisico"] == 1.0
 
 
 def _lluvia_mensual(anios: int, semilla: int) -> pd.Series:
