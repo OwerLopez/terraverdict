@@ -26,6 +26,7 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Frontend | ✅ Glassmorphism azul, vistas de fenómenos y Perú; bilingüe español/inglés | 27 pruebas; `docs/capturas/` | `cd frontend && npm test` |
 | Paquete científico | ✅ 108 pruebas pasan (2 omitidas por diseño) | `tests/` | `pytest` |
 | CI, Docker y E2E | ✅ Docker verificado con `docker compose up`; E2E Playwright 2 de 2 | `.github/`, `docker-compose.yml`, `frontend/e2e/` | ver `pendientes.md` |
+| Métricas e historial (M8) | ✅ Mapas de calor por métrica, importancia de variables, historial año a año (2016–2026) y caos en ventanas; 24 fichas de métricas | `resultados/historial.json`, vista `/metricas` | `tv experimentos --solo historial` |
 | Licencias | ✅ Código MIT; cita y términos de cada fuente; inventario de dependencias | `LICENSE`, `docs/licencias-*.md`, `tests/integridad/test_licencias.py` | `python scripts/inventario_licencias.py …` |
 | Despliegue público | ✅ Listo para Vercel y verificado en local (arranque en frío de 3,1 s, E2E 2 de 2) · ⏳ falta conectar el repositorio a Vercel (acción de cuenta) | `vercel.json`, `api/`, `docs/despliegue.md` | ver `despliegue.md` |
 
@@ -41,6 +42,49 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Frontend | ✅ Glassmorphism azul y 5 vistas nuevas | 23 pruebas; `docs/capturas/` | `cd frontend && npm test` |
 | CI, Docker y documentación | ✅ · ⏳ falta construir las imágenes y ver la primera ejecución de CI | `.github/`, `docker-compose.yml`, `docs/` | ver `pendientes.md` |
 | Prueba E2E (Playwright) | ⏳ Bloqueada: la descarga del navegador no fue autorizada en este entorno | — | ver `pendientes.md` |
+
+---
+
+## 2026-11-15 · M8: mapas de calor de métricas, historial año a año y caos en ventanas
+
+**Autor:** Ower Frank
+
+**Qué se hizo**
+- **Historial del pronóstico** (`experimentos/historial.py`): origen móvil anual 2016–2026 con el diseño congelado de cada tarea.
+  - Las tareas ahora son objetos `Tarea` compartidos con el experimento principal: mismos datos, objetivo y referencias.
+  - Regímenes "validación del diseño" (≤ 2020) y "fuera de muestra".
+  - Habilidad agregada por régimen con IC90 y Diebold-Mariano.
+- **Historial de la dinámica:** invariantes de caos en ventanas deslizantes con los métodos ya validados (entropías, λ, determinismo, K y p de no linealidad con sustitutos IAAFT).
+- **Mapas de calor (vista `/metricas`):**
+  - modelo × tarea para cada métrica (habilidad en prueba y en validación, IC90 inferior, p de Diebold-Mariano, dispersión entre semillas);
+  - importancia tarea × variable (también en `/relevancia`, que antes se veía vacía);
+  - modelo × año del historial;
+  - serie × ventana para cada invariante de caos.
+- **Fichas de métricas:** `config/metricas.yaml` con 24 fichas bilingües (qué mide, cómo leerla, si es mejor alta o baja, referencia), servidas en `GET /api/v1/metricas`.
+- **Backend:**
+  - tipo de expediente `historial_metricas` (M8, `TV-HIS-…`) con validación estricta;
+  - endpoints `GET /api/v1/historial` y `GET /api/v1/metricas/mapas`, que reorganizan expedientes publicados sin calcular cifras.
+- **Correcciones encontradas en la revisión visual:**
+  - en el móvil, cuatro vistas obligaban al navegador a alejar el zoom. Causas: textos `sr-only` con posición absoluta fuera del contenedor con scroll, tarjetas sin `min-w-0` dentro de grillas y un texto truncado sin `min-w-0`. Ahora las 16 rutas miden 390 px de ancho en un iPhone 13;
+  - el panel mostraba "25 departamentos" escrito a mano: ahora cuenta expedientes, como las demás filas, y agrega la fila M8.
+- **CHIRPS en el caos:** si faltan sus crudos (ClimateSERV bloqueado aquí), la serie se omite y el motivo queda registrado, en vez de detener el diagnóstico.
+
+**Resultados reales del historial** (`resultados/historial.json`, sellado; `docs/experimentos.md`)
+
+| Tarea | Fuera de muestra (2021–2026) | Lectura |
+|---|---|---|
+| Lluvia fuerte a 1 día | SSM congelado 0,036 (IC90 −0,081 a 0,138); ensamble 0,087 (IC90 0,009 a 0,166, p 0,119) | La red pierde la habilidad que tenía en validación (0,130): solo el ensamble deja un **indicio** |
+| Sequía SPI-3 a 1 mes | Ridge 0,711 (IC90 0,572 a 0,811); N-BEATS 0,525 | Todos **confirmados**; el modelo lineal generaliza mejor que la red elegida |
+| Sequía SPI-3 a 3 meses | Ensamble 0,248 (IC90 0,102 a 0,385, p 0,063) | **Confirmada** |
+| Sismos por mes | PatchTST 0,256 bits (IC90 0,093 a 0,484, p 0,040) | **Confirmada**; refleja agrupamiento, no es pronóstico de sismos |
+
+Dinámica: el ONI es no lineal (p ≤ 0,05) en 23 de 48 ventanas; la lluvia en 10 de 32; la temperatura en 9 de 42; los sismos en 0.
+
+**Evidencia**
+- Ciencia: 8 pruebas nuevas, entre ellas cortes sin fuga, referencias ajustadas solo hasta Y−2 y el método que distingue el mapa logístico del ruido en cada ventana.
+- Backend: 5 pruebas nuevas, y la prueba de despliegue limpio exige el historial y los mapas.
+- Frontend: 6 pruebas nuevas; E2E incluye `/metricas`.
+- Contrato de despliegue: 15 expedientes; `tv verificar-integridad` con 11 resultados sellados y 0 alterados.
 
 ---
 

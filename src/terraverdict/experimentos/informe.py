@@ -703,6 +703,97 @@ def limitaciones(res: dict[str, dict[str, Any]]) -> str:
     return "\n".join(dict.fromkeys(items))
 
 
+REGIMEN = {"validacion_del_diseno": "validación del diseño", "fuera_de_muestra": "fuera de muestra"}
+
+
+def seccion_historial(r: dict[str, Any]) -> str:
+    m = r["metodo"]
+    partes = [
+        "## Historial de métricas · origen móvil y dinámica en ventanas",
+        f"Para cada año Y desde {m['anio_inicial']}: entrenamiento con datos ≤ Y−2, validación en Y−1 y prueba en Y, "
+        "con el **diseño congelado** del experimento principal (variables, ventana y red). Los años hasta "
+        f"{m['frontera_diseno']} se usaron para elegir ese diseño (lectura optimista); los posteriores son "
+        f"**fuera de muestra**. Semillas por corte: {', '.join(str(s) for s in m['semillas'])}. Por año la muestra "
+        "es pequeña; la lectura principal es la habilidad agregada por régimen.",
+    ]
+    for nombre, t in r["pronostico"].items():
+        if "omitido" in t:
+            partes.append(f"### {nombre}\n\nNo evaluado: {t['omitido']}.")
+            continue
+        red = t["diseno"]["red"]
+        partes.append(
+            f"### {t['descripcion']}\n\nMétrica: {METRICA.get(t['metrica_principal'], t['metrica_principal'])}. "
+            f"Red congelada: {NOMBRES.get(red, red)}, ventana {t['diseno']['ventana']}."
+        )
+        filas = []
+        for a in t["anios"]:
+            if a.get("omitido"):
+                filas.append([a["anio"], REGIMEN[a["regimen"]], "—", "—", "—", f"omitido: {a['omitido']}"])
+                continue
+            mm = a["modelos"]
+            clasicos = [k for k, v in mm.items() if v["familia"] == "clasico"]
+            mejor_clasico = max(clasicos, key=lambda k: mm[k]["prueba"] if mm[k]["prueba"] is not None else -1e9)
+            filas.append(
+                [
+                    a["anio"],
+                    REGIMEN[a["regimen"]],
+                    n(a["n"]["prueba"]),
+                    f"{n(mm[red]['prueba'])} [{ic(mm[red]['ic90'])}]",
+                    f"{NOMBRES.get(mejor_clasico, mejor_clasico)} {n(mm[mejor_clasico]['prueba'])}",
+                    n(mm.get("ref_persistencia", {}).get("prueba")),
+                ]
+            )
+        partes.append(
+            tabla(["Año", "Régimen", "n", f"{NOMBRES.get(red, red)} [IC90]", "Mejor clásico", "Persistencia"], filas)
+        )
+        filas = []
+        for regimen, modelos in t.get("agregado", {}).items():
+            for modelo, v in sorted(modelos.items(), key=lambda kv: -(kv[1]["valor"] or -1e9)):
+                filas.append(
+                    [
+                        REGIMEN[regimen],
+                        NOMBRES.get(modelo, modelo),
+                        n(v["valor"]),
+                        ic(v["ic90"]),
+                        n(v["p_diebold_mariano"]),
+                        v["anios"],
+                    ]
+                )
+        if filas:
+            partes.append("Agregado por régimen (predicciones concatenadas):")
+            partes.append(tabla(["Régimen", "Modelo", "Habilidad", "IC90", "p DM", "Años"], filas))
+    if r.get("caos"):
+        partes.append("### Dinámica en ventanas deslizantes")
+        filas = []
+        for nombre, c in r["caos"].items():
+            ok = [f for f in c["ventanas"] if not f.get("omitido")]
+            if not ok:
+                continue
+            pe = [f["entropia_permutacion"] for f in ok if f.get("entropia_permutacion") is not None]
+            nl = sum(1 for f in ok if f.get("p_no_linealidad") is not None and f["p_no_linealidad"] <= 0.05)
+            filas.append(
+                [
+                    nombre.replace("_", " "),
+                    f"{c['ventana_anios']} años",
+                    f"{ok[0]['fin']}–{ok[-1]['fin']}",
+                    len(ok),
+                    f"{n(min(pe))} a {n(max(pe))}" if pe else "—",
+                    f"{nl} de {len(ok)}",
+                ]
+            )
+        partes.append(
+            tabla(
+                ["Serie", "Ventana", "Fin de ventana", "Ventanas", "Entropía de permutación", "No lineales (p ≤ 0,05)"],
+                filas,
+            )
+        )
+        if r.get("series_omitidas"):
+            partes.append(
+                "Series sin crudos locales: " + "; ".join(f"{k} ({v})" for k, v in r["series_omitidas"].items()) + "."
+            )
+    return "\n\n".join(partes)
+
+
 def generar(resultados: Path) -> str:
     indice = json.loads((resultados / "indice.json").read_text())
     res = {p.stem: json.loads(p.read_text()) for p in sorted(resultados.glob("*.json")) if p.stem != "indice"}
@@ -744,6 +835,7 @@ def generar(resultados: Path) -> str:
         ("caos", seccion_caos),
         ("fuentes", seccion_fuentes),
         ("nacional", seccion_nacional),
+        ("historial", seccion_historial),
     ):
         if clave in res:
             partes.append(f(res[clave]))

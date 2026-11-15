@@ -20,7 +20,7 @@ import pandas as pd
 from ..evaluacion.incertidumbre import decidir_abstencion
 from ..ingest import usgs
 from ..senales.procesamiento import regimenes
-from .comun import Particion, construir, evaluar_zoo, limpiar, serie_prueba
+from .comun import Particion, Tarea, construir, evaluar_zoo, limpiar, serie_prueba
 
 
 def catalogo(raw: Path) -> pd.DataFrame:
@@ -73,6 +73,68 @@ def gardner_knopoff(ev: pd.DataFrame) -> np.ndarray:
     return independiente
 
 
+def preparar(raw: Path) -> dict[str, Any]:
+    """Catálogo, completitud, desagrupamiento y series mensuales (compartido por el experimento y el historial)."""
+    ev = catalogo(raw)
+    mc_total = magnitud_completitud(ev["magnitud"].to_numpy())
+    mc = max(mc_total, 4.5)  # completitud conservadora para toda la serie
+    ev["independiente"] = gardner_knopoff(ev)
+    completos = ev[ev["magnitud"] >= mc - 1e-9]
+    mensual = completos.set_index("tiempo").resample("MS")["magnitud"].count()
+    mensual_ind = completos[completos["independiente"]].set_index("tiempo").resample("MS")["magnitud"].count()
+    mensual = mensual[mensual.index <= "2026-10-01"]
+    mensual_ind = mensual_ind.reindex(mensual.index, fill_value=0)
+    maxmag = completos.set_index("tiempo").resample("MS")["magnitud"].max().reindex(mensual.index).fillna(mc - 0.5)
+    return {
+        "ev": ev,
+        "mc_total": mc_total,
+        "mc": mc,
+        "completos": completos,
+        "mensual": mensual,
+        "mensual_ind": mensual_ind,
+        "maxmag": maxmag,
+    }
+
+
+def tarea(cfg: dict[str, Any], raw: Path, prep: dict[str, Any] | None = None) -> Tarea:
+    """Conteo mensual de sismos M ≥ Mc del mes siguiente frente a un Poisson de tasa constante.
+    La tasa de la climatología se estima solo con los meses ≤ `hasta`."""
+    prep = prep or preparar(raw)
+    mensual, mensual_ind, maxmag = prep["mensual"], prep["mensual_ind"], prep["maxmag"]
+    X = pd.DataFrame(
+        {"conteo_log": np.log1p(mensual), "conteo_independiente_log": np.log1p(mensual_ind), "magnitud_maxima": maxmag},
+        index=mensual.index,
+    )
+
+    def referencias(hasta: str):
+        tasa = float(mensual[mensual.index <= pd.Timestamp(hasta)].mean())
+
+        def construir_refs(d) -> dict[str, dict[str, np.ndarray]]:
+            return {
+                p: {
+                    "climatologia": np.full(len(d.y[p]), tasa),
+                    "persistencia": np.maximum(mensual.reindex(d.fechas[p]).to_numpy(float), 0.5),
+                }
+                for p in ("validacion", "prueba")
+            }
+
+        return construir_refs
+
+    return Tarea(
+        nombre="sismos_conteo_mensual",
+        tipo="conteo",
+        X=X,
+        objetivo=mensual.shift(-1).astype(float),
+        horizonte=pd.DateOffset(months=1),
+        referencias=referencias,
+        epocas=150,
+        bloque_bootstrap=6,
+    )
+
+
+VENTANA_CONTEOS_MESES = 12  # un ciclo anual completo de conteos como historia de entrada
+
+
 def ejecutar(
     cfg: dict[str, Any],
     raw: Path,
@@ -80,23 +142,17 @@ def ejecutar(
     redes: list[str] | None = None,
     semillas: tuple[int, ...] = (0, 1, 2),
 ) -> dict[str, Any]:
-    ev = catalogo(raw)
+    prep = preparar(raw)
+    ev, mc_total, mc, completos = prep["ev"], prep["mc_total"], prep["mc"], prep["completos"]
+    mensual, mensual_ind = prep["mensual"], prep["mensual_ind"]
     m = ev["magnitud"].to_numpy()
-    mc_total = magnitud_completitud(m)
     por_decada = {
         f"{d}s": magnitud_completitud(ev.loc[ev["tiempo"].dt.year // 10 * 10 == d, "magnitud"].to_numpy())
         for d in range(1970, 2030, 10)
         if (ev["tiempo"].dt.year // 10 * 10 == d).sum() > 50
     }
-    mc = max(mc_total, 4.5)  # completitud conservadora para toda la serie
-    ev["independiente"] = gardner_knopoff(ev)
-    completos = ev[ev["magnitud"] >= mc - 1e-9]
     b_total = valor_b(m, mc)
     b_ind = valor_b(completos.loc[completos["independiente"], "magnitud"].to_numpy(), mc)
-    mensual = completos.set_index("tiempo").resample("MS")["magnitud"].count()
-    mensual_ind = completos[completos["independiente"]].set_index("tiempo").resample("MS")["magnitud"].count()
-    mensual = mensual[mensual.index <= "2026-10-01"]
-    mensual_ind = mensual_ind.reindex(mensual.index, fill_value=0)
     intervalos = (
         np.diff(completos.loc[completos["independiente"], "tiempo"].to_numpy("datetime64[s]").astype(np.int64))
         / 86400.0
@@ -112,24 +168,12 @@ def ejecutar(
     particion = Particion(
         ("1973-01-01", pt["entrenamiento"][1]), tuple(pt["validacion"]), (pt["prueba"][0], fin_prueba)
     )
-    maxmag = completos.set_index("tiempo").resample("MS")["magnitud"].max().reindex(mensual.index).fillna(mc - 0.5)
-    X = pd.DataFrame(
-        {"conteo_log": np.log1p(mensual), "conteo_independiente_log": np.log1p(mensual_ind), "magnitud_maxima": maxmag},
-        index=mensual.index,
-    )
-    objetivo = mensual.shift(-1).astype(float)
+    t = tarea(cfg, raw, prep)
+    X, objetivo = t.X, t.objetivo
     tasa = float(mensual[mensual.index <= particion.entrenamiento[1]].mean())
+    referencias = t.referencias(particion.entrenamiento[1])
 
-    def referencias(d) -> dict[str, dict[str, np.ndarray]]:
-        return {
-            p: {
-                "climatologia": np.full(len(d.y[p]), tasa),
-                "persistencia": np.maximum(mensual.reindex(d.fechas[p]).to_numpy(float), 0.5),
-            }
-            for p in ("validacion", "prueba")
-        }
-
-    d = construir(X, objetivo, 12, particion, None, pd.DateOffset(months=1))
+    d = construir(X, objetivo, VENTANA_CONTEOS_MESES, particion, None, pd.DateOffset(months=1))
     zoo = evaluar_zoo(
         d, "conteo", referencias(d), redes=redes, semillas=semillas, epocas=150, bloque_bootstrap=6, registro=registro
     )
@@ -187,5 +231,9 @@ def ejecutar(
             "serie_prueba": serie_prueba(d, zoo, mejor, referencias(d)["prueba"]["climatologia"]),
         },
         "advertencia": "No es un pronóstico de sismos. Mide si hay estructura temporal (agrupamiento) más allá del azar.",
-        "_series": {"mensual_independiente": mensual_ind, "intereventos_log": np.log(np.maximum(intervalos, 1e-3))},
+        "_series": {
+            "mensual_independiente": mensual_ind,
+            "intereventos_log": np.log(np.maximum(intervalos, 1e-3)),
+            "intereventos_tiempos": pd.DatetimeIndex(completos.loc[completos["independiente"], "tiempo"].to_numpy()[1:]),
+        },
     }

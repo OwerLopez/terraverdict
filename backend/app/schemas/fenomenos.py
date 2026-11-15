@@ -67,3 +67,85 @@ class PanoramaNacional(Esquema):
         None, description="Contenido validado con ResultadoPanoramaNacional al publicarse."
     )
     aviso: str
+
+
+class HistorialMetricas(Esquema):
+    """Historial vigente: el resultado completo del expediente `historial_metricas` más reciente."""
+
+    expediente_id: str | None = Field(
+        None, description="Expediente del que sale el historial; null si no hay."
+    )
+    generado_utc: str | None = None
+    resultado: dict[str, Any] | None = Field(
+        None, description="Contenido validado con ResultadoHistorialMetricas al publicarse."
+    )
+    aviso: str
+
+
+class TextoBilingue(Esquema):
+    es: str
+    en: str
+
+
+class FichaMetrica(Esquema):
+    id: str
+    grupo: str
+    nombre: TextoBilingue
+    formula: str
+    que_mide: TextoBilingue
+    como_leer: TextoBilingue
+    mejor: str = Field(description="mayor, menor, cercano_a_0_9 o informativa.")
+    valor_referencia: float | None = Field(None, description="Valor de la referencia o umbral de lectura.")
+    cita: str
+
+
+class CatalogoMetricas(Esquema):
+    version: int
+    grupos: dict[str, TextoBilingue]
+    metricas: list[FichaMetrica]
+
+
+class TareaMapa(Esquema):
+    expediente_id: str
+    titulo: str
+    fenomeno: str
+    tarea: str
+    horizonte: str
+    metrica_principal: str
+    mejor_validacion: str
+
+
+class ModeloMapa(Esquema):
+    nombre: str
+    familia: str
+
+
+class CeldaMetricas(Esquema):
+    """Métricas de un modelo en una tarea, tal como se publicaron en su expediente."""
+
+    expediente_id: str
+    modelo: str
+    puntaje_validacion: float
+    puntaje_prueba: float | None = None
+    ic90_inferior: float | None = None
+    ic90_superior: float | None = None
+    p_diebold_mariano: float | None = None
+    dispersion_semillas: float | None = None
+
+
+class CeldaImportancia(Esquema):
+    expediente_id: str
+    variable: str
+    importancia: float
+    desviacion: float
+
+
+class MapasMetricas(Esquema):
+    """Matrices para los mapas de calor: modelo × tarea por métrica e importancia tarea × variable."""
+
+    tareas: list[TareaMapa]
+    modelos: list[ModeloMapa]
+    celdas: list[CeldaMetricas]
+    variables: list[str]
+    importancia: list[CeldaImportancia]
+    aviso: str

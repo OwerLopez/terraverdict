@@ -20,7 +20,7 @@ import numpy as np
 
 from ..config import cargar_yaml
 from ..integridad import exigir_crudos_integros, sellar_resultados
-from . import caos_real, deslizamientos, fuentes, lluvia, nacional, sequia, sismos, volcanes
+from . import caos_real, deslizamientos, fuentes, historial, lluvia, nacional, sequia, sismos, volcanes
 
 RAIZ = Path(__file__).resolve().parents[3]
 
@@ -121,9 +121,11 @@ def ejecutar(
     correr("sequia_chirps", lambda: sequia.ejecutar(cfg, raw, fuente="chirps", **opciones))
     correr("lluvia_extrema", lambda: lluvia.ejecutar(cfg, raw, **opciones))
     correr("lluvia_extrema_chirps", lambda: lluvia.ejecutar(cfg, raw, fuente="chirps", **opciones))
-    if rs is None and (not solo or "caos" in solo):
+    if rs is None and (not solo or "caos" in solo or "historial" in solo):
         rs = sismos.ejecutar(cfg, raw, redes=[], semillas=(0,))
     correr("caos", lambda: caos_real.ejecutar(cfg, raw, rs))
+    # El historial reevalúa el diseño congelado de los resultados principales (va después de ellos).
+    correr("historial", lambda: historial.ejecutar(cfg, raw, salida, rs, max_cortes=2 if rapido else None))
     # La escala nacional descarga lo que falte solo sobre los datos reales; con otro `raw` (pruebas)
     # corre sin red y solo si ese `raw` trae su recorte nacional.
     if raw.resolve() == (RAIZ / "data" / "raw").resolve() or (raw / "power_nacional").exists():

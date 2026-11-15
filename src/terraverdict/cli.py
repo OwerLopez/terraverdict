@@ -158,7 +158,7 @@ def experimentos(
     rapido: bool = typer.Option(False, help="Solo GRU y TCN con una semilla (para probar el pipeline)"),
     solo: list[str] = typer.Option(
         None,
-        help="volcanes, deslizamientos, sismos, fuentes, sequia, sequia_chirps, lluvia_extrema, lluvia_extrema_chirps, caos",
+        help="volcanes, deslizamientos, sismos, fuentes, sequia, sequia_chirps, lluvia_extrema, lluvia_extrema_chirps, caos, nacional, historial",
     ),
 ) -> None:
     """Ejecuta los experimentos reproducibles y escribe resultados/*.json con su procedencia."""

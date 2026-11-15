@@ -1,10 +1,14 @@
-import { useMatriz } from "../api/consultas";
+import { useCatalogoMetricas, useMapasMetricas, useMatriz } from "../api/consultas";
 import { MapaCalor } from "../componentes/graficos/MapaCalor";
 import { Encabezado, Esqueleto, ErrorCarga, Insignia, Tarjeta } from "../componentes/ui";
 import { t } from "../lib/i18n";
+import { ImportanciaVariables } from "../componentes/metricas/compartidos";
 
 export function RelevanciaPagina() {
   const matriz = useMatriz();
+  const mapas = useMapasMetricas();
+  const catalogo = useCatalogoMetricas();
+  const fichaImportancia = catalogo.data?.metricas.find((m) => m.id === "importancia_permutacion");
   return (
     <div className="space-y-6">
       <Encabezado
@@ -12,6 +16,7 @@ export function RelevanciaPagina() {
         titulo={t("Matriz de relevancia", "Relevance matrix")}
         descripcion={t("Para cada problema, qué variables importan, en qué dirección y con cuánta confianza. Cada celda proviene de un expediente validado fuera de muestra; si no hay resultado, la celda queda vacía en lugar de inventarse.", "For each problem, which variables matter, in which direction and with how much confidence. Every cell comes from an out-of-sample validated case file; without a result the cell stays empty instead of being invented.")}
       />
+      {mapas.data && <ImportanciaVariables mapas={mapas.data} ficha={fichaImportancia} />}
       <Tarjeta
         titulo={t("Problema × variable", "Problem × variable")}
         acciones={matriz.data && <Insignia tono={matriz.data.estado === "vacia" ? "neutral" : "good"}>{matriz.data.estado === "vacia" ? t("Sin resultados", "No results") : t("Con resultados", "With results")}</Insignia>}

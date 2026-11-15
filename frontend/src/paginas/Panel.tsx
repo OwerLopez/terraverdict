@@ -265,7 +265,7 @@ function VerificacionFuentes() {
           <ul className="space-y-1.5">
             {pendientes.map((f) => (
               <li key={f.id} className="flex items-center justify-between gap-3 text-[13px]">
-                <span className="truncate text-ink-2" title={f.nombre}>{f.nombre}</span>
+                <span className="min-w-0 truncate text-ink-2" title={f.nombre}>{f.nombre}</span>
                 <ChipEstado mapa={ESTADOS_VERIFICACION} valor={f.estado_verificacion} />
               </li>
             ))}
@@ -330,15 +330,16 @@ function Modulos() {
     { m: "M4", nombre: t("Anticipación", "Anticipation"), estado: exp.get("pronostico") || exp.get("alerta") ? t("Con resultados", "With results") : t("Contrato listo · pendiente de integración", "Contract ready · integration pending"), listo: Boolean(exp.get("pronostico") || exp.get("alerta")) },
     { m: "M5", nombre: t("Cuenca y decisión", "Basin and decision"), estado: exp.get("priorizacion") || exp.get("colmatacion") ? t("Con resultados", "With results") : t("Contrato listo · pendiente de integración", "Contract ready · integration pending"), listo: Boolean(exp.get("priorizacion") || exp.get("colmatacion")) },
     { m: "M6", nombre: t("Fenómenos naturales", "Natural hazards"), estado: m6 ? t(`${m6} expediente(s)`, `${m6} case file(s)`) : t("Sin resultados", "No results"), listo: m6 > 0 },
-    { m: "M7", nombre: t("Escala nacional", "National scale"), estado: exp.get("panorama_nacional") ? t("25 departamentos", "25 departments") : t("Sin resultados", "No results"), listo: Boolean(exp.get("panorama_nacional")) },
+    { m: "M7", nombre: t("Escala nacional", "National scale"), estado: exp.get("panorama_nacional") ? t(`${exp.get("panorama_nacional")} expediente(s)`, `${exp.get("panorama_nacional")} case file(s)`) : t("Sin resultados", "No results"), listo: Boolean(exp.get("panorama_nacional")) },
+    { m: "M8", nombre: t("Métricas e historial", "Metrics and history"), estado: exp.get("historial_metricas") ? t(`${exp.get("historial_metricas")} expediente(s)`, `${exp.get("historial_metricas")} case file(s)`) : t("Sin resultados", "No results"), listo: Boolean(exp.get("historial_metricas")) },
     { m: "IA", nombre: t("Asistente verificado", "Verified assistant"), estado: r?.asistente_conectado ? t("Conectado", "Connected") : t("No conectado · verificador numérico activo", "Not connected · numeric verifier active"), listo: Boolean(r?.asistente_conectado) },
   ];
   return (
     <Tarjeta titulo={t("Estado de los módulos", "Module status")} subtitulo={t("Lo que ya produce resultados y lo que espera al pipeline de ciencia de datos", "What already produces results and what awaits the data-science pipeline")}>
       <ul className="divide-y divide-line">
         {filas.map((f) => (
-          <li key={f.m} className="flex items-center justify-between gap-3 py-2.5">
-            <span className="flex items-center gap-3">
+          <li key={f.m} className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 py-2.5">
+            <span className="flex min-w-0 items-center gap-3">
               <span className="grid h-7 w-9 place-items-center rounded-md bg-surface-2 font-mono text-[11px] font-semibold text-ink-2">{f.m}</span>
               <span className="text-[13.5px] font-medium text-ink">{f.nombre}</span>
             </span>

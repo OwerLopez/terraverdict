@@ -74,7 +74,12 @@ def test_indice_con_todos_los_experimentos(resultados: Path) -> None:
         "lluvia_extrema",
         "lluvia_extrema_chirps",
         "caos",
+        "historial",
     }
+    # El historial (modo rápido: dos cortes) reevalúa el diseño congelado de los resultados principales
+    historial = json.loads((resultados / "historial.json").read_text())
+    evaluadas = [t for t in historial["pronostico"].values() if "anios" in t]
+    assert evaluadas and all(a["regimen"] in ("validacion_del_diseno", "fuera_de_muestra") for t in evaluadas for a in t["anios"])
     p = json.loads((resultados / "caos.json").read_text())["procedencia"]
     assert p["preregistro_sha256"] == cargar_preregistro(RAIZ / "preregistro.yaml").sha256
 

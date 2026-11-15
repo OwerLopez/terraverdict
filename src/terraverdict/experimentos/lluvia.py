@@ -24,7 +24,7 @@ from ..evaluacion.incertidumbre import decidir_abstencion, deriva
 from ..seleccion.variables import mrmr
 from ..senales.procesamiento import ventana_adaptativa
 from . import datos_reales as D
-from .comun import Particion, construir, evaluar_zoo, explicar, limpiar, serie_prueba
+from .comun import Particion, Tarea, construir, evaluar_zoo, explicar, limpiar, serie_prueba
 
 MESES_HUMEDOS = [11, 12, 1, 2, 3, 4]
 RAIZ = Path(__file__).resolve().parents[3]
@@ -71,6 +71,58 @@ def preparar(raw: Path, fuente: str = "power") -> tuple[pd.DataFrame, pd.Series,
     return X, lluvia, qc
 
 
+def tarea(cfg: dict[str, Any], raw: Path, fuente: str = "power") -> tuple[Tarea, pd.Series, dict[str, Any], float]:
+    """Lluvia fuerte al día siguiente. El umbral (p90 de dic–mar) se fija con el entrenamiento de la
+    partición congelada; climatología y persistencia se ajustan con los datos ≤ `hasta`."""
+    fin_entrenamiento = cfg["particion_temporal"]["entrenamiento"][1]
+    X, lluvia, qc = preparar(raw, fuente)
+    base = lluvia[(lluvia.index <= fin_entrenamiento) & lluvia.index.month.isin([12, 1, 2, 3])]
+    umbral = float(base.quantile(0.90))
+    evento = (lluvia >= umbral).astype(float)
+    objetivo = evento.shift(-1)  # emitido en t, verifica t+1
+    fechas = X.index[pd.DatetimeIndex(X.index + pd.Timedelta(days=1)).month.isin(MESES_HUMEDOS)]
+
+    def referencias(hasta: str):
+        # Climatología por día del año (±15 días) y persistencia de Markov, ajustadas con datos ≤ hasta
+        ent = evento.index <= pd.Timestamp(hasta)
+        doy = evento.index.dayofyear
+        clim_doy = {
+            d: float(evento[ent & (np.abs(((doy - d + 182) % 365) - 182) <= 15)].mean()) for d in range(1, 367)
+        }
+        hoy, manana = evento[ent].to_numpy()[:-1], evento[ent].to_numpy()[1:]
+        p1, p0 = float(manana[hoy == 1].mean()), float(manana[hoy == 0].mean())
+
+        def construir_refs(d) -> dict[str, dict[str, np.ndarray]]:
+            salida = {}
+            for parte in ("validacion", "prueba"):
+                f = d.fechas[parte]
+                salida[parte] = {
+                    "climatologia": np.array([clim_doy[(x + pd.Timedelta(days=1)).dayofyear] for x in f]),
+                    "persistencia": np.where(evento.reindex(f).to_numpy() == 1, p1, p0),
+                }
+            return salida
+
+        return construir_refs
+
+    t = Tarea(
+        nombre=f"lluvia_extrema_{fuente}",
+        tipo="clasificacion",
+        X=X,
+        objetivo=objetivo,
+        horizonte=pd.Timedelta(days=1),
+        referencias=referencias,
+        fechas=fechas,
+        epocas=60,
+        bloque_bootstrap=10,
+    )
+    return t, lluvia, qc, umbral
+
+
+def columnas_diseno(resultado: dict[str, Any]) -> list[str]:
+    """Columnas con las que se entrenó el modelo publicado (selección mRMR + estación del año)."""
+    return [*resultado["seleccion_variables"]["seleccionadas"], "estacion_seno", "estacion_coseno"]
+
+
 def ejecutar(
     cfg: dict[str, Any],
     raw: Path,
@@ -81,35 +133,14 @@ def ejecutar(
 ) -> dict[str, Any]:
     pt = cfg["particion_temporal"]
     particion = Particion(tuple(pt["entrenamiento"]), tuple(pt["validacion"]), tuple(pt["prueba"]))
-    X, lluvia, qc = preparar(raw, fuente)
+    t, _, qc, umbral = tarea(cfg, raw, fuente)
+    X, objetivo, fechas = t.X, t.objetivo, t.fechas
     ciudad, _ = D.power_diario(raw, "ciudad")
     calidad = {
         "cabecera": qc,
         "contraste_ciudad_vs_estacion": D.comparar_con_estacion(ciudad, raw, cfg["descarga"]["ghcn_estacion"]),
     }
-
-    entrenamiento = lluvia[(lluvia.index <= particion.entrenamiento[1]) & lluvia.index.month.isin([12, 1, 2, 3])]
-    umbral = float(entrenamiento.quantile(0.90))
-    evento = (lluvia >= umbral).astype(float)
-    objetivo = evento.shift(-1)  # emitido en t, verifica t+1
-    fechas = X.index[pd.DatetimeIndex(X.index + pd.Timedelta(days=1)).month.isin(MESES_HUMEDOS)]
-
-    # Referencias: climatología por día del año (±15 días) y persistencia de Markov, ambas del entrenamiento
-    ent = evento.index <= particion.entrenamiento[1]
-    doy = evento.index.dayofyear
-    clim_doy = {d: float(evento[ent & (np.abs(((doy - d + 182) % 365) - 182) <= 15)].mean()) for d in range(1, 367)}
-    hoy, manana = evento[ent].to_numpy()[:-1], evento[ent].to_numpy()[1:]
-    p1, p0 = float(manana[hoy == 1].mean()), float(manana[hoy == 0].mean())
-
-    def referencias(d) -> dict[str, dict[str, np.ndarray]]:
-        salida = {}
-        for parte in ("validacion", "prueba"):
-            f = d.fechas[parte]
-            salida[parte] = {
-                "climatologia": np.array([clim_doy[(x + pd.Timedelta(days=1)).dayofyear] for x in f]),
-                "persistencia": np.where(evento.reindex(f).to_numpy() == 1, p1, p0),
-            }
-        return salida
+    referencias = t.referencias(particion.entrenamiento[1])
 
     # Selección de variables (solo entrenamiento): mRMR + prior físico del catálogo
     catalogo = {v["id"]: v["relevancia"] for v in cfg["fenomenos"]["lluvia_extrema"]["variables"]}

@@ -45,3 +45,33 @@ export const CATEGORIAS_EVENTO: Record<string, { color: string; readonly texto: 
   clima: categoria("var(--serie-8)", "Clima", "Climate"),
   institucional: categoria("var(--serie-7)", "Institucional", "Institutional"),
 };
+
+/** Polo cálido de la escala divergente (100 → 700), derivado de --serie-2. Azul y naranja se distinguen
+ *  con daltonismo (ΔE deutan 17,2, tritan 22,2 entre los pasos medios; validate_palette.js). */
+export const RAMPA_NARANJA = ["#fbe3d6", "#f7c3a8", "#f29a72", "#eb6834", "#c9521f", "#9f3f15", "#73300f"] as const;
+
+export type ColorCelda = { fondo: string; texto: string };
+
+const TINTA_CLARA = "#ffffff";
+const TINTA_OSCURA = "#0b0b0b";
+
+/** Paso de una rampa para una fracción en [0, 1]; texto claro sobre los pasos oscuros. */
+function paso(rampa: readonly string[], fraccion: number): ColorCelda {
+  const i = Math.min(rampa.length - 1, Math.max(0, Math.floor(Math.min(1, Math.max(0, fraccion)) * rampa.length)));
+  return { fondo: rampa[i] as string, texto: i >= 3 ? TINTA_CLARA : TINTA_OSCURA };
+}
+
+/**
+ * Escala divergente alrededor de un centro (p. ej., 0 = igual que la climatología): azul = mejor,
+ * naranja = peor, gris neutro en el centro. `escala` es el |desvío| que satura el color.
+ */
+export function colorDivergente(valor: number, escala: number, centro = 0, mayorEsMejor = true): ColorCelda {
+  const d = (valor - centro) * (mayorEsMejor ? 1 : -1);
+  if (!Number.isFinite(d) || escala <= 0 || Math.abs(d) < escala * 0.02) return { fondo: "var(--neutral-mid)", texto: "var(--ink)" };
+  return paso(d > 0 ? RAMPA_AZUL : RAMPA_NARANJA, Math.abs(d) / escala);
+}
+
+/** Escala secuencial azul (claro = poco, oscuro = mucho) para una fracción en [0, 1]. */
+export function colorSecuencial(fraccion: number): ColorCelda {
+  return paso(RAMPA_AZUL, fraccion);
+}

@@ -1,6 +1,6 @@
 {
- "generado_utc": "2026-11-15T13:08:59+00:00",
- "commit": "f663f3c726b2207261dec65574cd0d669539dd60",
+ "generado_utc": "2026-11-15T16:57:23+00:00",
+ "commit": "571b8edc64b09be3f21f90ffa75c70a5941d64c7",
  "tiempos_segundos": {
   "volcanes": 0.0,
   "deslizamientos": 0.3,
@@ -11,7 +11,8 @@
   "lluvia_extrema": 172.6,
   "lluvia_extrema_chirps": 158.8,
   "caos": 55.0,
-  "nacional": 49.2
+  "nacional": 49.2,
+  "historial": 1231.6
  },
  "corridas": {
   "caos": {
@@ -28,6 +29,11 @@
    "commit": "41198fee2d6f1e8ef3b333a241aed8def4f56cab",
    "generado_utc": "2026-11-15T06:18:31+00:00",
    "segundos": 1.0
+  },
+  "historial": {
+   "commit": "571b8edc64b09be3f21f90ffa75c70a5941d64c7",
+   "generado_utc": "2026-11-15T16:57:23+00:00",
+   "segundos": 1231.6
   },
   "lluvia_extrema": {
    "commit": "41198fee2d6f1e8ef3b333a241aed8def4f56cab",
@@ -69,6 +75,7 @@
   "caos",
   "deslizamientos",
   "fuentes",
+  "historial",
   "lluvia_extrema",
   "lluvia_extrema_chirps",
   "nacional",
@@ -81,6 +88,7 @@
   "caos.json": "abe863729979457aa8801e2d1b6b41d78fef6be18bbcbd1e8faa027a62cad77c",
   "deslizamientos.json": "d70fb313c1593f329ac0425330d791cb13096ad8190559b74b4c56c332728eb9",
   "fuentes.json": "585f6353c53b6c7b1fac17e654757af6372d0e9a83fcb81abfe5c3292a462919",
+  "historial.json": "299bc15a70364f5cc312fab9bcfbd224485154196ccfebeaf086b5bdd5e9b00d",
   "lluvia_extrema.json": "78b55f90d0aa561c491f8585888897a019bf04d4f28f2758eb667b14612330fc",
   "lluvia_extrema_chirps.json": "66ecca40ec1ea84bdccd35c74087d252f61b919bfb4fcd739b050a01ef42afa1",
   "nacional.json": "c6cc4f23c72c1f6314b679478177bed25e1493a5d8685639eceafa8e81124f20",

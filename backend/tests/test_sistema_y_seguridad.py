@@ -156,3 +156,11 @@ def test_despliegue_nuevo_importa_los_resultados_cientificos(app: Any) -> None:
     assert len(deps) == 25 and all(d["tendencia_temperatura"]["veredicto"] != "robusta" for d in deps)
     assert cliente.get("/api/v1/capas/sismos").json()["expediente_id"]
     assert cliente.get("/api/v1/capas/volcanes").json()["features"]
+    # M8: el historial año a año y los mapas de calor también llegan con el contrato
+    historial = cliente.get("/api/v1/historial").json()
+    assert historial["expediente_id"].startswith("TV-HIS-")
+    tareas = historial["resultado"]["tareas"]
+    assert tareas and all(t["anios"] for t in tareas.values())
+    assert historial["resultado"]["caos"], "historial de la dinámica en ventanas"
+    mapas = cliente.get("/api/v1/metricas/mapas").json()
+    assert mapas["tareas"] and mapas["celdas"] and mapas["importancia"]

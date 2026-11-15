@@ -243,3 +243,10 @@
 .maplibregl-ctrl-group {
   border-radius: 10px !important;
 }
+
+/* Un contenedor con scroll horizontal es el bloque contenedor de sus hijos con posición absoluta
+   (textos sr-only, tooltips de Recharts): así no ensanchan la página en el móvil. */
+.overflow-x-auto,
+.overflow-auto {
+  position: relative;
+}

@@ -2440,6 +2440,83 @@
         }
       }
     },
+    "/api/v1/metricas": {
+      "get": {
+        "tags": [
+          "Métricas e historial"
+        ],
+        "summary": "Catálogo de métricas con su explicación",
+        "description": "Qué mide cada métrica, cómo leerla, si es mejor alta o baja y su referencia (config/metricas.yaml).",
+        "operationId": "catalogo_metricas_api_v1_metricas_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogoMetricas"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "El recurso no existe.",
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemaHTTP"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/metricas/mapas": {
+      "get": {
+        "tags": [
+          "Métricas e historial"
+        ],
+        "summary": "Mapas de calor de métricas e importancia de variables",
+        "description": "Reorganiza los expedientes `comparacion_modelos` vigentes (el más reciente por título) en una matriz modelo × tarea con cada métrica publicada y una matriz tarea × variable con la importancia por permutación. Sin expedientes, las listas vienen vacías.",
+        "operationId": "mapas_metricas_api_v1_metricas_mapas_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MapasMetricas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/historial": {
+      "get": {
+        "tags": [
+          "Métricas e historial"
+        ],
+        "summary": "Historial de métricas: año a año y dinámica en ventanas",
+        "description": "Habilidad de cada modelo por año (origen móvil con el diseño congelado) y evolución de los invariantes de caos en ventanas deslizantes, del expediente `historial_metricas` vigente. Sin expediente publicado, `resultado` es null.",
+        "operationId": "historial_metricas_api_v1_historial_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistorialMetricas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/relevancia/matriz": {
       "get": {
         "tags": [
@@ -3412,6 +3489,66 @@
         "title": "Abstencion",
         "description": "Decisión explícita de publicar o abstenerse, con sus motivos (nunca una abstención muda)."
       },
+      "AgregadoModelo": {
+        "properties": {
+          "valor": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valor"
+          },
+          "ic90": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 2,
+            "title": "Ic90"
+          },
+          "p_diebold_mariano": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P Diebold Mariano"
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "N"
+          },
+          "anios": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Anios"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "n",
+          "anios"
+        ],
+        "title": "AgregadoModelo"
+      },
       "Alcance": {
         "type": "string",
         "enum": [
@@ -3420,6 +3557,81 @@
         ],
         "title": "Alcance",
         "description": "Permisos de las cuentas de servicio (claves API) del equipo de ciencia de datos."
+      },
+      "AnioHistorial": {
+        "properties": {
+          "anio": {
+            "type": "integer",
+            "maximum": 2100.0,
+            "minimum": 1900.0,
+            "title": "Anio"
+          },
+          "regimen": {
+            "type": "string",
+            "enum": [
+              "validacion_del_diseno",
+              "fuera_de_muestra"
+            ],
+            "title": "Regimen"
+          },
+          "n": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "N"
+          },
+          "omitido": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Omitido",
+            "description": "Motivo por el que el año no se evaluó."
+          },
+          "eventos_prueba": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eventos Prueba"
+          },
+          "elegido_en_validacion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Elegido En Validacion"
+          },
+          "modelos": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/MetricaModeloAnio"
+            },
+            "type": "object",
+            "title": "Modelos"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "anio",
+          "regimen",
+          "n"
+        ],
+        "title": "AnioHistorial"
       },
       "Body_iniciar_sesion_api_v1_auth_token_post": {
         "properties": {
@@ -3658,6 +3870,36 @@
         ],
         "title": "CatalogoFenomenos"
       },
+      "CatalogoMetricas": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "grupos": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TextoBilingue"
+            },
+            "type": "object",
+            "title": "Grupos"
+          },
+          "metricas": {
+            "items": {
+              "$ref": "#/components/schemas/FichaMetrica"
+            },
+            "type": "array",
+            "title": "Metricas"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "grupos",
+          "metricas"
+        ],
+        "title": "CatalogoMetricas"
+      },
       "CategoriaEvento": {
         "type": "string",
         "enum": [
@@ -3670,6 +3912,115 @@
           "institucional"
         ],
         "title": "CategoriaEvento"
+      },
+      "CeldaImportancia": {
+        "properties": {
+          "expediente_id": {
+            "type": "string",
+            "title": "Expediente Id"
+          },
+          "variable": {
+            "type": "string",
+            "title": "Variable"
+          },
+          "importancia": {
+            "type": "number",
+            "title": "Importancia"
+          },
+          "desviacion": {
+            "type": "number",
+            "title": "Desviacion"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expediente_id",
+          "variable",
+          "importancia",
+          "desviacion"
+        ],
+        "title": "CeldaImportancia"
+      },
+      "CeldaMetricas": {
+        "properties": {
+          "expediente_id": {
+            "type": "string",
+            "title": "Expediente Id"
+          },
+          "modelo": {
+            "type": "string",
+            "title": "Modelo"
+          },
+          "puntaje_validacion": {
+            "type": "number",
+            "title": "Puntaje Validacion"
+          },
+          "puntaje_prueba": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Puntaje Prueba"
+          },
+          "ic90_inferior": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ic90 Inferior"
+          },
+          "ic90_superior": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ic90 Superior"
+          },
+          "p_diebold_mariano": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P Diebold Mariano"
+          },
+          "dispersion_semillas": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dispersion Semillas"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expediente_id",
+          "modelo",
+          "puntaje_validacion"
+        ],
+        "title": "CeldaMetricas",
+        "description": "Métricas de un modelo en una tarea, tal como se publicaron en su expediente."
       },
       "CeldaRelevancia": {
         "properties": {
@@ -4302,6 +4653,35 @@
           "deslizamientos_glc"
         ],
         "title": "DepartamentoNacional"
+      },
+      "DisenoCongelado": {
+        "properties": {
+          "columnas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Columnas"
+          },
+          "ventana": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ventana"
+          },
+          "red": {
+            "type": "string",
+            "title": "Red"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "columnas",
+          "ventana",
+          "red"
+        ],
+        "title": "DisenoCongelado"
       },
       "DistribucionSustitutos": {
         "properties": {
@@ -5020,6 +5400,9 @@
               },
               {
                 "$ref": "#/components/schemas/ResultadoPanoramaNacional"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoHistorialMetricas"
               }
             ],
             "title": "Resultado",
@@ -5031,6 +5414,7 @@
                 "caos": "#/components/schemas/ResultadoCaos",
                 "colmatacion": "#/components/schemas/ResultadoColmatacion",
                 "comparacion_modelos": "#/components/schemas/ResultadoComparacionModelos",
+                "historial_metricas": "#/components/schemas/ResultadoHistorialMetricas",
                 "inventario": "#/components/schemas/ResultadoInventario",
                 "panorama_nacional": "#/components/schemas/ResultadoPanoramaNacional",
                 "priorizacion": "#/components/schemas/ResultadoPriorizacion",
@@ -5300,6 +5684,9 @@
               },
               {
                 "$ref": "#/components/schemas/ResultadoPanoramaNacional"
+              },
+              {
+                "$ref": "#/components/schemas/ResultadoHistorialMetricas"
               }
             ],
             "title": "Resultado",
@@ -5311,6 +5698,7 @@
                 "caos": "#/components/schemas/ResultadoCaos",
                 "colmatacion": "#/components/schemas/ResultadoColmatacion",
                 "comparacion_modelos": "#/components/schemas/ResultadoComparacionModelos",
+                "historial_metricas": "#/components/schemas/ResultadoHistorialMetricas",
                 "inventario": "#/components/schemas/ResultadoInventario",
                 "panorama_nacional": "#/components/schemas/ResultadoPanoramaNacional",
                 "priorizacion": "#/components/schemas/ResultadoPriorizacion",
@@ -5519,6 +5907,65 @@
           "metricas"
         ],
         "title": "FenomenoSalida"
+      },
+      "FichaMetrica": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "grupo": {
+            "type": "string",
+            "title": "Grupo"
+          },
+          "nombre": {
+            "$ref": "#/components/schemas/TextoBilingue"
+          },
+          "formula": {
+            "type": "string",
+            "title": "Formula"
+          },
+          "que_mide": {
+            "$ref": "#/components/schemas/TextoBilingue"
+          },
+          "como_leer": {
+            "$ref": "#/components/schemas/TextoBilingue"
+          },
+          "mejor": {
+            "type": "string",
+            "title": "Mejor",
+            "description": "mayor, menor, cercano_a_0_9 o informativa."
+          },
+          "valor_referencia": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valor Referencia",
+            "description": "Valor de la referencia o umbral de lectura."
+          },
+          "cita": {
+            "type": "string",
+            "title": "Cita"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "grupo",
+          "nombre",
+          "formula",
+          "que_mide",
+          "como_leer",
+          "mejor",
+          "cita"
+        ],
+        "title": "FichaMetrica"
       },
       "Frecuencia": {
         "type": "string",
@@ -5839,6 +6286,153 @@
         ],
         "title": "HabilidadPronostico"
       },
+      "HistorialCaosSerie": {
+        "properties": {
+          "fuente": {
+            "type": "string",
+            "title": "Fuente"
+          },
+          "unidad_tiempo": {
+            "type": "string",
+            "title": "Unidad Tiempo"
+          },
+          "ventana_anios": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ventana Anios"
+          },
+          "ventanas": {
+            "items": {
+              "$ref": "#/components/schemas/VentanaCaos"
+            },
+            "type": "array",
+            "title": "Ventanas"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "fuente",
+          "unidad_tiempo",
+          "ventana_anios",
+          "ventanas"
+        ],
+        "title": "HistorialCaosSerie"
+      },
+      "HistorialMetricas": {
+        "properties": {
+          "expediente_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expediente Id",
+            "description": "Expediente del que sale el historial; null si no hay."
+          },
+          "generado_utc": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generado Utc"
+          },
+          "resultado": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resultado",
+            "description": "Contenido validado con ResultadoHistorialMetricas al publicarse."
+          },
+          "aviso": {
+            "type": "string",
+            "title": "Aviso"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "aviso"
+        ],
+        "title": "HistorialMetricas",
+        "description": "Historial vigente: el resultado completo del expediente `historial_metricas` más reciente."
+      },
+      "HistorialTarea": {
+        "properties": {
+          "fenomeno": {
+            "type": "string",
+            "title": "Fenomeno"
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "clasificacion",
+              "regresion",
+              "conteo"
+            ],
+            "title": "Tipo"
+          },
+          "descripcion": {
+            "type": "string",
+            "title": "Descripcion"
+          },
+          "diseno": {
+            "$ref": "#/components/schemas/DisenoCongelado"
+          },
+          "metrica_principal": {
+            "type": "string",
+            "title": "Metrica Principal"
+          },
+          "anios": {
+            "items": {
+              "$ref": "#/components/schemas/AnioHistorial"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Anios"
+          },
+          "agregado": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/AgregadoModelo"
+              },
+              "type": "object"
+            },
+            "propertyNames": {
+              "enum": [
+                "validacion_del_diseno",
+                "fuera_de_muestra"
+              ]
+            },
+            "type": "object",
+            "title": "Agregado"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "fenomeno",
+          "tipo",
+          "descripcion",
+          "diseno",
+          "metrica_principal",
+          "anios"
+        ],
+        "title": "HistorialTarea"
+      },
       "Identidad": {
         "properties": {
           "tipo": {
@@ -5976,6 +6570,61 @@
         ],
         "title": "Intervalo"
       },
+      "MapasMetricas": {
+        "properties": {
+          "tareas": {
+            "items": {
+              "$ref": "#/components/schemas/TareaMapa"
+            },
+            "type": "array",
+            "title": "Tareas"
+          },
+          "modelos": {
+            "items": {
+              "$ref": "#/components/schemas/ModeloMapa"
+            },
+            "type": "array",
+            "title": "Modelos"
+          },
+          "celdas": {
+            "items": {
+              "$ref": "#/components/schemas/CeldaMetricas"
+            },
+            "type": "array",
+            "title": "Celdas"
+          },
+          "variables": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Variables"
+          },
+          "importancia": {
+            "items": {
+              "$ref": "#/components/schemas/CeldaImportancia"
+            },
+            "type": "array",
+            "title": "Importancia"
+          },
+          "aviso": {
+            "type": "string",
+            "title": "Aviso"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tareas",
+          "modelos",
+          "celdas",
+          "variables",
+          "importancia",
+          "aviso"
+        ],
+        "title": "MapasMetricas",
+        "description": "Matrices para los mapas de calor: modelo × tarea por métrica e importancia tarea × variable."
+      },
       "MatrizRelevancia": {
         "properties": {
           "estado": {
@@ -6043,6 +6692,84 @@
           "mensaje"
         ],
         "title": "Mensaje"
+      },
+      "MetricaModeloAnio": {
+        "properties": {
+          "familia": {
+            "type": "string",
+            "enum": [
+              "referencia",
+              "clasico",
+              "red_neuronal",
+              "ensamble"
+            ],
+            "title": "Familia"
+          },
+          "validacion": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Validacion"
+          },
+          "prueba": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prueba",
+            "description": "Métrica principal de la tarea en el año de prueba."
+          },
+          "ic90": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "array",
+            "maxItems": 2,
+            "title": "Ic90"
+          },
+          "p_diebold_mariano": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P Diebold Mariano"
+          },
+          "secundarias": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Secundarias"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "familia"
+        ],
+        "title": "MetricaModeloAnio"
       },
       "ModeloEvaluado": {
         "properties": {
@@ -6133,6 +6860,25 @@
           "puntaje_validacion"
         ],
         "title": "ModeloEvaluado"
+      },
+      "ModeloMapa": {
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "familia": {
+            "type": "string",
+            "title": "Familia"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "nombre",
+          "familia"
+        ],
+        "title": "ModeloMapa"
       },
       "Monto": {
         "properties": {
@@ -7681,6 +8427,70 @@
         "title": "ResultadoComparacionModelos",
         "description": "Zoológico de modelos: el elegido es SIEMPRE el mejor en validación; la prueba solo informa."
       },
+      "ResultadoHistorialMetricas": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "const": "historial_metricas",
+            "title": "Tipo"
+          },
+          "metodo": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metodo"
+          },
+          "tareas": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/HistorialTarea"
+            },
+            "type": "object",
+            "minProperties": 1,
+            "title": "Tareas"
+          },
+          "tareas_omitidas": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Tareas Omitidas"
+          },
+          "caos": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/HistorialCaosSerie"
+            },
+            "type": "object",
+            "title": "Caos"
+          },
+          "series_omitidas": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Series Omitidas"
+          },
+          "lectura": {
+            "type": "string",
+            "maxLength": 1500,
+            "title": "Lectura"
+          },
+          "es_pronostico": {
+            "type": "boolean",
+            "const": false,
+            "title": "Es Pronostico",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tipo",
+          "metodo",
+          "tareas",
+          "lectura"
+        ],
+        "title": "ResultadoHistorialMetricas",
+        "description": "Historial por origen móvil anual del diseño congelado y dinámica en ventanas deslizantes."
+      },
       "ResultadoInventario": {
         "properties": {
           "tipo": {
@@ -8864,6 +9674,50 @@
         ],
         "title": "SolicitudVerificacion"
       },
+      "TareaMapa": {
+        "properties": {
+          "expediente_id": {
+            "type": "string",
+            "title": "Expediente Id"
+          },
+          "titulo": {
+            "type": "string",
+            "title": "Titulo"
+          },
+          "fenomeno": {
+            "type": "string",
+            "title": "Fenomeno"
+          },
+          "tarea": {
+            "type": "string",
+            "title": "Tarea"
+          },
+          "horizonte": {
+            "type": "string",
+            "title": "Horizonte"
+          },
+          "metrica_principal": {
+            "type": "string",
+            "title": "Metrica Principal"
+          },
+          "mejor_validacion": {
+            "type": "string",
+            "title": "Mejor Validacion"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expediente_id",
+          "titulo",
+          "fenomeno",
+          "tarea",
+          "horizonte",
+          "metrica_principal",
+          "mejor_validacion"
+        ],
+        "title": "TareaMapa"
+      },
       "TendenciaRegional": {
         "properties": {
           "sen_por_decada": {
@@ -8930,6 +9784,25 @@
         "title": "TendenciaRegional",
         "description": "Resumen del Sello de Confianza para una variable de un departamento."
       },
+      "TextoBilingue": {
+        "properties": {
+          "es": {
+            "type": "string",
+            "title": "Es"
+          },
+          "en": {
+            "type": "string",
+            "title": "En"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "es",
+          "en"
+        ],
+        "title": "TextoBilingue"
+      },
       "TipoExpediente": {
         "type": "string",
         "enum": [
@@ -8945,7 +9818,8 @@
           "recurrencia",
           "sismicidad",
           "inventario",
-          "panorama_nacional"
+          "panorama_nacional",
+          "historial_metricas"
         ],
         "title": "TipoExpediente"
       },
@@ -9499,6 +10373,145 @@
         ],
         "title": "VariableSalida"
       },
+      "VentanaCaos": {
+        "properties": {
+          "inicio": {
+            "type": "integer",
+            "maximum": 2100.0,
+            "minimum": 1800.0,
+            "title": "Inicio"
+          },
+          "fin": {
+            "type": "integer",
+            "maximum": 2100.0,
+            "minimum": 1800.0,
+            "title": "Fin"
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "N"
+          },
+          "omitido": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Omitido"
+          },
+          "entropia_permutacion": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entropia Permutacion"
+          },
+          "orden_permutacion": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 8.0,
+                "minimum": 2.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Orden Permutacion"
+          },
+          "entropia_muestral": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entropia Muestral"
+          },
+          "lyapunov": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lyapunov"
+          },
+          "determinismo": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Determinismo"
+          },
+          "k_01": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "K 01"
+          },
+          "p_no_linealidad": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P No Linealidad"
+          },
+          "embedding": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embedding"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "inicio",
+          "fin",
+          "n"
+        ],
+        "title": "VentanaCaos"
+      },
       "Veredicto": {
         "type": "string",
         "enum": [
@@ -9697,6 +10710,10 @@
     {
       "name": "Fenómenos naturales",
       "description": "Catálogo científico de fenómenos y capas GeoJSON del mapa."
+    },
+    {
+      "name": "Métricas e historial",
+      "description": "Catálogo explicado de métricas, mapas de calor y historial año a año (M8)."
     },
     {
       "name": "Ciencia de datos",

@@ -18,7 +18,7 @@ from ..evaluacion import metricas as M
 from ..evaluacion.incertidumbre import decidir_abstencion, deriva
 from ..senales.procesamiento import regimenes, spi, ventana_adaptativa
 from . import datos_reales as D
-from .comun import Particion, construir, evaluar_zoo, explicar, limpiar, serie_prueba
+from .comun import Particion, Tarea, construir, evaluar_zoo, explicar, limpiar, serie_prueba
 
 
 def preparar(raw: Path, hasta_entrenamiento: str, fuente: str = "power") -> tuple[pd.DataFrame, dict[str, Any]]:
@@ -54,6 +54,37 @@ def preparar(raw: Path, hasta_entrenamiento: str, fuente: str = "power") -> tupl
     }
 
 
+def tarea(cfg: dict[str, Any], raw: Path, h: int, fuente: str = "power", X: pd.DataFrame | None = None) -> Tarea:
+    """SPI-3 dentro de `h` meses. La gamma del SPI se ajusta solo con el entrenamiento congelado, así
+    que la climatología del SPI es 0 por construcción; la persistencia es el SPI-3 del mes de emisión."""
+    if X is None:
+        X, _ = preparar(raw, cfg["particion_temporal"]["entrenamiento"][1], fuente)
+    datos = X
+
+    def referencias(hasta: str):  # no depende de `hasta`: ambas referencias son de definición
+        def construir_refs(d) -> dict[str, dict[str, np.ndarray]]:
+            return {
+                p: {
+                    "climatologia": np.zeros(len(d.y[p])),
+                    "persistencia": datos["spi3"].reindex(d.fechas[p]).to_numpy(),
+                }
+                for p in ("validacion", "prueba")
+            }
+
+        return construir_refs
+
+    return Tarea(
+        nombre=f"sequia_h{h}_{fuente}",
+        tipo="regresion",
+        X=X,
+        objetivo=X["spi3"].shift(-h),
+        horizonte=pd.DateOffset(months=h),
+        referencias=referencias,
+        epocas=150,
+        bloque_bootstrap=6,
+    )
+
+
 def ejecutar(
     cfg: dict[str, Any],
     raw: Path,
@@ -77,13 +108,9 @@ def ejecutar(
         "horizontes": {},
     }
     for h in (1, 3):
-        objetivo = X["spi3"].shift(-h)
-
-        def referencias(d: Any) -> dict[str, dict[str, np.ndarray]]:
-            return {
-                p: {"climatologia": np.zeros(len(d.y[p])), "persistencia": X["spi3"].reindex(d.fechas[p]).to_numpy()}
-                for p in ("validacion", "prueba")
-            }
+        t = tarea(cfg, raw, h, fuente, X)
+        objetivo = t.objetivo
+        referencias = t.referencias(particion.entrenamiento[1])
 
         def evaluar_L(L: int, objetivo: pd.Series = objetivo, h: int = h) -> float:
             from sklearn.linear_model import Ridge

@@ -4,6 +4,33 @@
 > Regla para cerrar una tarea: código + pruebas que pasan + entrada en la bitácora + commit en `main`.
 > Nada se da por terminado sin evidencia ejecutada.
 
+## Estado al 15-11-2026 (cierre de la sesión)
+
+### Lo que tenemos (verificado)
+| Parte | Estado y evidencia |
+|---|---|
+| Datos reales | NASA POWER (Arequipa, celdas y 25 departamentos), NASA GLC, NASA GIBS (mapa), USGS ComCat, Smithsonian GVP, NOAA ONI y GHCN. Todo con SHA-256 en `data/raw/*/manifiesto.json`; `tv verificar-integridad`: 0 alterados |
+| Modelos | 10 redes (MLP, DLinear, LSTM, GRU, TCN convolucional, N-BEATS, N-HiTS, PatchTST, iTransformer, SSM) + clásicos y referencias. Evidencia: IC90 + Diebold-Mariano. Calibración, conformal y abstención |
+| Teoría del caos | Validada con Lorenz, Hénon y el mapa logístico. 7 series reales con veredicto global y ahora también **en ventanas deslizantes** (M8) |
+| Historial (M8) | Origen móvil 2016–2026 con el diseño congelado. Fuera de muestra: sequía a 1 mes (Ridge 0,711), sequía a 3 meses (ensamble 0,248) y sismos (PatchTST 0,256 bits) **confirmados**; la lluvia a 1 día solo deja un **indicio** (ensamble 0,087) |
+| Mapas de calor | `/metricas`: cada métrica (modelo × tarea), importancia de variables (también en `/relevancia`), historial modelo × año y caos serie × ventana. 24 fichas bilingües de métricas |
+| Escala nacional | 25 departamentos (`/peru`) |
+| Producto | API FastAPI (M1–M8), web React bilingüe ES/EN, accesible y sin desborde en móvil (16 rutas a 390 px) |
+| Calidad | Pruebas: ciencia 117 (115 se ejecutan, 2 se omiten por diseño), backend 72, frontend 33, E2E 2 de 2 contra el despliegue emulado. CI en GitHub Actions |
+| Despliegue | Docker Compose verificado por el equipo; Vercel listo y verificado en local (`docs/despliegue.md`) |
+| Licencias | MIT + atribución de cada fuente + inventario de dependencias. Uso no comercial (hackatón): cubierto también por el Smithsonian GVP |
+
+### Lo que falta
+| Tarea | Quién | Detalle |
+|---|---|---|
+| Publicar en Vercel | DiegoNiS (propietario del repo) u Ower con permisos | Instalar la integración de GitHub de Vercel, importar el repositorio y definir `TV_JWT_SECRETO` (`docs/despliegue.md` §A.1) |
+| IMERG completo | Integrante con cuenta Earthdata | `EARTHDATA_TOKEN` en `.env`, luego `tv ingest-fenomenos --solo-adicionales --fuentes imerg` (ver tabla de bloqueos) |
+| Asistente conversacional | Equipo (opcional) | Necesita una clave de API del proveedor; el verificador numérico ya funciona sin ella |
+| CHIRPS y MODIS | Cualquiera | ClimateSERV y ORNL no son accesibles desde el entorno de trabajo; correr desde otra máquina y repetir `tv experimentos` |
+| Fuentes nacionales | Equipo / docentes | SENAMHI, IGP, INGEMMET, ANA: sin API abierta, requieren convenio o descarga manual verificada |
+| Redes líquidas (LNN/CfC) | Opcional | No implementadas; la familia convolucional (TCN) sí está |
+| Pitch y video de la hackatón | Equipo | Usar `docs/presentacion-ejecutiva.md` y las capturas de `docs/capturas/` |
+
 ## Prioridad 1 · Resultados científicos completos
 
 ### 1.1 Corrida completa de experimentos · ✅ hecho (15-11-2026, commit de código `41198fe`; ver bitácora)
@@ -99,7 +126,8 @@ Y una prueba de humo de cada experimento con datos reducidos guardados en `tests
 | ✅ `backend/README.md` | Instalación, variables `TV_*` y comandos. `backend/pyproject.toml` lo declara. **Hecho:** 15-11-2026 |
 | ✅ `docs/arquitectura.md` | Vista completa: ciencia → API → web, con diagramas mermaid y flujos. **Hecho:** 15-11-2026 |
 | ✅ `docs/metodologia.md` | Métodos estadísticos y de caos con bibliografía verificable. Las referencias ya están en los docstrings de cada módulo. **Hecho:** 15-11-2026; cada método con su módulo y su DOI o arXiv |
-| ✅ Matriz de trazabilidad | Requisito → código → prueba → resultado. **Hecho:** 15-11-2026, `docs/trazabilidad.md` (23 requisitos) |
+| ✅ Matriz de trazabilidad | Requisito → código → prueba → resultado. **Hecho:** 15-11-2026, `docs/trazabilidad.md` (28 requisitos) |
+| ✅ Métricas e historial (M8) | Mapas de calor por métrica, importancia de variables, historial año a año por origen móvil y caos en ventanas deslizantes, con 24 fichas de métricas. **Hecho:** 15-11-2026 (ver bitácora). Pendiente opcional: repetir el historial con CHIRPS cuando ClimateSERV sea accesible (`tv ingest-fenomenos` y `tv experimentos --solo historial`) |
 | ✅ Licencias | `LICENSE` MIT; términos y cita de cada fuente en `docs/licencias-y-atribuciones.md`; inventario generado de las dependencias en `docs/licencias-terceros.md`; prueba que exige atribución para cada fuente de `data/raw`. **Hecho:** 15-11-2026. Queda ⚠️ confirmar el texto vigente de Mapzen Terrain Tiles y la licencia del IGP antes de usar sus datos |
 | ✅ Presentación ejecutiva | Valor tecnológico, científico y económico. Usar solo cifras citadas (p. ej. MERESE US$ 1,5 M, población afectada > 70 %); sin proyecciones inventadas. **Hecho:** 15-11-2026, `docs/presentacion-ejecutiva.md` |
 

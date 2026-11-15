@@ -20,6 +20,7 @@ const VolcanesPagina = lazy(() => import("./paginas/VolcanesPagina").then((m) =>
 const FenomenosPagina = lazy(() => import("./paginas/FenomenosPagina").then((m) => ({ default: m.FenomenosPagina })));
 const CaosPagina = lazy(() => import("./paginas/CaosPagina").then((m) => ({ default: m.CaosPagina })));
 const NacionalPagina = lazy(() => import("./paginas/NacionalPagina").then((m) => ({ default: m.NacionalPagina })));
+const MetricasPagina = lazy(() => import("./paginas/MetricasPagina").then((m) => ({ default: m.MetricasPagina })));
 const ModelosPagina = lazy(() => import("./paginas/ModelosPagina").then((m) => ({ default: m.ModelosPagina })));
 
 function NoEncontrada() {
@@ -41,6 +42,7 @@ export function App() {
           <Route path="/expedientes" element={<ExpedientesPagina />} />
           <Route path="/expedientes/:id" element={<ExpedientesPagina />} />
           <Route path="/peru" element={<NacionalPagina />} />
+          <Route path="/metricas" element={<MetricasPagina />} />
           <Route path="/fenomenos" element={<FenomenosPagina />} />
           <Route path="/sismos" element={<SismosPagina />} />
           <Route path="/volcanes" element={<VolcanesPagina />} />

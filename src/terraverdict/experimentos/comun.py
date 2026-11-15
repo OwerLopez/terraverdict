@@ -62,6 +62,26 @@ class Datos:
     normalizacion: dict[str, tuple[float, float]] = field(default_factory=dict)
 
 
+@dataclass
+class Tarea:
+    """Definición reutilizable de una tarea de pronóstico.
+
+    La comparten el experimento principal y el historial por origen móvil, para que ambos usen
+    exactamente los mismos datos, el mismo objetivo y las mismas referencias.
+    `referencias(hasta)` devuelve el constructor de referencias ajustado solo con datos ≤ `hasta`.
+    """
+
+    nombre: str
+    tipo: str  # clasificacion | regresion | conteo
+    X: pd.DataFrame
+    objetivo: pd.Series
+    horizonte: pd.Timedelta | pd.DateOffset
+    referencias: Callable[[str], Callable[[Datos], dict[str, dict[str, np.ndarray]]]]
+    fechas: pd.DatetimeIndex | None = None
+    epocas: int = 60
+    bloque_bootstrap: int = 10
+
+
 def construir(
     df: pd.DataFrame,
     objetivo: pd.Series,

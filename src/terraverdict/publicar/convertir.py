@@ -33,6 +33,10 @@ FUENTES = {
         ["power_mensual", "oni", "usgs_comcat", "nasa_glc", "gvp_volcanes"],
         ["power_nacional", "usgs_nacional", "noaa", "glc", "gvp"],
     ),
+    "historial": (
+        ["power_diaria", "power_mensual", "oni", "usgs_comcat"],
+        ["power", "noaa", "usgs"],
+    ),
 }
 DOMINIO = {"volcanes": "sur_peru_fenomenos", "deslizamientos": "sur_peru_fenomenos", "sismos": "sur_peru_fenomenos"}
 REPOSITORIO = "DiegoNiS/terraverdict"
@@ -556,6 +560,81 @@ def de_nacional(r: dict[str, Any], alfa: float = 0.10) -> list[dict[str, Any]]:
     ]
 
 
+def _limpio(x: Any) -> Any:
+    """Convierte no finitos en None, recursivamente (el contrato no admite NaN ni infinitos)."""
+    if isinstance(x, dict):
+        return {k: _limpio(v) for k, v in x.items()}
+    if isinstance(x, list):
+        return [_limpio(v) for v in x]
+    if isinstance(x, float):
+        return x if math.isfinite(x) else None
+    return x
+
+
+def de_historial(r: dict[str, Any]) -> list[dict[str, Any]]:
+    """Historial por origen móvil y dinámica en ventanas → un expediente `historial_metricas` (M8)."""
+    tareas = {k: _limpio(v) for k, v in r["pronostico"].items() if "omitido" not in v}
+    if not tareas:
+        return []
+    omitidas = {k: v["omitido"] for k, v in r["pronostico"].items() if "omitido" in v}
+    caos = {
+        k: {**_limpio(v), "ventanas": [{**_limpio(f)} for f in v["ventanas"]]} for k, v in r.get("caos", {}).items()
+    }
+    # Lectura con las cifras de la corrida: habilidad agregada fuera de muestra de la red congelada
+    frases = []
+    for nombre, t in tareas.items():
+        fuera = t.get("agregado", {}).get("fuera_de_muestra", {}).get(t["diseno"]["red"])
+        if fuera and fuera.get("valor") is not None:
+            lo = (fuera.get("ic90") or [None])[0]
+            frases.append(
+                f"{nombre}: {t['diseno']['red']} {_texto(fuera['valor'])} fuera de muestra "
+                f"({fuera['anios']} años, IC90 inferior {_texto(lo)})"
+            )
+    no_lineales = {
+        k: sum(1 for f in v["ventanas"] if f.get("p_no_linealidad") is not None and f["p_no_linealidad"] <= 0.05)
+        for k, v in caos.items()
+    }
+    evaluadas = {k: sum(1 for f in v["ventanas"] if "omitido" not in f or not f["omitido"]) for k, v in caos.items()}
+    lectura = (
+        "Origen móvil anual con el diseño congelado. Los años hasta "
+        f"{r['metodo']['frontera_diseno']} se usaron para elegir el diseño (lectura optimista); los "
+        "posteriores son fuera de muestra. Por año la muestra es pequeña: la lectura principal es la "
+        "habilidad agregada por régimen con su IC90. "
+        + ("; ".join(frases) + ". " if frases else "")
+        + "Ventanas con no linealidad significativa (p ≤ 0,05): "
+        + ", ".join(f"{k} {no_lineales[k]}/{evaluadas[k]}" for k in caos)
+        + "."
+    )
+    resultado = {
+        "tipo": "historial_metricas",
+        "metodo": r["metodo"],
+        "tareas": tareas,
+        "tareas_omitidas": omitidas,
+        "caos": caos,
+        "series_omitidas": r.get("series_omitidas", {}),
+        "lectura": lectura[:1500],
+    }
+    pasos = _pasos(
+        ("diseno", "Diseño congelado (variables, ventana y red) leído de los resultados principales"),
+        ("origen_movil", "Por año Y: entrena ≤ Y−2, valida Y−1, prueba Y; referencias ajustadas ≤ Y−2"),
+        ("agregado", "Habilidad por régimen con IC90 por bootstrap de bloques y Diebold-Mariano"),
+        ("caos_ventanas", "Invariantes de caos en ventanas deslizantes con sustitutos IAAFT"),
+    )
+    proc = procedencia("historial", r["procedencia"], pasos)
+    if r.get("configuracion"):
+        proc["hash_entradas"][r["configuracion"]["archivo"]] = r["configuracion"]["sha256"]
+    return [
+        _expediente(
+            "chili_analisis",
+            "Historial de métricas: habilidad año a año y dinámica en ventanas",
+            "Cómo habría rendido cada modelo cada año con los datos de entonces, y cómo cambian los "
+            "invariantes de caos con el tiempo. " + "; ".join(frases)[:1500],
+            resultado,
+            proc,
+        )
+    ]
+
+
 def de_resultados(carpeta: Path, eventos_minimos: int = 30) -> list[dict[str, Any]]:
     salida: list[dict[str, Any]] = []
     for ruta in sorted(carpeta.glob("*.json")):
@@ -578,6 +657,8 @@ def de_resultados(carpeta: Path, eventos_minimos: int = 30) -> list[dict[str, An
             salida += de_caos(r)
         elif nombre == "nacional":
             salida += de_nacional(r)
+        elif nombre == "historial":
+            salida += de_historial(r)
     return salida
 
 

@@ -639,6 +639,106 @@ class ResultadoPanoramaNacional(Esquema):
     es_pronostico: Literal[False] = False
 
 
+# --- M8 · Historial de métricas -------------------------------------------------------------
+
+Familia = Literal["referencia", "clasico", "red_neuronal", "ensamble"]
+Regimen = Literal["validacion_del_diseno", "fuera_de_muestra"]
+
+
+class MetricaModeloAnio(Esquema):
+    familia: Familia
+    validacion: NumeroFinitoOpcional = None
+    prueba: NumeroFinitoOpcional = Field(
+        None, description="Métrica principal de la tarea en el año de prueba."
+    )
+    ic90: list[NumeroFinitoOpcional] = Field(default_factory=list, max_length=2)
+    p_diebold_mariano: Probabilidad | None = None
+    secundarias: dict[str, NumeroFinito] = Field(default_factory=dict)
+
+
+class AnioHistorial(Esquema):
+    anio: int = Field(ge=1900, le=2100)
+    regimen: Regimen
+    n: dict[str, int]
+    omitido: str | None = Field(None, description="Motivo por el que el año no se evaluó.")
+    eventos_prueba: int | None = Field(None, ge=0)
+    elegido_en_validacion: str | None = None
+    modelos: dict[str, MetricaModeloAnio] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def _evaluado_u_omitido(self) -> AnioHistorial:
+        if bool(self.omitido) == bool(self.modelos):
+            raise ValueError(
+                "Un año del historial tiene métricas o un motivo de omisión, no ambos ni ninguno."
+            )
+        return self
+
+
+class AgregadoModelo(Esquema):
+    valor: NumeroFinitoOpcional = None
+    ic90: list[NumeroFinitoOpcional] = Field(default_factory=list, max_length=2)
+    p_diebold_mariano: Probabilidad | None = None
+    n: int = Field(ge=1)
+    anios: int = Field(ge=1)
+
+
+class DisenoCongelado(Esquema):
+    columnas: list[str] = Field(min_length=1)
+    ventana: int = Field(ge=1)
+    red: str
+
+
+class HistorialTarea(Esquema):
+    fenomeno: str
+    tipo: Literal["clasificacion", "regresion", "conteo"]
+    descripcion: str
+    diseno: DisenoCongelado
+    metrica_principal: str
+    anios: list[AnioHistorial] = Field(min_length=1)
+    agregado: dict[Regimen, dict[str, AgregadoModelo]] = Field(default_factory=dict)
+
+
+class VentanaCaos(Esquema):
+    inicio: int = Field(ge=1800, le=2100)
+    fin: int = Field(ge=1800, le=2100)
+    n: int = Field(ge=0)
+    omitido: str | None = None
+    entropia_permutacion: Probabilidad | None = None
+    orden_permutacion: int | None = Field(None, ge=2, le=8)
+    entropia_muestral: NumeroFinitoOpcional = None
+    lyapunov: NumeroFinitoOpcional = None
+    determinismo: Probabilidad | None = None
+    k_01: NumeroFinitoOpcional = None
+    p_no_linealidad: Probabilidad | None = None
+    embedding: dict[str, int] | None = None
+
+    @model_validator(mode="after")
+    def _orden(self) -> VentanaCaos:
+        if self.fin < self.inicio:
+            raise ValueError("La ventana termina antes de empezar.")
+        return self
+
+
+class HistorialCaosSerie(Esquema):
+    fuente: str
+    unidad_tiempo: str
+    ventana_anios: int = Field(ge=1)
+    ventanas: list[VentanaCaos]
+
+
+class ResultadoHistorialMetricas(Esquema):
+    """Historial por origen móvil anual del diseño congelado y dinámica en ventanas deslizantes."""
+
+    tipo: Literal["historial_metricas"]
+    metodo: dict[str, Any]
+    tareas: dict[str, HistorialTarea] = Field(min_length=1)
+    tareas_omitidas: dict[str, str] = Field(default_factory=dict)
+    caos: dict[str, HistorialCaosSerie] = Field(default_factory=dict)
+    series_omitidas: dict[str, str] = Field(default_factory=dict)
+    lectura: str = Field(max_length=1500)
+    es_pronostico: Literal[False] = False
+
+
 Resultado = Annotated[
     ResultadoTendencia
     | ResultadoRelevancia
@@ -652,7 +752,8 @@ Resultado = Annotated[
     | ResultadoRecurrencia
     | ResultadoSismicidad
     | ResultadoInventario
-    | ResultadoPanoramaNacional,
+    | ResultadoPanoramaNacional
+    | ResultadoHistorialMetricas,
     Field(discriminator="tipo"),
 ]
 

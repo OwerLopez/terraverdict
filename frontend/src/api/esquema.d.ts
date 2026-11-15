@@ -628,6 +628,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/metricas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Catálogo de métricas con su explicación
+         * @description Qué mide cada métrica, cómo leerla, si es mejor alta o baja y su referencia (config/metricas.yaml).
+         */
+        get: operations["catalogo_metricas_api_v1_metricas_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/metricas/mapas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Mapas de calor de métricas e importancia de variables
+         * @description Reorganiza los expedientes `comparacion_modelos` vigentes (el más reciente por título) en una matriz modelo × tarea con cada métrica publicada y una matriz tarea × variable con la importancia por permutación. Sin expedientes, las listas vienen vacías.
+         */
+        get: operations["mapas_metricas_api_v1_metricas_mapas_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/historial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Historial de métricas: año a año y dinámica en ventanas
+         * @description Habilidad de cada modelo por año (origen móvil con el diseño congelado) y evolución de los invariantes de caos en ventanas deslizantes, del expediente `historial_metricas` vigente. Sin expediente publicado, `resultado` es null.
+         */
+        get: operations["historial_metricas_api_v1_historial_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/relevancia/matriz": {
         parameters: {
             query?: never;
@@ -813,12 +873,52 @@ export interface components {
             /** Advertencias */
             advertencias?: string[];
         };
+        /** AgregadoModelo */
+        AgregadoModelo: {
+            /** Valor */
+            valor?: number | null;
+            /** Ic90 */
+            ic90?: (number | null)[];
+            /** P Diebold Mariano */
+            p_diebold_mariano?: number | null;
+            /** N */
+            n: number;
+            /** Anios */
+            anios: number;
+        };
         /**
          * Alcance
          * @description Permisos de las cuentas de servicio (claves API) del equipo de ciencia de datos.
          * @enum {string}
          */
         Alcance: "ingesta" | "trabajador";
+        /** AnioHistorial */
+        AnioHistorial: {
+            /** Anio */
+            anio: number;
+            /**
+             * Regimen
+             * @enum {string}
+             */
+            regimen: "validacion_del_diseno" | "fuera_de_muestra";
+            /** N */
+            n: {
+                [key: string]: number;
+            };
+            /**
+             * Omitido
+             * @description Motivo por el que el año no se evaluó.
+             */
+            omitido?: string | null;
+            /** Eventos Prueba */
+            eventos_prueba?: number | null;
+            /** Elegido En Validacion */
+            elegido_en_validacion?: string | null;
+            /** Modelos */
+            modelos?: {
+                [key: string]: components["schemas"]["MetricaModeloAnio"];
+            };
+        };
         /** Body_iniciar_sesion_api_v1_auth_token_post */
         Body_iniciar_sesion_api_v1_auth_token_post: {
             /** Grant Type */
@@ -905,11 +1005,55 @@ export interface components {
             /** Aviso */
             aviso: string;
         };
+        /** CatalogoMetricas */
+        CatalogoMetricas: {
+            /** Version */
+            version: number;
+            /** Grupos */
+            grupos: {
+                [key: string]: components["schemas"]["TextoBilingue"];
+            };
+            /** Metricas */
+            metricas: components["schemas"]["FichaMetrica"][];
+        };
         /**
          * CategoriaEvento
          * @enum {string}
          */
         CategoriaEvento: "escasez" | "turbidez" | "colmatacion" | "almacenamiento" | "degradacion" | "clima" | "institucional";
+        /** CeldaImportancia */
+        CeldaImportancia: {
+            /** Expediente Id */
+            expediente_id: string;
+            /** Variable */
+            variable: string;
+            /** Importancia */
+            importancia: number;
+            /** Desviacion */
+            desviacion: number;
+        };
+        /**
+         * CeldaMetricas
+         * @description Métricas de un modelo en una tarea, tal como se publicaron en su expediente.
+         */
+        CeldaMetricas: {
+            /** Expediente Id */
+            expediente_id: string;
+            /** Modelo */
+            modelo: string;
+            /** Puntaje Validacion */
+            puntaje_validacion: number;
+            /** Puntaje Prueba */
+            puntaje_prueba?: number | null;
+            /** Ic90 Inferior */
+            ic90_inferior?: number | null;
+            /** Ic90 Superior */
+            ic90_superior?: number | null;
+            /** P Diebold Mariano */
+            p_diebold_mariano?: number | null;
+            /** Dispersion Semillas */
+            dispersion_semillas?: number | null;
+        };
         /** CeldaRelevancia */
         CeldaRelevancia: {
             /** Problema Id */
@@ -1138,6 +1282,15 @@ export interface components {
             serie_temperatura_c?: number[];
             /** Serie Lluvia Mm */
             serie_lluvia_mm?: (number | null)[];
+        };
+        /** DisenoCongelado */
+        DisenoCongelado: {
+            /** Columnas */
+            columnas: string[];
+            /** Ventana */
+            ventana: number;
+            /** Red */
+            red: string;
         };
         /**
          * DistribucionSustitutos
@@ -1398,7 +1551,7 @@ export interface components {
             /** Resumen */
             resumen: string;
             /** Resultado */
-            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"] | components["schemas"]["ResultadoPanoramaNacional"];
+            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"] | components["schemas"]["ResultadoPanoramaNacional"] | components["schemas"]["ResultadoHistorialMetricas"];
             procedencia: components["schemas"]["Procedencia"];
             /** Reemplaza A */
             reemplaza_a?: string | null;
@@ -1468,7 +1621,7 @@ export interface components {
              */
             creado_en: string;
             /** Resultado */
-            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"] | components["schemas"]["ResultadoPanoramaNacional"];
+            resultado: components["schemas"]["ResultadoTendencia"] | components["schemas"]["ResultadoRelevancia"] | components["schemas"]["ResultadoAtribucion"] | components["schemas"]["ResultadoPronostico"] | components["schemas"]["ResultadoAlerta"] | components["schemas"]["ResultadoColmatacion"] | components["schemas"]["ResultadoPriorizacion"] | components["schemas"]["ResultadoCaos"] | components["schemas"]["ResultadoComparacionModelos"] | components["schemas"]["ResultadoRecurrencia"] | components["schemas"]["ResultadoSismicidad"] | components["schemas"]["ResultadoInventario"] | components["schemas"]["ResultadoPanoramaNacional"] | components["schemas"]["ResultadoHistorialMetricas"];
             procedencia: components["schemas"]["Procedencia"];
             /** Hash Contenido */
             hash_contenido: string;
@@ -1528,6 +1681,30 @@ export interface components {
             metricas: string[];
             /** Dominio Bbox */
             dominio_bbox?: number[] | null;
+        };
+        /** FichaMetrica */
+        FichaMetrica: {
+            /** Id */
+            id: string;
+            /** Grupo */
+            grupo: string;
+            nombre: components["schemas"]["TextoBilingue"];
+            /** Formula */
+            formula: string;
+            que_mide: components["schemas"]["TextoBilingue"];
+            como_leer: components["schemas"]["TextoBilingue"];
+            /**
+             * Mejor
+             * @description mayor, menor, cercano_a_0_9 o informativa.
+             */
+            mejor: string;
+            /**
+             * Valor Referencia
+             * @description Valor de la referencia o umbral de lectura.
+             */
+            valor_referencia?: number | null;
+            /** Cita */
+            cita: string;
         };
         /**
          * Frecuencia
@@ -1621,6 +1798,62 @@ export interface components {
             /** Anios Evaluados */
             anios_evaluados: number;
         };
+        /** HistorialCaosSerie */
+        HistorialCaosSerie: {
+            /** Fuente */
+            fuente: string;
+            /** Unidad Tiempo */
+            unidad_tiempo: string;
+            /** Ventana Anios */
+            ventana_anios: number;
+            /** Ventanas */
+            ventanas: components["schemas"]["VentanaCaos"][];
+        };
+        /**
+         * HistorialMetricas
+         * @description Historial vigente: el resultado completo del expediente `historial_metricas` más reciente.
+         */
+        HistorialMetricas: {
+            /**
+             * Expediente Id
+             * @description Expediente del que sale el historial; null si no hay.
+             */
+            expediente_id?: string | null;
+            /** Generado Utc */
+            generado_utc?: string | null;
+            /**
+             * Resultado
+             * @description Contenido validado con ResultadoHistorialMetricas al publicarse.
+             */
+            resultado?: {
+                [key: string]: unknown;
+            } | null;
+            /** Aviso */
+            aviso: string;
+        };
+        /** HistorialTarea */
+        HistorialTarea: {
+            /** Fenomeno */
+            fenomeno: string;
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "clasificacion" | "regresion" | "conteo";
+            /** Descripcion */
+            descripcion: string;
+            diseno: components["schemas"]["DisenoCongelado"];
+            /** Metrica Principal */
+            metrica_principal: string;
+            /** Anios */
+            anios: components["schemas"]["AnioHistorial"][];
+            /** Agregado */
+            agregado?: {
+                [key: string]: {
+                    [key: string]: components["schemas"]["AgregadoModelo"];
+                };
+            };
+        };
         /** Identidad */
         Identidad: {
             /**
@@ -1680,6 +1913,24 @@ export interface components {
              */
             nivel: number;
         };
+        /**
+         * MapasMetricas
+         * @description Matrices para los mapas de calor: modelo × tarea por métrica e importancia tarea × variable.
+         */
+        MapasMetricas: {
+            /** Tareas */
+            tareas: components["schemas"]["TareaMapa"][];
+            /** Modelos */
+            modelos: components["schemas"]["ModeloMapa"][];
+            /** Celdas */
+            celdas: components["schemas"]["CeldaMetricas"][];
+            /** Variables */
+            variables: string[];
+            /** Importancia */
+            importancia: components["schemas"]["CeldaImportancia"][];
+            /** Aviso */
+            aviso: string;
+        };
         /** MatrizRelevancia */
         MatrizRelevancia: {
             /**
@@ -1702,6 +1953,29 @@ export interface components {
         Mensaje: {
             /** Mensaje */
             mensaje: string;
+        };
+        /** MetricaModeloAnio */
+        MetricaModeloAnio: {
+            /**
+             * Familia
+             * @enum {string}
+             */
+            familia: "referencia" | "clasico" | "red_neuronal" | "ensamble";
+            /** Validacion */
+            validacion?: number | null;
+            /**
+             * Prueba
+             * @description Métrica principal de la tarea en el año de prueba.
+             */
+            prueba?: number | null;
+            /** Ic90 */
+            ic90?: (number | null)[];
+            /** P Diebold Mariano */
+            p_diebold_mariano?: number | null;
+            /** Secundarias */
+            secundarias?: {
+                [key: string]: number;
+            };
         };
         /** ModeloEvaluado */
         ModeloEvaluado: {
@@ -1729,6 +2003,13 @@ export interface components {
              * @description Artículo de la arquitectura.
              */
             referencia?: string | null;
+        };
+        /** ModeloMapa */
+        ModeloMapa: {
+            /** Nombre */
+            nombre: string;
+            /** Familia */
+            familia: string;
         };
         /** Monto */
         Monto: {
@@ -2250,6 +2531,45 @@ export interface components {
             importancia?: components["schemas"]["ImportanciaVariable"][];
             abstencion: components["schemas"]["Abstencion"];
         };
+        /**
+         * ResultadoHistorialMetricas
+         * @description Historial por origen móvil anual del diseño congelado y dinámica en ventanas deslizantes.
+         */
+        ResultadoHistorialMetricas: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            tipo: "historial_metricas";
+            /** Metodo */
+            metodo: {
+                [key: string]: unknown;
+            };
+            /** Tareas */
+            tareas: {
+                [key: string]: components["schemas"]["HistorialTarea"];
+            };
+            /** Tareas Omitidas */
+            tareas_omitidas?: {
+                [key: string]: string;
+            };
+            /** Caos */
+            caos?: {
+                [key: string]: components["schemas"]["HistorialCaosSerie"];
+            };
+            /** Series Omitidas */
+            series_omitidas?: {
+                [key: string]: string;
+            };
+            /** Lectura */
+            lectura: string;
+            /**
+             * Es Pronostico
+             * @default false
+             * @constant
+             */
+            es_pronostico: false;
+        };
         /** ResultadoInventario */
         ResultadoInventario: {
             /**
@@ -2685,6 +3005,23 @@ export interface components {
              */
             tolerancia_relativa: number;
         };
+        /** TareaMapa */
+        TareaMapa: {
+            /** Expediente Id */
+            expediente_id: string;
+            /** Titulo */
+            titulo: string;
+            /** Fenomeno */
+            fenomeno: string;
+            /** Tarea */
+            tarea: string;
+            /** Horizonte */
+            horizonte: string;
+            /** Metrica Principal */
+            metrica_principal: string;
+            /** Mejor Validacion */
+            mejor_validacion: string;
+        };
         /**
          * TendenciaRegional
          * @description Resumen del Sello de Confianza para una variable de un departamento.
@@ -2705,11 +3042,18 @@ export interface components {
             /** Anios Necesarios */
             anios_necesarios?: number | null;
         };
+        /** TextoBilingue */
+        TextoBilingue: {
+            /** Es */
+            es: string;
+            /** En */
+            en: string;
+        };
         /**
          * TipoExpediente
          * @enum {string}
          */
-        TipoExpediente: "tendencia" | "relevancia" | "atribucion" | "pronostico" | "alerta" | "colmatacion" | "priorizacion" | "caos" | "comparacion_modelos" | "recurrencia" | "sismicidad" | "inventario" | "panorama_nacional";
+        TipoExpediente: "tendencia" | "relevancia" | "atribucion" | "pronostico" | "alerta" | "colmatacion" | "priorizacion" | "caos" | "comparacion_modelos" | "recurrencia" | "sismicidad" | "inventario" | "panorama_nacional" | "historial_metricas";
         /**
          * TipoProceso
          * @enum {string}
@@ -2907,6 +3251,35 @@ export interface components {
             descripcion: string;
             /** Relacion */
             relacion: string | null;
+        };
+        /** VentanaCaos */
+        VentanaCaos: {
+            /** Inicio */
+            inicio: number;
+            /** Fin */
+            fin: number;
+            /** N */
+            n: number;
+            /** Omitido */
+            omitido?: string | null;
+            /** Entropia Permutacion */
+            entropia_permutacion?: number | null;
+            /** Orden Permutacion */
+            orden_permutacion?: number | null;
+            /** Entropia Muestral */
+            entropia_muestral?: number | null;
+            /** Lyapunov */
+            lyapunov?: number | null;
+            /** Determinismo */
+            determinismo?: number | null;
+            /** K 01 */
+            k_01?: number | null;
+            /** P No Linealidad */
+            p_no_linealidad?: number | null;
+            /** Embedding */
+            embedding?: {
+                [key: string]: number;
+            } | null;
         };
         /**
          * Veredicto
@@ -4625,6 +4998,76 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PanoramaNacional"];
+                };
+            };
+        };
+    };
+    catalogo_metricas_api_v1_metricas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CatalogoMetricas"];
+                };
+            };
+            /** @description El recurso no existe. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": unknown;
+                    "application/json": components["schemas"]["ProblemaHTTP"];
+                };
+            };
+        };
+    };
+    mapas_metricas_api_v1_metricas_mapas_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MapasMetricas"];
+                };
+            };
+        };
+    };
+    historial_metricas_api_v1_historial_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HistorialMetricas"];
                 };
             };
         };

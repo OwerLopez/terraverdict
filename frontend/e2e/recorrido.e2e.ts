@@ -50,6 +50,7 @@ test("las vistas de fenómenos cargan con su aviso y sin errores de consola", as
     ["/volcanes", "Actividad volcánica"],
     ["/caos", "Dinámica"],
     ["/modelos", "Comparación de modelos"],
+    ["/metricas", "Métricas, mapas de calor e historial"],
   ] as const) {
     await page.goto(ruta);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(titulo);

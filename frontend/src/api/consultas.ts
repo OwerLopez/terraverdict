@@ -161,3 +161,12 @@ export function useExpedienteVigente(tipo: Esquemas["ExpedienteResumen"]["tipo"]
 /** Panorama nacional vigente (25 departamentos con el mismo motor). */
 export const useNacional = () =>
   useQuery({ queryKey: ["nacional"], queryFn: () => pedir(api.GET("/api/v1/nacional")), staleTime: 10 * MINUTO });
+
+export const useCatalogoMetricas = () =>
+  useQuery({ queryKey: ["metricas"], queryFn: () => pedir(api.GET("/api/v1/metricas")), staleTime: 30 * MINUTO });
+
+export const useMapasMetricas = () =>
+  useQuery({ queryKey: ["metricas", "mapas"], queryFn: () => pedir(api.GET("/api/v1/metricas/mapas")), staleTime: 5 * MINUTO });
+
+export const useHistorial = () =>
+  useQuery({ queryKey: ["historial"], queryFn: () => pedir(api.GET("/api/v1/historial")), staleTime: 5 * MINUTO });

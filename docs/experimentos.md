@@ -4,13 +4,13 @@
 
 | Campo | Valor |
 |---|---|
-| Generado (UTC) | 2026-11-15T13:08:59+00:00 |
-| Commit del código | `f663f3c726b2207261dec65574cd0d669539dd60` |
+| Generado (UTC) | 2026-11-15T16:57:23+00:00 |
+| Commit del código | `571b8edc64b09be3f21f90ffa75c70a5941d64c7` |
 | Modo | completo |
 | Configuración (SHA-256) | `3cbb05a406bb35a4…` |
 | Versiones | python 3.13.15, numpy 2.5.4, torch 2.15.0+cpu, scikit_learn 1.9.1 |
 | Crudos con hash | 73 |
-| Tiempo por experimento (s) | volcanes 0, deslizamientos 0, sismos 14, fuentes 1, sequia 56, sequia_chirps 27, lluvia_extrema 173, lluvia_extrema_chirps 159, caos 55, nacional 49 |
+| Tiempo por experimento (s) | volcanes 0, deslizamientos 0, sismos 14, fuentes 1, sequia 56, sequia_chirps 27, lluvia_extrema 173, lluvia_extrema_chirps 159, caos 55, nacional 49, historial 1232 |
 
 **Cómo leer.** La partición es temporal y está congelada (entrenamiento 1981–2015, validación 2016–2020, prueba 2021–2026). Todo se elige con validación; la prueba se usa una vez. Una habilidad está **confirmada** solo si su IC90 por bootstrap de bloques queda por encima de 0 **y** la prueba de Diebold-Mariano frente a la climatología da p < 0,10; si solo se cumple una de las dos, es un **indicio**.
 
@@ -635,6 +635,161 @@ Veredictos (mismo vocabulario que la API: 'preliminar' = significativa con prueb
 | sur (−14° a −18,5°) | 1,034 | 1578 |
 
 Tasas históricas del catálogo global; no son pronósticos. El IGP mantiene el catálogo nacional oficial.
+
+## Historial de métricas · origen móvil y dinámica en ventanas
+
+Para cada año Y desde 2016: entrenamiento con datos ≤ Y−2, validación en Y−1 y prueba en Y, con el **diseño congelado** del experimento principal (variables, ventana y red). Los años hasta 2020 se usaron para elegir ese diseño (lectura optimista); los posteriores son **fuera de muestra**. Semillas por corte: 0. Por año la muestra es pequeña; la lectura principal es la habilidad agregada por régimen.
+
+### lluvia diaria en la cabecera ≥ 3.22 mm (p90 de dic–mar, entrenamiento; POWER)
+
+Métrica: habilidad de Brier frente a la climatología. Red congelada: SSM selectivo, ventana 14.
+
+| Año | Régimen | n | SSM selectivo [IC90] | Mejor clásico | Persistencia |
+|---|---|---|---|---|---|
+| 2016 | validación del diseño | 182 | -0,006 [-0,118 a 0,090] | Regresión logística 0,120 | 0,082 |
+| 2017 | validación del diseño | 181 | 0,224 [0,085 a 0,366] | Regresión logística 0,069 | 0,117 |
+| 2018 | validación del diseño | 181 | 0,018 [-0,159 a 0,171] | Regresión logística 0,041 | -0,015 |
+| 2019 | validación del diseño | 181 | 0,039 [-0,089 a 0,123] | Gradient boosting -0,023 | -0,053 |
+| 2020 | validación del diseño | 182 | 0,262 [0,114 a 0,378] | Regresión logística 0,269 | 0,033 |
+| 2021 | fuera de muestra | 181 | -0,197 [-0,532 a -0,030] | Gradient boosting -0,208 | -0,048 |
+| 2022 | fuera de muestra | 181 | -0,066 [-0,203 a -0,004] | Gradient boosting -0,029 | -0,117 |
+| 2023 | fuera de muestra | 181 | 0,071 [-0,031 a 0,162] | Regresión logística 0,066 | 0,046 |
+| 2024 | fuera de muestra | 182 | 0,037 [-0,173 a 0,196] | Gradient boosting -0,010 | 0,048 |
+| 2025 | fuera de muestra | 181 | 0,058 [-0,373 a 0,433] | Regresión logística 0,061 | 0,027 |
+| 2026 | fuera de muestra | 120 | 0,198 [-0,056 a 0,365] | Gradient boosting 0,272 | 0,082 |
+
+Agregado por régimen (predicciones concatenadas):
+
+| Régimen | Modelo | Habilidad | IC90 | p DM | Años |
+|---|---|---|---|---|---|
+| validación del diseño | Ensamble (3 mejores en validación) | 0,136 | 0,065 a 0,183 | 0,003 | 5 |
+| validación del diseño | SSM selectivo | 0,130 | 0,054 a 0,183 | 0,007 | 5 |
+| validación del diseño | Regresión logística | 0,104 | 0,015 a 0,159 | 0,040 | 5 |
+| validación del diseño | Gradient boosting | 0,048 | -0,037 a 0,110 | 0,305 | 5 |
+| validación del diseño | Persistencia (referencia) | 0,039 | -0,010 a 0,077 | 0,125 | 5 |
+| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
+| fuera de muestra | Ensamble (3 mejores en validación) | 0,087 | 0,009 a 0,166 | 0,119 | 6 |
+| fuera de muestra | SSM selectivo | 0,036 | -0,081 a 0,138 | 0,624 | 6 |
+| fuera de muestra | Gradient boosting | 0,031 | -0,033 a 0,090 | 0,463 | 6 |
+| fuera de muestra | Regresión logística | 0,029 | -0,048 a 0,099 | 0,555 | 6 |
+| fuera de muestra | Persistencia (referencia) | 0,015 | -0,032 a 0,066 | 0,614 | 6 |
+| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 6 |
+
+### SPI-3 dentro de 1 mes(es)
+
+Métrica: habilidad (1 − ECM/ECM de la climatología). Red congelada: N-BEATS, ventana 3.
+
+| Año | Régimen | n | N-BEATS [IC90] | Mejor clásico | Persistencia |
+|---|---|---|---|---|---|
+| 2016 | validación del diseño | 12 | 0,600 [0,518 a 0,671] | Ridge 0,425 | 0,571 |
+| 2017 | validación del diseño | 12 | 0,711 [0,637 a 0,826] | Gradient boosting 0,780 | 0,506 |
+| 2018 | validación del diseño | 12 | 0,779 [0,670 a 0,966] | Ridge 0,667 | 0,627 |
+| 2019 | validación del diseño | 12 | 0,848 [0,846 a 0,969] | Ridge 0,782 | -0,308 |
+| 2020 | validación del diseño | 12 | 0,326 [-0,095 a 0,708] | Gradient boosting 0,518 | 0,425 |
+| 2021 | fuera de muestra | 12 | 0,731 [-0,740 a 0,800] | Ridge 0,791 | 0,772 |
+| 2022 | fuera de muestra | 12 | 0,459 [0,340 a 0,733] | Gradient boosting 0,366 | -1,078 |
+| 2023 | fuera de muestra | 12 | 0,743 [0,431 a 0,770] | Ridge 0,682 | 0,343 |
+| 2024 | fuera de muestra | 12 | -0,291 [-0,291 a 0,363] | Ridge 0,345 | -0,110 |
+| 2025 | fuera de muestra | 12 | 0,347 [0,308 a 0,365] | Ridge 0,834 | 0,742 |
+
+Agregado por régimen (predicciones concatenadas):
+
+| Régimen | Modelo | Habilidad | IC90 | p DM | Años |
+|---|---|---|---|---|---|
+| validación del diseño | N-BEATS | 0,694 | 0,603 a 0,800 | 0,002 | 5 |
+| validación del diseño | Ensamble (3 mejores en validación) | 0,673 | 0,595 a 0,795 | 0,001 | 5 |
+| validación del diseño | Ridge | 0,620 | 0,509 a 0,759 | 0,002 | 5 |
+| validación del diseño | Gradient boosting | 0,582 | 0,512 a 0,730 | 0,000 | 5 |
+| validación del diseño | Persistencia (referencia) | 0,393 | 0,242 a 0,618 | 0,034 | 5 |
+| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
+| fuera de muestra | Ridge | 0,711 | 0,572 a 0,811 | 0,023 | 5 |
+| fuera de muestra | Ensamble (3 mejores en validación) | 0,685 | 0,604 a 0,740 | 0,014 | 5 |
+| fuera de muestra | Gradient boosting | 0,660 | 0,548 a 0,734 | 0,017 | 5 |
+| fuera de muestra | N-BEATS | 0,525 | 0,344 a 0,685 | 0,029 | 5 |
+| fuera de muestra | Persistencia (referencia) | 0,456 | 0,130 a 0,671 | 0,114 | 5 |
+| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
+
+### SPI-3 dentro de 3 mes(es)
+
+Métrica: habilidad (1 − ECM/ECM de la climatología). Red congelada: iTransformer, ventana 24.
+
+| Año | Régimen | n | iTransformer [IC90] | Mejor clásico | Persistencia |
+|---|---|---|---|---|---|
+| 2016 | validación del diseño | 12 | 0,287 [0,228 a 0,612] | Ridge -0,182 | -0,104 |
+| 2017 | validación del diseño | 12 | 0,573 [0,389 a 0,827] | Gradient boosting 0,536 | 0,164 |
+| 2018 | validación del diseño | 12 | 0,422 [0,422 a 0,699] | Gradient boosting 0,477 | 0,204 |
+| 2019 | validación del diseño | 12 | 0,430 [0,368 a 0,455] | Gradient boosting 0,363 | -1,720 |
+| 2020 | validación del diseño | 12 | -1,105 [-3,247 a 0,240] | Ridge -0,118 | -0,705 |
+| 2021 | fuera de muestra | 12 | 0,290 [-2,029 a 0,344] | Gradient boosting 0,072 | -0,059 |
+| 2022 | fuera de muestra | 12 | -0,494 [-1,002 a 0,053] | Gradient boosting -0,498 | -2,811 |
+| 2023 | fuera de muestra | 12 | 0,091 [-0,056 a 0,151] | Gradient boosting 0,175 | -0,369 |
+| 2024 | fuera de muestra | 12 | -0,020 [-1,186 a 0,216] | Gradient boosting 0,579 | -0,854 |
+| 2025 | fuera de muestra | 12 | 0,350 [0,252 a 0,425] | Ridge 0,424 | 0,086 |
+
+Agregado por régimen (predicciones concatenadas):
+
+| Régimen | Modelo | Habilidad | IC90 | p DM | Años |
+|---|---|---|---|---|---|
+| validación del diseño | Ensamble (3 mejores en validación) | 0,260 | 0,022 a 0,468 | 0,151 | 5 |
+| validación del diseño | iTransformer | 0,208 | -0,137 a 0,483 | 0,375 | 5 |
+| validación del diseño | Gradient boosting | 0,166 | -0,152 a 0,434 | 0,406 | 5 |
+| validación del diseño | Ridge | 0,154 | -0,111 a 0,387 | 0,421 | 5 |
+| validación del diseño | Persistencia (referencia) | -0,335 | -0,731 a 0,143 | 0,251 | 5 |
+| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
+| fuera de muestra | Ensamble (3 mejores en validación) | 0,248 | 0,102 a 0,385 | 0,063 | 5 |
+| fuera de muestra | Gradient boosting | 0,239 | 0,061 a 0,383 | 0,121 | 5 |
+| fuera de muestra | iTransformer | 0,181 | -0,029 a 0,298 | 0,143 | 5 |
+| fuera de muestra | Ridge | 0,030 | -0,346 a 0,302 | 0,870 | 5 |
+| fuera de muestra | Persistencia (referencia) | -0,305 | -0,722 a 0,148 | 0,243 | 5 |
+| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
+
+### conteo mensual de sismos M ≥ 4.5 del mes siguiente
+
+Métrica: ganancia de información frente a Poisson de tasa constante (bits/mes). Red congelada: PatchTST, ventana 12.
+
+| Año | Régimen | n | PatchTST [IC90] | Mejor clásico | Persistencia |
+|---|---|---|---|---|---|
+| 2016 | validación del diseño | 12 | 0,268 [-0,218 a 0,514] | GLM de Poisson 0,085 | -0,581 |
+| 2017 | validación del diseño | 12 | 0,303 [0,229 a 0,343] | GLM de Poisson 0,273 | 0,026 |
+| 2018 | validación del diseño | 12 | -0,002 [-0,558 a 0,209] | GLM de Poisson -0,041 | -0,100 |
+| 2019 | validación del diseño | 12 | -0,013 [-0,100 a 0,142] | Gradient boosting -0,170 | -1,855 |
+| 2020 | validación del diseño | 12 | 0,035 [-0,102 a 0,161] | Gradient boosting -0,539 | -1,348 |
+| 2021 | fuera de muestra | 12 | 0,805 [0,805 a 1,527] | Gradient boosting 0,541 | -0,244 |
+| 2022 | fuera de muestra | 12 | 0,488 [0,488 a 0,750] | GLM de Poisson 0,109 | -0,075 |
+| 2023 | fuera de muestra | 12 | -0,040 [-0,237 a 0,185] | Gradient boosting -0,203 | -2,073 |
+| 2024 | fuera de muestra | 12 | 0,200 [-0,025 a 0,688] | Gradient boosting -0,300 | -0,180 |
+| 2025 | fuera de muestra | 12 | 0,013 [-0,176 a 0,059] | GLM de Poisson 0,060 | -1,025 |
+| 2026 | fuera de muestra | 10 | 0,031 [0,031 a 0,397] | GLM de Poisson -0,806 | -1,716 |
+
+Agregado por régimen (predicciones concatenadas):
+
+| Régimen | Modelo | Habilidad | IC90 | p DM | Años |
+|---|---|---|---|---|---|
+| validación del diseño | PatchTST | 0,118 | -0,183 a 0,339 | 0,476 | 5 |
+| validación del diseño | Ensamble (3 mejores en validación) | 0,051 | -0,196 a 0,244 | 0,711 | 5 |
+| validación del diseño | Gradient boosting | -0,224 | -0,464 a -0,045 | 0,107 | 5 |
+| validación del diseño | GLM de Poisson | -0,313 | -0,704 a -0,021 | 0,170 | 5 |
+| validación del diseño | Persistencia (referencia) | -0,771 | -1,379 a -0,353 | 0,022 | 5 |
+| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
+| fuera de muestra | PatchTST | 0,256 | 0,093 a 0,484 | 0,040 | 6 |
+| fuera de muestra | Ensamble (3 mejores en validación) | 0,051 | -0,140 a 0,278 | 0,702 | 6 |
+| fuera de muestra | Gradient boosting | -0,266 | -0,561 a 0,034 | 0,160 | 6 |
+| fuera de muestra | GLM de Poisson | -0,388 | -0,650 a -0,077 | 0,042 | 6 |
+| fuera de muestra | Persistencia (referencia) | -0,862 | -1,261 a -0,351 | 0,003 | 6 |
+| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 6 |
+
+### Dinámica en ventanas deslizantes
+
+| Serie | Ventana | Fin de ventana | Ventanas | Entropía de permutación | No lineales (p ≤ 0,05) |
+|---|---|---|---|---|---|
+| lluvia pentadas cabecera | 15 años | 1995–2026 | 32 | 0,971 a 0,982 | 10 de 32 |
+| temperatura diaria cabecera | 5 años | 1985–2026 | 42 | 0,907 a 0,938 | 9 de 42 |
+| spi3 mensual cabecera | 25 años | 2005–2025 | 21 | 0,909 a 0,949 | 2 de 21 |
+| oni mensual | 30 años | 1979–2026 | 48 | 0,553 a 0,749 | 23 de 48 |
+| sismos conteo mensual | 20 años | 1992–2025 | 34 | 0,917 a 0,952 | 0 de 34 |
+| sismos intereventos log | 20 años | 1992–2026 | 35 | 0,979 a 0,999 | 0 de 35 |
+
+Series sin crudos locales: lluvia_pentadas_cabecera_chirps (No hay CHIRPS 'cabecera_local' en /home/user/terraverdict/data/raw/chirps: correr tv ingest-fenomenos).
 
 ## Limitaciones
 

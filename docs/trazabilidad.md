@@ -28,3 +28,8 @@ verifica y al resultado o documento donde se ve. Una fila sin prueba no se consi
 | R21 | Accesibilidad de los gráficos | `frontend/src/componentes/fenomenos/TablaDatos.tsx` | `fenomenos.test.tsx` (tabla por gráfico, texto en los estados) | Vistas Sismos, Volcanes, Caos y Modelos |
 | R22 | Tendencias con Sello de Confianza | `trends/*`, `expedientes/*` | `tests/unit/test_sello.py`, `test_golden_preliminar.py` | `expedientes/*.json` |
 | R23 | Integración continua | `.github/workflows/ci.yml` | Los tres trabajos (backend, ciencia, frontend) | Pestaña Actions del repositorio |
+| R24 | Historial año a año sin fuga de datos (origen móvil con diseño congelado) | `src/terraverdict/experimentos/historial.py`, `comun.Tarea` | `tests/experimentos/test_historial.py` (cortes, regímenes, referencias ≤ Y−2) | `resultados/historial.json`, vista `/metricas` |
+| R25 | Dinámica (caos) en el tiempo con métodos validados | `historial.caos_ventanas` sobre `caos/*` | `test_caos_en_ventanas_distingue_mapa_logistico_de_ruido` | `resultados/historial.json` (sección `caos`) |
+| R26 | Mapas de calor de métricas e importancia con datos publicados | `backend/app/api/v1/metricas.py`, `frontend/src/componentes/graficos/MatrizCalor.tsx` | `backend/tests/test_metricas.py`, `frontend/src/test/metricas.test.tsx` | Vistas `/metricas` y `/relevancia` |
+| R27 | Cada métrica explicada (bilingüe, con referencia) | `config/metricas.yaml`, `GET /api/v1/metricas` | `test_catalogo_de_metricas_explica_cada_metrica_en_dos_idiomas` | Fichas en `/metricas` |
+| R28 | Licencias del código, de los datos y de las dependencias | `LICENSE`, `docs/licencias-*.md`, `scripts/inventario_licencias.py` | `tests/integridad/test_licencias.py` | `docs/licencias-y-atribuciones.md` |

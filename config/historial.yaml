@@ -1,0 +1,35 @@
+# Historial de métricas (tv experimentos --solo historial).
+# Los años evaluados NO se fijan aquí: salen de config/fenomenos.yaml (particion_temporal):
+#   - primer año = el siguiente al fin del entrenamiento (normalización, SPI y umbrales se ajustaron
+#     solo hasta ahí, así que ningún año evaluado los contaminó);
+#   - años ≤ fin de la validación → régimen "validacion_del_diseno" (el diseño se eligió con ellos:
+#     lectura optimista); años posteriores → "fuera_de_muestra";
+#   - último año = el último con objetivo observado.
+
+pronostico:
+  # Origen móvil anual (Tashman, 2000, doi:10.1016/S0169-2070(00)00065-0): para el año Y se entrena
+  # con datos ≤ Y−2, el año Y−1 sirve de validación (calibración, umbral, parada temprana) y Y es la prueba.
+  semillas: [0]              # una semilla por corte (el experimento principal ya mide la dispersión entre semillas)
+  n_minimo_prueba: 10        # cortes con menos observaciones de prueba no se evalúan
+  eventos_minimos: 3         # clasificación: eventos mínimos en validación y en prueba del corte
+  tareas:                    # tareas cuyo diseño congelado se reevalúa (deben tener resultado principal)
+    - lluvia_extrema_power
+    - sequia_h1_power
+    - sequia_h3_power
+    - sismos_conteo_mensual
+
+caos:
+  # Invariantes en ventanas deslizantes de N años con paso anual. N se elige para que cada ventana
+  # tenga ≥ 240 puntos y la entropía de permutación de orden ≥ 4 cumpla n ≥ 5·d! (Riedl et al., 2013,
+  # doi:10.1140/epjst/e2013-01862-7).
+  paso_anios: 1
+  n_sustitutos: 39           # IAAFT; con 39 el p mínimo es 0,025 (prueba bilateral a α = 0,05)
+  semilla: 20261114
+  series:
+    lluvia_pentadas_cabecera: {ventana_anios: 15}       # ~1095 péntadas por ventana
+    lluvia_pentadas_cabecera_chirps: {ventana_anios: 15}
+    temperatura_diaria_cabecera: {ventana_anios: 5}     # ~1826 días
+    spi3_mensual_cabecera: {ventana_anios: 25}          # 300 meses
+    oni_mensual: {ventana_anios: 30}                    # 360 meses
+    sismos_conteo_mensual: {ventana_anios: 20}          # 240 meses
+    sismos_intereventos_log: {ventana_anios: 20}

@@ -26,8 +26,12 @@ from .sequia import preparar as preparar_sequia
 
 
 def series(
-    cfg: dict[str, Any], raw: Path, sismos: dict[str, Any] | None
-) -> dict[str, tuple[np.ndarray, str, str, float]]:
+    cfg: dict[str, Any], raw: Path, sismos: dict[str, Any] | None, omitidas: dict[str, str] | None = None
+) -> dict[str, tuple[pd.Series, str, str, float]]:
+    """Series fechadas (índice temporal) para el diagnóstico global y para el historial en ventanas.
+
+    Una fuente sin crudos locales (p. ej. CHIRPS cuando ClimateSERV no es accesible) se omite y su
+    motivo queda en `omitidas`, en vez de detener el resto del diagnóstico."""
     hasta = cfg["particion_temporal"]["entrenamiento"][1]
     df, _ = D.power_diario(raw, "cabecera")
 
@@ -41,35 +45,39 @@ def series(
     X, _ = preparar_sequia(raw, hasta)
     salida = {
         "lluvia_pentadas_cabecera": (
-            anom_lluvia.dropna().to_numpy(),
+            anom_lluvia.dropna(),
             "péntada",
             "NASA POWER (MERRA-2) PRECTOTCORR, celda de cabecera",
             5.0,
         ),
-        "lluvia_pentadas_cabecera_chirps": (
-            pentadas(D.chirps_diario(raw, "cabecera_local")).dropna().to_numpy(),
-            "péntada",
-            "CHIRPS v2.0 (ClimateSERV), caja de 0,1° en la cabecera",
-            5.0,
-        ),
         "temperatura_diaria_cabecera": (
-            anom_t.dropna().to_numpy(),
+            anom_t.dropna(),
             "día",
             "NASA POWER (MERRA-2) T2M, celda de cabecera",
             1.0,
         ),
-        "spi3_mensual_cabecera": (X["spi3"].dropna().to_numpy(), "mes", "SPI-3 derivado de NASA POWER", 30.4),
-        "oni_mensual": (D.oni_mensual(raw).to_numpy(), "mes", "NOAA CPC ONI", 30.4),
+        "spi3_mensual_cabecera": (X["spi3"].dropna(), "mes", "SPI-3 derivado de NASA POWER", 30.4),
+        "oni_mensual": (D.oni_mensual(raw).astype(float), "mes", "NOAA CPC ONI", 30.4),
     }
+    try:
+        salida["lluvia_pentadas_cabecera_chirps"] = (
+            pentadas(D.chirps_diario(raw, "cabecera_local")).dropna(),
+            "péntada",
+            "CHIRPS v2.0 (ClimateSERV), caja de 0,1° en la cabecera",
+            5.0,
+        )
+    except FileNotFoundError as e:
+        if omitidas is not None:
+            omitidas["lluvia_pentadas_cabecera_chirps"] = str(e)
     if sismos is not None:
         salida["sismos_conteo_mensual"] = (
-            sismos["_series"]["mensual_independiente"].to_numpy(float),
+            sismos["_series"]["mensual_independiente"].astype(float),
             "mes",
             "USGS ComCat desagrupado (Gardner-Knopoff)",
             30.4,
         )
         salida["sismos_intereventos_log"] = (
-            sismos["_series"]["intereventos_log"],
+            pd.Series(sismos["_series"]["intereventos_log"], index=sismos["_series"]["intereventos_tiempos"]),
             "evento",
             "USGS ComCat desagrupado: log de días entre sismos",
             float("nan"),
@@ -79,7 +87,9 @@ def series(
 
 def ejecutar(cfg: dict[str, Any], raw: Path, sismos: dict[str, Any] | None = None, registro=print) -> dict[str, Any]:
     resultados = {}
-    for nombre, (x, unidad, fuente, dias) in series(cfg, raw, sismos).items():
+    omitidas: dict[str, str] = {}
+    for nombre, (serie, unidad, fuente, dias) in series(cfg, raw, sismos, omitidas).items():
+        x = serie.to_numpy(float)
         r = diagnosticar(x, nombre=nombre, unidad_tiempo=unidad)
         r["fuente"] = fuente
         tau = (r.get("embedding") or {}).get("tau") or 1
@@ -98,6 +108,7 @@ def ejecutar(cfg: dict[str, Any], raw: Path, sismos: dict[str, Any] | None = Non
         "tarea": "diagnostico_caos",
         "series": resultados,
         "resumen_veredictos": conteo,
+        "series_omitidas": omitidas,
         "lectura": (
             "Un veredicto 'compatible_con_caos_baja_dimension' exigiría no linealidad, determinismo, D2 "
             "saturado bajo, λ > 0 y K > 0,8 a la vez. Los métodos se validaron antes con Lorenz, Hénon, "

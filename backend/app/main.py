@@ -38,6 +38,10 @@ ETIQUETAS = [
         "name": "Fenómenos naturales",
         "description": "Catálogo científico de fenómenos y capas GeoJSON del mapa.",
     },
+    {
+        "name": "Métricas e historial",
+        "description": "Catálogo explicado de métricas, mapas de calor y historial año a año (M8).",
+    },
     {"name": "Ciencia de datos", "description": "Matriz de Relevancia y ejecuciones del pipeline."},
     {"name": "Procesos", "description": "Cola de procesos científicos y su bitácora."},
     {"name": "Asistente", "description": "Asistente conversacional y verificador numérico."},

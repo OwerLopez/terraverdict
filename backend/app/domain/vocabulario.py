@@ -39,6 +39,7 @@ class TipoExpediente(StrEnum):
     sismicidad = "sismicidad"  # completitud, valor b y tasas (no es pronóstico)
     inventario = "inventario"  # eventos georreferenciados (p. ej., deslizamientos) y su lluvia antecedente
     panorama_nacional = "panorama_nacional"  # mismo motor aplicado a los 25 departamentos del Perú
+    historial_metricas = "historial_metricas"  # métricas año a año (origen móvil) y dinámica en ventanas
 
 
 ABREVIATURA_EXPEDIENTE: dict[TipoExpediente, str] = {
@@ -55,6 +56,7 @@ ABREVIATURA_EXPEDIENTE: dict[TipoExpediente, str] = {
     TipoExpediente.sismicidad: "SIS",
     TipoExpediente.inventario: "INV",
     TipoExpediente.panorama_nacional: "NAC",
+    TipoExpediente.historial_metricas: "HIS",
 }
 
 MODULO_POR_TIPO: dict[TipoExpediente, str] = {
@@ -71,6 +73,7 @@ MODULO_POR_TIPO: dict[TipoExpediente, str] = {
     TipoExpediente.sismicidad: "M6",
     TipoExpediente.inventario: "M6",
     TipoExpediente.panorama_nacional: "M7",
+    TipoExpediente.historial_metricas: "M8",
 }
 """M6: fenómenos naturales (lluvia extrema, sequía, sismos, volcanes, deslizamientos y dinámica)."""
 

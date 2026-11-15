@@ -149,11 +149,37 @@ Si falta alguna condición, el veredicto es "no lineal sin caos demostrado" o "l
 - **Cinco pruebas preregistradas:** ventanas móviles, ENSO, sensor, independencia de familias y detectabilidad.
 - **Sensibilidad de palanca:** se quitan los últimos años y se comprueba si la tendencia sobrevive.
 
-## 9. Reproducibilidad
+## 9. Historial de métricas (`experimentos/historial.py`, M8)
+
+### Pronóstico año a año: origen móvil
+Origen móvil anual (Tashman, 2000, doi:10.1016/S0169-2070(00)00065-0). Para cada año Y:
+- se entrena con datos ≤ Y−2;
+- Y−1 sirve de validación (calibración isotónica, umbral, conformal y parada temprana);
+- Y es la prueba.
+
+Reglas:
+- **Diseño congelado.** Variables, ventana y red se leen del resultado principal; no se vuelven a elegir.
+- **Sin fuga de datos.** Las referencias (climatología y persistencia) se ajustan solo con datos ≤ Y−2. La normalización, el SPI y el umbral de lluvia se ajustan solo con el entrenamiento original (hasta 2015). Por eso el primer año evaluado es 2016.
+- **Dos regímenes:**
+  - años ≤ 2020: "validación del diseño". Es optimista, porque esos años sirvieron para elegir el diseño;
+  - años posteriores: "fuera de muestra".
+- **Lectura principal.** Por año la muestra es pequeña (12 meses en sequía y sismos). Se lee la habilidad agregada por régimen sobre las predicciones concatenadas, con IC90 por bootstrap de bloques y Diebold-Mariano.
+
+### Dinámica en ventanas
+- Ventanas deslizantes de N años con paso anual (`config/historial.yaml`).
+- N se elige para tener ≥ 240 puntos y una entropía de permutación de orden ≥ 4 con n ≥ 5·d! (Riedl et al., 2013, doi:10.1140/epjst/e2013-01862-7).
+- En cada ventana, con el embedding estimado en la propia ventana: entropía de permutación, entropía muestral, λ de Rosenstein, determinismo, K de la prueba 0-1 y p de no linealidad frente a 39 sustitutos IAAFT.
+- Prueba (`tests/experimentos/test_historial.py`): el método distingue el mapa logístico del ruido en cada ventana.
+
+### Catálogo de métricas
+`config/metricas.yaml` (servido en `GET /api/v1/metricas`) explica cada métrica en español e inglés: qué mide, cómo leerla, si es mejor alta o baja y su referencia.
+
+## 10. Reproducibilidad
 
 ```bash
 tv ingest-fenomenos            # crudos con SHA-256
-tv experimentos                # resultados/*.json con procedencia
+tv experimentos                # resultados/*.json con procedencia (incluye el historial)
+tv experimentos --solo historial  # solo el historial año a año y la dinámica en ventanas
 tv informe                     # docs/experimentos.md (solo cifras de los JSON)
 pytest                         # motor, caos, humo con un recorte real de los datos e integración con el backend
 ```

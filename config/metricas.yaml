@@ -1,0 +1,325 @@
+# Catálogo de métricas: qué mide cada una, cómo leerla y su referencia (servido en GET /api/v1/metricas).
+# Las claves `id` coinciden con las de resultados/*.json. Las referencias son las verificadas en
+# docs/metodologia.md. `mejor`: mayor | menor | cercano_a_1 | cercano_a_0 | informativa.
+version: 1
+
+grupos:
+  pronostico: {es: "Habilidad del pronóstico", en: "Forecast skill"}
+  incertidumbre: {es: "Incertidumbre y significancia", en: "Uncertainty and significance"}
+  calibracion: {es: "Calibración y discriminación", en: "Calibration and discrimination"}
+  error: {es: "Error", en: "Error"}
+  explicabilidad: {es: "Explicabilidad", en: "Explainability"}
+  caos: {es: "Dinámica y caos", en: "Dynamics and chaos"}
+
+metricas:
+  - id: bss_climatologia
+    grupo: pronostico
+    nombre: {es: "Habilidad de Brier frente a la climatología", en: "Brier skill vs climatology"}
+    formula: "BSS = 1 − Brier(modelo) / Brier(climatología)"
+    que_mide:
+      es: "Cuánto mejora la probabilidad pronosticada de un evento (p. ej., lluvia fuerte) sobre la frecuencia histórica de ese día del año."
+      en: "How much the forecast probability of an event (e.g., heavy rain) improves on the historical frequency for that day of the year."
+    como_leer:
+      es: "0 = igual que la climatología; > 0 = mejor; 1 = perfecto; < 0 = peor que no pronosticar."
+      en: "0 = same as climatology; > 0 = better; 1 = perfect; < 0 = worse than not forecasting."
+    mejor: mayor
+    valor_referencia: 0
+    cita: "Wilks (2011), Statistical Methods in the Atmospheric Sciences; Gneiting y Raftery (2007), doi:10.1198/016214506000001437"
+
+  - id: bss_persistencia
+    grupo: pronostico
+    nombre: {es: "Habilidad de Brier frente a la persistencia", en: "Brier skill vs persistence"}
+    formula: "1 − Brier(modelo) / Brier(persistencia de Markov)"
+    que_mide:
+      es: "Mejora sobre suponer que mañana se parecerá a hoy (probabilidad condicional al estado de hoy)."
+      en: "Improvement over assuming tomorrow will resemble today (probability conditioned on today's state)."
+    como_leer:
+      es: "> 0: el modelo aporta más que la inercia del propio fenómeno."
+      en: "> 0: the model adds more than the phenomenon's own inertia."
+    mejor: mayor
+    valor_referencia: 0
+    cita: "Wilks (2011)"
+
+  - id: habilidad_climatologia
+    grupo: pronostico
+    nombre: {es: "Habilidad (ECM) frente a la climatología", en: "MSE skill vs climatology"}
+    formula: "1 − ECM(modelo) / ECM(climatología)"
+    que_mide:
+      es: "Para valores continuos (p. ej., el SPI-3 futuro): cuánto se reduce el error cuadrático respecto de la climatología."
+      en: "For continuous values (e.g., future SPI-3): how much the squared error drops relative to climatology."
+    como_leer:
+      es: "0 = igual que la climatología; 1 = perfecto; negativo = peor."
+      en: "0 = same as climatology; 1 = perfect; negative = worse."
+    mejor: mayor
+    valor_referencia: 0
+    cita: "Wilks (2011)"
+
+  - id: habilidad_persistencia
+    grupo: pronostico
+    nombre: {es: "Habilidad (ECM) frente a la persistencia", en: "MSE skill vs persistence"}
+    formula: "1 − ECM(modelo) / ECM(persistencia)"
+    que_mide:
+      es: "Mejora sobre repetir el último valor observado."
+      en: "Improvement over repeating the last observed value."
+    como_leer:
+      es: "> 0: el modelo supera a la inercia de la serie."
+      en: "> 0: the model beats the series' inertia."
+    mejor: mayor
+    valor_referencia: 0
+    cita: "Wilks (2011)"
+
+  - id: ganancia_informacion_bits
+    grupo: pronostico
+    nombre: {es: "Ganancia de información", en: "Information gain"}
+    formula: "(log L(modelo) − log L(Poisson de tasa constante)) / ln 2, en bits"
+    que_mide:
+      es: "Para conteos (sismos por mes): cuánta información aporta el modelo sobre un proceso de Poisson sin memoria."
+      en: "For counts (earthquakes per month): how much information the model adds over a memoryless Poisson process."
+    como_leer:
+      es: "0 = sin información adicional; > 0 = hay estructura temporal (p. ej., réplicas). No es un pronóstico de sismos."
+      en: "0 = no extra information; > 0 = temporal structure exists (e.g., aftershocks). Not an earthquake forecast."
+    mejor: mayor
+    valor_referencia: 0
+    cita: "Gneiting y Raftery (2007), doi:10.1198/016214506000001437 (puntaje logarítmico propio)"
+
+  - id: puntaje_validacion
+    grupo: pronostico
+    nombre: {es: "Habilidad en validación", en: "Validation skill"}
+    formula: "Métrica principal de la tarea sobre el periodo de validación"
+    que_mide:
+      es: "La habilidad con la que se ELIGE el modelo. El periodo de prueba no participa en la elección."
+      en: "The skill used to SELECT the model. The test period does not take part in the choice."
+    como_leer:
+      es: "Si es mucho mayor que la habilidad en prueba, hay sobreajuste a la validación."
+      en: "If much higher than test skill, the model overfits the validation period."
+    mejor: mayor
+    valor_referencia: 0
+    cita: "Hyndman y Athanasopoulos, Forecasting: Principles and Practice; Tashman (2000), doi:10.1016/S0169-2070(00)00065-0"
+
+  - id: ic90
+    grupo: incertidumbre
+    nombre: {es: "Intervalo de confianza al 90 %", en: "90 % confidence interval"}
+    formula: "Percentiles 5 y 95 de la habilidad en 500 remuestreos por bloques móviles"
+    que_mide:
+      es: "El rango plausible de la habilidad dada la muestra. Los bloques conservan la autocorrelación de los errores."
+      en: "The plausible range of skill given the sample. Blocks preserve error autocorrelation."
+    como_leer:
+      es: "Si el extremo inferior es > 0, la mejora sobre la climatología es robusta al azar de la muestra."
+      en: "If the lower bound is > 0, the improvement over climatology is robust to sampling chance."
+    mejor: mayor
+    valor_referencia: 0
+    cita: "Künsch (1989), bootstrap de bloques móviles; Wilks (2011)"
+
+  - id: p_diebold_mariano
+    grupo: incertidumbre
+    nombre: {es: "p de Diebold-Mariano", en: "Diebold-Mariano p-value"}
+    formula: "Prueba de igualdad de pérdidas con varianza HAC y corrección de Harvey-Leybourne-Newbold"
+    que_mide:
+      es: "La probabilidad de ver una diferencia de error así de grande si el modelo y la climatología fueran igual de buenos."
+      en: "The probability of seeing such an error difference if the model and climatology were equally good."
+    como_leer:
+      es: "p < 0,10 junto con IC90 > 0 = evidencia «confirmada»; solo una de las dos = «indicio»."
+      en: "p < 0.10 together with CI90 > 0 = «confirmed» evidence; only one of the two = «indication»."
+    mejor: menor
+    valor_referencia: 0.10
+    cita: "Diebold y Mariano (1995), doi:10.1080/07350015.1995.10524599"
+
+  - id: cobertura_90
+    grupo: incertidumbre
+    nombre: {es: "Cobertura del intervalo conformal al 90 %", en: "Conformal 90 % interval coverage"}
+    formula: "Fracción de observaciones de prueba dentro del intervalo pronosticado"
+    que_mide:
+      es: "Si los intervalos de incertidumbre son honestos: deberían contener ≈ 90 % de los valores reales."
+      en: "Whether uncertainty intervals are honest: they should contain ≈ 90 % of actual values."
+    como_leer:
+      es: "Cerca de 0,90 = bien calibrado; mucho menor = intervalos demasiado estrechos."
+      en: "Near 0.90 = well calibrated; much lower = intervals too narrow."
+    mejor: cercano_a_0_9
+    valor_referencia: 0.90
+    cita: "Angelopoulos y Bates (2021), arXiv:2107.07511"
+
+  - id: ancho_intervalo_90
+    grupo: incertidumbre
+    nombre: {es: "Ancho del intervalo al 90 %", en: "90 % interval width"}
+    formula: "2 × cuantil conformal de los residuos de validación"
+    que_mide:
+      es: "Cuán preciso es el pronóstico, a igual cobertura."
+      en: "How precise the forecast is, at equal coverage."
+    como_leer:
+      es: "Más estrecho es mejor solo si la cobertura se mantiene cerca de 0,90."
+      en: "Narrower is better only if coverage stays near 0.90."
+    mejor: menor
+    cita: "Angelopoulos y Bates (2021), arXiv:2107.07511"
+
+  - id: dispersion_semillas
+    grupo: incertidumbre
+    nombre: {es: "Dispersión entre semillas", en: "Spread across seeds"}
+    formula: "Desviación estándar de la habilidad en validación entre semillas de inicialización"
+    que_mide:
+      es: "Cuánto cambia el resultado de una red solo por el azar de su inicialización."
+      en: "How much a network's result changes only due to its random initialisation."
+    como_leer:
+      es: "Si es comparable a la diferencia entre modelos, esa diferencia no es confiable."
+      en: "If it is comparable to the gap between models, that gap is not reliable."
+    mejor: menor
+    cita: "Práctica estándar de reproducibilidad; ver docs/metodologia.md §4"
+
+  - id: auc
+    grupo: calibracion
+    nombre: {es: "Área bajo la curva ROC", en: "Area under the ROC curve"}
+    formula: "Probabilidad de que un día con evento reciba más probabilidad que uno sin evento"
+    que_mide:
+      es: "La capacidad de discriminar días con y sin evento, sin importar la calibración."
+      en: "The ability to discriminate event from non-event days, regardless of calibration."
+    como_leer:
+      es: "0,5 = azar; 1 = discriminación perfecta."
+      en: "0.5 = chance; 1 = perfect discrimination."
+    mejor: mayor
+    valor_referencia: 0.5
+    cita: "Wilks (2011)"
+
+  - id: ece
+    grupo: calibracion
+    nombre: {es: "Error de calibración esperado", en: "Expected calibration error"}
+    formula: "Promedio ponderado de |frecuencia observada − probabilidad media| por bins de igual frecuencia"
+    que_mide:
+      es: "Si «30 % de probabilidad» significa que el evento ocurre ≈ 30 % de las veces."
+      en: "Whether «30 % probability» means the event happens ≈ 30 % of the time."
+    como_leer:
+      es: "0 = calibración perfecta; más alto = probabilidades engañosas."
+      en: "0 = perfect calibration; higher = misleading probabilities."
+    mejor: menor
+    valor_referencia: 0
+    cita: "Wilks (2011)"
+
+  - id: brier
+    grupo: error
+    nombre: {es: "Puntaje de Brier", en: "Brier score"}
+    formula: "Media de (probabilidad − resultado)²"
+    que_mide:
+      es: "El error cuadrático de las probabilidades pronosticadas."
+      en: "The squared error of forecast probabilities."
+    como_leer:
+      es: "0 = perfecto. Solo comparable entre modelos de la misma tarea."
+      en: "0 = perfect. Only comparable across models of the same task."
+    mejor: menor
+    cita: "Wilks (2011)"
+
+  - id: mae
+    grupo: error
+    nombre: {es: "Error absoluto medio", en: "Mean absolute error"}
+    formula: "Media de |pronóstico − observado|"
+    que_mide: {es: "El error típico en las unidades de la variable.", en: "The typical error in the variable's units."}
+    como_leer: {es: "Menor es mejor; compárelo con el de la climatología.", en: "Lower is better; compare with climatology's."}
+    mejor: menor
+    cita: "Wilks (2011)"
+
+  - id: rmse
+    grupo: error
+    nombre: {es: "Raíz del error cuadrático medio", en: "Root mean squared error"}
+    formula: "√(media de (pronóstico − observado)²)"
+    que_mide: {es: "El error típico, penalizando más los errores grandes.", en: "The typical error, penalising large errors more."}
+    como_leer: {es: "Menor es mejor.", en: "Lower is better."}
+    mejor: menor
+    cita: "Wilks (2011)"
+
+  - id: r
+    grupo: error
+    nombre: {es: "Correlación de Pearson", en: "Pearson correlation"}
+    formula: "cov(pronóstico, observado) / (σ_p · σ_o)"
+    que_mide: {es: "Si el pronóstico sigue las subidas y bajadas de lo observado.", en: "Whether the forecast tracks observed ups and downs."}
+    como_leer: {es: "1 = sigue perfectamente; 0 = sin relación. No mide sesgo.", en: "1 = tracks perfectly; 0 = unrelated. Does not measure bias."}
+    mejor: mayor
+    cita: "Wilks (2011)"
+
+  - id: importancia_permutacion
+    grupo: explicabilidad
+    nombre: {es: "Importancia por permutación", en: "Permutation importance"}
+    formula: "Aumento de la pérdida en validación al barajar una variable completa en toda la ventana"
+    que_mide:
+      es: "Cuánto depende el modelo de cada variable física. Se calcula en validación, nunca en prueba."
+      en: "How much the model relies on each physical variable. Computed on validation, never on test."
+    como_leer:
+      es: "Mayor = más relevante; ≈ 0 o negativa = el modelo no la necesita. No implica causalidad."
+      en: "Higher = more relevant; ≈ 0 or negative = the model does not need it. Does not imply causality."
+    mejor: mayor
+    cita: "Breiman (2001), doi:10.1023/A:1010933404324"
+
+  - id: entropia_permutacion
+    grupo: caos
+    nombre: {es: "Entropía de permutación", en: "Permutation entropy"}
+    formula: "Entropía de Shannon normalizada de los patrones ordinales de orden d"
+    que_mide:
+      es: "Cuán impredecible es el orden de los valores sucesivos."
+      en: "How unpredictable the order of successive values is."
+    como_leer:
+      es: "1 = máximo desorden (ruido); valores bajos = estructura u orden en la dinámica."
+      en: "1 = maximum disorder (noise); low values = structure or order in the dynamics."
+    mejor: informativa
+    cita: "Bandt y Pompe (2002), doi:10.1103/PhysRevLett.88.174102"
+
+  - id: entropia_muestral
+    grupo: caos
+    nombre: {es: "Entropía muestral", en: "Sample entropy"}
+    formula: "−ln(A/B): coincidencias de longitud m+1 sobre las de longitud m, con tolerancia 0,2σ"
+    que_mide:
+      es: "La regularidad de la serie: si los patrones que se repiten siguen repitiéndose."
+      en: "The series' regularity: whether repeating patterns keep repeating."
+    como_leer:
+      es: "Más baja = más regular y predecible; más alta = más compleja o ruidosa."
+      en: "Lower = more regular and predictable; higher = more complex or noisy."
+    mejor: informativa
+    cita: "Richman y Moorman (2000), doi:10.1152/ajpheart.2000.278.6.H2039"
+
+  - id: lyapunov
+    grupo: caos
+    nombre: {es: "Mayor exponente de Lyapunov", en: "Largest Lyapunov exponent"}
+    formula: "Pendiente del log de la divergencia media de trayectorias vecinas (Rosenstein)"
+    que_mide:
+      es: "La sensibilidad a las condiciones iniciales: el sello del caos."
+      en: "Sensitivity to initial conditions: the hallmark of chaos."
+    como_leer:
+      es: "> 0 sugiere caos SOLO si además hay no linealidad significativa; en ruido lineal también puede salir > 0."
+      en: "> 0 suggests chaos ONLY if nonlinearity is also significant; linear noise can also give > 0."
+    mejor: informativa
+    cita: "Rosenstein, Collins y De Luca (1993), doi:10.1016/0167-2789(93)90009-P"
+
+  - id: determinismo
+    grupo: caos
+    nombre: {es: "Determinismo (RQA)", en: "Determinism (RQA)"}
+    formula: "Fracción de puntos recurrentes que forman diagonales del gráfico de recurrencia"
+    que_mide:
+      es: "Si los estados similares evolucionan de forma similar."
+      en: "Whether similar states evolve similarly."
+    como_leer:
+      es: "Cerca de 1 = dinámica determinista; bajo = dominada por el azar."
+      en: "Near 1 = deterministic dynamics; low = dominated by chance."
+    mejor: informativa
+    cita: "Marwan et al. (2007), doi:10.1016/j.physrep.2006.11.001"
+
+  - id: k_01
+    grupo: caos
+    nombre: {es: "K de la prueba 0-1", en: "0-1 test K"}
+    formula: "Mediana de la tasa de crecimiento del desplazamiento cuadrático medio"
+    que_mide:
+      es: "Distingue dinámica regular (K ≈ 0) de no regular (K ≈ 1)."
+      en: "Distinguishes regular (K ≈ 0) from irregular (K ≈ 1) dynamics."
+    como_leer:
+      es: "K ≈ 1 también ocurre con ruido: solo se interpreta junto con la prueba de no linealidad."
+      en: "K ≈ 1 also happens with noise: only interpreted alongside the nonlinearity test."
+    mejor: informativa
+    cita: "Gottwald y Melbourne (2004), doi:10.1098/rspa.2003.1183"
+
+  - id: p_no_linealidad
+    grupo: caos
+    nombre: {es: "p de no linealidad (sustitutos)", en: "Nonlinearity p-value (surrogates)"}
+    formula: "Asimetría temporal frente a sustitutos IAAFT con el mismo espectro y distribución"
+    que_mide:
+      es: "Si la serie se distingue de un ruido lineal con su mismo espectro. Es la condición necesaria para hablar de caos."
+      en: "Whether the series differs from linear noise with the same spectrum. It is the necessary condition to speak of chaos."
+    como_leer:
+      es: "p ≤ 0,05 = no linealidad significativa; p alto = compatible con un proceso lineal estocástico."
+      en: "p ≤ 0.05 = significant nonlinearity; high p = consistent with a linear stochastic process."
+    mejor: menor
+    valor_referencia: 0.05
+    cita: "Schreiber y Schmitz (1996), doi:10.1103/PhysRevLett.77.635; Theiler et al. (1992), doi:10.1016/0167-2789(92)90102-S"

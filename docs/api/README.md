@@ -42,6 +42,10 @@ Con el servidor en marcha, la documentación interactiva está en `/api/docs` (S
 | | `POST /expedientes/{id}/retirar` | Retirar con motivo (se conserva) | admin |
 | Fenómenos naturales | `GET /fenomenos[/{id}]` | Catálogo de `config/fenomenos.yaml`: variables con justificación, partición y abstención | público |
 | | `GET /capas/sismos?magnitud_min=5`, `GET /capas/volcanes`, `GET /capas/deslizamientos` | Capas GeoJSON del mapa, tomadas del expediente vigente de cada tipo | público |
+| | `GET /nacional` | Panorama nacional (M7): 25 departamentos del expediente `panorama_nacional` vigente | público |
+| Métricas e historial | `GET /metricas` | Catálogo de métricas (`config/metricas.yaml`): qué mide cada una, cómo leerla y su referencia, en español e inglés | público |
+| | `GET /metricas/mapas` | Matrices para los mapas de calor: modelo × tarea por métrica e importancia tarea × variable, de los expedientes `comparacion_modelos` vigentes | público |
+| | `GET /historial` | Historial año a año por origen móvil y dinámica en ventanas (M8) del expediente `historial_metricas` vigente | público |
 | Ciencia de datos | `GET /relevancia/matriz` | Matriz de Relevancia (solo con expedientes `relevancia`) | público |
 | | `GET, POST /ejecuciones` | Manifiestos de ejecución del pipeline | público / `ingesta` |
 | Procesos | `GET, POST /procesos`, `GET, PATCH /procesos/{id}` | Cola de procesos científicos | público / analista / `trabajador` |

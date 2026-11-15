@@ -50,14 +50,15 @@ export function Tarjeta({
   sinPadding?: boolean;
 }) {
   return (
-    <section className={clsx("panel-vidrio rounded-2xl animate-aparecer", className)}>
+    // min-w-0: como ítem de grilla o flex, la tarjeta no hereda el ancho mínimo de sus tablas con scroll
+    <section className={clsx("panel-vidrio min-w-0 rounded-2xl animate-aparecer", className)}>
       {(titulo || acciones) && (
-        <header className="flex items-start justify-between gap-4 px-5 pt-4">
+        <header className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 px-5 pt-4">
           <div className="min-w-0">
             {titulo && <h2 className="text-[15px] font-semibold tracking-tight text-ink">{titulo}</h2>}
             {subtitulo && <p className="mt-0.5 text-[13px] leading-snug text-ink-2">{subtitulo}</p>}
           </div>
-          {acciones && <div className="flex shrink-0 items-center gap-2">{acciones}</div>}
+          {acciones && <div className="flex max-w-full flex-wrap items-center gap-2">{acciones}</div>}
         </header>
       )}
       <div className={clsx(!sinPadding && "px-5 py-4")}>{children}</div>
@@ -266,7 +267,7 @@ export function Segmentado<T extends string>({
   etiqueta: string;
 }) {
   return (
-    <div role="radiogroup" aria-label={etiqueta} className="inline-flex rounded-lg border border-line bg-surface-2 p-0.5">
+    <div role="radiogroup" aria-label={etiqueta} className="inline-flex max-w-full overflow-x-auto rounded-lg border border-line bg-surface-2 p-0.5">
       {opciones.map((o) => (
         <button
           key={o.valor}
@@ -276,7 +277,7 @@ export function Segmentado<T extends string>({
           title={o.titulo}
           onClick={() => alCambiar(o.valor)}
           className={clsx(
-            "inline-flex h-7 items-center gap-1.5 rounded-md px-2.5 text-[12.5px] font-medium transition-colors",
+            "inline-flex h-7 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 text-[12.5px] font-medium transition-colors",
             valor === o.valor ? "bg-surface text-ink shadow-tarjeta" : "text-ink-2 hover:text-ink",
           )}
         >

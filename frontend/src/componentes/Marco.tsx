@@ -1,31 +1,5 @@
 import { clsx } from "clsx";
-import {
-  Activity,
-  BookOpenText,
-  Bot,
-  BrainCircuit,
-  CalendarClock,
-  FileCheck2,
-  Globe2,
-  Grid3x3,
-  Info,
-  LayoutDashboard,
-  Layers3,
-  LineChart,
-  LogIn,
-  LogOut,
-  MapPinned,
-  Menu,
-  Monitor,
-  Moon,
-  Mountain,
-  Orbit,
-  Satellite,
-  Sun,
-  Workflow,
-  X,
-  type LucideIcon,
-} from "lucide-react";
+import { Activity, BookOpenText, Bot, BrainCircuit, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, Sun, Workflow, X, type LucideIcon } from "lucide-react";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ErrorApi } from "../api/cliente";
@@ -55,6 +29,7 @@ const NAVEGACION: { grupo: [string, string]; items: { a: string; texto: [string,
       { a: "/volcanes", texto: ["Volcanes", "Volcanoes"], icono: Mountain },
       { a: "/caos", texto: ["Dinámica y caos", "Dynamics & chaos"], icono: Orbit },
       { a: "/modelos", texto: ["Modelos", "Models"], icono: BrainCircuit },
+      { a: "/metricas", texto: ["Métricas e historial", "Metrics & history"], icono: ChartColumnBig },
     ],
   },
   {
