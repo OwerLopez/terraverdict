@@ -8,6 +8,7 @@ import { TablaDatos } from "../componentes/fenomenos/TablaDatos";
 import { Encabezado, ErrorCarga, EstadoVacio, Esqueleto, Tarjeta } from "../componentes/ui";
 import { RAMPA_AZUL } from "../lib/colores";
 import { numero } from "../lib/formato";
+import { t } from "../lib/i18n";
 
 type Volcan = Esquemas["VolcanRecurrencia"];
 
@@ -28,7 +29,7 @@ function GraficoProbabilidad({ volcanes }: { volcanes: Volcan[] }) {
   const alto = volcanes.length * FILA + 34;
   const marcas = [0, maximo / 4, maximo / 2, (3 * maximo) / 4, maximo].map((m) => Math.round(m * 10) / 10);
   return (
-    <svg viewBox={`0 0 ${ANCHO} ${alto}`} className="w-full" role="img" aria-label="Probabilidad anual de inicio de erupción por volcán, con su intervalo de confianza del 90 %">
+    <svg viewBox={`0 0 ${ANCHO} ${alto}`} className="w-full" role="img" aria-label={t("Probabilidad anual de inicio de erupción por volcán, con su intervalo de confianza del 90 %", "Annual probability of eruption onset per volcano, with its 90 % confidence interval")}>
       {marcas.map((m) => (
         <g key={m}>
           <line x1={x(m)} x2={x(m)} y1={4} y2={alto - 26} stroke="var(--grid)" />
@@ -48,7 +49,7 @@ function GraficoProbabilidad({ volcanes }: { volcanes: Volcan[] }) {
             onMouseLeave={() => setActivo(null)}
             onFocus={() => setActivo(i)}
             onBlur={() => setActivo(null)}
-            aria-label={`${v.nombre}: ${numero(v.probabilidad_anual * 100, 2)} % al año, IC90 ${numero(v.intervalo.lo * 100, 2)} a ${numero(v.intervalo.hi * 100, 2)} %`}
+            aria-label={t(`${v.nombre}: ${numero(v.probabilidad_anual * 100, 2)} % al año, IC90 ${numero(v.intervalo.lo * 100, 2)} a ${numero(v.intervalo.hi * 100, 2)} %`, `${v.nombre}: ${numero(v.probabilidad_anual * 100, 2)} % per year, 90 % CI ${numero(v.intervalo.lo * 100, 2)} to ${numero(v.intervalo.hi * 100, 2)} %`)}
             className="outline-none"
           >
             <rect x={0} y={y - FILA / 2} width={ANCHO} height={FILA} fill={enfoque ? "var(--accent-soft)" : "transparent"} rx={6} />
@@ -77,7 +78,7 @@ function LineaTiempo({ volcanes, desde }: { volcanes: Volcan[]; desde: number })
   const decenas = [];
   for (let a = Math.ceil(desde / 100) * 100; a <= hasta; a += 100) decenas.push(a);
   return (
-    <svg viewBox={`0 0 ${ANCHO} ${alto}`} className="w-full" role="img" aria-label={`Años de inicio de cada erupción confirmada desde ${desde}, por volcán`}>
+    <svg viewBox={`0 0 ${ANCHO} ${alto}`} className="w-full" role="img" aria-label={t(`Años de inicio de cada erupción confirmada desde ${desde}, por volcán`, `Onset years of each confirmed eruption since ${desde}, by volcano`)}>
       {decenas.map((a) => (
         <g key={a}>
           <line x1={x(a)} x2={x(a)} y1={4} y2={alto - 26} stroke="var(--grid)" />
@@ -96,7 +97,7 @@ function LineaTiempo({ volcanes, desde }: { volcanes: Volcan[]; desde: number })
             <line x1={IZQ} x2={ANCHO - DER} y1={y} y2={y} stroke="var(--border-strong)" />
             {(v.inicios ?? []).map((a, j) => (
               <rect key={`${a}-${j}`} x={x(a) - 2} y={y - 8} width={4} height={16} rx={2} fill="var(--serie-1)">
-                <title>{`${v.nombre}: erupción iniciada en ${a}`}</title>
+                <title>{t(`${v.nombre}: erupción iniciada en ${a}`, `${v.nombre}: eruption started in ${a}`)}</title>
               </rect>
             ))}
           </g>
@@ -115,26 +116,26 @@ export function VolcanesPagina() {
     [r],
   );
   const etiqueta = useCallback(
-    (p: Record<string, unknown>) => `${String(p.nombre)} · ${numero(Number(p.probabilidad_anual) * 100, 2)} %/año · ${numero(Number(p.distancia_km), 0)} km de Arequipa`,
+    (p: Record<string, unknown>) => t(`${String(p.nombre)} · ${numero(Number(p.probabilidad_anual) * 100, 2)} %/año · ${numero(Number(p.distancia_km), 0)} km de Arequipa`, `${String(p.nombre)} · ${numero(Number(p.probabilidad_anual) * 100, 2)} %/yr · ${numero(Number(p.distancia_km), 0)} km from Arequipa`),
     [],
   );
 
   return (
     <>
       <Encabezado
-        eyebrow="Fenómenos naturales"
-        titulo="Actividad volcánica"
-        descripcion="Frecuencia histórica de erupciones (Smithsonian GVP) con su intervalo exacto. Son frecuencias, no pronósticos: el estado actual de cada volcán lo informa el OVS-IGP."
+        eyebrow={t("Fenómenos naturales", "Natural hazards")}
+        titulo={t("Actividad volcánica", "Volcanic activity")}
+        descripcion={t("Frecuencia histórica de erupciones (Smithsonian GVP) con su intervalo exacto. Son frecuencias, no pronósticos: el estado actual de cada volcán lo informa el OVS-IGP.", "Historical eruption frequency (Smithsonian GVP) with its exact interval. These are frequencies, not forecasts: each volcano's current status is reported by OVS-IGP.")}
       />
       {detalle.isError && <ErrorCarga error={detalle.error} className="mb-4" />}
       {detalle.isLoading && <Esqueleto className="h-80" />}
-      {!detalle.isLoading && !r && <EstadoVacio icono={Mountain} titulo="Sin expediente de recurrencia">Publique los resultados con <code>tv publicar</code>.</EstadoVacio>}
+      {!detalle.isLoading && !r && <EstadoVacio icono={Mountain} titulo={t("Sin expediente de recurrencia", "No recurrence case file")}>{t("Publique los resultados con", "Publish the results with")} <code>tv publicar</code>.</EstadoVacio>}
       {r && (
         <div className="grid gap-5 xl:grid-cols-2">
           <Tarjeta
-            titulo="Probabilidad anual de inicio de erupción"
-            subtitulo={`${r.metodo}. Desde ${r.inicio_registro}.`}
-            pie={<>Fuente: expediente <Link className="font-mono text-accent-ink hover:underline" to={`/expedientes/${detalle.data?.id}`}>{detalle.data?.id}</Link></>}
+            titulo={t("Probabilidad anual de inicio de erupción", "Annual probability of eruption onset")}
+            subtitulo={`${r.metodo}. ${t("Desde", "Since")} ${r.inicio_registro}.`}
+            pie={<>{t("Fuente: expediente", "Source: case file")} <Link className="font-mono text-accent-ink hover:underline" to={`/expedientes/${detalle.data?.id}`}>{detalle.data?.id}</Link></>}
           >
             <div className="overflow-x-auto">
               <div className="min-w-[520px] sm:min-w-0">
@@ -142,8 +143,8 @@ export function VolcanesPagina() {
               </div>
             </div>
             <TablaDatos
-              titulo="Probabilidad anual por volcán"
-              columnas={["Volcán", "Erupciones", "P anual (%)", "IC90 (%)", "Intervalo medio (años)", "Distancia (km)"]}
+              titulo={t("Probabilidad anual por volcán", "Annual probability per volcano")}
+              columnas={[t("Volcán", "Volcano"), t("Erupciones", "Eruptions"), t("P anual (%)", "Annual P (%)"), t("IC90 (%)", "90 % CI (%)"), t("Intervalo medio (años)", "Mean interval (years)"), t("Distancia (km)", "Distance (km)")]}
               filas={activos.map((v) => [
                 v.nombre,
                 v.erupciones,
@@ -154,19 +155,19 @@ export function VolcanesPagina() {
               ])}
             />
           </Tarjeta>
-          <Tarjeta titulo="Historia eruptiva" subtitulo="Cada marca es el inicio de una erupción confirmada.">
+          <Tarjeta titulo={t("Historia eruptiva", "Eruptive history")} subtitulo={t("Cada marca es el inicio de una erupción confirmada.", "Each mark is the onset of a confirmed eruption.")}>
             <div className="overflow-x-auto">
               <div className="min-w-[520px] sm:min-w-0">
   <LineaTiempo volcanes={activos} desde={r.inicio_registro} />
               </div>
             </div>
             <TablaDatos
-              titulo="Años de inicio de erupción"
-              columnas={["Volcán", "Años"]}
+              titulo={t("Años de inicio de erupción", "Eruption onset years")}
+              columnas={[t("Volcán", "Volcano"), t("Años", "Years")]}
               filas={activos.map((v) => [v.nombre, (v.inicios ?? []).join(", ") || "—"])}
             />
           </Tarjeta>
-          <Tarjeta titulo="Ubicación" className="xl:col-span-2">
+          <Tarjeta titulo={t("Ubicación", "Location")} className="xl:col-span-2">
             <MapaPuntos
               puntos={capa.data?.features ?? []}
               color={["interpolate", ["linear"], ["get", "probabilidad_anual"], 0, RAMPA_AZUL[1], 0.02, RAMPA_AZUL[4], 0.05, RAMPA_AZUL[6]]}
@@ -174,7 +175,7 @@ export function VolcanesPagina() {
               centro={[-71.5, -16.2]}
               zoom={6}
               alto={360}
-              descripcion="Mapa de los volcanes del sur del Perú; el tono de azul indica la probabilidad anual histórica."
+              descripcion={t("Mapa de los volcanes del sur del Perú; el tono de azul indica la probabilidad anual histórica.", "Map of southern Peru's volcanoes; blue tone shows the historical annual probability.")}
               etiqueta={etiqueta}
             />
             <p className="mt-3 flex items-start gap-2 text-[12.5px] text-ink-2">

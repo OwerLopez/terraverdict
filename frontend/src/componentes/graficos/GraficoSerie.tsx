@@ -13,9 +13,10 @@ import {
 } from "recharts";
 import type { Esquemas } from "../../api/cliente";
 import { useColores } from "../../lib/colores";
-import { conUnidad, numero, simboloUnidad } from "../../lib/formato";
+import { conUnidad, nombreMes, numero, simboloUnidad } from "../../lib/formato";
 import { anioDecimal, banda, evaluarRecta, rectaSen } from "../../lib/tendencia";
 import { Boton } from "../ui";
+import { t } from "../../lib/i18n";
 
 type Observacion = Esquemas["ObservacionSalida"];
 type Pendiente = Esquemas["Pendiente"];
@@ -28,7 +29,6 @@ interface Fila {
   banda?: [number, number];
 }
 
-const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
 export function etiquetaPeriodo(fecha: string, agregacion?: Record<string, unknown>): string {
   const [a, m] = fecha.split("-").map(Number);
@@ -36,9 +36,9 @@ export function etiquetaPeriodo(fecha: string, agregacion?: Record<string, unkno
   if (Array.isArray(meses) && meses.length > 1 && a && m) {
     const fin = meses[meses.length - 1] as number;
     const anioFin = fin < (m ?? 1) ? a + 1 : a;
-    return `${MESES[(m ?? 1) - 1]} ${a} – ${MESES[fin - 1]} ${anioFin}`;
+    return `${nombreMes(m ?? 1)} ${a} – ${nombreMes(fin)} ${anioFin}`;
   }
-  if (agregacion?.tipo === "media_anual") return `Año ${a}`;
+  if (agregacion?.tipo === "media_anual") return t(`Año ${a}`, `Year ${a}`);
   return fecha;
 }
 
@@ -83,9 +83,9 @@ export function GraficoSerie({
     return (
       <div className="min-w-[180px] rounded-xl border border-line bg-surface px-3 py-2.5 text-[12.5px] shadow-flotante">
         <p className="mb-1.5 font-semibold text-ink">{etiquetaPeriodo(f.fecha, agregacion)}</p>
-        <Linea color={c.serie1} texto={nombre} valor={f.valor === null ? "sin dato" : conUnidad(f.valor, unidad, decimales)} />
+        <Linea color={c.serie1} texto={nombre} valor={f.valor === null ? t("sin dato", "no data") : conUnidad(f.valor, unidad, decimales)} />
         {f.tendencia !== undefined && (
-          <Linea color={c.serie2} texto="Tendencia de Sen" valor={conUnidad(f.tendencia, unidad, decimales)} discontinua />
+          <Linea color={c.serie2} texto={t("Tendencia de Sen", "Sen trend")} valor={conUnidad(f.tendencia, unidad, decimales)} discontinua />
         )}
       </div>
     );
@@ -94,26 +94,26 @@ export function GraficoSerie({
   return (
     <div>
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12.5px] text-ink-2" aria-label="Leyenda">
+        <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12.5px] text-ink-2" aria-label={t("Leyenda", "Legend")}>
           <li className="flex items-center gap-1.5"><span className="h-0.5 w-4 rounded" style={{ background: c.serie1 }} />{nombre}</li>
           {pendiente && (
             <>
-              <li className="flex items-center gap-1.5"><span className="h-0 w-4 border-t-2 border-dashed" style={{ borderColor: c.serie2 }} />Tendencia de Sen</li>
-              <li className="flex items-center gap-1.5"><span className="h-3 w-4 rounded-sm" style={{ background: c.banda }} />IC {Math.round((pendiente.intervalo.nivel ?? 0.9) * 100)} % de la pendiente</li>
+              <li className="flex items-center gap-1.5"><span className="h-0 w-4 border-t-2 border-dashed" style={{ borderColor: c.serie2 }} />{t("Tendencia de Sen", "Sen trend")}</li>
+              <li className="flex items-center gap-1.5"><span className="h-3 w-4 rounded-sm" style={{ background: c.banda }} />{t(`IC ${Math.round((pendiente.intervalo.nivel ?? 0.9) * 100)} % de la pendiente`, `${Math.round((pendiente.intervalo.nivel ?? 0.9) * 100)} % CI of the slope`)}</li>
             </>
           )}
         </ul>
         <Boton tamano="sm" variante="fantasma" icono={Table2} onClick={() => setTabla((v) => !v)} aria-pressed={tabla}>
-          {tabla ? "Ver gráfico" : "Ver tabla"}
+          {tabla ? t("Ver gráfico", "Show chart") : t("Ver tabla", "Show table")}
         </Boton>
       </div>
 
       {tabla ? (
         <div className="max-h-[320px] overflow-auto rounded-xl border border-line">
           <table className="w-full text-[13px]">
-            <caption className="sr-only">Valores de la serie</caption>
+            <caption className="sr-only">{t("Valores de la serie", "Series values")}</caption>
             <thead className="sticky top-0 bg-surface-2 text-left text-ink-2">
-              <tr><th className="px-3 py-2 font-medium">Periodo</th><th className="px-3 py-2 text-right font-medium">Valor ({simbolo || "—"})</th></tr>
+              <tr><th className="px-3 py-2 font-medium">{t("Periodo", "Period")}</th><th className="px-3 py-2 text-right font-medium">{t("Valor", "Value")} ({simbolo || "—"})</th></tr>
             </thead>
             <tbody>
               {filas.map((f) => (
@@ -126,7 +126,7 @@ export function GraficoSerie({
           </table>
         </div>
       ) : (
-        <div style={{ height: alto }} role="img" aria-label={`Serie temporal ${nombre} en ${simbolo}`}>
+        <div style={{ height: alto }} role="img" aria-label={t(`Serie temporal ${nombre} en ${simbolo}`, `Time series ${nombre} in ${simbolo}`)}>
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={filas} margin={{ top: 8, right: 12, bottom: 0, left: 4 }}>
               <CartesianGrid stroke={c.rejilla} vertical={false} />

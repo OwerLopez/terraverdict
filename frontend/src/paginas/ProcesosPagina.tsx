@@ -7,6 +7,7 @@ import { useCancelarProceso, useEventosProceso, useProcesos, useResumen, useSeri
 import { Boton, ChipEstado, ESTADOS_PROCESO, Encabezado, Esqueleto, EstadoVacio, ErrorCarga, Insignia, Tarjeta } from "../componentes/ui";
 import { fechaHora, haceCuanto } from "../lib/formato";
 import { useSesion } from "../lib/sesion";
+import { idiomaActual, t } from "../lib/i18n";
 
 type Proceso = Esquemas["ProcesoSalida"];
 
@@ -18,27 +19,27 @@ function Bitacora({ proceso }: { proceso: Proceso }) {
   const color = { debug: "var(--ink-3)", info: "var(--accent)", aviso: "var(--warning)", error: "var(--critical)" } as const;
   return (
     <Tarjeta
-      titulo={<span className="flex items-center gap-2"><TerminalSquare className="h-4 w-4 text-accent" /> Bitácora del proceso</span>}
+      titulo={<span className="flex items-center gap-2"><TerminalSquare className="h-4 w-4 text-accent" /> {t("Bitácora del proceso", "Job log")}</span>}
       subtitulo={<span className="font-mono text-[11.5px]">{proceso.id}</span>}
       acciones={
         activo && puede("analista") && (
-          <Boton tamano="sm" icono={Ban} onClick={() => cancelar.mutate(proceso.id)} disabled={cancelar.isPending}>Cancelar</Boton>
+          <Boton tamano="sm" icono={Ban} onClick={() => cancelar.mutate(proceso.id)} disabled={cancelar.isPending}>{t("Cancelar", "Cancel")}</Boton>
         )
       }
     >
       <div className="rounded-xl bg-[#0d0d0d] p-4 font-mono text-[12px] leading-relaxed text-[#c3c2b7]">
         {eventos.isLoading ? (
-          <p>Cargando…</p>
+          <p>{t("Cargando…", "Loading…")}</p>
         ) : (
           (eventos.data ?? []).map((e) => (
             <p key={e.id} className="flex gap-3">
-              <span className="shrink-0 text-[#898781]">{new Date(e.t).toLocaleTimeString("es-PE")}</span>
+              <span className="shrink-0 text-[#898781]">{new Date(e.t).toLocaleTimeString(idiomaActual() === "en" ? "en-US" : "es-PE")}</span>
               <span className="w-12 shrink-0 uppercase" style={{ color: color[e.nivel as keyof typeof color] }}>{e.nivel}</span>
               <span className="text-[#f0efec]">{e.mensaje}</span>
             </p>
           ))
         )}
-        {activo && <p className="mt-1 animate-pulso text-[#898781]">▍ esperando eventos del trabajador…</p>}
+        {activo && <p className="mt-1 animate-pulso text-[#898781]">▍ {t("esperando eventos del trabajador…", "waiting for worker events…")}</p>}
       </div>
       {proceso.error && <p className="mt-3 text-[13px]" style={{ color: "var(--critical)" }}>Error: {proceso.error.mensaje}</p>}
     </Tarjeta>
@@ -55,19 +56,19 @@ function Solicitar() {
     setError(null);
     solicitar.mutate(
       { tipo: "tendencia", parametros: { serie_id: serie }, prioridad: 5 },
-      { onError: (err) => setError(err instanceof ErrorApi ? err.message : "No se pudo solicitar.") },
+      { onError: (err) => setError(err instanceof ErrorApi ? err.message : t("No se pudo solicitar.", "The request failed.")) },
     );
   };
   const largas = (series.data?.items ?? []).filter((s) => s.n_observaciones >= 10);
   return (
     <form onSubmit={enviar} className="flex flex-col gap-3 sm:flex-row sm:items-end">
       <label className="flex-1 text-[12px] text-ink-2">
-        Recalcular tendencia y sello para la serie
+        {t("Recalcular tendencia y sello para la serie", "Recompute trend and seal for the series")}
         <select name="serie" className="mt-1 h-9 w-full rounded-lg border border-line bg-surface-2 px-2.5 text-[13px] text-ink">
           {largas.map((s) => <option key={s.id} value={s.id}>{s.id}</option>)}
         </select>
       </label>
-      <Boton type="submit" variante="primario" icono={Play} disabled={solicitar.isPending || largas.length === 0}>Solicitar</Boton>
+      <Boton type="submit" variante="primario" icono={Play} disabled={solicitar.isPending || largas.length === 0}>{t("Solicitar", "Request")}</Boton>
       {error && <p role="alert" className="text-[13px]" style={{ color: "var(--critical)" }}>{error}</p>}
     </form>
   );
@@ -85,22 +86,22 @@ export function ProcesosPagina() {
   return (
     <div className="space-y-6">
       <Encabezado
-        eyebrow="Integración con ciencia de datos"
-        titulo="Procesos científicos"
-        descripcion="Las personas solicitan cálculos; los trabajadores del pipeline los reclaman, informan su avance en la bitácora y publican un expediente. La API no calcula ciencia: coordina."
+        eyebrow={t("Integración con ciencia de datos", "Data-science integration")}
+        titulo={t("Procesos científicos", "Scientific jobs")}
+        descripcion={t("Las personas solicitan cálculos; los trabajadores del pipeline los reclaman, informan su avance en la bitácora y publican un expediente. La API no calcula ciencia: coordina.", "People request computations; pipeline workers claim them, report progress in the log and publish a case file. The API does not compute science: it coordinates.")}
         acciones={
           <Insignia tono={trabajadores > 0 ? "good" : "neutral"} icono={Workflow}>
-            {trabajadores > 0 ? `${trabajadores} trabajador(es) activo(s)` : "Ningún trabajador conectado"}
+            {trabajadores > 0 ? t(`${trabajadores} trabajador(es) activo(s)`, `${trabajadores} active worker(s)`) : t("Ningún trabajador conectado", "No worker connected")}
           </Insignia>
         }
       />
 
-      <Tarjeta titulo="Solicitar un proceso" subtitulo={puede("analista") ? "Quedará pendiente hasta que un trabajador lo reclame." : undefined}>
+      <Tarjeta titulo={t("Solicitar un proceso", "Request a job")} subtitulo={puede("analista") ? t("Quedará pendiente hasta que un trabajador lo reclame.", "It stays pending until a worker claims it.") : undefined}>
         {puede("analista") ? (
           <Solicitar />
         ) : (
           <p className="text-[13px] text-ink-2">
-            {identidad ? "Su rol no permite solicitar procesos (se requiere analista)." : "Inicie sesión con rol analista para solicitar procesos."}
+            {identidad ? t("Su rol no permite solicitar procesos (se requiere analista).", "Your role cannot request jobs (analyst required).") : t("Inicie sesión con rol analista para solicitar procesos.", "Sign in with the analyst role to request jobs.")}
           </p>
         )}
       </Tarjeta>
@@ -110,13 +111,13 @@ export function ProcesosPagina() {
       ) : procesos.error ? (
         <ErrorCarga error={procesos.error} />
       ) : lista.length === 0 ? (
-        <EstadoVacio icono={Workflow} titulo="Todavía no hay procesos">
-          Cuando un analista solicite un cálculo aparecerá aquí, con su estado y su bitácora en vivo. Contrato para trabajadores:
+        <EstadoVacio icono={Workflow} titulo={t("Todavía no hay procesos", "No jobs yet")}>
+          {t("Cuando un analista solicite un cálculo aparecerá aquí, con su estado y su bitácora en vivo. Contrato para trabajadores:", "When an analyst requests a computation it will appear here, with its status and live log. Worker contract:")}
           <code className="mx-1 font-mono">POST /api/v1/procesos/reclamar</code>.
         </EstadoVacio>
       ) : (
         <div className="grid gap-6 xl:grid-cols-[1fr_1.1fr]">
-          <Tarjeta titulo="Cola" sinPadding>
+          <Tarjeta titulo={t("Cola", "Queue")} sinPadding>
             <ul className="divide-y divide-line">
               {lista.map((p) => (
                 <li key={p.id}>
@@ -147,9 +148,9 @@ export function ProcesosPagina() {
             <div className="space-y-3">
               <Bitacora proceso={activo} />
               <p className="text-[12px] text-ink-3">
-                Creado {fechaHora(activo.creado_en)}
-                {activo.trabajador && ` · trabajador ${activo.trabajador}`}
-                {activo.expediente_id && ` · expediente ${activo.expediente_id}`}
+                {t("Creado", "Created")} {fechaHora(activo.creado_en)}
+                {activo.trabajador && ` · ${t("trabajador", "worker")} ${activo.trabajador}`}
+                {activo.expediente_id && ` · ${t("expediente", "case file")} ${activo.expediente_id}`}
               </p>
             </div>
           )}

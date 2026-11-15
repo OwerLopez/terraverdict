@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import type { Esquemas } from "../../api/cliente";
 import { etiquetaMetrica, valorMetrica } from "../../lib/formato";
 import { ubicar } from "../../lib/grafo";
+import { t } from "../../lib/i18n";
 
 type Paso = Esquemas["Paso"];
 
@@ -93,7 +94,7 @@ export function GrafoProceso({ pasos }: { pasos: Paso[] }) {
               ))}
             </dl>
           ) : (
-            <p className="mt-2 text-ink-3">Este paso no registró métricas.</p>
+            <p className="mt-2 text-ink-3">{t("Este paso no registró métricas.", "This step recorded no metrics.")}</p>
           )}
         </div>
       )}

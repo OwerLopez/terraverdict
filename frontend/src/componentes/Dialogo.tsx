@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { useEffect, useRef, type ReactNode } from "react";
+import { t } from "../lib/i18n";
 
 /** Diálogo modal accesible basado en <dialog> nativo (foco atrapado y Escape). */
 export function Dialogo({
@@ -31,7 +32,7 @@ export function Dialogo({
     >
       <div className="flex items-center justify-between border-b border-line px-5 py-3.5">
         <h2 className="font-semibold">{titulo}</h2>
-        <button type="button" onClick={alCerrar} className="rounded-md p-1 text-ink-3 hover:bg-surface-2 hover:text-ink" aria-label="Cerrar">
+        <button type="button" onClick={alCerrar} className="rounded-md p-1 text-ink-3 hover:bg-surface-2 hover:text-ink" aria-label={t("Cerrar", "Close")}>
           <X className="h-4 w-4" />
         </button>
       </div>

@@ -157,3 +157,7 @@ export function useExpedienteVigente(tipo: Esquemas["ExpedienteResumen"]["tipo"]
   const detalle = useExpediente(elegido);
   return { lista, detalle, elegido };
 }
+
+/** Panorama nacional vigente (25 departamentos con el mismo motor). */
+export const useNacional = () =>
+  useQuery({ queryKey: ["nacional"], queryFn: () => pedir(api.GET("/api/v1/nacional")), staleTime: 10 * MINUTO });

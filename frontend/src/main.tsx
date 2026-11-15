@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ErrorApi } from "./api/cliente";
 import { App } from "./App";
 import "./estilos/global.css";
+import { ProveedorIdioma } from "./lib/i18n";
 import { ProveedorSesion } from "./lib/sesion";
 import { ProveedorTema } from "./lib/tema";
 
@@ -27,9 +28,11 @@ createRoot(raiz).render(
     <QueryClientProvider client={cliente}>
       <BrowserRouter>
         <ProveedorTema>
-          <ProveedorSesion>
-            <App />
-          </ProveedorSesion>
+          <ProveedorIdioma>
+            <ProveedorSesion>
+              <App />
+            </ProveedorSesion>
+          </ProveedorIdioma>
         </ProveedorTema>
       </BrowserRouter>
     </QueryClientProvider>

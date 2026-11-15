@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { ErrorApi } from "../api/cliente";
+import { t } from "../lib/i18n";
 
 export type Tono = "neutral" | "accent" | "good" | "warning" | "serious" | "critical";
 
@@ -88,45 +89,63 @@ export function Insignia({ tono = "neutral", icono: Icono, children, className }
   );
 }
 
-type Def = { tono: Tono; icono: LucideIcon; texto: string };
+type Def = { tono: Tono; icono: LucideIcon; readonly texto: string };
+
+/** Estado con texto bilingüe: `texto` se traduce al leerse (en el render), no al importar. */
+function def(tono: Tono, icono: LucideIcon, es: string, en: string): Def {
+  return {
+    tono,
+    icono,
+    get texto() {
+      return t(es, en);
+    },
+  };
+}
+
+/** Diccionario cuyos valores se traducen al leerse. */
+function bilingue(pares: Record<string, [string, string]>): Record<string, string> {
+  const salida: Record<string, string> = {};
+  for (const [clave, [es, en]] of Object.entries(pares)) Object.defineProperty(salida, clave, { get: () => t(es, en), enumerable: true });
+  return salida;
+}
 
 export const ESTADOS_VERIFICACION: Record<string, Def> = {
-  verificado: { tono: "good", icono: CheckCircle2, texto: "Verificado" },
-  parcial: { tono: "warning", icono: AlertTriangle, texto: "Parcial" },
-  no_verificado: { tono: "critical", icono: XCircle, texto: "No verificado" },
-  sin_evidencia: { tono: "neutral", icono: CircleDashed, texto: "Sin evidencia" },
+  verificado: def("good", CheckCircle2, "Verificado", "Verified"),
+  parcial: def("warning", AlertTriangle, "Parcial", "Partial"),
+  no_verificado: def("critical", XCircle, "No verificado", "Not verified"),
+  sin_evidencia: def("neutral", CircleDashed, "Sin evidencia", "No evidence"),
 };
 
 export const ESTADOS_PRUEBA: Record<string, Def> = {
-  aprobada: { tono: "good", icono: CheckCircle2, texto: "Aprobada" },
-  fallida: { tono: "critical", icono: XCircle, texto: "Fallida" },
-  calculada: { tono: "accent", icono: Calculator, texto: "Calculada" },
-  pendiente: { tono: "neutral", icono: Clock, texto: "Pendiente" },
-  no_aplica: { tono: "neutral", icono: Minus, texto: "No aplica" },
+  aprobada: def("good", CheckCircle2, "Aprobada", "Passed"),
+  fallida: def("critical", XCircle, "Fallida", "Failed"),
+  calculada: def("accent", Calculator, "Calculada", "Computed"),
+  pendiente: def("neutral", Clock, "Pendiente", "Pending"),
+  no_aplica: def("neutral", Minus, "No aplica", "Not applicable"),
 };
 
 export const VEREDICTOS: Record<string, Def> = {
-  robusta: { tono: "good", icono: ShieldCheck, texto: "Robusta" },
-  fragil: { tono: "serious", icono: ShieldAlert, texto: "Frágil" },
-  no_decidible: { tono: "neutral", icono: HelpCircle, texto: "No decidible" },
-  sin_tendencia: { tono: "accent", icono: Equal, texto: "Sin tendencia" },
-  preliminar: { tono: "warning", icono: FlaskConical, texto: "Preliminar" },
+  robusta: def("good", ShieldCheck, "Robusta", "Robust"),
+  fragil: def("serious", ShieldAlert, "Frágil", "Fragile"),
+  no_decidible: def("neutral", HelpCircle, "No decidible", "Undecidable"),
+  sin_tendencia: def("accent", Equal, "Sin tendencia", "No trend"),
+  preliminar: def("warning", FlaskConical, "Preliminar", "Preliminary"),
 };
 
-export const NOMBRES_PRUEBA: Record<string, string> = {
-  ventanas: "Ventanas",
-  enso: "Filtro El Niño",
-  sensor: "Cambio de sensor",
-  independencia: "Independencia",
-  detectabilidad: "Detectabilidad",
-};
+export const NOMBRES_PRUEBA: Record<string, string> = bilingue({
+  ventanas: ["Ventanas", "Windows"],
+  enso: ["Filtro El Niño", "El Niño filter"],
+  sensor: ["Cambio de sensor", "Sensor change"],
+  independencia: ["Independencia", "Independence"],
+  detectabilidad: ["Detectabilidad", "Detectability"],
+});
 
 export const ESTADOS_PROCESO: Record<string, Def> = {
-  pendiente: { tono: "neutral", icono: Clock, texto: "Pendiente" },
-  en_curso: { tono: "accent", icono: Loader2, texto: "En curso" },
-  completado: { tono: "good", icono: CheckCircle2, texto: "Completado" },
-  fallido: { tono: "critical", icono: XCircle, texto: "Fallido" },
-  cancelado: { tono: "neutral", icono: Ban, texto: "Cancelado" },
+  pendiente: def("neutral", Clock, "Pendiente", "Pending"),
+  en_curso: def("accent", Loader2, "En curso", "Running"),
+  completado: def("good", CheckCircle2, "Completado", "Completed"),
+  fallido: def("critical", XCircle, "Fallido", "Failed"),
+  cancelado: def("neutral", Ban, "Cancelado", "Cancelled"),
 };
 
 export function ChipEstado({ mapa, valor }: { mapa: Record<string, Def>; valor: string | null | undefined }) {
@@ -204,7 +223,7 @@ export function ErrorCarga({ error, className }: { error: unknown; className?: s
     <div role="alert" className={clsx("rounded-xl border border-line bg-surface-2 p-4 text-sm", className)}>
       <p className="flex items-center gap-2 font-semibold text-ink">
         <XCircle aria-hidden className="h-4 w-4" style={{ color: "var(--critical)" }} />
-        {e?.codigo === "sin_conexion" ? "No hay conexión con la API" : (e?.problema?.title ?? "No se pudo cargar")}
+        {e?.codigo === "sin_conexion" ? t("No hay conexión con la API", "No connection to the API") : (e?.problema?.title ?? t("No se pudo cargar", "Could not load"))}
       </p>
       <p className="mt-1 text-ink-2">{e?.message ?? String(error)}</p>
       {e?.problema?.request_id && <p className="mt-2 font-mono text-[11px] text-ink-3">request_id: {e.problema.request_id}</p>}

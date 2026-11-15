@@ -1,6 +1,7 @@
 import maplibregl, { type ExpressionSpecification, type Map as MapaML } from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import type { Esquemas } from "../../api/cliente";
+import { t } from "../../lib/i18n";
 
 const GIBS = "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best";
 
@@ -47,7 +48,7 @@ export function MapaPuntos({
             tiles: [`${GIBS}/BlueMarble_ShadedRelief_Bathymetry/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpeg`],
             tileSize: 256,
             maxzoom: 8,
-            attribution: "Imágenes: NASA GIBS / ESDIS",
+            attribution: t("Imágenes: NASA GIBS / ESDIS", "Imagery: NASA GIBS / ESDIS"),
           },
         },
         layers: [{ id: "fondo", type: "raster", source: "fondo" }],

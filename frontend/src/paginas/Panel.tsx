@@ -10,6 +10,7 @@ import {
   FileCheck2,
   Gauge,
   Globe2,
+  MapPinned,
   Mountain,
   Thermometer,
   Waves,
@@ -45,23 +46,24 @@ import {
   VEREDICTOS,
 } from "../componentes/ui";
 import { CATEGORIAS_EVENTO } from "../lib/colores";
-import { TEXTO_COTA, cifraCitada, conUnidad, fecha, numero, valorP } from "../lib/formato";
+import { textoCota, cifraCitada, conUnidad, fecha, numero, valorP } from "../lib/formato";
+import { t } from "../lib/i18n";
 
 const SERIE_T = "chili_analisis.cabecera_power:temperatura_aire_2m:power_mensual:p1y";
 type Crisis = {
   id: string;
-  etiqueta: string;
+  etiqueta: [string, string];
   icono: LucideIcon;
   /** Índice de la cifra principal dentro de las cifras del evento. */
   principal: number;
   /** Proporción entre dos cifras citadas (se muestra como cálculo, no como dato de la fuente). */
-  medidor?: { parte: number; total: number; texto: string };
+  medidor?: { parte: number; total: number; texto: [string, string] };
 };
 
 const CRISIS: Crisis[] = [
-  { id: "2023-11-almacenamiento-bajo", etiqueta: "Por falta", icono: Droplets, principal: 0, medidor: { parte: 0, total: 1, texto: "de la capacidad útil" } },
-  { id: "2025-02-corte-turbidez", etiqueta: "Por exceso", icono: Waves, principal: 0 },
-  { id: "2024-03-colmatacion-aguada-blanca", etiqueta: "Por desgaste", icono: Mountain, principal: 1, medidor: { parte: 1, total: 0, texto: "de la capacidad de diseño" } },
+  { id: "2023-11-almacenamiento-bajo", etiqueta: ["Por falta", "Too little"], icono: Droplets, principal: 0, medidor: { parte: 0, total: 1, texto: ["de la capacidad útil", "of usable capacity"] } },
+  { id: "2025-02-corte-turbidez", etiqueta: ["Por exceso", "Too much"], icono: Waves, principal: 0 },
+  { id: "2024-03-colmatacion-aguada-blanca", etiqueta: ["Por desgaste", "Wear and tear"], icono: Mountain, principal: 1, medidor: { parte: 1, total: 0, texto: ["de la capacidad de diseño", "of design capacity"] } },
 ];
 
 function Crisis() {
@@ -85,22 +87,22 @@ function Crisis() {
           <article key={id} className="relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface p-5 shadow-tarjeta animate-aparecer">
             <span aria-hidden className="absolute inset-x-0 top-0 h-[3px]" style={{ background: color }} />
             <div className="flex items-center justify-between gap-3">
-              <p className="etiqueta">{etiqueta} · {fecha(e.fecha, e.precision)}</p>
+              <p className="etiqueta">{t(...etiqueta)} · {fecha(e.fecha, e.precision)}</p>
               <span className="grid h-7 w-7 place-items-center rounded-lg bg-surface-2">
                 <Icono aria-hidden className="h-4 w-4" style={{ color }} />
               </span>
             </div>
-            <p className="cifra mt-3 text-[34px] font-semibold leading-none tracking-tight text-ink" title={TEXTO_COTA[cifra.cota]}>
+            <p className="cifra mt-3 text-[34px] font-semibold leading-none tracking-tight text-ink" title={textoCota(cifra.cota)}>
               {cifraCitada(cifra)}
             </p>
             <p className="mt-1.5 text-[12.5px] text-ink-2">{cifra.descripcion}</p>
             {proporcion !== null && medidor && (
               <div className="mt-3">
-                <div className="h-1.5 overflow-hidden rounded-full bg-surface-3" role="img" aria-label={`${numero(proporcion, 0)} % ${medidor.texto}`}>
+                <div className="h-1.5 overflow-hidden rounded-full bg-surface-3" role="img" aria-label={`${numero(proporcion, 0)} % ${t(...medidor.texto)}`}>
                   <div className="h-full rounded-full" style={{ width: `${Math.min(100, proporcion)}%`, background: color }} />
                 </div>
                 <p className="mt-1.5 text-[11.5px] text-ink-3">
-                  <span className="cifra font-semibold text-ink-2">{numero(proporcion, 0)} %</span> {medidor.texto} · calculado con las cifras citadas
+                  <span className="cifra font-semibold text-ink-2">{numero(proporcion, 0)} %</span> {t(...medidor.texto)} · {t("calculado con las cifras citadas", "computed from the cited figures")}
                 </p>
               </div>
             )}
@@ -109,7 +111,7 @@ function Crisis() {
                 {secundarias.map((c) => (
                   <div key={c.descripcion} className="flex items-baseline justify-between gap-3">
                     <dt className="text-ink-2">{c.descripcion}</dt>
-                    <dd className="cifra shrink-0 font-semibold text-ink" title={TEXTO_COTA[c.cota]}>{cifraCitada(c)}</dd>
+                    <dd className="cifra shrink-0 font-semibold text-ink" title={textoCota(c.cota)}>{cifraCitada(c)}</dd>
                   </div>
                 ))}
               </dl>
@@ -138,8 +140,8 @@ function PrimerResultado() {
   const tendencia = r && r.tipo === "tendencia" ? r : null;
   const elevacion = expediente.data?.procedencia.pasos?.find((p) => p.id === "descarga_power")?.metricas?.elevacion_celda_m;
   const subtitulo = [
-    "Media anual del aire a 2 m · celda NASA POWER (MERRA-2)",
-    typeof elevacion === "number" ? `a ${numero(elevacion, 0)} m` : null,
+    t("Media anual del aire a 2 m · celda NASA POWER (MERRA-2)", "Annual mean 2 m air temperature · NASA POWER cell (MERRA-2)"),
+    typeof elevacion === "number" ? t(`a ${numero(elevacion, 0)} m`, `at ${numero(elevacion, 0)} m`) : null,
     tendencia ? `· ${tendencia.periodo.desde}–${tendencia.periodo.hasta}` : null,
   ]
     .filter(Boolean)
@@ -147,11 +149,11 @@ function PrimerResultado() {
 
   return (
     <Tarjeta
-      titulo="Primer resultado real: temperatura en la cabecera"
+      titulo={t("Primer resultado real: temperatura en la cabecera", "First real result: headwaters temperature")}
       subtitulo={subtitulo}
-      acciones={id && <Link to={`/expedientes/${id}`}><Boton tamano="sm" icono={FileCheck2}>Expediente</Boton></Link>}
+      acciones={id && <Link to={`/expedientes/${id}`}><Boton tamano="sm" icono={FileCheck2}>{t("Expediente", "Case file")}</Boton></Link>}
       pie={
-        <>Fuente: NASA POWER (MERRA-2) y NOAA CPC (ONI) · cálculo reproducible en <code className="font-mono">scripts/analisis_preliminar.py</code></>
+        <>{t("Fuente: NASA POWER (MERRA-2) y NOAA CPC (ONI) · cálculo reproducible en", "Source: NASA POWER (MERRA-2) and NOAA CPC (ONI) · reproducible computation in")} <code className="font-mono">scripts/analisis_preliminar.py</code></>
       }
     >
       <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
@@ -166,7 +168,7 @@ function PrimerResultado() {
               unidad={obs.data?.unidad ?? "Cel"}
               agregacion={serie?.agregacion}
               pendiente={tendencia?.pendiente}
-              nombre="Temperatura media anual"
+              nombre={t("Temperatura media anual", "Annual mean temperature")}
             />
           )}
         </div>
@@ -174,20 +176,20 @@ function PrimerResultado() {
           {tendencia ? (
             <>
               <div>
-                <p className="etiqueta">Tendencia de Sen</p>
+                <p className="etiqueta">{t("Tendencia de Sen", "Sen trend")}</p>
                 <p className="mt-1 text-[30px] font-semibold leading-none tracking-tight">
                   {conUnidad(tendencia.pendiente.valor, tendencia.pendiente.unidad, 2, true)}
                 </p>
                 <p className="mt-1 text-[12.5px] text-ink-2">
-                  IC 90 %: {numero(tendencia.pendiente.intervalo.lo, 2)} a {numero(tendencia.pendiente.intervalo.hi, 2)} · p {valorP(tendencia.significancia.p_conservador)}
+                  {t("IC 90 %", "90 % CI")}: {numero(tendencia.pendiente.intervalo.lo, 2)} {t("a", "to")} {numero(tendencia.pendiente.intervalo.hi, 2)} · p {valorP(tendencia.significancia.p_conservador)}
                 </p>
               </div>
               <div>
-                <p className="etiqueta mb-1.5">Veredicto</p>
+                <p className="etiqueta mb-1.5">{t("Veredicto", "Verdict")}</p>
                 <ChipEstado mapa={VEREDICTOS} valor={tendencia.veredicto} />
               </div>
               <div>
-                <p className="etiqueta mb-1.5">Sello de confianza</p>
+                <p className="etiqueta mb-1.5">{t("Sello de confianza", "Confidence seal")}</p>
                 <ul className="space-y-1.5 text-[13px]">
                   {Object.entries(tendencia.sello).map(([k, p]) => (
                     <li key={k} className="flex items-center justify-between gap-2">
@@ -214,7 +216,7 @@ function Proporcion({ etiqueta, correctas, total, nota }: { etiqueta: string; co
       <p className="text-[12px] text-ink-2">{etiqueta}</p>
       <p className="mt-1 text-[20px] font-semibold leading-none tracking-tight text-ink">
         <span className="cifra">{correctas}</span>
-        <span className="text-[13px] font-medium text-ink-3"> de {total}</span>
+        <span className="text-[13px] font-medium text-ink-3"> {t("de", "of")} {total}</span>
       </p>
       <div className="mt-2 h-1 overflow-hidden rounded-full bg-surface-3" aria-hidden>
         <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "var(--accent)" }} />
@@ -232,34 +234,34 @@ function VerificacionFuentes() {
   const pendientes = (fuentes.data ?? []).filter((f) => f.estado_verificacion !== "verificado");
   return (
     <Tarjeta
-      titulo="Verificación de fuentes"
+      titulo={t("Verificación de fuentes", "Source verification")}
       subtitulo={verificacion.data?.fuentes ? `Consultas reales del ${fecha(verificacion.data.fuentes.generado_utc)}` : undefined}
-      acciones={<Link to="/fuentes"><Boton tamano="sm" variante="fantasma" icono={ArrowRight}>Ver fuentes</Boton></Link>}
+      acciones={<Link to="/fuentes"><Boton tamano="sm" variante="fantasma" icono={ArrowRight}>{t("Ver fuentes", "See sources")}</Boton></Link>}
     >
       {verificacion.data ? <BarraEstados conteos={verificacion.data.estados_fuentes} /> : <Esqueleto className="h-16" />}
       {r && (
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {r.verificacion_fuentes && (
             <Proporcion
-              etiqueta="Consultas a catálogos"
+              etiqueta={t("Consultas a catálogos", "Catalog queries")}
               correctas={r.verificacion_fuentes.correctas}
               total={r.verificacion_fuentes.total}
-              nota="Respondieron lo esperado (CMR, AppEEARS, POWER, NOAA, Copernicus)"
+              nota={t("Respondieron lo esperado (CMR, AppEEARS, POWER, NOAA, Copernicus)", "Answered as expected (CMR, AppEEARS, POWER, NOAA, Copernicus)")}
             />
           )}
           {r.verificacion_enlaces && (
             <Proporcion
-              etiqueta="Enlaces del reto y de la guía"
+              etiqueta={t("Enlaces del reto y de la guía", "Challenge and guide links")}
               correctas={r.verificacion_enlaces.correctas}
               total={r.verificacion_enlaces.total}
-              nota="HTTP 200 en al menos una de las corridas automáticas"
+              nota={t("HTTP 200 en al menos una de las corridas automáticas", "HTTP 200 in at least one automated run")}
             />
           )}
         </div>
       )}
       {pendientes.length > 0 && (
         <div className="mt-4 border-t border-line pt-3">
-          <p className="etiqueta mb-2">Fuentes aún sin verificación completa</p>
+          <p className="etiqueta mb-2">{t("Fuentes aún sin verificación completa", "Sources not yet fully verified")}</p>
           <ul className="space-y-1.5">
             {pendientes.map((f) => (
               <li key={f.id} className="flex items-center justify-between gap-3 text-[13px]">
@@ -293,9 +295,9 @@ function VolumenRepresas() {
 
   return (
     <Tarjeta
-      titulo="Volumen útil por represa"
-      subtitulo={filas[0]?.obs ? `Reporte hídrico oficial del ${fecha(filas[0].obs.t)}` : "Reporte hídrico oficial"}
-      pie="Fuente: AUTODEMA (PDF transcrito; la suma coincide con el total reportado ±0,05 hm³). Dato puntual, no una serie."
+      titulo={t("Volumen útil por represa", "Usable volume by reservoir")}
+      subtitulo={filas[0]?.obs ? t(`Reporte hídrico oficial del ${fecha(filas[0].obs.t)}`, `Official water report of ${fecha(filas[0].obs.t)}`) : t("Reporte hídrico oficial", "Official water report")}
+      pie={t("Fuente: AUTODEMA (PDF transcrito; la suma coincide con el total reportado ±0,05 hm³). Dato puntual, no una serie.", "Source: AUTODEMA (transcribed PDF; the sum matches the reported total ±0.05 hm³). Single report, not a series.")}
     >
       {series.isLoading ? (
         <Esqueleto className="h-48" />
@@ -320,16 +322,19 @@ function Modulos() {
   const resumen = useResumen();
   const r = resumen.data;
   const exp = new Map((r?.expedientes_por_tipo ?? []).map((c) => [c.clave, c.total]));
+  const m6 = ["caos", "comparacion_modelos", "recurrencia", "sismicidad", "inventario"].reduce((a, k) => a + (exp.get(k) ?? 0), 0);
   const filas = [
-    { m: "M1", nombre: "Matriz de relevancia", estado: exp.get("relevancia") ? `${exp.get("relevancia")} expediente(s)` : "Sin resultados publicados", listo: Boolean(exp.get("relevancia")) },
-    { m: "M2", nombre: "Tendencias + sello", estado: exp.get("tendencia") ? `${exp.get("tendencia")} expedientes preliminares` : "Sin resultados", listo: Boolean(exp.get("tendencia")) },
-    { m: "M3", nombre: "Gemelo y atribución", estado: exp.get("atribucion") ? `${exp.get("atribucion")} expediente(s)` : "Contrato listo · pendiente de integración", listo: Boolean(exp.get("atribucion")) },
-    { m: "M4", nombre: "Anticipación", estado: exp.get("pronostico") || exp.get("alerta") ? "Con resultados" : "Contrato listo · pendiente de integración", listo: Boolean(exp.get("pronostico") || exp.get("alerta")) },
-    { m: "M5", nombre: "Cuenca y decisión", estado: exp.get("priorizacion") || exp.get("colmatacion") ? "Con resultados" : "Contrato listo · pendiente de integración", listo: Boolean(exp.get("priorizacion") || exp.get("colmatacion")) },
-    { m: "IA", nombre: "Asistente verificado", estado: r?.asistente_conectado ? "Conectado" : "No conectado · verificador numérico activo", listo: Boolean(r?.asistente_conectado) },
+    { m: "M1", nombre: t("Matriz de relevancia", "Relevance matrix"), estado: exp.get("relevancia") ? t(`${exp.get("relevancia")} expediente(s)`, `${exp.get("relevancia")} case file(s)`) : t("Sin resultados publicados", "No published results"), listo: Boolean(exp.get("relevancia")) },
+    { m: "M2", nombre: t("Tendencias + sello", "Trends + seal"), estado: exp.get("tendencia") ? t(`${exp.get("tendencia")} expediente(s)`, `${exp.get("tendencia")} case file(s)`) : t("Sin resultados", "No results"), listo: Boolean(exp.get("tendencia")) },
+    { m: "M3", nombre: t("Gemelo y atribución", "Twin and attribution"), estado: exp.get("atribucion") ? t(`${exp.get("atribucion")} expediente(s)`, `${exp.get("atribucion")} case file(s)`) : t("Contrato listo · pendiente de integración", "Contract ready · integration pending"), listo: Boolean(exp.get("atribucion")) },
+    { m: "M4", nombre: t("Anticipación", "Anticipation"), estado: exp.get("pronostico") || exp.get("alerta") ? t("Con resultados", "With results") : t("Contrato listo · pendiente de integración", "Contract ready · integration pending"), listo: Boolean(exp.get("pronostico") || exp.get("alerta")) },
+    { m: "M5", nombre: t("Cuenca y decisión", "Basin and decision"), estado: exp.get("priorizacion") || exp.get("colmatacion") ? t("Con resultados", "With results") : t("Contrato listo · pendiente de integración", "Contract ready · integration pending"), listo: Boolean(exp.get("priorizacion") || exp.get("colmatacion")) },
+    { m: "M6", nombre: t("Fenómenos naturales", "Natural hazards"), estado: m6 ? t(`${m6} expediente(s)`, `${m6} case file(s)`) : t("Sin resultados", "No results"), listo: m6 > 0 },
+    { m: "M7", nombre: t("Escala nacional", "National scale"), estado: exp.get("panorama_nacional") ? t("25 departamentos", "25 departments") : t("Sin resultados", "No results"), listo: Boolean(exp.get("panorama_nacional")) },
+    { m: "IA", nombre: t("Asistente verificado", "Verified assistant"), estado: r?.asistente_conectado ? t("Conectado", "Connected") : t("No conectado · verificador numérico activo", "Not connected · numeric verifier active"), listo: Boolean(r?.asistente_conectado) },
   ];
   return (
-    <Tarjeta titulo="Estado de los módulos" subtitulo="Lo que ya produce resultados y lo que espera al pipeline de ciencia de datos">
+    <Tarjeta titulo={t("Estado de los módulos", "Module status")} subtitulo={t("Lo que ya produce resultados y lo que espera al pipeline de ciencia de datos", "What already produces results and what awaits the data-science pipeline")}>
       <ul className="divide-y divide-line">
         {filas.map((f) => (
           <li key={f.m} className="flex items-center justify-between gap-3 py-2.5">
@@ -342,10 +347,18 @@ function Modulos() {
         ))}
       </ul>
       <p className="mt-3 flex items-center gap-2 text-[12.5px] text-ink-3">
-        <Workflow className="h-3.5 w-3.5" /> Trabajadores de ciencia de datos activos: <span className="font-semibold text-ink">{r?.trabajadores_activos ?? 0}</span>
+        <Workflow className="h-3.5 w-3.5" /> {t("Trabajadores de ciencia de datos activos:", "Active data-science workers:")} <span className="font-semibold text-ink">{r?.trabajadores_activos ?? 0}</span>
       </p>
     </Tarjeta>
   );
+}
+
+/** Clasificación ENSO por el valor del ONI (umbrales de NOAA CPC: ±0,5 °C; fuerte ≥ 1,5 °C). */
+function etiquetaEnso(oni: number): string {
+  if (oni >= 1.5) return t("El Niño fuerte (ONI)", "Strong El Niño (ONI)");
+  if (oni >= 0.5) return t("El Niño (ONI)", "El Niño (ONI)");
+  if (oni <= -0.5) return t("La Niña (ONI)", "La Niña (ONI)");
+  return t("ENSO neutro (ONI)", "ENSO neutral (ONI)");
 }
 
 export function Panel() {
@@ -360,13 +373,14 @@ export function Panel() {
   return (
     <div className="space-y-6">
       <Encabezado
-        eyebrow="Cuenca regulada del Chili · Arequipa, Perú"
-        titulo="Arequipa se queda sin agua por falta… y por exceso"
-        descripcion="TerraVerdict reúne datos abiertos de NASA y fuentes oficiales para saber qué cambia en la cuenca, por qué, con cuánta confianza y dónde actuar. Cada cifra de esta pantalla viene de una fuente real y citada."
+        eyebrow={t("Cuenca regulada del Chili · Arequipa, Perú → escala nacional", "Chili regulated basin · Arequipa, Peru → national scale")}
+        titulo={t("Arequipa se queda sin agua por falta… y por exceso", "Arequipa runs out of water from too little… and from too much")}
+        descripcion={t("TerraVerdict reúne datos abiertos de NASA y fuentes oficiales para saber qué cambia, por qué, con cuánta confianza y dónde actuar: primero en la cuenca del Chili y luego en los 25 departamentos del Perú. Cada cifra de esta pantalla viene de una fuente real y citada.", "TerraVerdict combines NASA open data and official sources to learn what is changing, why, with how much confidence and where to act: first in the Chili basin, then across Peru's 25 departments. Every figure on this screen comes from a real, cited source.")}
         acciones={
           <>
-            <Boton variante="primario" icono={Globe2} onClick={() => navegar("/mapa")}>Mapa satelital</Boton>
-            <Boton icono={ArrowRight} onClick={() => navegar("/expedientes")}>Expedientes</Boton>
+            <Boton variante="primario" icono={Globe2} onClick={() => navegar("/mapa")}>{t("Mapa satelital", "Satellite map")}</Boton>
+            <Boton icono={MapPinned} onClick={() => navegar("/peru")}>{t("Escala nacional", "National scale")}</Boton>
+            <Boton icono={ArrowRight} onClick={() => navegar("/expedientes")}>{t("Expedientes", "Case files")}</Boton>
           </>
         }
       />
@@ -375,32 +389,32 @@ export function Panel() {
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Dato
-          etiqueta="El Niño en curso"
+          etiqueta={oni ? etiquetaEnso(oni.valor) : "ENSO"}
           icono={Thermometer}
-          tono="critical"
+          tono={oni && Math.abs(oni.valor) >= 0.5 ? "critical" : "neutral"}
           valor={oni ? numero(oni.valor, 2, { signo: true }) : "—"}
           unidad="°C"
-          nota={oni ? `${oni.descripcion} · NOAA CPC` : "Cargando…"}
+          nota={oni ? `${oni.descripcion} · NOAA CPC` : t("Cargando…", "Loading…")}
         />
         <Dato
-          etiqueta="Fuentes verificadas"
+          etiqueta={t("Fuentes verificadas", "Verified sources")}
           icono={Database}
           tono="good"
           valor={r ? `${verificadas}/${r.fuentes_total}` : "—"}
-          nota="Comprobadas con consultas reales a sus catálogos oficiales"
+          nota={t("Comprobadas con consultas reales a sus catálogos oficiales", "Checked with real queries to their official catalogs")}
         />
         <Dato
-          etiqueta="Observaciones reales"
+          etiqueta={t("Observaciones reales", "Real observations")}
           icono={Gauge}
           valor={r ? numero(r.observaciones_total, 0) : "—"}
-          nota={r ? `${r.series_total} series publicadas con procedencia completa` : undefined}
+          nota={r ? t(`${r.series_total} series publicadas con procedencia completa`, `${r.series_total} series published with full provenance`) : undefined}
         />
         <Dato
-          etiqueta="Asistente de IA"
+          etiqueta={t("Asistente de IA", "AI assistant")}
           icono={Bot}
           tono={r?.asistente_conectado ? "good" : "neutral"}
-          valor={r?.asistente_conectado ? "Conectado" : "En espera"}
-          nota="Toda respuesta pasará por el verificador numérico, ya activo"
+          valor={r?.asistente_conectado ? t("Conectado", "Connected") : t("En espera", "Standby")}
+          nota={t("Toda respuesta pasará por el verificador numérico, ya activo", "Every answer will pass the numeric verifier, already active")}
         />
       </div>
 
@@ -412,7 +426,7 @@ export function Panel() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <Tarjeta titulo="Crónica reciente" subtitulo="Eventos documentados con su fuente" acciones={<Link to="/eventos"><Boton tamano="sm" variante="fantasma" icono={ArrowRight}>Ver todo</Boton></Link>}>
+        <Tarjeta titulo={t("Crónica reciente", "Recent chronicle")} subtitulo={t("Eventos documentados con su fuente (en el idioma de la fuente)", "Documented events with their source (in the source's language)")} acciones={<Link to="/eventos"><Boton tamano="sm" variante="fantasma" icono={ArrowRight}>{t("Ver todo", "See all")}</Boton></Link>}>
           {eventos.data ? <LineaTiempo eventos={eventos.data} limite={4} /> : <Esqueleto className="h-64" />}
         </Tarjeta>
         <Modulos />

@@ -27,6 +27,29 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Interfaz bilingüe español/inglés y vista nacional
+**Autor:** Ower Frank
+
+**Qué se hizo**
+- Traducción completa de la interfaz con `t("español", "English")`: los dos textos van juntos en el código, así que ninguno puede quedar sin traducir. Selector ES/EN persistente en la barra lateral. El idioma inicial sale del navegador.
+- Formatos según el idioma: números (coma decimal en español, punto en inglés), meses, fechas relativas, unidades y etiquetas de métricas. El verificador numérico recibe siempre números en formato español, porque así lo exige el backend.
+- Los datos citados (títulos de eventos, justificaciones del catálogo) se muestran en su idioma original, con aviso. Traducirlos alteraría la evidencia.
+- Vista **Perú: escala nacional** (`/peru`):
+  - mapa por departamento con la variable elegible;
+  - tabla con el Sello de cada celda y el estado SPI (con ícono y texto, nunca solo color);
+  - grilla sísmica nacional y valor b por franja.
+- Se quitaron dos datos fijados a mano en el panel:
+  - la etiqueta ENSO ahora se deriva del ONI citado con los umbrales de NOAA (±0,5 °C; fuerte ≥ 1,5 °C);
+  - se agregaron los módulos M6 y M7 a la lista de estado.
+- Los expedientes de tipo M6/M7 enlazan a su vista especializada; el JSON queda plegado.
+- La página de modelos aplica la regla de evidencia unificada: confirmada, indicio o no confirmada.
+
+**Evidencia**
+- `src/test/i18n.test.ts`: recorre todos los componentes y falla si encuentra texto visible fuera de `t()`. Además verifica los formatos en inglés.
+- 27 pruebas del frontend; tsc y eslint sin errores.
+
+---
+
 ## 2026-11-15 · Escala nacional (25 departamentos) y regla de evidencia más estricta
 **Autor:** Ower Frank
 

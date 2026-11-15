@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { t } from "../../lib/i18n";
 
 /**
  * Vista de tabla de un gráfico (accesibilidad): los mismos datos que el gráfico, legibles por
@@ -19,7 +20,7 @@ export function TablaDatos({
   return (
     <details className="mt-3 text-[12.5px]">
       <summary className="cursor-pointer select-none font-medium text-accent-ink hover:underline">
-        Ver datos en tabla ({filas.length} filas)
+        {t(`Ver datos en tabla (${filas.length} filas)`, `Show data as table (${filas.length} rows)`)}
       </summary>
       <div className="mt-2 max-h-80 overflow-auto rounded-lg border border-line">
         <table className="w-full border-collapse text-left">
@@ -46,7 +47,7 @@ export function TablaDatos({
           </tbody>
         </table>
         {filas.length > maxFilas && (
-          <p className="px-3 py-1.5 text-ink-3">Se muestran {maxFilas} de {filas.length} filas.</p>
+          <p className="px-3 py-1.5 text-ink-3">{t(`Se muestran ${maxFilas} de ${filas.length} filas.`, `Showing ${maxFilas} of ${filas.length} rows.`)}</p>
         )}
       </div>
     </details>

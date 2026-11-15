@@ -2,6 +2,7 @@ import { Compass } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import { Marco } from "./componentes/Marco";
+import { t } from "./lib/i18n";
 import { Esqueleto, EstadoVacio } from "./componentes/ui";
 import { AsistentePagina } from "./paginas/AsistentePagina";
 import { EventosPagina } from "./paginas/EventosPagina";
@@ -18,12 +19,13 @@ const SismosPagina = lazy(() => import("./paginas/SismosPagina").then((m) => ({ 
 const VolcanesPagina = lazy(() => import("./paginas/VolcanesPagina").then((m) => ({ default: m.VolcanesPagina })));
 const FenomenosPagina = lazy(() => import("./paginas/FenomenosPagina").then((m) => ({ default: m.FenomenosPagina })));
 const CaosPagina = lazy(() => import("./paginas/CaosPagina").then((m) => ({ default: m.CaosPagina })));
+const NacionalPagina = lazy(() => import("./paginas/NacionalPagina").then((m) => ({ default: m.NacionalPagina })));
 const ModelosPagina = lazy(() => import("./paginas/ModelosPagina").then((m) => ({ default: m.ModelosPagina })));
 
 function NoEncontrada() {
   return (
-    <EstadoVacio icono={Compass} titulo="Esta página no existe" acciones={<Link to="/" className="text-accent-ink hover:underline">Volver al panel</Link>}>
-      Revise la dirección o use la navegación lateral.
+    <EstadoVacio icono={Compass} titulo={t("Esta página no existe", "This page does not exist")} acciones={<Link to="/" className="text-accent-ink hover:underline">{t("Volver al panel", "Back to dashboard")}</Link>}>
+      {t("Revise la dirección o use la navegación lateral.", "Check the address or use the side navigation.")}
     </EstadoVacio>
   );
 }
@@ -38,6 +40,7 @@ export function App() {
           <Route path="/series" element={<SeriesPagina />} />
           <Route path="/expedientes" element={<ExpedientesPagina />} />
           <Route path="/expedientes/:id" element={<ExpedientesPagina />} />
+          <Route path="/peru" element={<NacionalPagina />} />
           <Route path="/fenomenos" element={<FenomenosPagina />} />
           <Route path="/sismos" element={<SismosPagina />} />
           <Route path="/volcanes" element={<VolcanesPagina />} />

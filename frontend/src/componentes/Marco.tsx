@@ -14,6 +14,7 @@ import {
   LineChart,
   LogIn,
   LogOut,
+  MapPinned,
   Menu,
   Monitor,
   Moon,
@@ -30,43 +31,45 @@ import { NavLink, useLocation } from "react-router-dom";
 import { ErrorApi } from "../api/cliente";
 import { useResumen, useSalud } from "../api/consultas";
 import { useSesion } from "../lib/sesion";
+import { t, useIdioma, type Idioma } from "../lib/i18n";
 import { useTema, type Tema } from "../lib/tema";
 import { Dialogo } from "./Dialogo";
 import { Boton, Insignia, Segmentado } from "./ui";
 
-const NAVEGACION: { grupo: string; items: { a: string; texto: string; icono: LucideIcon }[] }[] = [
+const NAVEGACION: { grupo: [string, string]; items: { a: string; texto: [string, string]; icono: LucideIcon }[] }[] = [
   {
-    grupo: "Explorar",
+    grupo: ["Explorar", "Explore"],
     items: [
-      { a: "/", texto: "Panel", icono: LayoutDashboard },
-      { a: "/mapa", texto: "Mapa satelital", icono: Globe2 },
-      { a: "/series", texto: "Series", icono: LineChart },
-      { a: "/expedientes", texto: "Expedientes", icono: FileCheck2 },
+      { a: "/", texto: ["Panel", "Dashboard"], icono: LayoutDashboard },
+      { a: "/mapa", texto: ["Mapa satelital", "Satellite map"], icono: Globe2 },
+      { a: "/series", texto: ["Series", "Time series"], icono: LineChart },
+      { a: "/expedientes", texto: ["Expedientes", "Case files"], icono: FileCheck2 },
     ],
   },
   {
-    grupo: "Fenómenos naturales",
+    grupo: ["Fenómenos naturales", "Natural hazards"],
     items: [
-      { a: "/fenomenos", texto: "Catálogo de fenómenos", icono: Layers3 },
-      { a: "/sismos", texto: "Sismos", icono: Activity },
-      { a: "/volcanes", texto: "Volcanes", icono: Mountain },
-      { a: "/caos", texto: "Dinámica y caos", icono: Orbit },
-      { a: "/modelos", texto: "Modelos", icono: BrainCircuit },
+      { a: "/peru", texto: ["Perú: escala nacional", "Peru: national scale"], icono: MapPinned },
+      { a: "/fenomenos", texto: ["Catálogo de fenómenos", "Hazard catalog"], icono: Layers3 },
+      { a: "/sismos", texto: ["Sismos", "Earthquakes"], icono: Activity },
+      { a: "/volcanes", texto: ["Volcanes", "Volcanoes"], icono: Mountain },
+      { a: "/caos", texto: ["Dinámica y caos", "Dynamics & chaos"], icono: Orbit },
+      { a: "/modelos", texto: ["Modelos", "Models"], icono: BrainCircuit },
     ],
   },
   {
-    grupo: "Ciencia de datos",
+    grupo: ["Ciencia de datos", "Data science"],
     items: [
-      { a: "/relevancia", texto: "Matriz de relevancia", icono: Grid3x3 },
-      { a: "/procesos", texto: "Procesos", icono: Workflow },
+      { a: "/relevancia", texto: ["Matriz de relevancia", "Relevance matrix"], icono: Grid3x3 },
+      { a: "/procesos", texto: ["Procesos", "Pipeline jobs"], icono: Workflow },
     ],
   },
   {
-    grupo: "Evidencia",
+    grupo: ["Evidencia", "Evidence"],
     items: [
-      { a: "/fuentes", texto: "Fuentes verificadas", icono: Satellite },
-      { a: "/eventos", texto: "Crónica de eventos", icono: CalendarClock },
-      { a: "/asistente", texto: "Asistente", icono: Bot },
+      { a: "/fuentes", texto: ["Fuentes verificadas", "Verified sources"], icono: Satellite },
+      { a: "/eventos", texto: ["Crónica de eventos", "Event chronicle"], icono: CalendarClock },
+      { a: "/asistente", texto: ["Asistente", "Assistant"], icono: Bot },
     ],
   },
 ];
@@ -82,7 +85,7 @@ function Marca() {
       </svg>
       <div className="leading-tight">
         <p className="text-[15px] font-semibold tracking-tight text-ink">TerraVerdict</p>
-        <p className="text-[11px] text-ink-3">Cuenca del Chili · Arequipa</p>
+        <p className="text-[11px] text-ink-3">{t("Arequipa → Perú · amenazas naturales", "Arequipa → Peru · natural hazards")}</p>
       </div>
     </div>
   );
@@ -99,10 +102,25 @@ function EstadoApi() {
           {enLinea && <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-40" style={{ background: "var(--good)" }} />}
           <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: enLinea ? "var(--good)" : "var(--critical)" }} />
         </span>
-        {salud.isLoading ? "Conectando…" : enLinea ? "API en línea" : "API sin conexión"}
+        {salud.isLoading ? t("Conectando…", "Connecting…") : enLinea ? t("API en línea", "API online") : t("API sin conexión", "API offline")}
       </span>
       <span className="font-mono text-ink-3">v{resumen.data?.version_api ?? "—"}</span>
     </div>
+  );
+}
+
+function SelectorIdioma() {
+  const { idioma, cambiar } = useIdioma();
+  return (
+    <Segmentado<Idioma>
+      etiqueta={t("Idioma", "Language")}
+      valor={idioma}
+      alCambiar={cambiar}
+      opciones={[
+        { valor: "es", texto: "ES", titulo: "Español" },
+        { valor: "en", texto: "EN", titulo: "English" },
+      ]}
+    />
   );
 }
 
@@ -110,13 +128,13 @@ function SelectorTema() {
   const { tema, cambiar } = useTema();
   return (
     <Segmentado<Tema>
-      etiqueta="Tema de color"
+      etiqueta={t("Tema de color", "Color theme")}
       valor={tema}
       alCambiar={cambiar}
       opciones={[
-        { valor: "light", texto: <Sun className="h-3.5 w-3.5" />, titulo: "Claro" },
-        { valor: "sistema", texto: <Monitor className="h-3.5 w-3.5" />, titulo: "Sistema" },
-        { valor: "dark", texto: <Moon className="h-3.5 w-3.5" />, titulo: "Oscuro" },
+        { valor: "light", texto: <Sun className="h-3.5 w-3.5" />, titulo: t("Claro", "Light") },
+        { valor: "sistema", texto: <Monitor className="h-3.5 w-3.5" />, titulo: t("Sistema", "System") },
+        { valor: "dark", texto: <Moon className="h-3.5 w-3.5" />, titulo: t("Oscuro", "Dark") },
       ]}
     />
   );
@@ -137,7 +155,7 @@ function Acceso() {
       await iniciar(String(datos.get("email")), String(datos.get("contrasena")));
       setAbierto(false);
     } catch (err) {
-      setError(err instanceof ErrorApi ? err.message : "No se pudo iniciar sesión.");
+      setError(err instanceof ErrorApi ? err.message : t("No se pudo iniciar sesión.", "Sign-in failed."));
     } finally {
       setEnviando(false);
     }
@@ -150,7 +168,7 @@ function Acceso() {
           <p className="truncate text-[12.5px] font-medium text-ink">{identidad.nombre}</p>
           <p className="text-[11px] capitalize text-ink-3">{identidad.rol ?? identidad.tipo}</p>
         </div>
-        <button type="button" onClick={cerrar} className="rounded-md p-1.5 text-ink-3 hover:bg-surface-2 hover:text-ink" aria-label="Cerrar sesión" title="Cerrar sesión">
+        <button type="button" onClick={cerrar} className="rounded-md p-1.5 text-ink-3 hover:bg-surface-2 hover:text-ink" aria-label={t("Cerrar sesión", "Sign out")} title={t("Cerrar sesión", "Sign out")}>
           <LogOut className="h-4 w-4" />
         </button>
       </div>
@@ -159,24 +177,24 @@ function Acceso() {
   return (
     <>
       <Boton icono={LogIn} className="w-full" onClick={() => setAbierto(true)}>
-        Iniciar sesión
+        {t("Iniciar sesión", "Sign in")}
       </Boton>
-      <Dialogo abierto={abierto} alCerrar={() => setAbierto(false)} titulo="Iniciar sesión">
+      <Dialogo abierto={abierto} alCerrar={() => setAbierto(false)} titulo={t("Iniciar sesión", "Sign in")}>
         <form onSubmit={enviar} className="space-y-3">
           <p className="text-[13px] text-ink-2">
-            La lectura es pública. Inicie sesión para solicitar procesos (rol analista) o administrar el sistema.
+            {t("La lectura es pública. Inicie sesión para solicitar procesos (rol analista) o administrar el sistema.", "Reading is public. Sign in to request pipeline jobs (analyst role) or administer the system.")}
           </p>
           <label className="block text-[13px] font-medium">
-            Correo
+            {t("Correo", "Email")}
             <input name="email" type="email" required autoComplete="username" className="mt-1 h-10 w-full rounded-lg border border-line bg-surface-2 px-3 text-sm outline-none focus:border-accent" />
           </label>
           <label className="block text-[13px] font-medium">
-            Contraseña
+            {t("Contraseña", "Password")}
             <input name="contrasena" type="password" required autoComplete="current-password" className="mt-1 h-10 w-full rounded-lg border border-line bg-surface-2 px-3 text-sm outline-none focus:border-accent" />
           </label>
           {error && <p role="alert" className="text-[13px]" style={{ color: "var(--critical)" }}>{error}</p>}
           <Boton type="submit" variante="primario" className="w-full" disabled={enviando}>
-            {enviando ? "Verificando…" : "Entrar"}
+            {enviando ? t("Verificando…", "Verifying…") : t("Entrar", "Sign in")}
           </Boton>
         </form>
       </Dialogo>
@@ -186,10 +204,10 @@ function Acceso() {
 
 function Navegacion({ alNavegar }: { alNavegar?: () => void }) {
   return (
-    <nav aria-label="Principal" className="space-y-5">
+    <nav aria-label={t("Principal", "Main")} className="space-y-5">
       {NAVEGACION.map((g) => (
-        <div key={g.grupo}>
-          <p className="etiqueta mb-1.5 px-3">{g.grupo}</p>
+        <div key={g.grupo[0]}>
+          <p className="etiqueta mb-1.5 px-3">{t(...g.grupo)}</p>
           <ul className="space-y-0.5">
             {g.items.map((i) => (
               <li key={i.a}>
@@ -205,7 +223,7 @@ function Navegacion({ alNavegar }: { alNavegar?: () => void }) {
                   }
                 >
                   <i.icono aria-hidden className="h-4 w-4" />
-                  {i.texto}
+                  {t(...i.texto)}
                 </NavLink>
               </li>
             ))}
@@ -222,6 +240,7 @@ function PieLateral() {
       <EstadoApi />
       <div className="flex items-center justify-between">
         <SelectorTema />
+        <SelectorIdioma />
         <a href="/api/docs" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-[12px] font-medium text-ink-2 hover:bg-surface-2 hover:text-ink">
           <BookOpenText className="h-3.5 w-3.5" /> API
         </a>
@@ -247,17 +266,17 @@ export function Marco({ children }: { children: ReactNode }) {
 
       <header className="vidrio sticky top-0 z-30 flex items-center justify-between border-b border-line px-4 py-3 lg:hidden">
         <Marca />
-        <button type="button" onClick={() => setMenu(true)} className="rounded-lg p-2 text-ink-2 hover:bg-surface-2" aria-label="Abrir menú">
+        <button type="button" onClick={() => setMenu(true)} className="rounded-lg p-2 text-ink-2 hover:bg-surface-2" aria-label={t("Abrir menú", "Open menu")}>
           <Menu className="h-5 w-5" />
         </button>
       </header>
       {menu && (
-        <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label="Menú">
+        <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true" aria-label={t("Menú", "Menu")}>
           <div className="absolute inset-0 bg-black/40" onClick={() => setMenu(false)} />
           <div className="absolute inset-y-0 left-0 flex w-[280px] flex-col justify-between overflow-y-auto bg-surface-solida p-4 shadow-flotante">
             <div className="space-y-6">
               <div className="flex items-center justify-between"><Marca />
-                <button type="button" onClick={() => setMenu(false)} className="rounded-lg p-2 text-ink-2 hover:bg-surface-2" aria-label="Cerrar menú"><X className="h-5 w-5" /></button>
+                <button type="button" onClick={() => setMenu(false)} className="rounded-lg p-2 text-ink-2 hover:bg-surface-2" aria-label={t("Cerrar menú", "Close menu")}><X className="h-5 w-5" /></button>
               </div>
               <Navegacion alNavegar={() => setMenu(false)} />
             </div>
@@ -284,7 +303,7 @@ export function AvisoNoOficial() {
       className="vidrio flex min-h-9 items-center justify-center gap-2 border-b border-line px-4 py-1.5 text-center text-[12.5px] font-medium text-ink-2"
     >
       <Info aria-hidden className="h-3.5 w-3.5 shrink-0 text-accent" />
-      Resultados experimentales. No son alertas oficiales (SENAMHI, IGP, INGEMMET, INDECI).
+      {t("Resultados experimentales. No son alertas oficiales (SENAMHI, IGP, INGEMMET, INDECI).", "Experimental results. Not official warnings (SENAMHI, IGP, INGEMMET, INDECI).")}
     </p>
   );
 }
@@ -292,7 +311,7 @@ export function AvisoNoOficial() {
 export function AvisoDatosReales({ children }: { children?: ReactNode }) {
   return (
     <Insignia tono="good" className="!rounded-md">
-      {children ?? "Solo datos reales verificados"}
+      {children ?? t("Solo datos reales verificados", "Verified real data only")}
     </Insignia>
   );
 }

@@ -1,8 +1,9 @@
 import { ExternalLink } from "lucide-react";
 import type { Esquemas } from "../../api/cliente";
 import { CATEGORIAS_EVENTO } from "../../lib/colores";
-import { TEXTO_COTA, cifraCitada, fecha } from "../../lib/formato";
+import { textoCota, cifraCitada, fecha } from "../../lib/formato";
 import { ESTADOS_VERIFICACION, Insignia } from "../ui";
+import { t } from "../../lib/i18n";
 
 const ORDEN_ESTADOS = ["verificado", "parcial", "no_verificado", "sin_evidencia"];
 const COLOR_ESTADO: Record<string, string> = {
@@ -18,7 +19,7 @@ export function BarraEstados({ conteos }: { conteos: Record<string, number> }) {
   const presentes = ORDEN_ESTADOS.filter((e) => (conteos[e] ?? 0) > 0);
   return (
     <div>
-      <div className="flex h-3 w-full gap-[2px]" role="img" aria-label="Distribución de estados de verificación">
+      <div className="flex h-3 w-full gap-[2px]" role="img" aria-label={t("Distribución de estados de verificación", "Distribution of verification statuses")}>
         {presentes.map((e) => (
           <div
             key={e}
@@ -64,7 +65,7 @@ export function CoberturaFuentes({ fuentes, desde = 1945 }: { fuentes: Esquemas[
         {marcas.map((m) => (
           <span key={m} className="absolute -translate-x-1/2" style={{ left: escala(m) }}>{m}</span>
         ))}
-        <span className="absolute right-0">hoy</span>
+        <span className="absolute right-0">{t("hoy", "today")}</span>
       </div>
       <ul className="mt-1.5 space-y-1">
         {conPeriodo.map(({ f, ini, fin, vigente }) => (
@@ -74,13 +75,13 @@ export function CoberturaFuentes({ fuentes, desde = 1945 }: { fuentes: Esquemas[
               <div
                 className="absolute inset-y-0 rounded-full"
                 style={{ left: escala(ini), width: `calc(${escala(fin)} - ${escala(ini)})`, background: "var(--accent)", opacity: vigente ? 1 : 0.55 }}
-                title={`${f.periodo?.[0]} → ${f.periodo?.[1] ?? "vigente"}`}
+                title={`${f.periodo?.[0]} → ${f.periodo?.[1] ?? t("vigente", "ongoing")}`}
               />
             </div>
           </li>
         ))}
       </ul>
-      <p className="mt-2 text-ink-3">Barra intensa: colección vigente. Barra tenue: colección cerrada.</p>
+      <p className="mt-2 text-ink-3">{t("Barra intensa: colección vigente. Barra tenue: colección cerrada.", "Solid bar: ongoing collection. Faint bar: closed collection.")}</p>
     </div>
   );
 }
@@ -104,7 +105,7 @@ export function LineaTiempo({ eventos, limite }: { eventos: Esquemas["EventoDocu
             {e.cifras.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-2">
                 {e.cifras.map((c) => (
-                  <span key={c.descripcion} className="rounded-lg border border-line bg-surface-2 px-2 py-1 text-[12px] text-ink-2" title={TEXTO_COTA[c.cota]}>
+                  <span key={c.descripcion} className="rounded-lg border border-line bg-surface-2 px-2 py-1 text-[12px] text-ink-2" title={textoCota(c.cota)}>
                     <span className="cifra font-semibold text-ink">{cifraCitada(c)}</span> · {c.descripcion}
                   </span>
                 ))}

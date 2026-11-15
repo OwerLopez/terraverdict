@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { t } from "./i18n";
 import { colorToken, useTema } from "./tema";
 
 /** Colores resueltos del tema actual para librerías que dibujan en SVG/Canvas (Recharts, MapLibre). */
@@ -26,12 +27,21 @@ export function useColores() {
 export const RAMPA_AZUL = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"] as const;
 
 /** Orden categórico fijo (nunca cíclico) para las categorías de eventos. */
-export const CATEGORIAS_EVENTO: Record<string, { color: string; texto: string }> = {
-  escasez: { color: "var(--serie-2)", texto: "Escasez" },
-  turbidez: { color: "var(--serie-1)", texto: "Turbidez" },
-  colmatacion: { color: "var(--serie-4)", texto: "Colmatación" },
-  almacenamiento: { color: "var(--serie-3)", texto: "Almacenamiento" },
-  degradacion: { color: "var(--serie-5)", texto: "Degradación" },
-  clima: { color: "var(--serie-8)", texto: "Clima" },
-  institucional: { color: "var(--serie-7)", texto: "Institucional" },
+function categoria(color: string, es: string, en: string): { color: string; readonly texto: string } {
+  return {
+    color,
+    get texto() {
+      return t(es, en);
+    },
+  };
+}
+
+export const CATEGORIAS_EVENTO: Record<string, { color: string; readonly texto: string }> = {
+  escasez: categoria("var(--serie-2)", "Escasez", "Scarcity"),
+  turbidez: categoria("var(--serie-1)", "Turbidez", "Turbidity"),
+  colmatacion: categoria("var(--serie-4)", "Colmatación", "Siltation"),
+  almacenamiento: categoria("var(--serie-3)", "Almacenamiento", "Storage"),
+  degradacion: categoria("var(--serie-5)", "Degradación", "Degradation"),
+  clima: categoria("var(--serie-8)", "Clima", "Climate"),
+  institucional: categoria("var(--serie-7)", "Institucional", "Institutional"),
 };

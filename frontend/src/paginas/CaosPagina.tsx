@@ -7,29 +7,39 @@ import { TablaDatos } from "../componentes/fenomenos/TablaDatos";
 import { Dato, Encabezado, ErrorCarga, EstadoVacio, Esqueleto, Insignia, Tarjeta, type Tono } from "../componentes/ui";
 import { RAMPA_AZUL } from "../lib/colores";
 import { numero } from "../lib/formato";
+import { t } from "../lib/i18n";
 
 type Serie = Esquemas["SerieDinamica"];
 
-export const VEREDICTOS_DINAMICA: Record<string, { texto: string; tono: Tono }> = {
-  lineal_estocastica: { texto: "Lineal estocástica", tono: "neutral" },
-  no_lineal_sin_caos_demostrado: { texto: "No lineal, sin caos demostrado", tono: "accent" },
-  compatible_con_caos_baja_dimension: { texto: "Compatible con caos de baja dimensión", tono: "warning" },
-  regular: { texto: "Regular", tono: "good" },
-  insuficiente: { texto: "Datos insuficientes", tono: "neutral" },
+function veredicto(es: string, en: string, tono: Tono): { readonly texto: string; tono: Tono } {
+  return {
+    tono,
+    get texto() {
+      return t(es, en);
+    },
+  };
+}
+
+export const VEREDICTOS_DINAMICA: Record<string, { readonly texto: string; tono: Tono }> = {
+  lineal_estocastica: veredicto("Lineal estocástica", "Linear stochastic", "neutral"),
+  no_lineal_sin_caos_demostrado: veredicto("No lineal, sin caos demostrado", "Nonlinear, no demonstrated chaos", "accent"),
+  compatible_con_caos_baja_dimension: veredicto("Compatible con caos de baja dimensión", "Compatible with low-dimensional chaos", "warning"),
+  regular: veredicto("Regular", "Regular", "good"),
+  insuficiente: veredicto("Datos insuficientes", "Insufficient data", "neutral"),
 };
 
-const ESTADISTICOS: Record<string, string> = {
-  asimetria_temporal: "Asimetría temporal",
-  error_prediccion_analogos: "Error de predicción por análogos",
+const ESTADISTICOS: Record<string, [string, string]> = {
+  asimetria_temporal: ["Asimetría temporal", "Time asymmetry"],
+  error_prediccion_analogos: ["Error de predicción por análogos", "Analog prediction error"],
 };
-const nombreEstadistico = (e: string) => ESTADISTICOS[e] ?? e.replace(/_/g, " ");
+const nombreEstadistico = (e: string) => (ESTADISTICOS[e] ? t(...(ESTADISTICOS[e] as [string, string])) : e.replace(/_/g, " "));
 
-const CONDICIONES: Record<string, string> = {
-  no_linealidad_significativa: "No linealidad significativa (sustitutos IAAFT)",
-  determinismo_prediccion_analogos: "Determinismo (predicción por análogos)",
-  d2_satura_bajo: "D2 satura por debajo de 5",
-  lyapunov_positivo: "Exponente de Lyapunov > 0",
-  prueba_01_caotica: "Prueba 0-1: K > 0,8",
+const CONDICIONES: Record<string, [string, string]> = {
+  no_linealidad_significativa: ["No linealidad significativa (sustitutos IAAFT)", "Significant nonlinearity (IAAFT surrogates)"],
+  determinismo_prediccion_analogos: ["Determinismo (predicción por análogos)", "Determinism (analog prediction)"],
+  d2_satura_bajo: ["D2 satura por debajo de 5", "D2 saturates below 5"],
+  lyapunov_positivo: ["Exponente de Lyapunov > 0", "Lyapunov exponent > 0"],
+  prueba_01_caotica: ["Prueba 0-1: K > 0,8", "0-1 test: K > 0.8"],
 };
 
 function EspacioFases({ puntos, tau }: { puntos: [number, number][]; tau: number | null | undefined }) {
@@ -38,14 +48,14 @@ function EspacioFases({ puntos, tau }: { puntos: [number, number][]; tau: number
   const lim = Math.max(3, ...puntos.flatMap(([a, b]) => [Math.abs(a), Math.abs(b)]));
   const e = (v: number) => m + ((v + lim) / (2 * lim)) * (lado - 2 * m);
   return (
-    <svg viewBox={`0 0 ${lado} ${lado}`} className="mx-auto w-full max-w-[360px]" role="img" aria-label={`Espacio de fases reconstruido: x(t) frente a x(t+τ) con τ = ${tau ?? "—"}, ${puntos.length} puntos`}>
+    <svg viewBox={`0 0 ${lado} ${lado}`} className="mx-auto w-full max-w-[360px]" role="img" aria-label={t(`Espacio de fases reconstruido: x(t) frente a x(t+τ) con τ = ${tau ?? "—"}, ${puntos.length} puntos`, `Reconstructed phase space: x(t) versus x(t+τ) with τ = ${tau ?? "—"}, ${puntos.length} points`)}>
       <rect x={m} y={m} width={lado - 2 * m} height={lado - 2 * m} fill="none" stroke="var(--border-strong)" rx={6} />
       <line x1={e(0)} x2={e(0)} y1={m} y2={lado - m} stroke="var(--grid)" />
       <line y1={lado - e(0)} y2={lado - e(0)} x1={m} x2={lado - m} stroke="var(--grid)" />
       {puntos.map(([a, b], i) => (
         <circle key={i} cx={e(a)} cy={lado - e(b)} r={1.6} fill="var(--serie-1)" fillOpacity={0.45} />
       ))}
-      <text x={lado / 2} y={lado - 6} textAnchor="middle" fontSize={11} fill="var(--ink-3)">x(t), estandarizada</text>
+      <text x={lado / 2} y={lado - 6} textAnchor="middle" fontSize={11} fill="var(--ink-3)">{t("x(t), estandarizada", "x(t), standardized")}</text>
       <text x={10} y={lado / 2} textAnchor="middle" fontSize={11} fill="var(--ink-3)" transform={`rotate(-90 10 ${lado / 2})`}>x(t + τ)</text>
     </svg>
   );
@@ -75,7 +85,7 @@ function Recurrencia({ matriz }: { matriz: number[][] }) {
     <canvas
       ref={lienzo}
       role="img"
-      aria-label={`Gráfico de recurrencia de ${matriz.length} × ${matriz.length} bloques; más oscuro = más recurrencias`}
+      aria-label={t(`Gráfico de recurrencia de ${matriz.length} × ${matriz.length} bloques; más oscuro = más recurrencias`, `Recurrence plot of ${matriz.length} × ${matriz.length} blocks; darker = more recurrences`)}
       className="mx-auto aspect-square w-full max-w-[320px] rounded-lg border border-line"
       style={{ imageRendering: "pixelated" }}
     />
@@ -96,7 +106,7 @@ function Sustitutos({ d }: { d: Esquemas["DistribucionSustitutos"] }) {
   const x = (v: number) => 8 + ((v - min) / (max - min || 1)) * (ancho - 16);
   const anchoBarra = (ancho - 16) / nb;
   return (
-    <svg viewBox={`0 0 ${ancho} ${alto + 18}`} className="w-full" role="img" aria-label={`Distribución de ${nombreEstadistico(d.estadistico).toLowerCase()} en ${d.sustitutos.length} sustitutos; la serie original vale ${numero(d.original, 3)} (p = ${numero(d.p, 3)})`}>
+    <svg viewBox={`0 0 ${ancho} ${alto + 18}`} className="w-full" role="img" aria-label={t(`Distribución de ${nombreEstadistico(d.estadistico).toLowerCase()} en ${d.sustitutos.length} sustitutos; la serie original vale ${numero(d.original, 3)} (p = ${numero(d.p, 3)})`, `Distribution of ${nombreEstadistico(d.estadistico).toLowerCase()} over ${d.sustitutos.length} surrogates; the original series is ${numero(d.original, 3)} (p = ${numero(d.p, 3)})`)}>
       {conteos.map((c, i) => (
         <rect key={i} x={8 + i * anchoBarra + 1} y={alto - (c / cmax) * (alto - 10)} width={anchoBarra - 2} height={(c / cmax) * (alto - 10)} rx={2} fill="var(--serie-1)" fillOpacity={0.55} />
       ))}
@@ -118,16 +128,16 @@ export function CaosPagina() {
   return (
     <>
       <Encabezado
-        eyebrow="Fenómenos naturales"
-        titulo="Dinámica: ¿caos, no linealidad o ruido?"
-        descripcion="Diagnóstico de cada serie real con sustitutos IAAFT, dimensión de correlación, exponente de Lyapunov, prueba 0-1 y recurrencias. Afirmar caos exige todas las condiciones a la vez."
+        eyebrow={t("Fenómenos naturales", "Natural hazards")}
+        titulo={t("Dinámica: ¿caos, no linealidad o ruido?", "Dynamics: chaos, nonlinearity or noise?")}
+        descripcion={t("Diagnóstico de cada serie real con sustitutos IAAFT, dimensión de correlación, exponente de Lyapunov, prueba 0-1 y recurrencias. Afirmar caos exige todas las condiciones a la vez. Los métodos se validaron antes con Lorenz, Hénon y el mapa logístico.", "Diagnosis of each real series with IAAFT surrogates, correlation dimension, Lyapunov exponent, 0-1 test and recurrences. Claiming chaos requires all conditions at once. The methods were first validated on Lorenz, Hénon and the logistic map.")}
       />
       {detalle.isError && <ErrorCarga error={detalle.error} className="mb-4" />}
       {detalle.isLoading && <Esqueleto className="h-80" />}
-      {!detalle.isLoading && !r && <EstadoVacio icono={Orbit} titulo="Sin diagnóstico publicado">Publique los resultados con <code>tv publicar</code>.</EstadoVacio>}
+      {!detalle.isLoading && !r && <EstadoVacio icono={Orbit} titulo={t("Sin diagnóstico publicado", "No published diagnosis")}>{t("Publique los resultados con", "Publish the results with")} <code>tv publicar</code>.</EstadoVacio>}
       {r && serie && (
         <>
-          <div className="mb-5 flex flex-wrap gap-2" role="tablist" aria-label="Series evaluadas">
+          <div className="mb-5 flex flex-wrap gap-2" role="tablist" aria-label={t("Series evaluadas", "Evaluated series")}>
             {r.series.map((s) => (
               <button
                 key={s.serie_id}
@@ -146,21 +156,21 @@ export function CaosPagina() {
             ))}
           </div>
           <div className="mb-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Dato etiqueta="Veredicto" valor={<span className="text-[18px]">{v?.texto ?? serie.veredicto}</span>} nota={`${serie.fuente} · n = ${numero(serie.n, 0)} (${serie.unidad_tiempo})`} />
-            <Dato etiqueta="Dimensión D2" valor={serie.d2 != null ? numero(serie.d2, 2) : "no satura"} nota={`Embedding: τ = ${serie.tau ?? "—"}, m = ${serie.m ?? "—"}`} />
-            <Dato etiqueta="Lyapunov λ" valor={numero(serie.lyapunov, 3)} nota={`por ${serie.unidad_tiempo}`} />
-            <Dato etiqueta="Prueba 0-1 (K)" valor={numero(serie.k_01, 2)} nota="≈ 0 regular · ≈ 1 caótica o estocástica" />
+            <Dato etiqueta={t("Veredicto", "Verdict")} valor={<span className="text-[18px]">{v?.texto ?? serie.veredicto}</span>} nota={`${serie.fuente} · n = ${numero(serie.n, 0)} (${serie.unidad_tiempo})`} />
+            <Dato etiqueta={t("Dimensión D2", "Dimension D2")} valor={serie.d2 != null ? numero(serie.d2, 2) : t("no satura", "does not saturate")} nota={`Embedding: τ = ${serie.tau ?? "—"}, m = ${serie.m ?? "—"}`} />
+            <Dato etiqueta="Lyapunov λ" valor={numero(serie.lyapunov, 3)} nota={`${t("por", "per")} ${serie.unidad_tiempo}`} />
+            <Dato etiqueta={t("Prueba 0-1 (K)", "0-1 test (K)")} valor={numero(serie.k_01, 2)} nota={t("≈ 0 regular · ≈ 1 caótica o estocástica", "≈ 0 regular · ≈ 1 chaotic or stochastic")} />
           </div>
           <div className="grid gap-5 lg:grid-cols-3">
-            <Tarjeta titulo="Espacio de fases" subtitulo="Reconstrucción de Takens (submuestra).">
-              {serie.espacio_fases?.length ? <EspacioFases puntos={serie.espacio_fases as [number, number][]} tau={serie.tau} /> : <EstadoVacio titulo="Sin puntos" />}
-              <TablaDatos titulo="Espacio de fases" columnas={["x(t)", "x(t+τ)"]} filas={(serie.espacio_fases ?? []).map(([a, b]) => [numero(a, 3), numero(b, 3)])} maxFilas={200} />
+            <Tarjeta titulo={t("Espacio de fases", "Phase space")} subtitulo={t("Reconstrucción de Takens (submuestra).", "Takens reconstruction (subsample).")}>
+              {serie.espacio_fases?.length ? <EspacioFases puntos={serie.espacio_fases as [number, number][]} tau={serie.tau} /> : <EstadoVacio titulo={t("Sin puntos", "No points")} />}
+              <TablaDatos titulo={t("Espacio de fases", "Phase space")} columnas={["x(t)", "x(t+τ)"]} filas={(serie.espacio_fases ?? []).map(([a, b]) => [numero(a, 3), numero(b, 3)])} maxFilas={200} />
             </Tarjeta>
-            <Tarjeta titulo="Gráfico de recurrencia" subtitulo="Densidad por bloque; diagonales largas indican determinismo.">
-              {serie.recurrencia_miniatura?.length ? <Recurrencia matriz={serie.recurrencia_miniatura} /> : <EstadoVacio titulo="Sin datos de recurrencia" />}
-              <p className="mt-2 text-center text-[12px] text-ink-3">Determinismo (RQA): {numero(serie.determinismo_rqa, 3)}</p>
+            <Tarjeta titulo={t("Gráfico de recurrencia", "Recurrence plot")} subtitulo={t("Densidad por bloque; diagonales largas indican determinismo.", "Density per block; long diagonals indicate determinism.")}>
+              {serie.recurrencia_miniatura?.length ? <Recurrencia matriz={serie.recurrencia_miniatura} /> : <EstadoVacio titulo={t("Sin datos de recurrencia", "No recurrence data")} />}
+              <p className="mt-2 text-center text-[12px] text-ink-3">{t("Determinismo (RQA)", "Determinism (RQA)")}: {numero(serie.determinismo_rqa, 3)}</p>
             </Tarjeta>
-            <Tarjeta titulo="Frente a los sustitutos" subtitulo="Si la serie original cae dentro de la nube de sustitutos lineales, no hay evidencia de no linealidad.">
+            <Tarjeta titulo={t("Frente a los sustitutos", "Against the surrogates")} subtitulo={t("Si la serie original cae dentro de la nube de sustitutos lineales, no hay evidencia de no linealidad.", "If the original series falls inside the cloud of linear surrogates, there is no evidence of nonlinearity.")}>
               {serie.sustitutos?.length ? (
                 <div className="space-y-4">
                   {serie.sustitutos.map((d) => (
@@ -173,22 +183,23 @@ export function CaosPagina() {
                   ))}
                 </div>
               ) : (
-                <EstadoVacio titulo="Sin sustitutos (serie insuficiente)" />
+                <EstadoVacio titulo={t("Sin sustitutos (serie insuficiente)", "No surrogates (insufficient series)")} />
               )}
               <TablaDatos
-                titulo="Estadísticos frente a sustitutos"
-                columnas={["Estadístico", "Original", "Sustitutos (n)", "p"]}
+                titulo={t("Estadísticos frente a sustitutos", "Statistics against surrogates")}
+                columnas={[t("Estadístico", "Statistic"), t("Original", "Original"), t("Sustitutos (n)", "Surrogates (n)"), "p"]}
                 filas={(serie.sustitutos ?? []).map((d) => [nombreEstadistico(d.estadistico), numero(d.original, 4), d.sustitutos.length, numero(d.p, 3)])}
               />
             </Tarjeta>
           </div>
-          <Tarjeta titulo="Condiciones para afirmar caos" className="mt-5" pie={<>Fuente: expediente <Link className="font-mono text-accent-ink hover:underline" to={`/expedientes/${detalle.data?.id}`}>{detalle.data?.id}</Link></>}>
+          <Tarjeta titulo={t("Condiciones para afirmar caos", "Conditions to claim chaos")} className="mt-5" pie={<>{t("Fuente: expediente", "Source: case file")} <Link className="font-mono text-accent-ink hover:underline" to={`/expedientes/${detalle.data?.id}`}>{detalle.data?.id}</Link></>}>
             <ul className="grid gap-2 text-[13px] sm:grid-cols-2">
-              {Object.entries(CONDICIONES).map(([k, texto]) => {
+              {Object.entries(CONDICIONES).map(([k, par]) => {
+                const texto = t(...par);
                 const ok = serie.condiciones?.[k];
                 return (
                   <li key={k} className="flex items-center gap-2">
-                    <Insignia tono={ok ? "good" : "neutral"}>{ok ? "Se cumple" : ok === false ? "No se cumple" : "No evaluada"}</Insignia>
+                    <Insignia tono={ok ? "good" : "neutral"}>{ok ? t("Se cumple", "Met") : ok === false ? t("No se cumple", "Not met") : t("No evaluada", "Not evaluated")}</Insignia>
                     <span className="text-ink-2">{texto}</span>
                   </li>
                 );
