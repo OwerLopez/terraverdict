@@ -534,6 +534,7 @@ def de_nacional(r: dict[str, Any], alfa: float = 0.10) -> list[dict[str, Any]]:
     resultado = {
         "tipo": "panorama_nacional",
         "fuente_clima": r["fuente_clima"],
+        "umbral_spi_mm": r.get("umbral_spi_mm"),
         "departamentos": deps,
         "sismicidad": sismicidad,
         "lectura": r["lectura"][:1000],
@@ -554,7 +555,7 @@ def de_nacional(r: dict[str, Any], alfa: float = 0.10) -> list[dict[str, Any]]:
     return [
         _expediente(
             "peru_nacional",
-            "Panorama nacional: clima, sequía y sismicidad de los 25 departamentos",
+            f"Panorama nacional: clima, sequía y sismicidad de los {len(r['departamentos'])} departamentos",
             f"Mismo motor en todo el país. Temperatura con pendiente positiva en {calentamiento} de {unicos} celdas "
             "climáticas distintas; ver el veredicto del Sello de cada una. Tasas sísmicas históricas, no pronósticos.",
             resultado,

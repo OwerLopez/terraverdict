@@ -166,7 +166,8 @@ def modis_lst(raw: Path, nombre: str) -> pd.DataFrame | None:
     """LST diurna y nocturna MODIS (°C, compuestos de 8 días); None si no se descargó."""
     from ..ingest import modis
 
-    if not (raw / "modis" / f"modis_{nombre}_LST_Day_1km.json").exists():
+    # Todas las bandas o ninguna: una descarga a medias (p. ej., en curso) no se usa a medias.
+    if not all((raw / "modis" / f"modis_{nombre}_{b}.json").exists() for b in modis.BANDAS):
         return None
     return pd.DataFrame({b: _serie(modis.cargar(raw / "modis", nombre, b)) for b in modis.BANDAS})
 

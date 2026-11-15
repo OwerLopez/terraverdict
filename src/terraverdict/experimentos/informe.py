@@ -575,6 +575,12 @@ def _conteo_veredictos(deps: list[dict[str, Any]]) -> dict[str, dict[str, int]]:
     return salida
 
 
+def periodo_nacional(r: dict[str, Any]) -> str:
+    """Años de las series anuales de los departamentos (de los datos, no escrito a mano)."""
+    anios = [a for d in r["departamentos"] for a in (d.get("series_anuales") or {}).get("anios", [])]
+    return f"{min(anios)}–{max(anios)}" if anios else "del periodo disponible"
+
+
 def seccion_nacional(r: dict[str, Any]) -> str:
     deps = [d for d in r["departamentos"] if "error" not in d]
     filas = []
@@ -593,10 +599,10 @@ def seccion_nacional(r: dict[str, Any]) -> str:
         )
     s = r.get("sismicidad")
     partes = [
-        "## Escala nacional · 25 departamentos",
-        f"**Clima:** {r['fuente_clima']}. Tendencias 1981–2025 con el Sello de Confianza del paquete; SPI con "
-        "parámetros gamma de 1981–2015 (último mes disponible). Con una sola familia de datos el Sello no puede dar "
-        "'robusta': la independencia queda pendiente.",
+        f"## Escala nacional · {len(r['departamentos'])} departamentos",
+        f"**Clima:** {r['fuente_clima']}. Tendencias {periodo_nacional(r)} con el Sello de Confianza del paquete; "
+        "SPI con parámetros gamma del entrenamiento (último mes disponible). Con una sola familia de datos el Sello "
+        "no puede dar 'robusta': la independencia queda pendiente.",
         tabla(
             [
                 "Departamento",

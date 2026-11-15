@@ -648,6 +648,10 @@ class ResultadoPanoramaNacional(Esquema):
 
     tipo: Literal["panorama_nacional"]
     fuente_clima: str
+    umbral_spi_mm: NumeroFinitoOpcional = Field(
+        None,
+        description="Lluvia anual media por debajo de la cual el SPI no se interpreta (config/modelos.yaml).",
+    )
     departamentos: list[DepartamentoNacional] = Field(min_length=1, max_length=60)
     sismicidad: SismicidadNacional | None = None
     lectura: str = Field(max_length=1000)

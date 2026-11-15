@@ -55,7 +55,7 @@ export function SismosPagina() {
       <Encabezado
         eyebrow={t("Fenómenos naturales", "Natural hazards")}
         titulo={t("Actividad sísmica", "Seismic activity")}
-        descripcion={t("Catálogo USGS a 350 km de Arequipa: completitud, valor b y tasas. Describe la sismicidad; no pronostica sismos. La escala nacional está en la vista Perú.", "USGS catalog within 350 km of Arequipa: completeness, b-value and rates. It describes seismicity; it does not forecast earthquakes. The national scale is in the Peru view.")}
+        descripcion={t(`Catálogo USGS${r ? ` a ${numero(r.radio_km, 0)} km` : ""} de Arequipa: completitud, valor b y tasas. Describe la sismicidad; no pronostica sismos. La escala nacional está en la vista Perú.`, `USGS catalog${r ? ` within ${numero(r.radio_km, 0)} km` : ""} of Arequipa: completeness, b-value and rates. It describes seismicity; it does not forecast earthquakes. The national scale is in the Peru view.`)}
         acciones={
           <Segmentado
             etiqueta={t("Magnitud mínima en el mapa", "Minimum magnitude on the map")}

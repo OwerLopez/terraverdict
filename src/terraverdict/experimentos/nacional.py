@@ -259,6 +259,7 @@ def ejecutar(
             "sha256": hashlib.sha256(Path(ruta_cfg).read_bytes()).hexdigest(),
         },
         "fuente_clima": "NASA POWER (MERRA-2), celda de la capital de cada departamento",
+        "umbral_spi_mm": UMBRAL_SPI_MM,
         "departamentos": departamentos,
         "resumen_veredictos": resumen_veredictos,
         "sismicidad": sismicidad,

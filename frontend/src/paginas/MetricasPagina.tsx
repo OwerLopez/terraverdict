@@ -188,6 +188,52 @@ function HistorialPronostico({ historial, fichas }: { historial: Historial; fich
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <Segmentado etiqueta={t("Tarea", "Task")} valor={clave} alCambiar={setClave} opciones={claves.map((k) => ({ valor: k, texto: nombreTarea(k) }))} />
       </div>
+      <div className="mb-5">
+        <h3 className="mb-1 text-[13.5px] font-semibold text-ink">{t("Habilidad agregada por régimen", "Aggregated skill by regime")}</h3>
+        <p className="mb-2 text-[12.5px] text-ink-2">
+          {t(
+            "Lectura principal (primera fila de cada régimen): el modelo que eligió la validación de cada año. Las demás filas son comparaciones en orden fijo; elegir entre ellas la de mejor cifra en la prueba sería sesgo de selección.",
+            "Main reading (first row of each regime): the model chosen on each year's validation. The other rows are comparisons in a fixed order; picking the one with the best test score would be selection bias.",
+          )}
+        </p>
+        <div className="overflow-x-auto rounded-xl border border-line">
+          <table className="w-full text-[12.5px]">
+            <caption className="sr-only">{t("Habilidad agregada por régimen", "Aggregated skill by regime")}</caption>
+            <thead className="bg-surface-2 text-left text-ink-2">
+              <tr>
+                <th className="px-3 py-2 font-medium">{t("Régimen", "Regime")}</th>
+                <th className="px-3 py-2 font-medium">{t("Modelo", "Model")}</th>
+                <th className="px-3 py-2 text-right font-medium">{t("Habilidad", "Skill")}</th>
+                <th className="px-3 py-2 text-right font-medium">IC90</th>
+                <th className="px-3 py-2 text-right font-medium">{t("p DM", "DM p")}</th>
+                <th className="px-3 py-2 text-right font-medium">{t("Años", "Years")}</th>
+                <th className="px-3 py-2 font-medium">{t("Evidencia", "Evidence")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(["fuera_de_muestra", "validacion_del_diseno"] as const).flatMap((reg) =>
+                ordenAgregado(Object.keys(tarea.agregado?.[reg] ?? {}).filter((k) => k !== "ref_climatologia"))
+                  .map((k) => [k, (tarea.agregado?.[reg] ?? {})[k]] as const)
+                  .filter((par): par is readonly [string, NonNullable<(typeof par)[1]>] => !!par[1])
+                  .map(([k, v]) => (
+                    <tr key={`${reg}-${k}`} className={`border-t border-line ${k === principal ? "bg-surface-2" : ""}`}>
+                      <td className="px-3 py-1.5 text-ink-2">{REGIMEN[reg]()}</td>
+                      <td className={`px-3 py-1.5 text-ink ${k === principal ? "font-semibold" : "font-medium"}`}>{nombreModelo(k)}{k === red ? ` · ${t("red congelada", "frozen network")}` : ""}{k === principal ? ` · ${t("lectura principal", "main reading")}` : ""}</td>
+                      <td className="cifra px-3 py-1.5 text-right">{numero(v.valor, 3)}</td>
+                      <td className="cifra px-3 py-1.5 text-right">{numero(v.ic90?.[0], 3)} – {numero(v.ic90?.[1], 3)}</td>
+                      <td className="cifra px-3 py-1.5 text-right">{valorP(v.p_diebold_mariano)}</td>
+                      <td className="cifra px-3 py-1.5 text-right">{v.anios}</td>
+                      <td className="px-3 py-1.5"><InsigniaEvidencia lo={v.ic90?.[0]} p={v.p_diebold_mariano} /></td>
+                    </tr>
+                  )),
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p className="mb-2 text-[12.5px] text-ink-2">
+        {t("Detalle por año (contexto: cada año tiene pocas observaciones, 12 meses en sequía y sismos; no se lee por separado).", "Per-year detail (context: each year has few observations, 12 months for drought and earthquakes; not read on its own).")}
+      </p>
       <MatrizCalor
         titulo={t("Habilidad en prueba por modelo y año", "Test skill by model and year")}
         etiquetaFilas={t("Modelo", "Model")}
@@ -255,49 +301,6 @@ function HistorialPronostico({ historial, fichas }: { historial: Historial; fich
         )}
       </div>
 
-      <div className="mt-5">
-        <h3 className="mb-1 text-[13.5px] font-semibold text-ink">{t("Habilidad agregada por régimen", "Aggregated skill by regime")}</h3>
-        <p className="mb-2 text-[12.5px] text-ink-2">
-          {t(
-            "Lectura principal (primera fila de cada régimen): el modelo que eligió la validación de cada año. Las demás filas son comparaciones en orden fijo; elegir entre ellas la de mejor cifra en la prueba sería sesgo de selección.",
-            "Main reading (first row of each regime): the model chosen on each year's validation. The other rows are comparisons in a fixed order; picking the one with the best test score would be selection bias.",
-          )}
-        </p>
-        <div className="overflow-x-auto rounded-xl border border-line">
-          <table className="w-full text-[12.5px]">
-            <caption className="sr-only">{t("Habilidad agregada por régimen", "Aggregated skill by regime")}</caption>
-            <thead className="bg-surface-2 text-left text-ink-2">
-              <tr>
-                <th className="px-3 py-2 font-medium">{t("Régimen", "Regime")}</th>
-                <th className="px-3 py-2 font-medium">{t("Modelo", "Model")}</th>
-                <th className="px-3 py-2 text-right font-medium">{t("Habilidad", "Skill")}</th>
-                <th className="px-3 py-2 text-right font-medium">IC90</th>
-                <th className="px-3 py-2 text-right font-medium">{t("p DM", "DM p")}</th>
-                <th className="px-3 py-2 text-right font-medium">{t("Años", "Years")}</th>
-                <th className="px-3 py-2 font-medium">{t("Evidencia", "Evidence")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(["fuera_de_muestra", "validacion_del_diseno"] as const).flatMap((reg) =>
-                ordenAgregado(Object.keys(tarea.agregado?.[reg] ?? {}).filter((k) => k !== "ref_climatologia"))
-                  .map((k) => [k, (tarea.agregado?.[reg] ?? {})[k]] as const)
-                  .filter((par): par is readonly [string, NonNullable<(typeof par)[1]>] => !!par[1])
-                  .map(([k, v]) => (
-                    <tr key={`${reg}-${k}`} className={`border-t border-line ${k === principal ? "bg-surface-2" : ""}`}>
-                      <td className="px-3 py-1.5 text-ink-2">{REGIMEN[reg]()}</td>
-                      <td className={`px-3 py-1.5 text-ink ${k === principal ? "font-semibold" : "font-medium"}`}>{nombreModelo(k)}{k === red ? ` · ${t("red congelada", "frozen network")}` : ""}{k === principal ? ` · ${t("lectura principal", "main reading")}` : ""}</td>
-                      <td className="cifra px-3 py-1.5 text-right">{numero(v.valor, 3)}</td>
-                      <td className="cifra px-3 py-1.5 text-right">{numero(v.ic90?.[0], 3)} – {numero(v.ic90?.[1], 3)}</td>
-                      <td className="cifra px-3 py-1.5 text-right">{valorP(v.p_diebold_mariano)}</td>
-                      <td className="cifra px-3 py-1.5 text-right">{v.anios}</td>
-                      <td className="px-3 py-1.5"><InsigniaEvidencia lo={v.ic90?.[0]} p={v.p_diebold_mariano} /></td>
-                    </tr>
-                  )),
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
       {ficha && <div className="mt-3"><FichaMetrica ficha={ficha} compacta /></div>}
     </Tarjeta>
   );

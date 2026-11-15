@@ -326,9 +326,10 @@ def evaluar_zoo(
                 pva_oof = calibrar_cruzado(pva, yva, pliegues)
                 pte = cal.transformar(pte)
             umbral = M.mejor_umbral_csi(yva, pva if pva_oof is None else pva_oof)
-        elif tipo == "regresion":
-            q = cuantil_conformal(yva - pva, float(ev["nivel_ic"]))
         va_puntaje = pva if pva_oof is None else pva_oof
+        if tipo == "regresion":
+            # Residuos de validación fuera de pliegue en los ensambles (sus pesos salen de la validación)
+            q = cuantil_conformal(yva - va_puntaje, float(ev["nivel_ic"]))
         val = puntaje_validacion(tipo, yva, va_puntaje, clim_va)
         prueba = _metricas(tipo, yte, pte, referencias["prueba"], umbral, q)
         principal = (

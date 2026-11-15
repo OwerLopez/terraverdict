@@ -2637,6 +2637,11 @@ export interface components {
             tipo: "panorama_nacional";
             /** Fuente Clima */
             fuente_clima: string;
+            /**
+             * Umbral Spi Mm
+             * @description Lluvia anual media por debajo de la cual el SPI no se interpreta (config/modelos.yaml).
+             */
+            umbral_spi_mm?: number | null;
             /** Departamentos */
             departamentos: components["schemas"]["DepartamentoNacional"][];
             sismicidad?: components["schemas"]["SismicidadNacional"] | null;

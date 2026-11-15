@@ -110,13 +110,17 @@ export function NacionalPagina() {
   const r = consulta.data?.resultado as Panorama | null | undefined;
   const deps = useMemo(() => r?.departamentos ?? [], [r]);
   const unicos = deps.filter((d) => !d.comparte_celda_con);
+  const compartidas = deps.filter((d) => d.comparte_celda_con).map((d) => `${d.nombre} – ${deps.find((x) => x.id === d.comparte_celda_con)?.nombre ?? d.comparte_celda_con}`);
+  const anios = deps.flatMap((d) => d.serie_anios ?? []);
+  const periodo = anios.length ? `${Math.min(...anios)}–${Math.max(...anios)}` : "";
+  const umbralSpi = r?.umbral_spi_mm;
   const conteo = (clave: "tendencia_temperatura" | "tendencia_lluvia") =>
     unicos.reduce<Record<string, number>>((acc, d) => ({ ...acc, [d[clave].veredicto]: (acc[d[clave].veredicto] ?? 0) + 1 }), {});
 
   return (
     <div className="space-y-6">
       <Encabezado
-        eyebrow={t("Escala nacional · 25 departamentos", "National scale · 25 departments")}
+        eyebrow={deps.length ? t(`Escala nacional · ${deps.length} departamentos`, `National scale · ${deps.length} departments`) : t("Escala nacional", "National scale")}
         titulo={t("El Perú con el mismo motor que Arequipa", "Peru with the same engine as Arequipa")}
         descripcion={t(
           "Cada departamento se analiza con las mismas reglas que la cuenca del Chili: Sello de Confianza para las tendencias, SPI con parámetros del entrenamiento y estadística sísmica. Agregar una región es configuración, no código nuevo.",
@@ -134,10 +138,10 @@ export function NacionalPagina() {
       ) : (
         <>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <Dato etiqueta={t("Celdas climáticas", "Climate cells")} icono={MapPinned} valor={numero(unicos.length, 0)} nota={t(`${deps.length} departamentos; Lima y Callao comparten celda`, `${deps.length} departments; Lima and Callao share a cell`)} />
-            <Dato etiqueta={t("Calentamiento", "Warming")} icono={Thermometer} valor={`${unicos.filter((d) => d.tendencia_temperatura.sen_por_decada > 0).length}/${unicos.length}`} nota={t("celdas con pendiente de Sen positiva (1981–2025); ver el Sello de cada una", "cells with positive Sen slope (1981–2025); see each Seal")} />
+            <Dato etiqueta={t("Celdas climáticas", "Climate cells")} icono={MapPinned} valor={numero(unicos.length, 0)} nota={compartidas.length ? t(`${deps.length} departamentos; comparten celda: ${compartidas.join("; ")}`, `${deps.length} departments; sharing a cell: ${compartidas.join("; ")}`) : t(`${deps.length} departamentos`, `${deps.length} departments`)} />
+            <Dato etiqueta={t("Calentamiento", "Warming")} icono={Thermometer} valor={`${unicos.filter((d) => d.tendencia_temperatura.sen_por_decada > 0).length}/${unicos.length}`} nota={t(`celdas con pendiente de Sen positiva${periodo ? ` (${periodo})` : ""}; ver el Sello de cada una`, `cells with positive Sen slope${periodo ? ` (${periodo})` : ""}; see each Seal`)} />
             <Dato etiqueta={t("Tendencia de temperatura confirmada", "Confirmed temperature trend")} icono={Thermometer} valor={numero(conteo("tendencia_temperatura").preliminar ?? 0, 0)} nota={t("preliminares: significativas con pruebas pendientes (una sola familia de datos)", "preliminary: significant with pending tests (single data family)")} />
-            <Dato etiqueta={t("SPI no interpretable", "SPI not interpretable")} icono={Waves} valor={numero(unicos.filter((d) => !d.spi_confiable).length, 0)} nota={t("celdas áridas (< 200 mm/año): el SPI no se interpreta", "arid cells (< 200 mm/yr): SPI is not interpreted")} />
+            <Dato etiqueta={t("SPI no interpretable", "SPI not interpretable")} icono={Waves} valor={numero(unicos.filter((d) => !d.spi_confiable).length, 0)} nota={typeof umbralSpi === "number" ? t(`celdas áridas (< ${numero(umbralSpi, 0)} mm/año): el SPI no se interpreta`, `arid cells (< ${numero(umbralSpi, 0)} mm/yr): SPI is not interpreted`) : t("celdas áridas: el SPI no se interpreta", "arid cells: SPI is not interpreted")} />
           </div>
 
           <Tarjeta

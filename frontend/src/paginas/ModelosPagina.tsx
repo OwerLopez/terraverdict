@@ -133,7 +133,7 @@ export function ModelosPagina() {
       <Encabezado
         eyebrow={t("Fenómenos naturales", "Natural hazards")}
         titulo={t("Comparación de modelos", "Model comparison")}
-        descripcion={t("Referencias, modelos clásicos y 10 redes neuronales (LSTM, GRU, TCN, N-BEATS, N-HiTS, PatchTST, iTransformer, SSM, DLinear, MLP). Todo se elige en validación; el periodo de prueba se usa una sola vez y solo informa.", "References, classical models and 10 neural networks (LSTM, GRU, TCN, N-BEATS, N-HiTS, PatchTST, iTransformer, SSM, DLinear, MLP). Everything is chosen on validation; the test period is used once and only reports.")}
+        descripcion={t("Referencias, modelos clásicos, redes neuronales y ensambles. Todo se elige en validación (calibración y ensambles puntuados fuera de pliegue); el periodo de prueba se usa una sola vez y solo informa.", "References, classical models, neural networks and ensembles. Everything is chosen on validation (calibration and ensembles scored out of fold); the test period is used once and only reports.")}
       />
       {lista.isError && <ErrorCarga error={lista.error} className="mb-4" />}
       {lista.isLoading && <Esqueleto className="h-12" />}

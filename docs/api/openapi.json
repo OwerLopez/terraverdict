@@ -8638,6 +8638,18 @@
             "type": "string",
             "title": "Fuente Clima"
           },
+          "umbral_spi_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Umbral Spi Mm",
+            "description": "Lluvia anual media por debajo de la cual el SPI no se interpreta (config/modelos.yaml)."
+          },
           "departamentos": {
             "items": {
               "$ref": "#/components/schemas/DepartamentoNacional"
