@@ -1,6 +1,6 @@
 # Qué falta para terminar TerraVerdict al 100 %
 
-> Actualizado: **15-11-2026**. Lo hecho y su evidencia está en [`bitacora.md`](bitacora.md).
+> Actualizado: **15-11-2026** (prioridades 1, 2 y 3 hechas, salvo lo marcado ⏳). Lo hecho y su evidencia está en [`bitacora.md`](bitacora.md).
 > Regla para cerrar una tarea: código + pruebas que pasan + entrada en la bitácora + commit en `main`.
 > Nada se da por terminado sin evidencia ejecutada.
 
@@ -93,20 +93,21 @@ Y una prueba de humo de cada experimento con datos reducidos guardados en `tests
 |---|---|
 | ✅ CI | `.github/workflows/ci.yml` en tres trabajos. Backend: ruff, mypy y pytest. Ciencia: ruff, mypy y pytest. Frontend: typecheck, lint, test y build. **Hecho:** 15-11-2026; también verifica que los tipos del frontend coinciden con el OpenAPI |
 | ✅ Docker | `backend/Dockerfile`: migrar, importar y uvicorn. `frontend/Dockerfile`: build con nginx y proxy de `/api`. `docker-compose.yml` con perfil PostgreSQL. `.env.example`. **Hecho:** 15-11-2026; `docker compose config` válido. Las imágenes no se construyeron en este entorno (sin daemon de Docker): verificar con `docker compose up --build` |
-| Extremo a extremo | Playwright: iniciar sesión, ver el panel, abrir un expediente y comprobar que el verificador marca una cifra sin respaldo |
+| ⏳ Extremo a extremo | Playwright: iniciar sesión, ver el panel, abrir un expediente y comprobar que el verificador marca una cifra sin respaldo. **Bloqueado (15-11-2026):** en este entorno no se autorizó descargar Chromium para Playwright. Con permiso: `npm i -D @playwright/test && npx playwright install chromium` |
 | ✅ `docs/api/README.md` | Endpoints, autenticación y códigos de error con anclas `#errores-<codigo>`. Las URL `type` de los errores ya apuntan ahí. **Hecho:** 15-11-2026; una prueba del backend exige un ancla por cada código de error |
 | ✅ `docs/integracion-ciencia-datos.md` | Contratos de series, expedientes y procesos; protocolo del trabajador; unidades e identificadores. `backend/app/main.py` ya lo enlaza. **Hecho:** 15-11-2026; incluye la tabla resultados → expedientes de `tv publicar` |
 | ✅ `backend/README.md` | Instalación, variables `TV_*` y comandos. `backend/pyproject.toml` lo declara. **Hecho:** 15-11-2026 |
 | ✅ `docs/arquitectura.md` | Vista completa: ciencia → API → web, con diagramas mermaid y flujos. **Hecho:** 15-11-2026 |
 | ✅ `docs/metodologia.md` | Métodos estadísticos y de caos con bibliografía verificable. Las referencias ya están en los docstrings de cada módulo. **Hecho:** 15-11-2026; cada método con su módulo y su DOI o arXiv |
 | ✅ Matriz de trazabilidad | Requisito → código → prueba → resultado. **Hecho:** 15-11-2026, `docs/trazabilidad.md` (23 requisitos) |
-| Presentación ejecutiva | Valor tecnológico, científico y económico. Usar solo cifras citadas (p. ej. MERESE US$ 1,5 M, población afectada > 70 %); sin proyecciones inventadas |
+| ✅ Presentación ejecutiva | Valor tecnológico, científico y económico. Usar solo cifras citadas (p. ej. MERESE US$ 1,5 M, población afectada > 70 %); sin proyecciones inventadas. **Hecho:** 15-11-2026, `docs/presentacion-ejecutiva.md` |
 
 ## Bloqueos externos (no dependen del código)
 
 | Bloqueo | Qué se necesita | Quién |
 |---|---|---|
-| IMERG, MODIS, SMAP y HLS por Earthdata | Cuenta y token de Earthdata (gratis) en el entorno, nunca en el repositorio | Integrante con la cuenta |
+| IMERG por Earthdata | El token ya funciona (LP DAAC y NSIDC responden 200). Falta que el dueño de la cuenta acepte una vez la licencia de GES DISC: https://urs.earthdata.nasa.gov/approve_app?client_id=e2WVk8Pw6weeLUKZYOxvTQ, y luego `tv ingest-fenomenos --solo-adicionales --fuentes imerg` | Dueño de la cuenta Earthdata |
+| MODIS LST (ORNL DAAC) | El servidor respondió 502 de forma sostenida el 15-11. Reintentar con `--fuentes modis` y volver a correr solo `tv experimentos --solo fuentes` | Cualquiera, cuando ORNL responda |
 | SENAMHI, IGP/OVS, INGEMMET, ANA, CENEPRED, SINIA | Sin API accesible (ver `auditoria-repositorio.md`): convenio o descarga manual verificada | Equipo / docentes |
 | Serie de volumen de las represas | AUTODEMA publica reportes aislados en PDF: transcribir más reportes con su fuente | Equipo |
 | Deslizamientos | Solo 28 eventos por lluvia en el GLC: el sistema se abstiene de estimar umbrales hasta tener ≥ 30 (inventario INGEMMET) | Integración nacional |

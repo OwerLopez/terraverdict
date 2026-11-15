@@ -9,10 +9,23 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
-## Estado al 14-11-2026 (resumen para el equipo)
+## Estado al 15-11-2026 (resumen para el equipo)
 
 | Parte | Estado | Evidencia | Cómo correrlo |
 |---|---|---|---|
+| Preregistro y partición temporal | ✅ Congelados el 15-11 | Prueba que falla ante cualquier cambio | `pytest tests/unit/test_preregistro_congelado.py` |
+| Ingesta de fuentes reales | ✅ POWER, CHIRPS, USGS, IGP, GVP, GLC, GHCN y ONI con SHA-256 · ⏳ IMERG (EULA de GES DISC) y MODIS (ORNL con 502) | `data/raw/registro_descarga.json` | `tv ingest-fenomenos` |
+| Motor (modelos, evaluación, incertidumbre, selección) | ✅ 3 defectos corregidos al probarlo | `tests/motor/` | `pytest tests/motor` |
+| Corrida completa de experimentos | ✅ 9 experimentos con procedencia | `resultados/*.json` | `tv experimentos` |
+| Caos en series reales | ✅ 7 series, ninguna caótica | `resultados/caos.json` | (incluido en `tv experimentos`) |
+| Informe de resultados | ✅ Solo cifras de los JSON | `docs/experimentos.md` | `tv informe` |
+| Backend (API REST) | ✅ Tipos M6, capas y catálogo de fenómenos | 66 pruebas; OpenAPI sin deriva | `cd backend && pytest` |
+| Publicación ciencia → backend | ✅ Idempotente; 13 expedientes reales | `tests/integracion/` | `tv publicar` |
+| Frontend | ✅ Glassmorphism azul y 5 vistas nuevas | 23 pruebas; `docs/capturas/` | `cd frontend && npm test` |
+| CI, Docker y documentación | ✅ · ⏳ falta construir las imágenes y ver la primera ejecución de CI | `.github/`, `docker-compose.yml`, `docs/` | ver `pendientes.md` |
+| Prueba E2E (Playwright) | ⏳ Bloqueada: la descarga del navegador no fue autorizada en este entorno | — | ver `pendientes.md` |
+
+---|---|---|---|
 | Propuesta y verificación de fuentes | ✅ Hecho | 37/40 consultas a catálogos; 35/40 enlaces con HTTP 200 | `docs/verificacion/` |
 | Backend (API REST) | ✅ Hecho | 51 pruebas, ruff y mypy limpios, OpenAPI exportado | `cd backend && pytest` |
 | Frontend (web) | ✅ Funcional · ⏳ falta el rediseño *glassmorphism* | tsc, eslint, 19 pruebas | `cd frontend && npm test` |
@@ -22,6 +35,37 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Teoría del caos | ✅ Validada con sistemas de referencia · ⏳ falta correrla en series reales | 14 pruebas en `tests/caos` | `pytest tests/caos` |
 | Modelos, evaluación e incertidumbre | ✅ Código y corridas de prueba · ⏳ falta la corrida completa | ver entrada del motor | `tv experimentos` |
 | Integración ciencia → backend → frontend | ⏳ Pendiente | — | ver `pendientes.md` |
+
+---
+
+## 2026-11-15 · Calidad, despliegue y documentación (prioridad 3)
+**Autor:** MaxsForocca · **Aportes:** Ower Frank
+
+**Qué se hizo** (un commit por tarea)
+- **CI** (`.github/workflows/ci.yml`), en tres trabajos:
+  - backend: ruff, mypy y pytest;
+  - ciencia: ruff, mypy y pytest, con PyTorch CPU y el backend instalado para la integración;
+  - frontend: tipos idénticos al OpenAPI, typecheck, lint, test y build.
+- **Docker:**
+  - API: migra, importa y sirve con uvicorn; usuario sin privilegios y healthcheck;
+  - interfaz: Vite servido por nginx con proxy de `/api`;
+  - `docker-compose.yml` con perfil `postgres`, y `.env.example`.
+- **Documentación:**
+  - `docs/api/README.md`, con una prueba de backend que exige un ancla por cada código de error;
+  - `docs/integracion-ciencia-datos.md`, `backend/README.md`, `docs/arquitectura.md` y `docs/metodologia.md` (DOI o arXiv por método);
+  - `docs/trazabilidad.md` (23 requisitos);
+  - `docs/presentacion-ejecutiva.md`: solo cifras citadas o de los JSON, sin proyecciones.
+
+**Evidencia**
+- Ciencia: 92 pruebas pasan, 1 se omite (requiere R).
+- Backend: 66 pruebas pasan.
+- Frontend: 23 pruebas pasan; typecheck, lint y build limpios.
+- `docker compose config` es válido.
+
+**No verificado en este entorno (se dice, no se oculta)**
+- **Imágenes de Docker:** sin daemon de Docker, no se construyeron.
+- **Primera ejecución de CI:** sin `gh`, no se pudo ver la ejecución en GitHub Actions.
+- **E2E con Playwright:** la descarga de Chromium no fue autorizada; la prueba queda pendiente.
 
 ---
 
