@@ -19,7 +19,7 @@
 
 1. **Crudo con hash:** `guardar_crudo()` escribe el archivo y su entrada en `manifiesto.json` (URL, producto, versión, fecha UTC, SHA-256).
 2. **Offline:** una vez descargado, `tv trends` no usa red.
-3. **Credenciales:** `EARTHDATA_USER`, `EARTHDATA_PASS` (o `~/.netrc`), token de AppEEARS, cuenta USGS; solo por entorno o secretos de CI. Archivo `.env` en `.gitignore`.
+3. **Credenciales:** solo `EARTHDATA_TOKEN` (IMERG por OPeNDAP de GES DISC; la cuenta acepta una vez la EULA). POWER, USGS, NOAA, GHCN, GVP, GLC, CHIRPS (ClimateSERV) y MODIS (ORNL) no piden cuenta. Los secretos van en `.env` (en `.gitignore`) o en las variables del despliegue, nunca en git.
 4. **Disponibilidad ≠ HTTP 200:** un servicio es `ok` solo con 2xx/3xx; con reintentos y *backoff* (`ingest/http.py`).
 5. **Licencias:** PISCOp (CC BY-NC-ND) solo validación interna y nada derivado publicado; Copernicus exige la atribución *"Contains modified Copernicus Sentinel data [año]"*.
 6. **Entrega entre integrantes:** quien tenga las credenciales descarga y publica `data/raw` comprimido con su manifiesto; el resto trabaja offline.

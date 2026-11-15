@@ -1,0 +1,27 @@
+# Vercel solo necesita el frontend (se compila), la función api/ y lo que la API lee al arrancar:
+# backend/app, config/, datos/, docs/verificacion/ y resultados/contrato/.
+# El pyproject.toml y el requirements.txt de la raíz son del paquete científico (numpy, scipy, torch):
+# si Vercel los ve, los instala en la función y supera su límite de tamaño. Las dependencias de la
+# función están fijadas en api/requirements.txt.
+/pyproject.toml
+/requirements.txt
+/Makefile
+/src
+/tests
+/scripts
+/web
+/data
+/expedientes
+/reports
+/preregistro.yaml
+/backend/tests
+/backend/Dockerfile
+/backend/pyproject.toml
+/docs/capturas
+/docs/api
+/frontend/e2e
+/frontend/docker
+/frontend/Dockerfile
+/resultados/*.json
+/.github
+/docker-compose.yml

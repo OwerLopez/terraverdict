@@ -2,7 +2,7 @@
 
 API FastAPI que publica los resultados científicos del proyecto con su procedencia: catálogo de
 fuentes verificadas, series, **expedientes inmutables** (con reglas de publicación validadas en el
-esquema), procesos, capas del mapa y un verificador numérico para el asistente.
+esquema), procesos, capas del mapa y un verificador numérico y el asistente con Google Gemini anclado en expedientes.
 Contrato y errores: [`docs/api/README.md`](../docs/api/README.md) y [`openapi.json`](../docs/api/openapi.json).
 
 ## Instalación
@@ -32,7 +32,7 @@ Se leen del entorno o de `backend/.env` (no se versiona).
 
 | Variable | Valor por defecto | Uso |
 |---|---|---|
-| `TV_ENTORNO` | `desarrollo` | `desarrollo`, `pruebas` o `produccion`. En producción se exige un secreto JWT de ≥ 32 caracteres y CORS sin `*` |
+| `TV_ENTORNO` | `desarrollo` | `desarrollo`, `pruebas` o `produccion`. En producción, CORS sin `*` y, para tener sesiones, un secreto JWT propio de ≥ 32 caracteres (sin él: modo solo lectura, sin emitir ni aceptar tokens) |
 | `TV_DATABASE_URL` | `sqlite:///backend/terraverdict.db` | URL de SQLAlchemy, p. ej. `postgresql+psycopg://usuario:clave@host/terraverdict` |
 | `TV_JWT_SECRETO` | valor solo para desarrollo | Firma de los tokens |
 | `TV_JWT_ALGORITMO` | `HS256` | `HS256`, `HS384` o `HS512` |
@@ -41,7 +41,13 @@ Se leen del entorno o de `backend/.env` (no se versiona).
 | `TV_LOGIN_INTENTOS_POR_MINUTO` | `10` | Límite de inicios de sesión por IP |
 | `TV_RAIZ_DATOS` | raíz del repositorio | De dónde se leen `config/`, `datos/` y `docs/verificacion/` |
 | `TV_LOG_NIVEL` | `INFO` | Registros JSON con `request_id` |
-| `TV_ANTHROPIC_API_KEY` | — | Habilita el asistente; sin ella responde 503 |
+| `TV_GEMINI_API_KEY` | — | Habilita el asistente con Google Gemini; sin ella `POST /asistente/consultas` responde 503 |
+| `TV_GEMINI_MODELO` | `gemini-flash-latest` | Modelo principal |
+| `TV_GEMINI_MODELOS_RESPALDO` | `["gemini-flash-lite-latest"]` | Se usan ante 429/5xx o tiempo agotado |
+| `TV_GEMINI_TIMEOUT_S` | `12` | Tiempo máximo por llamada y modelo |
+| `TV_ASISTENTE_CONSULTAS_POR_MINUTO` | `6` | Límite por IP |
+| `TV_ASISTENTE_CONSULTAS_GLOBALES_POR_MINUTO` | `40` | Tope por instancia (protege la cuota de la clave) |
+| `TV_ADMIN_EMAIL` | — | En serverless, crea el administrador al arrancar (con `TV_ADMIN_PASSWORD`) |
 | `TV_ADMIN_PASSWORD` | — | Solo para `crear-admin` sin pedir la contraseña por consola |
 
 El pipeline científico usa además `TV_CLAVE_INGESTA` (clave de alcance `ingesta`) para `tv publicar`.
