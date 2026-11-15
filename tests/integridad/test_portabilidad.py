@@ -43,3 +43,19 @@ def test_escrituras_de_produccion_en_utf8_y_lf() -> None:
 def test_gitattributes_fuerza_lf() -> None:
     reglas = (RAIZ / ".gitattributes").read_text(encoding="utf-8").splitlines()
     assert "* text=auto eol=lf" in reglas
+
+
+def test_la_cli_imprime_unicode_con_una_consola_cp1252() -> None:
+    """Con stdout en cp1252 (consola de Windows), `tv` no debe caerse al imprimir '→' o '±'."""
+    import subprocess
+    import sys
+
+    codigo = "import terraverdict.cli; print('→ ± ≥ áéí')"
+    r = subprocess.run(
+        [sys.executable, "-c", codigo],
+        capture_output=True,
+        env={**__import__("os").environ, "PYTHONIOENCODING": "cp1252", "PYTHONUTF8": "0"},
+        check=False,
+    )
+    assert r.returncode == 0, r.stderr.decode("utf-8", "replace")
+    assert "→" in r.stdout.decode("utf-8")

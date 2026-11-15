@@ -48,3 +48,6 @@ Thumbs.db
 # Playwright (reportes y trazas locales)
 frontend/test-results/
 frontend/playwright-report/
+
+# Capturas y registros locales del navegador de pruebas (Playwright MCP)
+.playwright-mcp/

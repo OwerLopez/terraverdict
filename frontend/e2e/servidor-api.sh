@@ -5,6 +5,7 @@ set -eu
 cd "$(dirname "$0")/../../backend"
 PY=python
 [ -x .venv/bin/python ] && PY=.venv/bin/python
+[ -x .venv/Scripts/python.exe ] && PY=.venv/Scripts/python.exe  # Windows
 DB="${TMPDIR:-/tmp}/terraverdict-e2e-$$.db"
 export TV_DATABASE_URL="sqlite:///$DB" TV_ENTORNO=pruebas TV_LOG_NIVEL=WARNING
 export TV_ADMIN_PASSWORD="${E2E_CONTRASENA:-contrasena-e2e-segura}"

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -16,6 +17,12 @@ from .preprocess.anual import lluvia_dic_mar, mensual, temperatura_media_anual
 from .trends.analizar import analizar_serie
 
 app = typer.Typer(help="TerraVerdict · detective de tendencias")
+
+# En Windows la consola usa cp1252: imprimir "→", "≥" o "±" detenía una corrida completa con
+# UnicodeEncodeError a mitad de los experimentos. La salida de la CLI va siempre en UTF-8.
+for _flujo in (sys.stdout, sys.stderr):
+    if hasattr(_flujo, "reconfigure"):
+        _flujo.reconfigure(encoding="utf-8", errors="replace")
 
 
 @app.command("ingest-power")

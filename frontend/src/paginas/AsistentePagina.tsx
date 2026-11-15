@@ -251,7 +251,7 @@ export function AsistentePagina() {
       <Encabezado
         eyebrow={t("IA con garantías", "AI with guarantees")}
         titulo={t("Asistente", "Assistant")}
-        descripcion={t("La IA conversa, pero no calcula: cada número que diga debe estar en un expediente. El verificador que impone esa regla ya funciona; el modelo de lenguaje se conectará sin cambiar el contrato.", "The AI converses but does not compute: every number it says must be in a case file. The verifier that enforces that rule already works; the language model will plug in without changing the contract.")}
+        descripcion={t("Google Gemini conversa, pero no calcula: responde solo con los expedientes publicados más pertinentes, cita cada uno y el verificador numérico comprueba cada cifra antes de mostrarla. Si alguna no tiene respaldo, se pide una reescritura y el resultado se muestra tal cual.", "Google Gemini converses but does not compute: it answers only from the most relevant published case files, cites each one, and the numeric verifier checks every figure before showing it. If any figure is unbacked, a rewrite is requested and the outcome is shown as is.")}
       />
       <div className="grid gap-6 xl:grid-cols-2">
         <Conversacion />
