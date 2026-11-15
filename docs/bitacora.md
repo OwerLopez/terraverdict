@@ -14,7 +14,7 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Parte | Estado | Evidencia | Cómo correrlo |
 |---|---|---|---|
 | Preregistro y partición temporal | ✅ Congelados el 15-11 | Prueba que falla ante cualquier cambio | `pytest tests/unit/test_preregistro_congelado.py` |
-| Ingesta de fuentes reales | ✅ POWER (Arequipa, celdas y 25 departamentos), USGS (Arequipa y Perú), GVP, GLC, GHCN, ONI, CHIRPS, IGP y MODIS LST con SHA-256 · ⏳ IMERG (1998–2000; la descarga sigue) | `data/raw/*/manifiesto.json` | `tv ingest-fenomenos` |
+| Ingesta de fuentes reales | ✅ POWER (Arequipa, celdas y 25 departamentos), USGS (Arequipa y Perú), GVP, GLC, GHCN, ONI, CHIRPS, IGP y MODIS LST con SHA-256 · ⏳ IMERG (1998–2001; detenida al cerrar la sesión, se reanuda con `docs/traspaso.md`) | `data/raw/*/manifiesto.json` | `tv ingest-fenomenos` |
 | Cadena de custodia | ✅ Crudos verificados contra su manifiesto antes de entrenar; resultados sellados; el publicador rechaza lo alterado | `tests/integridad/` | `tv verificar-integridad` |
 | Motor (modelos, evaluación, incertidumbre, selección) | ✅ 10 redes, 2 ensambles, IC90, Diebold-Mariano, conformal y abstención; protocolo auditado (`docs/auditoria-metricas.md`) | `tests/motor/` | `pytest tests/motor` |
 | Corrida completa de experimentos | ✅ 10 experimentos con procedencia, incluida la escala nacional | `resultados/*.json`, `resultados/indice.json` | `tv experimentos` |
@@ -73,7 +73,7 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 - En esta máquina, 24 crudos (POWER, celdas POWER y GVP) no coincidían con los manifiestos del repositorio y faltaban los 36 nacionales. La cadena de custodia bloqueó la corrida.
 - Se volvieron a descargar **solo** esos crudos de su fuente oficial. Los nacionales los descargó el propio experimento. Los manifiestos tienen los nuevos SHA-256.
 - Las informaciones mutuas y las cifras de Ridge coinciden con las de antes: los datos del entrenamiento no cambiaron.
-- MODIS se completó (ciudad y cabecera, día y noche, tras reintentos por 502/503 de ORNL). IMERG va en 1998–2000.
+- MODIS se completó (ciudad y cabecera, día y noche, tras reintentos por 502/503 de ORNL). IMERG quedó en 1998–2001 al cerrar la sesión: la descarga se detuvo a propósito y `fuentes` usa 1998–2000.
 - `fuentes` ya no falla con una descarga de MODIS a medias, y dos ingestas en paralelo ya no se pisan el registro de descargas.
 
 **Resultados nuevos** (todas las cifras de `resultados/*.json`; tabla completa en `auditoria-metricas.md` §10):
@@ -99,7 +99,7 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 **Pendiente:**
 - Vercel: solo el owner (DiegoNiS), porque MaxsForocca no tiene permisos.
-- Terminar IMERG.
+- Terminar IMERG (2002–2025): pasos y prompt en [`traspaso.md`](traspaso.md).
 - Decidir si la Mc debe variar por década (riesgo 1 de la auditoría).
 
 ---
