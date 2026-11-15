@@ -1464,5 +1464,15 @@
    }
   ],
   "nota": "Tomado del manifiesto de una corrida anterior."
+ },
+ "modis_lst_ciudad": {
+  "ok": false,
+  "error": "RetryError: HTTPSConnectionPool(host='modis.ornl.gov', port=443): Max retries exceeded with url: /rst/api/v1/MOD11A2/dates?latitude=-16.4&longitude=-71.535 (Caused by ResponseError('too many 502 error responses'))",
+  "segundos": 236.6
+ },
+ "modis_lst_cabecera": {
+  "ok": false,
+  "error": "RetryError: HTTPSConnectionPool(host='modis.ornl.gov', port=443): Max retries exceeded with url: /rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Day_1km&startDate=A2005305&endDate=A2006009&kmAboveBelow=0&kmLeftRight=0 (Caused by ResponseError('too many 502 error responses'))",
+  "segundos": 1231.5
  }
 }
