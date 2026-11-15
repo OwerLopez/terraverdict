@@ -33,7 +33,7 @@ def app(tmp_path: Path) -> Any:
     aplicacion = create_app(settings)
     Base.metadata.create_all(aplicacion.state.motor)
     with aplicacion.state.fabrica_sesiones() as sesion:
-        importar_todo(sesion, RAIZ_REPO)
+        importar_todo(sesion, RAIZ_REPO, incluir_ciencia=False)
         for email, rol in (
             ("admin@tv.pe", Rol.admin),
             ("analista@tv.pe", Rol.analista),

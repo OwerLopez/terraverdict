@@ -27,6 +27,26 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Despliegue autosuficiente por contrato y cliente IMERG robusto
+**Autor:** Ower Frank
+
+**Qué se hizo**
+- `tv publicar --exportar resultados/contrato/expedientes.json` escribe los expedientes ya en el formato del contrato de la API.
+- Al arrancar, el backend los importa con `importar_expedientes_ciencia`, validando cada uno con `ExpedienteCrear` y de forma idempotente. Lo controla `TV_IMPORTAR_RESULTADOS_CIENCIA`, activa por defecto.
+- Con esto, un despliegue nuevo (Docker o nube) muestra desde el primer arranque las vistas de sismos, volcanes, caos, modelos y Perú, sin depender del paquete científico. Antes quedaban vacías hasta correr `tv publicar` contra una API viva.
+- Cliente IMERG:
+  - reintentos acotados con espera exponencial ante 401/429/5xx (GES DISC limita la tasa); 403 no se reintenta, porque suele ser la licencia;
+  - 4 hilos por defecto, en lugar de 12;
+  - el error indica desde qué año retomar.
+- `tv ingest-fenomenos` ahora termina con código 1 si falla una fuente pedida. Antes, la descarga de IMERG que se cortó en 1998 terminó con código 0. Para entornos sin acceso existe `--tolerar-fallos`.
+
+**Evidencia**
+- Backend: prueba de despliegue limpio con 14 expedientes científicos importados, segunda importación sin duplicados y `GET /api/v1/nacional` con 25 departamentos.
+- `tests/unit/test_earthdata_reintentos.py` (3, sin red).
+- Corrida real sin token: el comando imprime `ERR imerg` y sale con código 1.
+
+---
+
 ## 2026-11-15 · Cadena de custodia del pipeline (integridad SHA-256 de punta a punta)
 **Autor:** Ower Frank
 

@@ -120,8 +120,14 @@ def ingest_fenomenos(
         False, help="Solo CHIRPS, IGP, IMERG y MODIS; conserva el resto del registro"
     ),
     fuentes: str = typer.Option("chirps,igp,imerg,modis", help="Fuentes adicionales (con --solo-adicionales)"),
+    tolerar_fallos: bool = typer.Option(
+        False, help="Termina con código 0 aunque falle alguna fuente (p. ej. entornos sin acceso a ellas)"
+    ),
 ) -> None:
-    """Descarga trazable de todas las fuentes de los cinco fenómenos (con manifiesto SHA-256)."""
+    """Descarga trazable de todas las fuentes de los cinco fenómenos (con manifiesto SHA-256).
+
+    Termina con código 1 si falla alguna fuente pedida: una descarga incompleta no debe pasar por buena.
+    """
     from .ingest import fenomenos, glc
 
     cfg = cargar_yaml(config)
@@ -135,9 +141,16 @@ def ingest_fenomenos(
         if reg.get("glc", {}).get("ok"):
             reg["celdas_deslizamientos"] = fenomenos.descargar_celdas_deslizamientos(glc.cargar(raw / "glc"), cfg, raw)
     fenomenos.guardar_registro(reg, ruta)
+    pedidas = tuple(fuentes.split(",")) if solo_adicionales else None
+    fallidas = []
     for nombre, paso in reg.items():
         if isinstance(paso, dict) and "ok" in paso:
             typer.echo(f"{'OK ' if paso['ok'] else 'ERR'} {nombre} {paso.get('error') or ''}")
+            if not paso["ok"] and (pedidas is None or nombre.startswith(pedidas)):
+                fallidas.append(nombre)
+    if fallidas and not tolerar_fallos:
+        typer.echo(f"Fuentes con error: {', '.join(fallidas)} (use --tolerar-fallos para aceptarlo)", err=True)
+        raise typer.Exit(code=1)
 
 
 @app.command("experimentos")
@@ -171,6 +184,9 @@ def publicar(
     pre: Path = Path("preregistro.yaml"),
     config: Path = Path("config/fenomenos.yaml"),
     simular: bool = typer.Option(False, help="Solo convierte y escribe los expedientes, sin enviarlos"),
+    exportar: Path = typer.Option(
+        None, help="Escribe los expedientes del contrato en este archivo (p. ej. resultados/contrato/expedientes.json)"
+    ),
 ) -> None:
     """Publica resultados/*.json y expedientes/*.json en el backend (idempotente por contenido)."""
     from .publicar import cliente, convertir
@@ -181,6 +197,11 @@ def publicar(
     )
     if simular:
         typer.echo(json.dumps(lista, ensure_ascii=False, indent=1))
+        return
+    if exportar:
+        # Contrato como interfaz: el backend importa este archivo al arrancar (sin depender de este paquete).
+        exportar.write_text(json.dumps(lista, ensure_ascii=False, indent=1), encoding="utf-8")
+        typer.echo(f"{len(lista)} expedientes exportados a {exportar}")
         return
     informe = cliente.publicar(lista, api, cliente.clave_ingesta())
     for i in informe:

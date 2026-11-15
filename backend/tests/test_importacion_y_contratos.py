@@ -24,7 +24,7 @@ def test_importacion_es_idempotente(sesion: Session) -> None:
         sesion.scalar(select(func.count()).select_from(Observacion)),
         sesion.scalar(select(func.count()).select_from(InformeVerificacion)),
     )
-    importar_todo(sesion, RAIZ_REPO)
+    importar_todo(sesion, RAIZ_REPO, incluir_ciencia=False)
     despues = (
         sesion.scalar(select(func.count()).select_from(Expediente)),
         sesion.scalar(select(func.count()).select_from(Observacion)),

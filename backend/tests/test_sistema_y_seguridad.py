@@ -138,3 +138,21 @@ def test_eventos_distinguen_cifras_exactas_de_cotas(cliente: TestClient) -> None
     }
     assert turbidez[1]["cota"] == "minima"  # la fuente dice "más del 70 %"
     assert all(e["fuentes"] for e in eventos.values()), "todo evento debe citar al menos una fuente"
+
+
+def test_despliegue_nuevo_importa_los_resultados_cientificos(app: Any) -> None:
+    """Un despliegue limpio ya trae las vistas M6/M7 llenas desde el contrato exportado por el pipeline."""
+    from app.core.config import RAIZ_REPO
+    from app.importacion import importar_expedientes_ciencia
+
+    with app.state.fabrica_sesiones() as sesion:
+        primera = importar_expedientes_ciencia(sesion, RAIZ_REPO)
+        segunda = importar_expedientes_ciencia(sesion, RAIZ_REPO)
+    assert primera["nuevos"] == primera["leidos"] > 0 and segunda["nuevos"] == 0  # idempotente
+    cliente = TestClient(app)
+    nacional = cliente.get("/api/v1/nacional").json()
+    assert nacional["expediente_id"] and nacional["expediente_id"].startswith("TV-NAC-")
+    deps = nacional["resultado"]["departamentos"]
+    assert len(deps) == 25 and all(d["tendencia_temperatura"]["veredicto"] != "robusta" for d in deps)
+    assert cliente.get("/api/v1/capas/sismos").json()["expediente_id"]
+    assert cliente.get("/api/v1/capas/volcanes").json()["features"]

@@ -37,7 +37,8 @@ def migrar(_: argparse.Namespace) -> None:
 
 def importar(_: argparse.Namespace) -> None:
     with _sesion() as sesion:
-        resumen = importar_todo(sesion, obtener_settings().raiz_datos)
+        cfg = obtener_settings()
+        resumen = importar_todo(sesion, cfg.raiz_datos, incluir_ciencia=cfg.importar_resultados_ciencia)
     print(json.dumps(resumen, ensure_ascii=False, indent=2, default=str))
 
 

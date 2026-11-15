@@ -31,6 +31,10 @@ class Settings(BaseSettings):
     cors_origenes: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
     login_intentos_por_minuto: int = Field(10, ge=1, le=1000)
     raiz_datos: Path = RAIZ_REPO
+    importar_resultados_ciencia: bool = Field(
+        True,
+        description="Al importar, publicar resultados/contrato/expedientes.json (vistas M6/M7 listas al desplegar).",
+    )
     log_nivel: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
     anthropic_api_key: SecretStr | None = None
 

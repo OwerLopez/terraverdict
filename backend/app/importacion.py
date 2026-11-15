@@ -724,7 +724,26 @@ def importar_analisis_preliminar(sesion: Session, raiz: Path) -> dict[str, int]:
     return {"series": 2, "expedientes_nuevos": creados}
 
 
-def importar_todo(sesion: Session, raiz: Path) -> dict[str, Any]:
+def importar_expedientes_ciencia(sesion: Session, raiz: Path) -> dict[str, int]:
+    """Publica los expedientes que exportó el pipeline científico (`tv publicar --exportar`).
+
+    El archivo es el contrato: cada elemento se valida con `ExpedienteCrear` igual que si llegara por
+    `POST /api/v1/expedientes`, y la publicación es idempotente por hash de contenido. Así un
+    despliegue nuevo muestra los resultados sin depender del paquete científico.
+    """
+    ruta = raiz / "resultados" / "contrato" / "expedientes.json"
+    if not ruta.exists():
+        return {"leidos": 0, "nuevos": 0}
+    lista = _leer_json(ruta)
+    nuevos = 0
+    for crudo in lista:
+        datos = ExpedienteCrear.model_validate(crudo)
+        nuevos += int(servicio_expedientes.publicar(sesion, datos, IMPORTADOR)[1])
+    sesion.commit()
+    return {"leidos": len(lista), "nuevos": nuevos}
+
+
+def importar_todo(sesion: Session, raiz: Path, incluir_ciencia: bool = True) -> dict[str, Any]:
     resumen: dict[str, Any] = {}
     resumen["fuentes"] = importar_fuentes(sesion, raiz)
     resumen.update(importar_catalogos(sesion, raiz))
@@ -733,6 +752,8 @@ def importar_todo(sesion: Session, raiz: Path) -> dict[str, Any]:
     resumen["eventos"] = importar_eventos(sesion, raiz)
     resumen["observaciones_autodema"] = importar_autodema(sesion, raiz)
     resumen["analisis_preliminar"] = importar_analisis_preliminar(sesion, raiz)
+    if incluir_ciencia:
+        resumen["expedientes_ciencia"] = importar_expedientes_ciencia(sesion, raiz)
     resumen["expedientes_total"] = len(sesion.scalars(select(Expediente.id)).all())
     log.info("importacion_completa", extra={"resumen": resumen})
     return resumen

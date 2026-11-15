@@ -15,6 +15,8 @@ import datetime as dt
 import json
 import os
 import re
+import time
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
@@ -54,6 +56,9 @@ def _url_dia(d: dt.date, lon: tuple[int, int], lat: tuple[int, int]) -> str:
     )
 
 
+REINTENTABLES = (401, 429, 500, 502, 503, 504)
+
+
 def _verificar(r) -> None:
     if r.status_code in (401, 403):
         raise PermissionError(
@@ -63,13 +68,35 @@ def _verificar(r) -> None:
     r.raise_for_status()
 
 
+def pedir_con_reintentos(
+    get: Callable[[str], Any],
+    url: str,
+    intentos: int = 4,
+    espera: float = 2.0,
+    dormir: Callable[[float], None] = time.sleep,
+) -> Any:
+    """GET con reintentos acotados y espera exponencial.
+
+    GES DISC limita la tasa de consultas: bajo carga puede responder 401 o 429 a un token válido.
+    Se reintenta 401/429/5xx (2, 4, 8 s…). Un 403 no se reintenta: suele ser la licencia (EULA) sin
+    aceptar, y repetir no lo arregla. Si se agotan los intentos se devuelve la última respuesta.
+    """
+    r = get(url)
+    for i in range(intentos - 1):
+        if r.status_code not in REINTENTABLES:
+            break
+        dormir(espera * 2**i)
+        r = get(url)
+    return r
+
+
 def descargar_imerg(
     lon: tuple[int, int],
     lat: tuple[int, int],
     desde: dt.date,
     hasta: dt.date,
     raw: str | Path,
-    hilos: int = 12,
+    hilos: int = 4,
 ) -> list[dict[str, Any]]:
     """Una caja de celdas IMERG por día; se guarda un crudo por año (respuestas ASCII concatenadas).
 
@@ -79,10 +106,14 @@ def descargar_imerg(
     raw = Path(raw)
     s = sesion()
     s.headers["Authorization"] = f"Bearer {token_earthdata()}"
-    _verificar(s.get(_url_dia(desde, lon, lat), timeout=120))  # falla temprano si no hay acceso
+
+    def get(url: str) -> Any:
+        return s.get(url, timeout=180)
+
+    _verificar(pedir_con_reintentos(get, _url_dia(desde, lon, lat)))  # falla temprano si no hay acceso
     man = raw / "manifiesto.json"
     previos = {e["archivo"]: e for e in json.loads(man.read_text())} if man.exists() else {}
-    entradas = []
+    entradas: list[dict[str, Any]] = []
     for anio in range(desde.year, hasta.year + 1):
         a, b = max(desde, dt.date(anio, 1, 1)), min(hasta, dt.date(anio, 12, 31))
         dias = [a + dt.timedelta(days=i) for i in range((b - a).days + 1)]
@@ -93,14 +124,18 @@ def descargar_imerg(
             continue
 
         def bajar(d: dt.date) -> str | None:
-            r = s.get(_url_dia(d, lon, lat), timeout=180)
+            r = pedir_con_reintentos(get, _url_dia(d, lon, lat))
             if r.status_code == 404:
                 return None
             _verificar(r)
             return f"### {d.isoformat()}\n{r.text}"
 
-        with ThreadPoolExecutor(hilos) as ex:
-            bloques = list(ex.map(bajar, dias))
+        try:
+            with ThreadPoolExecutor(hilos) as ex:
+                bloques = list(ex.map(bajar, dias))
+        except PermissionError as e:
+            # Los años anteriores ya quedaron guardados; el siguiente intento retoma desde este.
+            raise PermissionError(f"Descarga de IMERG detenida en {anio} (años previos guardados): {e}") from e
         faltantes = [d.isoformat() for d, bl in zip(dias, bloques, strict=True) if bl is None]
         entradas.append(
             guardar_crudo(
