@@ -1,0 +1,42 @@
+[
+ {
+  "archivo": "modis_ciudad_LST_Day_1km.json",
+  "sha256": "1e2efa50e5752b045b2a2c668b2083c3ae8dfc4194ec051aad9e3cf589c30fbb",
+  "bytes": 180126,
+  "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Day_1km",
+  "producto": "MOD11A2",
+  "version": "061",
+  "descargado_utc": "2026-11-15T19:40:31+00:00",
+  "fechas": 1225
+ },
+ {
+  "archivo": "modis_ciudad_LST_Night_1km.json",
+  "sha256": "1ca923f5231fa2740281517298fb8cc120489cdf9a6f401903e41783c324aba8",
+  "bytes": 182358,
+  "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Night_1km",
+  "producto": "MOD11A2",
+  "version": "061",
+  "descargado_utc": "2026-11-15T19:48:37+00:00",
+  "fechas": 1225
+ },
+ {
+  "archivo": "modis_cabecera_LST_Day_1km.json",
+  "sha256": "64370a990e76babf08b6b3ac62917d8acbd389f0e107d1292c645b0b22985287",
+  "bytes": 180082,
+  "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Day_1km",
+  "producto": "MOD11A2",
+  "version": "061",
+  "descargado_utc": "2026-11-15T19:53:42+00:00",
+  "fechas": 1225
+ },
+ {
+  "archivo": "modis_cabecera_LST_Night_1km.json",
+  "sha256": "eb29fb908214681c9e1de707a590e6e4d4ed48b283d0150c511a1ab1e2f93b1f",
+  "bytes": 182442,
+  "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Night_1km",
+  "producto": "MOD11A2",
+  "version": "061",
+  "descargado_utc": "2026-11-15T19:56:58+00:00",
+  "fechas": 1225
+ }
+]

@@ -18,6 +18,8 @@
  },
  "completitud": {
   "mc_maxima_curvatura": 4.4,
+  "mc_calculada_con": "eventos hasta 2015-12-31 (entrenamiento)",
+  "mc_piso": 4.5,
   "mc_por_decada": {
    "1970s": 4.9,
    "1980s": 5.1,
@@ -4686,6 +4688,12 @@
  ],
  "pronostico_conteos": {
   "definicion": "conteo mensual de sismos M ≥ 4.5 del mes siguiente",
+  "ventana_meses": 12,
+  "columnas": [
+   "conteo_log",
+   "conteo_independiente_log",
+   "magnitud_maxima"
+  ],
   "tasa_media_entrenamiento": 2.922481,
   "zoo": {
    "modelos": {
@@ -4703,6 +4711,7 @@
       0.0,
       0.0
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
       "estadistico": null,
       "p": null,
@@ -4726,6 +4735,7 @@
       -1.223343,
       -0.259325
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
       "estadistico": 2.699269,
       "p": 0.008732,
@@ -4750,6 +4760,7 @@
       -0.797638,
       -0.119997
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
       "estadistico": 2.19276,
       "p": 0.031699,
@@ -4758,7 +4769,7 @@
      },
      "umbral_decision": null,
      "q_conformal_90": null,
-     "segundos": 0.06
+     "segundos": 0.09
     },
     "gbm": {
      "familia": "clasico",
@@ -4774,6 +4785,7 @@
       -0.544246,
       0.306323
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
       "estadistico": 0.287241,
       "p": 0.774789,
@@ -4782,26 +4794,27 @@
      },
      "umbral_decision": null,
      "q_conformal_90": null,
-     "segundos": 0.17
+     "segundos": 78.98
     },
     "mlp": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.12755,
+     "puntaje_validacion": 0.022118,
      "prueba": {
-      "log_verosimilitud": -2.28111,
-      "ganancia_informacion_bits": 0.180752,
-      "mae": 1.98156,
+      "log_verosimilitud": -2.351181,
+      "ganancia_informacion_bits": 0.079662,
+      "mae": 2.035388,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      -0.001627,
-      0.435487
+      -0.102678,
+      0.316069
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -1.293882,
-      "p": 0.20002,
-      "diferencia_media": -0.125288,
+      "estadistico": -0.572941,
+      "p": 0.568547,
+      "diferencia_media": -0.055217,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -4811,48 +4824,50 @@
      "semillas": [
       {
        "semilla": 0,
-       "epocas": 34,
-       "mejor_epoca": 23,
-       "segundos": 0.1
+       "epocas": 64,
+       "mejor_epoca": 53,
+       "segundos": 0.2
       },
       {
        "semilla": 1,
-       "epocas": 40,
-       "mejor_epoca": 29,
+       "epocas": 41,
+       "mejor_epoca": 30,
        "segundos": 0.1
       },
       {
        "semilla": 2,
-       "epocas": 36,
-       "mejor_epoca": 25,
-       "segundos": 0.1
+       "epocas": 62,
+       "mejor_epoca": 51,
+       "segundos": 0.2
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.20712,
-      0.069108,
-      0.031803
+      0.065039,
+      0.006425,
+      -0.11852
      ],
-     "dispersion_semillas": 0.075406
+     "dispersion_semillas": 0.076551
     },
     "dlinear": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.128002,
+     "puntaje_validacion": 0.041015,
      "prueba": {
-      "log_verosimilitud": -2.297672,
-      "ganancia_informacion_bits": 0.156859,
-      "mae": 1.967353,
+      "log_verosimilitud": -2.365832,
+      "ganancia_informacion_bits": 0.058524,
+      "mae": 2.00802,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      -0.0228,
-      0.433059
+      -0.09006,
+      0.303314
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -1.075132,
-      "p": 0.286061,
-      "diferencia_media": -0.108726,
+      "estadistico": -0.454817,
+      "p": 0.650669,
+      "diferencia_media": -0.040566,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -4862,48 +4877,50 @@
      "semillas": [
       {
        "semilla": 0,
-       "epocas": 112,
-       "mejor_epoca": 101,
+       "epocas": 105,
+       "mejor_epoca": 94,
        "segundos": 0.3
       },
       {
        "semilla": 1,
-       "epocas": 82,
-       "mejor_epoca": 71,
-       "segundos": 0.2
+       "epocas": 80,
+       "mejor_epoca": 69,
+       "segundos": 0.3
       },
       {
        "semilla": 2,
-       "epocas": 150,
-       "mejor_epoca": 141,
+       "epocas": 133,
+       "mejor_epoca": 122,
        "segundos": 0.4
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.065967,
-      0.161434,
-      0.056917
+      -0.104642,
+      0.12887,
+      -0.079526
      ],
-     "dispersion_semillas": 0.047281
+     "dispersion_semillas": 0.104662
     },
     "lstm": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.265249,
+     "puntaje_validacion": 0.28704,
      "prueba": {
-      "log_verosimilitud": -2.218029,
-      "ganancia_informacion_bits": 0.27176,
-      "mae": 1.908686,
+      "log_verosimilitud": -2.227951,
+      "ganancia_informacion_bits": 0.257445,
+      "mae": 1.895826,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      0.073881,
-      0.511817
+      0.056943,
+      0.495162
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -1.87016,
-      "p": 0.065704,
-      "diferencia_media": -0.188369,
+      "estadistico": -1.821638,
+      "p": 0.072844,
+      "diferencia_media": -0.178447,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -4913,48 +4930,50 @@
      "semillas": [
       {
        "semilla": 0,
-       "epocas": 18,
-       "mejor_epoca": 7,
+       "epocas": 19,
+       "mejor_epoca": 8,
        "segundos": 0.2
       },
       {
        "semilla": 1,
-       "epocas": 22,
-       "mejor_epoca": 11,
+       "epocas": 20,
+       "mejor_epoca": 9,
        "segundos": 0.2
       },
       {
        "semilla": 2,
-       "epocas": 18,
-       "mejor_epoca": 7,
+       "epocas": 20,
+       "mejor_epoca": 9,
        "segundos": 0.2
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.271613,
-      0.253746,
-      0.256841
+      0.294382,
+      0.275374,
+      0.280837
      ],
-     "dispersion_semillas": 0.007796
+     "dispersion_semillas": 0.00799
     },
     "gru": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.256741,
+     "puntaje_validacion": 0.191651,
      "prueba": {
-      "log_verosimilitud": -2.233391,
-      "ganancia_informacion_bits": 0.249596,
-      "mae": 1.930872,
+      "log_verosimilitud": -2.274175,
+      "ganancia_informacion_bits": 0.190758,
+      "mae": 1.933219,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      0.042342,
-      0.504001
+      0.04643,
+      0.388378
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -1.665995,
-      "p": 0.100248,
-      "diferencia_media": -0.173007,
+      "estadistico": -1.708734,
+      "p": 0.091995,
+      "diferencia_media": -0.132223,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -4964,48 +4983,50 @@
      "semillas": [
       {
        "semilla": 0,
+       "epocas": 29,
+       "mejor_epoca": 18,
+       "segundos": 0.4
+      },
+      {
+       "semilla": 1,
        "epocas": 20,
        "mejor_epoca": 9,
        "segundos": 0.3
       },
       {
-       "semilla": 1,
-       "epocas": 19,
-       "mejor_epoca": 8,
-       "segundos": 0.3
-      },
-      {
        "semilla": 2,
-       "epocas": 19,
-       "mejor_epoca": 8,
+       "epocas": 20,
+       "mejor_epoca": 9,
        "segundos": 0.3
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.218672,
-      0.247735,
-      0.249097
+      0.045209,
+      0.191523,
+      0.263266
      ],
-     "dispersion_semillas": 0.014033
+     "dispersion_semillas": 0.09074
     },
     "tcn": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.18079,
+     "puntaje_validacion": 0.159772,
      "prueba": {
-      "log_verosimilitud": -2.235232,
-      "ganancia_informacion_bits": 0.24694,
-      "mae": 1.929728,
+      "log_verosimilitud": -2.251686,
+      "ganancia_informacion_bits": 0.223202,
+      "mae": 1.912772,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      0.064375,
-      0.488281
+      0.071246,
+      0.432482
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -1.938705,
-      "p": 0.056628,
-      "diferencia_media": -0.171166,
+      "estadistico": -2.078794,
+      "p": 0.041356,
+      "diferencia_media": -0.154712,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -5029,34 +5050,36 @@
        "semilla": 2,
        "epocas": 13,
        "mejor_epoca": 2,
-       "segundos": 0.5
+       "segundos": 0.4
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.111231,
-      0.117696,
-      0.17952
+      0.041152,
+      0.112085,
+      0.126019
      ],
-     "dispersion_semillas": 0.030781
+     "dispersion_semillas": 0.03716
     },
     "nbeats": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.136198,
+     "puntaje_validacion": 0.095809,
      "prueba": {
-      "log_verosimilitud": -2.243935,
-      "ganancia_informacion_bits": 0.234384,
-      "mae": 1.948655,
+      "log_verosimilitud": -2.285431,
+      "ganancia_informacion_bits": 0.174518,
+      "mae": 1.947667,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      0.086479,
-      0.437133
+      0.047114,
+      0.360824
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -2.077489,
-      "p": 0.04148,
-      "diferencia_media": -0.162463,
+      "estadistico": -1.841395,
+      "p": 0.069862,
+      "diferencia_media": -0.120967,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -5066,48 +5089,50 @@
      "semillas": [
       {
        "semilla": 0,
-       "epocas": 19,
-       "mejor_epoca": 8,
-       "segundos": 0.2
+       "epocas": 13,
+       "mejor_epoca": 2,
+       "segundos": 0.1
       },
       {
        "semilla": 1,
-       "epocas": 12,
-       "mejor_epoca": 1,
+       "epocas": 13,
+       "mejor_epoca": 2,
        "segundos": 0.1
       },
       {
        "semilla": 2,
-       "epocas": 12,
-       "mejor_epoca": 1,
+       "epocas": 13,
+       "mejor_epoca": 2,
        "segundos": 0.1
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.081026,
-      0.043755,
-      0.162658
+      0.031537,
+      0.040023,
+      0.141487
      ],
-     "dispersion_semillas": 0.049655
+     "dispersion_semillas": 0.049951
     },
     "nhits": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.167184,
+     "puntaje_validacion": 0.18209,
      "prueba": {
-      "log_verosimilitud": -2.258867,
-      "ganancia_informacion_bits": 0.212842,
-      "mae": 1.979755,
+      "log_verosimilitud": -2.257641,
+      "ganancia_informacion_bits": 0.214611,
+      "mae": 1.95068,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      0.006621,
-      0.479434
+      0.026003,
+      0.442136
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -1.44665,
-      "p": 0.152523,
-      "diferencia_media": -0.147531,
+      "estadistico": -1.688031,
+      "p": 0.095921,
+      "diferencia_media": -0.148757,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -5117,48 +5142,50 @@
      "semillas": [
       {
        "semilla": 0,
-       "epocas": 13,
-       "mejor_epoca": 2,
+       "epocas": 12,
+       "mejor_epoca": 1,
        "segundos": 0.1
       },
       {
        "semilla": 1,
-       "epocas": 19,
-       "mejor_epoca": 8,
-       "segundos": 0.2
+       "epocas": 12,
+       "mejor_epoca": 1,
+       "segundos": 0.1
       },
       {
        "semilla": 2,
-       "epocas": 13,
-       "mejor_epoca": 2,
+       "epocas": 12,
+       "mejor_epoca": 1,
        "segundos": 0.1
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.129531,
-      0.100299,
-      0.17893
+      0.134436,
+      0.090872,
+      0.176705
      ],
-     "dispersion_semillas": 0.032451
+     "dispersion_semillas": 0.035043
     },
     "patchtst": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.274514,
+     "puntaje_validacion": 0.192376,
      "prueba": {
-      "log_verosimilitud": -2.244302,
-      "ganancia_informacion_bits": 0.233855,
-      "mae": 1.928505,
+      "log_verosimilitud": -2.296301,
+      "ganancia_informacion_bits": 0.158837,
+      "mae": 1.995863,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      0.020573,
-      0.473929
+      -0.002071,
+      0.365829
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -1.603445,
-      "p": 0.113404,
-      "diferencia_media": -0.162096,
+      "estadistico": -1.393551,
+      "p": 0.167926,
+      "diferencia_media": -0.110097,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -5168,15 +5195,15 @@
      "semillas": [
       {
        "semilla": 0,
-       "epocas": 15,
-       "mejor_epoca": 4,
-       "segundos": 0.4
+       "epocas": 23,
+       "mejor_epoca": 12,
+       "segundos": 0.5
       },
       {
        "semilla": 1,
-       "epocas": 12,
-       "mejor_epoca": 1,
-       "segundos": 0.3
+       "epocas": 25,
+       "mejor_epoca": 14,
+       "segundos": 0.6
       },
       {
        "semilla": 2,
@@ -5185,31 +5212,33 @@
        "segundos": 0.3
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.234602,
-      0.175757,
-      0.228525
+      0.162269,
+      0.08786,
+      0.095411
      ],
-     "dispersion_semillas": 0.026424
+     "dispersion_semillas": 0.033439
     },
     "itransformer": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.261212,
+     "puntaje_validacion": 0.141853,
      "prueba": {
-      "log_verosimilitud": -2.286448,
-      "ganancia_informacion_bits": 0.173052,
-      "mae": 1.987586,
+      "log_verosimilitud": -2.392218,
+      "ganancia_informacion_bits": 0.020458,
+      "mae": 2.05995,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      0.013856,
-      0.43753
+      -0.120479,
+      0.275527
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -1.230682,
-      "p": 0.222621,
-      "diferencia_media": -0.11995,
+      "estadistico": -0.148739,
+      "p": 0.882194,
+      "diferencia_media": -0.01418,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -5219,15 +5248,15 @@
      "semillas": [
       {
        "semilla": 0,
-       "epocas": 13,
-       "mejor_epoca": 2,
-       "segundos": 0.2
+       "epocas": 28,
+       "mejor_epoca": 17,
+       "segundos": 0.5
       },
       {
        "semilla": 1,
-       "epocas": 19,
-       "mejor_epoca": 8,
-       "segundos": 0.4
+       "epocas": 14,
+       "mejor_epoca": 3,
+       "segundos": 0.3
       },
       {
        "semilla": 2,
@@ -5236,31 +5265,33 @@
        "segundos": 0.4
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.284797,
-      0.128589,
-      0.228561
+      0.127554,
+      -0.003,
+      0.121265
      ],
-     "dispersion_semillas": 0.064599
+     "dispersion_semillas": 0.060116
     },
     "ssm_selectivo": {
      "familia": "red_neuronal",
-     "puntaje_validacion": 0.088557,
+     "puntaje_validacion": -0.120566,
      "prueba": {
-      "log_verosimilitud": -2.383672,
-      "ganancia_informacion_bits": 0.032787,
-      "mae": 2.044903,
+      "log_verosimilitud": -2.484835,
+      "ganancia_informacion_bits": -0.11316,
+      "mae": 2.128919,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      -0.148825,
-      0.213578
+      -0.302055,
+      0.05585
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -0.282322,
-      "p": 0.778542,
-      "diferencia_media": -0.022726,
+      "estadistico": 0.994207,
+      "p": 0.323596,
+      "diferencia_media": 0.078437,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
@@ -5270,75 +5301,132 @@
      "semillas": [
       {
        "semilla": 0,
-       "epocas": 15,
-       "mejor_epoca": 4,
+       "epocas": 16,
+       "mejor_epoca": 5,
        "segundos": 1.2
       },
       {
        "semilla": 1,
-       "epocas": 15,
-       "mejor_epoca": 4,
-       "segundos": 1.3
+       "epocas": 25,
+       "mejor_epoca": 14,
+       "segundos": 1.9
       },
       {
        "semilla": 2,
-       "epocas": 33,
-       "mejor_epoca": 22,
-       "segundos": 2.6
+       "epocas": 27,
+       "mejor_epoca": 16,
+       "segundos": 2.1
       }
      ],
+     "parada_temprana": "último 15% del entrenamiento (76 ventanas)",
      "puntaje_validacion_por_semilla": [
-      0.052905,
-      -0.074978,
-      0.013744
+      -0.03823,
+      -0.294793,
+      -0.198437
      ],
-     "dispersion_semillas": 0.053499
+     "dispersion_semillas": 0.105817
     },
     "ensamble_top3": {
      "familia": "ensamble",
-     "puntaje_validacion": 0.288644,
+     "puntaje_validacion": 0.210114,
      "prueba": {
-      "log_verosimilitud": -2.231257,
-      "ganancia_informacion_bits": 0.252675,
-      "mae": 1.927616,
+      "log_verosimilitud": -2.25264,
+      "ganancia_informacion_bits": 0.221826,
+      "mae": 1.927151,
       "mae_climatologia": 1.943079
      },
      "metrica_principal": "ganancia_informacion_bits",
      "ic90_prueba": [
-      0.065747,
-      0.492253
+      0.050268,
+      0.426275
      ],
+     "bloque_bootstrap": 6,
      "diebold_mariano_vs_climatologia": {
-      "estadistico": -1.812384,
-      "p": 0.074278,
-      "diferencia_media": -0.175141,
+      "estadistico": -1.865352,
+      "p": 0.066384,
+      "diferencia_media": -0.153758,
       "rezagos_hac": 4
      },
      "umbral_decision": null,
      "q_conformal_90": null,
      "miembros": [
-      "patchtst",
       "lstm",
-      "itransformer"
-     ]
+      "patchtst",
+      "gru"
+     ],
+     "pesos": [
+      0.3333,
+      0.3333,
+      0.3333
+     ],
+     "variante": "promedio",
+     "nota": "Promedio simple de los 3 mejores en validación; puntaje de validación fuera de pliegue (5 bloques)"
+    },
+    "ensamble_ponderado": {
+     "familia": "ensamble",
+     "puntaje_validacion": 0.269569,
+     "prueba": {
+      "log_verosimilitud": -2.227951,
+      "ganancia_informacion_bits": 0.257445,
+      "mae": 1.895826,
+      "mae_climatologia": 1.943079
+     },
+     "metrica_principal": "ganancia_informacion_bits",
+     "ic90_prueba": [
+      0.056943,
+      0.495162
+     ],
+     "bloque_bootstrap": 6,
+     "diebold_mariano_vs_climatologia": {
+      "estadistico": -1.821638,
+      "p": 0.072844,
+      "diferencia_media": -0.178447,
+      "rezagos_hac": 4
+     },
+     "umbral_decision": null,
+     "q_conformal_90": null,
+     "miembros": [
+      "lstm",
+      "patchtst",
+      "gru"
+     ],
+     "pesos": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "variante": "pesos_validacion",
+     "nota": "Pesos ≥ 0 que suman 1, ajustados en validación de los 3 mejores en validación; puntaje de validación fuera de pliegue (5 bloques)"
     }
    },
-   "mejor_validacion": "ensamble_top3",
+   "mejor_validacion": "lstm",
    "ranking_validacion": [
+    "lstm",
+    "ensamble_ponderado",
     "ensamble_top3",
     "patchtst",
-    "lstm",
-    "itransformer",
     "gru",
-    "tcn",
     "nhits",
+    "tcn",
+    "itransformer",
     "nbeats",
     "dlinear",
     "mlp",
     "ssm_selectivo",
     "gbm",
     "poisson_glm"
-   ]
+   ],
+   "protocolo": {
+    "seleccion": "mayor puntaje de validación (la prueba no interviene)",
+    "calibracion": "isotónica; puntaje de validación fuera de pliegue (5 bloques contiguos)",
+    "parada_temprana": "último 15% del entrenamiento",
+    "ensambles": [
+     "promedio",
+     "pesos_validacion"
+    ],
+    "horizonte_diebold_mariano": 1,
+    "bloque_bootstrap_minimo": 6
+   }
   },
   "abstencion": {
    "publicar": true,
@@ -5347,7 +5435,7 @@
    "advertencias": []
   },
   "serie_prueba": {
-   "modelo": "ensamble_top3",
+   "modelo": "lstm",
    "fechas": [
     "2020-12-01",
     "2021-01-01",
@@ -5493,76 +5581,76 @@
     4.0
    ],
    "pronostico": [
-    4.4794,
-    4.1239,
-    4.0474,
-    4.256,
-    4.1929,
-    4.5209,
-    4.5642,
-    4.7379,
-    4.7755,
-    4.3731,
-    4.9419,
-    4.1982,
-    4.3895,
-    4.3361,
-    4.2581,
-    4.1288,
-    3.8826,
-    4.6565,
-    4.6668,
-    4.7406,
-    4.2705,
-    4.0783,
-    4.1391,
-    4.328,
-    4.3727,
-    4.4247,
-    4.2315,
-    4.6144,
-    3.659,
-    3.9677,
-    4.5585,
-    4.2314,
-    3.8119,
-    3.0304,
-    3.4892,
-    2.9821,
-    3.5576,
-    4.0272,
-    4.0878,
-    4.1304,
-    3.6257,
-    3.8155,
-    4.4477,
-    4.0592,
-    4.0985,
-    3.9393,
-    3.8226,
-    3.616,
-    3.612,
-    4.0171,
-    4.4538,
-    4.9494,
-    3.8665,
-    3.6191,
-    2.8462,
-    3.1057,
-    2.6328,
-    3.2204,
-    3.5291,
-    4.0569,
-    3.7242,
-    3.1458,
-    2.7363,
-    2.9686,
-    2.3961,
-    2.8267,
-    2.8863,
-    3.4342,
-    3.5106,
-    2.9635
+    4.1937,
+    3.8747,
+    3.9941,
+    4.1614,
+    4.2582,
+    4.2954,
+    4.3009,
+    4.3467,
+    4.355,
+    4.1705,
+    4.4374,
+    4.0934,
+    4.1161,
+    4.284,
+    4.0369,
+    4.1247,
+    3.9852,
+    4.2446,
+    4.3481,
+    4.3616,
+    4.1744,
+    4.2393,
+    4.1362,
+    4.2587,
+    4.3198,
+    3.9528,
+    4.0748,
+    4.3436,
+    3.8071,
+    4.0378,
+    4.2785,
+    3.9969,
+    4.0218,
+    3.3289,
+    3.6912,
+    3.5438,
+    3.9106,
+    3.9846,
+    4.0933,
+    4.0398,
+    3.8814,
+    4.1567,
+    4.2866,
+    4.1732,
+    3.9526,
+    3.9415,
+    3.8948,
+    3.9544,
+    3.7045,
+    3.8834,
+    4.0296,
+    4.324,
+    3.9922,
+    3.9323,
+    3.233,
+    3.4559,
+    3.2139,
+    3.5975,
+    3.6286,
+    3.8342,
+    3.7282,
+    3.3617,
+    3.2914,
+    3.619,
+    3.0129,
+    3.308,
+    3.1785,
+    3.5054,
+    3.6691,
+    3.2445
    ],
    "referencia": [
     2.9225,
@@ -5640,9 +5728,10 @@
  },
  "advertencia": "No es un pronóstico de sismos. Mide si hay estructura temporal (agrupamiento) más allá del azar.",
  "procedencia": {
-  "generado_utc": "2026-11-15T06:18:31+00:00",
-  "commit": "41198fee2d6f1e8ef3b333a241aed8def4f56cab",
-  "config_sha256": "3cbb05a406bb35a4f344266fe65c7addd7e4b6ee22e3d00981d8b1ea5444b571",
+  "generado_utc": "2026-11-15T19:41:37+00:00",
+  "commit": "98846dfe121502312b8e4386cc85c94020d52034",
+  "config_sha256": "0382c23985f0b0c04460a28fde87d7e034710eef454c6cc2211280cb64323687",
+  "modelos_sha256": "ce2c8b19ad17cae2a60430c81f8b46cd055ddeb6f3a8b5f74171b829573b0d96",
   "preregistro_sha256": "c40676fd76ab55434bb8f0a89fe6c1bcf8845551dd884b41444682f3bd00d596",
   "crudos": {
    "chirps": [
@@ -5772,7 +5861,7 @@
      "archivo": "ghcn_PE000084752.csv",
      "sha256": "1963def04a0c425d2dad4511d7ae6f88f733485645f30dd44acbc526e8edfd88",
      "url": "https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/PE000084752.csv",
-     "descargado_utc": "2026-11-15T05:05:50+00:00"
+     "descargado_utc": "2026-11-15T10:32:08+00:00"
     }
    ],
    "glc": [
@@ -5780,21 +5869,21 @@
      "archivo": "glc.csv",
      "sha256": "2c4898899dd4f373c4320e121c5b655ebb5394d431fa42e57ec4828d07d48b04",
      "url": "https://data.nasa.gov/docs/legacy/Global_Landslide_Catalog_Export/Global_Landslide_Catalog_Export_rows.csv",
-     "descargado_utc": "2026-11-15T05:07:20+00:00"
+     "descargado_utc": "2026-11-15T10:32:16+00:00"
     }
    ],
    "gvp": [
     {
      "archivo": "gvp_volcanes.geojson",
-     "sha256": "ca537d1fc0619b06f11ae62d16df0b75162a17706d75bf8541e290eb3b8c8778",
+     "sha256": "10ae0a5437833c91cb42015811c5a3b091c4203d7f6c8a21f6545540de277291",
      "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Volcanoes&outputFormat=application%2Fjson&CQL_FILTER=Country%3D%27Peru%27",
-     "descargado_utc": "2026-11-15T05:05:57+00:00"
+     "descargado_utc": "2026-11-15T19:27:26+00:00"
     },
     {
      "archivo": "gvp_erupciones.geojson",
-     "sha256": "7af6c4421fe0086a9ce13fac2b9c4007d0b27f80be50b0461bb3a2113b45f16b",
+     "sha256": "120bdbbc3c9e1cdf7e95f11a468276d18d4e0b4ddae0225b403f6106e84365de",
      "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Eruptions&outputFormat=application%2Fjson&CQL_FILTER=Volcano_Number+IN+%28354000%2C354001%2C354003%2C354004%2C354005%2C354006%2C354010%2C354020%2C354031%2C354030%2C354040%2C354050%2C354060%29",
-     "descargado_utc": "2026-11-15T05:05:57+00:00"
+     "descargado_utc": "2026-11-15T19:27:26+00:00"
     }
    ],
    "igp": [
@@ -5889,148 +5978,328 @@
      "descargado_utc": "2026-11-15T05:44:07+00:00"
     }
    ],
+   "imerg": [
+    {
+     "archivo": "imerg_diaria_1998.txt",
+     "sha256": "edf074a962a197f184412ebed810d323c9b573e331361cf18413f24851c81582",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T07:12:36+00:00"
+    }
+   ],
+   "modis": [
+    {
+     "archivo": "modis_cabecera_LST_Day_1km.json",
+     "sha256": "64370a990e76babf08b6b3ac62917d8acbd389f0e107d1292c645b0b22985287",
+     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Day_1km",
+     "descargado_utc": "2026-11-15T19:27:09+00:00"
+    },
+    {
+     "archivo": "modis_cabecera_LST_Night_1km.json",
+     "sha256": "eb29fb908214681c9e1de707a590e6e4d4ed48b283d0150c511a1ab1e2f93b1f",
+     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Night_1km",
+     "descargado_utc": "2026-11-15T19:30:55+00:00"
+    },
+    {
+     "archivo": "modis_ciudad_LST_Day_1km.json",
+     "sha256": "1e2efa50e5752b045b2a2c668b2083c3ae8dfc4194ec051aad9e3cf589c30fbb",
+     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Day_1km",
+     "descargado_utc": "2026-11-15T19:40:31+00:00"
+    }
+   ],
    "noaa": [
     {
      "archivo": "oni.ascii.txt",
      "sha256": "118c563331335c8649cdc2677e6be7ae89d1259d901345fcddbc2857af280f7f",
      "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
-     "descargado_utc": "2026-11-15T05:05:47+00:00"
+     "descargado_utc": "2026-11-15T10:32:07+00:00"
     }
    ],
    "power": [
     {
      "archivo": "power_diario_ciudad.json",
-     "sha256": "dffe19e526277b9a478a56f9f3cd5ca88ec13d9eeaa9c5a84e24e8d9ac13d9b9",
+     "sha256": "f85d621b9986c5cdd274c9f0aa1d0598ff9eb3bca583e229f81e85ad40cef7e4",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.535&latitude=-16.4&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:05:42+00:00"
+     "descargado_utc": "2026-11-15T19:27:21+00:00"
     },
     {
      "archivo": "power_diario_cabecera.json",
-     "sha256": "5f2d72eb0a4dde1585081aefa694908a4a9a9f8bb4546aaf7fcecf69fcbfaff6",
+     "sha256": "acc78f55dbd12c58e6357f11439342c68a64b7a0386ad1d1b94331c8c1badb8e",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.25&latitude=-15.95&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:05:45+00:00"
+     "descargado_utc": "2026-11-15T19:27:24+00:00"
     },
     {
      "archivo": "power_-71.25_-15.95_1981_2025.json",
-     "sha256": "7fae526361348299f42bbf814b8cd4a6fbd2e88e23919d119cd9b170f1000c7b",
+     "sha256": "441c1c8d4383a952b97623afa2074858317934bd1675a24fec95889417fa9aba",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M&community=AG&longitude=-71.25&latitude=-15.95&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T05:05:46+00:00"
+     "descargado_utc": "2026-11-15T19:27:25+00:00"
     }
    ],
    "power_celdas": [
     {
      "archivo": "power_diario_celda_-75.0_-13.0.json",
-     "sha256": "322bbe04fe70a904ffc0d742b69931757cdd67b2dd3773c321c176a7af361faf",
+     "sha256": "b6f57b21b7760cc6e9545aada6adba42e6aebfed108fbec37a1b0a32903dd680",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:22+00:00"
+     "descargado_utc": "2026-11-15T19:27:28+00:00"
     },
     {
      "archivo": "power_diario_celda_-75.0_-12.5.json",
-     "sha256": "99b0c98aa3417bf5d4f9bb22cbd8edec605c50208d574e57b942bedefc220aa8",
+     "sha256": "8f2f3d1ca18948adc97aa9c7417e84ea7b9ac89fc09d94ea88a1e17bb714da49",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-12.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:23+00:00"
+     "descargado_utc": "2026-11-15T19:27:29+00:00"
     },
     {
      "archivo": "power_diario_celda_-74.375_-13.0.json",
-     "sha256": "44b74ecc4fd8e7019d1aa9581e92a71d5b22c25de47427d56a23b2741487f520",
+     "sha256": "577926a76dbe895e8a7876a53c5fe4bb4b1f4f24da0702ea67e7dccababd470f",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-74.375&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:24+00:00"
+     "descargado_utc": "2026-11-15T19:27:30+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.75_-15.5.json",
-     "sha256": "1d2321997236bd79568f9e869fe63fadd76782a3ecded9c8dd974bb353b7e811",
+     "sha256": "2d82582f0be9d57dd058cd92008acb2185cd587ceee78a474ce0b6cb96d0116a",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-15.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:25+00:00"
+     "descargado_utc": "2026-11-15T19:27:31+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.75_-13.5.json",
-     "sha256": "7e7d94666113ff111099180fbc63f95eb6c869f067d46ff1b0a799eb91f02c9f",
+     "sha256": "9fa6db94eca2280a4fe7cbc2b81f475b3c44316b5c07433cb845c4d6e2cd5bea",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:26+00:00"
+     "descargado_utc": "2026-11-15T19:27:33+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-15.0.json",
-     "sha256": "a97a02c807ce2509e729487331ee8af4e4b7199dd15f459a75dbd58ddc8ec8e1",
+     "sha256": "aa6b4203b1746a841c168b252061e67bfb70a7f3285ccafcac96735ca0d875b0",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-15.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:27+00:00"
+     "descargado_utc": "2026-11-15T19:27:34+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-14.0.json",
-     "sha256": "9edff17a055c10d9ea33aac8a8998624327a0e50f1358b28c970baca4d27b364",
+     "sha256": "9e2d5644dd47886a5f4db3ae50385aac725f5682233fc230911c5dd964a0b79c",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-14.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:28+00:00"
+     "descargado_utc": "2026-11-15T19:27:35+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-13.5.json",
-     "sha256": "0be7429291c02b5ae67edfc27fa91b9f936e1fba3ed97ca511507affb2353458",
+     "sha256": "823e1b2e1b650b7311d4a84dff5ded085acb6f67e434881837d6f4318986878a",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:30+00:00"
+     "descargado_utc": "2026-11-15T19:27:36+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-12.5.json",
-     "sha256": "b221a7338a406cfd2eb61223264fa97d57a6324d19bda7e3109b71c55980fbd9",
+     "sha256": "ec3c6ba89f40faa8db94ba87af2c68eae2ce0a2b4288afae574420feffa1e3d9",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-12.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:31+00:00"
+     "descargado_utc": "2026-11-15T19:27:37+00:00"
     },
     {
      "archivo": "power_diario_celda_-72.5_-13.5.json",
      "sha256": "f9a34899fac7006226becbefc9bcefd74c48c6f07dedbce1cde00982a6c5b686",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:32+00:00"
+     "descargado_utc": "2026-11-15T19:27:38+00:00"
     },
     {
      "archivo": "power_diario_celda_-72.5_-13.0.json",
-     "sha256": "e082dcdbf281ceab46581ca6c920d3d4fc91de8552171026692ce8694ce72a0b",
+     "sha256": "8141fa2e60f1e10f4362bc2c67c7da1689d076d6e9c99fee0aa29f2be108d083",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:33+00:00"
+     "descargado_utc": "2026-11-15T19:27:39+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.875_-15.5.json",
-     "sha256": "42276470c44bf17d43b286b01cd0c81a4143e44e7f4ed5b2e2ca3645d7e49720",
+     "sha256": "3f4421438543552e9d102a6bf53274e83447effc1ba93377124e0fcd46772f76",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-15.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:34+00:00"
+     "descargado_utc": "2026-11-15T19:27:40+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.875_-13.5.json",
-     "sha256": "3d51535b58de0d18011f34fc90ae869f8c5c1021fba073e73fdb7dd492b3d104",
+     "sha256": "c6d45b4db583f1cb1721811c7a54610dd1a6b0f428bf622e6121a1bec1ef4d53",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:36+00:00"
+     "descargado_utc": "2026-11-15T19:27:41+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.875_-13.0.json",
-     "sha256": "d696d1700825490c0c88d0ebbc88c789452746b9f7e13127b59ce1cbacd44bb4",
+     "sha256": "10ca55dba90f5f4092eaaf8989b63a857d6bd597e6b539bd093b7a2279c0fde7",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:37+00:00"
+     "descargado_utc": "2026-11-15T19:27:43+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.25_-16.5.json",
-     "sha256": "4ff33962125f4d28be1d0ff8ed82de851f1b9f230f80cf1298efce4ee521a050",
+     "sha256": "52818bdad63946d21fd13773c49e931292d739df542b99bc9ebd22f47b9b1966",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-16.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:38+00:00"
+     "descargado_utc": "2026-11-15T19:27:43+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.25_-15.5.json",
-     "sha256": "1cf6f453dd8cf278a6ecf6bc062fa552978afaad1bb5f0d6ce805e2bbd70d97c",
+     "sha256": "45ce5f8d64d559d733bb7915c717d58f1c63a6d2cce245361355e5a43480ce91",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-15.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:39+00:00"
+     "descargado_utc": "2026-11-15T19:27:45+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.25_-13.0.json",
-     "sha256": "0fdf339d7546d96b84cefc4c40703b3c8f7545eca59fecd699176d05079eba83",
+     "sha256": "30bb7479a799df81081a444b30733e635ae9c91c201f8cbd88b629db5dce594e",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:40+00:00"
+     "descargado_utc": "2026-11-15T19:27:46+00:00"
     },
     {
      "archivo": "power_diario_celda_-70.625_-14.0.json",
-     "sha256": "f87ec1b30d7595da48124688febb7c2ea064538f6f800a6a23481a27030221d5",
+     "sha256": "9752f768677fcefcf3d44d77918f177cf86c296bd9e69b82379ea1d2c66641a3",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.625&latitude=-14.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:41+00:00"
+     "descargado_utc": "2026-11-15T19:27:47+00:00"
     },
     {
      "archivo": "power_diario_celda_-70.0_-14.0.json",
-     "sha256": "bc6609e74667948ad4c7f0ab6f6c784337c6a2edcde03db2b77bc8786516f251",
+     "sha256": "8e3404d56aef6b6b3db623bacc41e07c1513355117e934bbf1ec46bde025bcb7",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.0&latitude=-14.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:42+00:00"
+     "descargado_utc": "2026-11-15T19:27:48+00:00"
+    }
+   ],
+   "power_nacional": [
+    {
+     "archivo": "power_-77.869_-6.231_1981_2025.json",
+     "sha256": "d32f115b65296d16e078eb7d714f11265537b970889fa3e8c15f4ddeaa3cb714",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.869&latitude=-6.231&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:12+00:00"
+    },
+    {
+     "archivo": "power_-77.528_-9.527_1981_2025.json",
+     "sha256": "b061197d726a1bfb763211ade088ed7b1ff6ce0b8f40a3d4b11c26d9fb862d32",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.528&latitude=-9.527&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:13+00:00"
+    },
+    {
+     "archivo": "power_-72.881_-13.634_1981_2025.json",
+     "sha256": "cda1824a50af3356505da9809142217b621bbc465db1b2e6c49aabd01ed8e115",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-72.881&latitude=-13.634&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:14+00:00"
+    },
+    {
+     "archivo": "power_-71.535_-16.399_1981_2025.json",
+     "sha256": "4853095911ce7bfe41189832aa26e910c4d8b7ddd8cefb2c6514c09496873265",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-71.535&latitude=-16.399&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:15+00:00"
+    },
+    {
+     "archivo": "power_-74.224_-13.159_1981_2025.json",
+     "sha256": "28291657859fc66121418ee34081ddac0ed3bd7d08e5063aa8d37fe232cf9ca3",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-74.224&latitude=-13.159&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:16+00:00"
+    },
+    {
+     "archivo": "power_-78.5_-7.163_1981_2025.json",
+     "sha256": "00d96b73723ae6eacadb45d60035f342d5243787eb2e36c409c0bc29babc28a4",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-78.5&latitude=-7.163&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:17+00:00"
+    },
+    {
+     "archivo": "power_-77.125_-12.052_1981_2025.json",
+     "sha256": "58db56d1c566ba0dbfdbd4ca6a9b627469e60281a665d4c21d09f8b2092ea78c",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.125&latitude=-12.052&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:17+00:00"
+    },
+    {
+     "archivo": "power_-71.967_-13.532_1981_2025.json",
+     "sha256": "9f81493cbb2759febb4a0a077680f0b4c3f9ca87c417297b5fcf71ac01bf9fcf",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-71.967&latitude=-13.532&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:18+00:00"
+    },
+    {
+     "archivo": "power_-74.973_-12.787_1981_2025.json",
+     "sha256": "82eed0515f8f684978e06369ec541b04fd40bb6def6b7e7ee00b8b174ef74031",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-74.973&latitude=-12.787&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:19+00:00"
+    },
+    {
+     "archivo": "power_-76.242_-9.93_1981_2025.json",
+     "sha256": "f109236d6462d62566d324ea294b5e40aaa9250d290489ba871f8302ff57ebe6",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-76.242&latitude=-9.93&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:20+00:00"
+    },
+    {
+     "archivo": "power_-75.729_-14.068_1981_2025.json",
+     "sha256": "a92e466d25a74bfbb13113679591e23106e06df24f60981ccd4886c628e693f5",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-75.729&latitude=-14.068&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:21+00:00"
+    },
+    {
+     "archivo": "power_-75.204_-12.065_1981_2025.json",
+     "sha256": "40f54649ced4fcd570d93103b21b27c5a1059f342d8f801e868b65e07cbd500f",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-75.204&latitude=-12.065&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:22+00:00"
+    },
+    {
+     "archivo": "power_-79.029_-8.112_1981_2025.json",
+     "sha256": "f03e0478a127166471f450c036bbe2dcec521aaeed2e71423d4241dc2746d280",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-79.029&latitude=-8.112&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:23+00:00"
+    },
+    {
+     "archivo": "power_-79.841_-6.771_1981_2025.json",
+     "sha256": "355dfbd27ee549d0850725071ea26302eae3b04b8ade677c5097057133ce0d9d",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-79.841&latitude=-6.771&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:23+00:00"
+    },
+    {
+     "archivo": "power_-77.043_-12.046_1981_2025.json",
+     "sha256": "25a1fabc56fdd32e2a154f7da2e7d677d65ed9ad912b81add2cb340db3b6ebe1",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.043&latitude=-12.046&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:24+00:00"
+    },
+    {
+     "archivo": "power_-73.253_-3.749_1981_2025.json",
+     "sha256": "bd84b797c8b561d6746eedefe09de53fb0d6935c6840ba452afcfdc7b6418239",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-73.253&latitude=-3.749&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:25+00:00"
+    },
+    {
+     "archivo": "power_-69.189_-12.593_1981_2025.json",
+     "sha256": "c64793851c5dddaa482e5583efd4ff060d68206ae4b292732d846e7ac6fc3cf2",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-69.189&latitude=-12.593&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:26+00:00"
+    },
+    {
+     "archivo": "power_-70.935_-17.195_1981_2025.json",
+     "sha256": "3aa9f9a53ffb5e39b58025ed1d580e12c93ade051d03161497054e0dd30a0f1f",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-70.935&latitude=-17.195&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:27+00:00"
+    },
+    {
+     "archivo": "power_-76.263_-10.686_1981_2025.json",
+     "sha256": "6e4f5d7a651ef0fc94cf2a1be8177922a64df16a13f306043c88501add4ee0de",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-76.263&latitude=-10.686&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:28+00:00"
+    },
+    {
+     "archivo": "power_-80.633_-5.195_1981_2025.json",
+     "sha256": "710ea405deee9816c21136d809c5a3aaa506a0c416c1f55a38482e6811f5ece8",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-80.633&latitude=-5.195&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:28+00:00"
+    },
+    {
+     "archivo": "power_-70.022_-15.84_1981_2025.json",
+     "sha256": "c3f727c8cceeb3b4c84b1996a9c90a38bde2ae50c06de3d9792778f0fe8b2533",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-70.022&latitude=-15.84&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:29+00:00"
+    },
+    {
+     "archivo": "power_-76.974_-6.034_1981_2025.json",
+     "sha256": "551e48886f7131e7f913de2d038c00f06daf6dae64b3ece7e59be467d8a0ce53",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-76.974&latitude=-6.034&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:30+00:00"
+    },
+    {
+     "archivo": "power_-70.246_-18.006_1981_2025.json",
+     "sha256": "88f14644596f6c31e50f7db97d3fccc6669aa48b77fdbc059e532a2f69608003",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-70.246&latitude=-18.006&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:30+00:00"
+    },
+    {
+     "archivo": "power_-80.451_-3.567_1981_2025.json",
+     "sha256": "1ede01dac516c40d87ad658a059b7464a9e6a25b3a790f9aab76c56c3d5d8ac4",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-80.451&latitude=-3.567&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:31+00:00"
+    },
+    {
+     "archivo": "power_-74.554_-8.379_1981_2025.json",
+     "sha256": "4c3529a628a1a81f5de7e17c51538513ca6e36e85ac10036d64be24204dac836",
+     "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-74.554&latitude=-8.379&start=1981&end=2025&format=JSON",
+     "descargado_utc": "2026-11-15T19:40:32+00:00"
     }
    ],
    "usgs": [
@@ -6038,67 +6307,135 @@
      "archivo": "usgs_1973_1977.csv",
      "sha256": "b195959730b48df2e75aa6717fb4f3756c757bb082ae7469a71e910673c600f7",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:50+00:00"
+     "descargado_utc": "2026-11-15T10:32:09+00:00"
     },
     {
      "archivo": "usgs_1978_1982.csv",
      "sha256": "f5275542fa290568268cc283c383960d0fb0aca64196f1f95d6b608d6ca1dda1",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:51+00:00"
+     "descargado_utc": "2026-11-15T10:32:09+00:00"
     },
     {
      "archivo": "usgs_1983_1987.csv",
      "sha256": "a48602fb11ae60cb2f92b54e1184f8749216244fe24556a0f4e3774902898d6f",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:51+00:00"
+     "descargado_utc": "2026-11-15T10:32:10+00:00"
     },
     {
      "archivo": "usgs_1988_1992.csv",
      "sha256": "d8fbf64991aaff8006c81f70969123d39a6d5e6734994ef1804fe30679705ac1",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:52+00:00"
+     "descargado_utc": "2026-11-15T10:32:10+00:00"
     },
     {
      "archivo": "usgs_1993_1997.csv",
      "sha256": "bca383f30e8896dbd442ee4ac540a72d98032ceb638733d3f7dbd6cb37635091",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:53+00:00"
+     "descargado_utc": "2026-11-15T10:32:10+00:00"
     },
     {
      "archivo": "usgs_1998_2002.csv",
      "sha256": "c577f921f4848c1f48ce6620d6768ceaf7a0b02a625f2b6bb51d7d46e9ee7bc1",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:53+00:00"
+     "descargado_utc": "2026-11-15T10:32:11+00:00"
     },
     {
      "archivo": "usgs_2003_2007.csv",
      "sha256": "06081ab1876bf0e64f82bead8c9db41413781969d68729c83515156f0be28f3d",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:54+00:00"
+     "descargado_utc": "2026-11-15T10:32:11+00:00"
     },
     {
      "archivo": "usgs_2008_2012.csv",
      "sha256": "d53710ae5b3c6aa725ce50edd488b0130eddaeed2bc2c2167e4de8ee0723a3eb",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:54+00:00"
+     "descargado_utc": "2026-11-15T10:32:12+00:00"
     },
     {
      "archivo": "usgs_2013_2017.csv",
      "sha256": "d33196222084b31a4e1cfb3d0148d0e4f02041e09f2c36852b650761c08e7b82",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:55+00:00"
+     "descargado_utc": "2026-11-15T10:32:13+00:00"
     },
     {
      "archivo": "usgs_2018_2022.csv",
      "sha256": "72b239f770ea156f37966ec04fa7ca0d2646f44dfd306f91d5be517712f45f6c",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:55+00:00"
+     "descargado_utc": "2026-11-15T10:32:13+00:00"
     },
     {
      "archivo": "usgs_2023_2026.csv",
      "sha256": "dbe080e268a56779c5d3d14a658202be8a11f5ac16fdc8b9718b3a1ad4317231",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:56+00:00"
+     "descargado_utc": "2026-11-15T10:32:14+00:00"
+    }
+   ],
+   "usgs_nacional": [
+    {
+     "archivo": "usgs_1973_1977.csv",
+     "sha256": "086d03790a4a3c691616bb6860f66925db9dc019f4f65bf7a66ab81ee0687128",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:33+00:00"
+    },
+    {
+     "archivo": "usgs_1978_1982.csv",
+     "sha256": "b15992c395fa06556dd30237c14ebf45922fe7af86e2b21fd217d8126daaf747",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:34+00:00"
+    },
+    {
+     "archivo": "usgs_1983_1987.csv",
+     "sha256": "52b88681a91c39d9fc23f69baf32ef874c2b417966c9ca8933a587fc7ff729e4",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:35+00:00"
+    },
+    {
+     "archivo": "usgs_1988_1992.csv",
+     "sha256": "958673b3acdffaedd2a97b071314a9d1fd213980957219c766af7eecc9fffca0",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:35+00:00"
+    },
+    {
+     "archivo": "usgs_1993_1997.csv",
+     "sha256": "f8cd90eaebdf9cb3a5fe1836811eabd024f632c760529c0a5d48ea77a5cc549b",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:36+00:00"
+    },
+    {
+     "archivo": "usgs_1998_2002.csv",
+     "sha256": "29f1f21a29c88a544d9725b0e999606e6672d9c6b68cdaa859863305e628a65d",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:37+00:00"
+    },
+    {
+     "archivo": "usgs_2003_2007.csv",
+     "sha256": "e945e3daa36cfd48dcff6d68b210bf8f305460141995777b4b9957bb79ad27f7",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:37+00:00"
+    },
+    {
+     "archivo": "usgs_2008_2012.csv",
+     "sha256": "b205da8782a8569942ab1ffb845e1cd52564873e13b1f118f1e393fcbfc2c2df",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:38+00:00"
+    },
+    {
+     "archivo": "usgs_2013_2017.csv",
+     "sha256": "1d5f147e8b6619ae6f0fb0e2117f68f4a096768f498198292cdb7c226f60c8ad",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:39+00:00"
+    },
+    {
+     "archivo": "usgs_2018_2022.csv",
+     "sha256": "67732b660107990d0b05dc7fa716c5eadfb5b0eb3f8eb4c8dece9c126980e896",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:40+00:00"
+    },
+    {
+     "archivo": "usgs_2023_2026.csv",
+     "sha256": "1c1f5364cbd59080d1c56a157368ed9d0f3a205a21bfa085c72154932c4dcb92",
+     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
+     "descargado_utc": "2026-11-15T19:40:40+00:00"
     }
    ]
   },
@@ -6108,7 +6445,12 @@
    "torch": "2.15.0+cpu",
    "scikit_learn": "1.9.1"
   },
-  "segundos": 14.2,
+  "integridad_crudos": {
+   "verificados": 113,
+   "faltantes": 0,
+   "sin_manifiesto": 0
+  },
+  "segundos": 93.9,
   "modo": "completo"
  }
 }

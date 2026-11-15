@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 
@@ -133,9 +134,15 @@ def ingest_fenomenos(
     cfg = cargar_yaml(config)
     ruta = raw / "registro_descarga.json"
     if solo_adicionales:
-        reg = json.loads(ruta.read_text()) if ruta.exists() else {}
+        inicial = json.loads(ruta.read_text()) if ruta.exists() else {}
+        reg = copy.deepcopy(inicial)
         fenomenos.descargar_fuentes_adicionales(cfg, raw, reg, tuple(fuentes.split(",")))
         fenomenos.registrar_desde_manifiestos(reg, raw)
+        # Otra ingesta pudo escribir el registro mientras esta descargaba (p. ej., IMERG y MODIS en
+        # paralelo): se relee y solo se actualizan los pasos que cambió esta corrida.
+        actual = json.loads(ruta.read_text()) if ruta.exists() else {}
+        actual.update({k: v for k, v in reg.items() if inicial.get(k) != v})
+        reg = actual
     else:
         reg = fenomenos.descargar_todo(cfg, raw)
         if reg.get("glc", {}).get("ok"):

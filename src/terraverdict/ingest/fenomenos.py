@@ -143,6 +143,15 @@ def registrar_desde_manifiestos(reg: dict[str, Any], raw: Path) -> dict[str, Any
                 reg[clave] = {"ok": True, "salida": [], "nota": "Tomado del manifiesto de una corrida anterior."}
             if reg[clave].get("nota") and e not in reg[clave]["salida"]:
                 reg[clave]["salida"].append(e)
+    # MODIS: un paso por punto, completo solo si su manifiesto tiene todas las bandas
+    man = raw / "modis" / "manifiesto.json"
+    if man.exists():
+        entradas = json.loads(man.read_text())
+        for punto in {e["archivo"].split("_")[1] for e in entradas}:
+            propias = [e for e in entradas if e["archivo"].startswith(f"modis_{punto}_")]
+            clave = f"modis_lst_{punto}"
+            if len(propias) == 2 and not reg.get(clave, {}).get("ok"):
+                reg[clave] = {"ok": True, "salida": propias, "nota": "Tomado del manifiesto (todas las bandas)."}
     return reg
 
 

@@ -22,9 +22,9 @@ corregidos, en [`bitacora.md`](bitacora.md).
 |---|---|---|
 | NASA POWER (MERRA-2), diaria y mensual | Lluvia, temperatura, humedad, viento, presión y radiación | power.larc.nasa.gov |
 | CHIRPS v2.0, diaria (ClimateSERV) | Lluvia alternativa de 0,05° desde 1981 | Funk et al. (2015), doi:10.1038/sdata.2015.66 |
-| IMERG Final V07, diaria | Lluvia satelital. Requiere aceptar la EULA de GES DISC; pendiente en la corrida del 2026-11-15 | Huffman et al., doi:10.5067/GPM/IMERGDF/DAY/07 |
+| IMERG Final V07, diaria | Lluvia satelital. Token Earthdata y EULA de GES DISC. En la corrida auditada del 2026-11-15 solo 1998–2000 (descarga en curso); solo entra en el contraste de fuentes | Huffman et al., doi:10.5067/GPM/IMERGDF/DAY/07 |
 | NOAA GHCN-Daily, Arequipa | Contraste puntual de lluvia y temperatura | Menne et al. (2012), doi:10.1175/JTECH-D-11-00103.1 |
-| MODIS MOD11A2 v061 (ORNL DAAC) | Temperatura de superficie (contraste de anomalías y tendencias). En la corrida del 2026-11-15 no hubo acceso: ORNL respondía 502 (registrado) | modis.ornl.gov |
+| MODIS MOD11A2 v061 (ORNL DAAC) | Temperatura de superficie (contraste de anomalías y tendencias). Completo desde el 2026-11-15 (ciudad y cabecera, LST diurna y nocturna) | modis.ornl.gov |
 | NOAA CPC ONI | El Niño, con el rezago de publicación de 2 meses | cpc.ncep.noaa.gov |
 | USGS ComCat | Sismos M ≥ 4 a 350 km de Arequipa desde 1973 | earthquake.usgs.gov/fdsnws |
 | IGP, sismos reportados | Contraste nacional desde 2012 | ultimosismo.igp.gob.pe |
@@ -53,7 +53,7 @@ Así se sabe cuánto depende un resultado del producto elegido. Por eso la lluvi
 - **Selección de variables (mRMR con prior físico):** Peng, Long y Ding (2005), doi:10.1109/TPAMI.2005.159.
   - Relevancia: información mutua por k vecinos (Kraskov, Stögbauer y Grassberger, 2004, doi:10.1103/PhysRevE.69.066138).
   - Redundancia: |ρ de Spearman| máxima con las variables ya elegidas.
-  - Puntaje: peso físico (alta 1,0; media 0,8; baja 0,6) × IM × (1 − redundancia).
+  - Puntaje: peso físico × IM × (1 − redundancia). El peso sale del campo `relevancia` del catálogo (`config/fenomenos.yaml`) y su valor (alta 1,0; media 0,8; baja 0,6) de `config/modelos.yaml`. Cada resultado guarda una **ablación con pesos iguales** para medir si el prior cambia la selección.
   - Una variable entra solo si su IM descontada supera la máxima de 50 permutaciones del objetivo (≈ p98 del nulo).
   - La forma multiplicativa reemplazó a la diferencia original porque, con un objetivo binario, la relevancia y la redundancia tenían escalas distintas (ver la bitácora del 2026-11-15).
 
@@ -63,7 +63,7 @@ Así se sabe cuánto depende un resultado del producto elegido. Por eso la lluvi
 - climatología por día del año (±15 días) o tasa media;
 - persistencia de Markov o del último valor.
 
-**Clásicos:** regresión logística, Ridge, GLM de Poisson y gradient boosting por histogramas.
+**Clásicos:** regresión logística, Ridge, GLM de Poisson y gradient boosting por histogramas. Sus hiperparámetros están en `config/modelos.yaml`, fijados a priori: no se ajustan con validación, que ya elige la ventana y el modelo.
 
 **Redes** (PyTorch, CPU; entrada `(lote, L, F)`):
 
@@ -80,11 +80,16 @@ Así se sabe cuánto depende un resultado del producto elegido. Por eso la lluvi
 | iTransformer | Liu et al. (2024), arXiv:2310.06625 |
 | SSM selectivo | Inspirado en Gu y Dao (2023), arXiv:2312.00752, y Gu et al. (2022), arXiv:2111.00396. Es una implementación de referencia, no el núcleo CUDA de Mamba |
 
-**Entrenamiento:**
-- AdamW con recorte de gradiente y parada temprana sobre la validación.
+**Entrenamiento** (hiperparámetros en `config/modelos.yaml`):
+- AdamW con recorte de gradiente (Loshchilov y Hutter, 2019, arXiv:1711.05101).
+- **Parada temprana con el último 15 % del entrenamiento**, no con la validación. Desde la auditoría del 2026-11-15 la validación no interviene en el ajuste de las redes: solo las compara con los demás modelos.
 - Varias semillas: lluvia 2; sequía y sismos 3. Se informa la media y la dispersión entre semillas.
 - La semilla se fija **antes** de crear la red, porque la inicialización también depende de ella.
-- Ensamble: promedio de los 3 mejores en validación.
+
+**Ensambles** (los dos compiten como candidatos):
+- `ensamble_top3`: promedio simple de los 3 mejores en validación.
+- `ensamble_ponderado`: los mismos miembros con pesos ≥ 0 que suman 1 y minimizan la pérdida de la tarea en validación (apilamiento restringido; Breiman, 1996, doi:10.1007/BF00117832).
+- El **puntaje de validación** de un ensamble se calcula fuera de pliegue: la validación se divide en 5 bloques contiguos, y los miembros y pesos de cada bloque salen de los otros cuatro. Sin esto, el ensamble se evaluaba con los mismos datos con que se eligió y competía con ventaja.
 
 ## 5. Evaluación e incertidumbre (`evaluacion/`)
 
@@ -95,14 +100,16 @@ Así se sabe cuánto depende un resultado del producto elegido. Por eso la lluvi
   - tabla de contingencia (POD, FAR, CSI, HSS) con el umbral de máximo CSI **elegido en validación**.
 - **Regresión:** habilidad = 1 − ECM/ECM de la referencia; MAE, RMSE, r.
 - **Conteos:** ganancia de información en bits por mes frente a un Poisson de tasa constante.
-- **Intervalos de confianza:** bootstrap de bloques móviles, que conserva la autocorrelación de los errores.
-- **Diebold-Mariano:** frente a la climatología, con varianza HAC y corrección de Harvey, Leybourne y Newbold (Diebold y Mariano, 1995, doi:10.1080/07350015.1995.10524599).
-- **Calibración isotónica:** ajustada solo en validación.
+- **Intervalos de confianza:** bootstrap de bloques móviles, que conserva la autocorrelación de los errores. El bloque es el mayor entre el de la tarea (10 días; 6 meses) y el automático de Politis y White (2004, doi:10.1081/ETC-120028836; corrección de Patton, Politis y White, 2009) estimado sobre el diferencial de pérdidas. Cada resultado guarda el bloque usado.
+- **Diebold-Mariano:** frente a la climatología, con varianza HAC y corrección de Harvey, Leybourne y Newbold (Diebold y Mariano, 1995, doi:10.1080/07350015.1995.10524599). Usa el **horizonte** del pronóstico (h = 3 en la sequía a 3 meses), porque sus errores se solapan.
+- **Calibración isotónica:** se ajusta con la validación y se aplica a la prueba. El **puntaje de validación** usa la versión fuera de pliegue (5 bloques contiguos; cada bloque calibrado con los demás). Antes la calibración se evaluaba con los mismos datos con que se ajustaba, lo que inflaba el puntaje de los modelos calibrados.
 - **Intervalos conformales al 90 %:** predicción conformal partida (Vovk et al., 2005; Angelopoulos y Bates, 2021, arXiv:2107.07511). Con series temporales la garantía es aproximada: por eso se **mide** la cobertura en prueba.
 - **Deriva:** PSI y Kolmogorov-Smirnov entre el entrenamiento y la prueba. Un PSI > 0,25 genera una advertencia.
 - **Explicabilidad:** importancia por permutación de variables completas en toda la ventana (Breiman, 2001, doi:10.1023/A:1010933404324; Fisher, Rudin y Dominici, 2019).
 
-**Lectura conservadora:** una habilidad está **confirmada** solo si su IC90 completo queda por encima de 0.
+**Regla de evidencia** (`config/modelos.yaml`, una sola fuente para el informe y la web): **confirmada** si el IC90 inferior > 0 **y** p de Diebold-Mariano < 0,10; **indicio** si se cumple solo una; **no confirmada** si ninguna.
+
+La auditoría completa de cada métrica y de cada parámetro está en [`auditoria-metricas.md`](auditoria-metricas.md).
 
 ## 6. Fenómenos sin pronóstico posible con estos datos
 
@@ -159,15 +166,19 @@ Origen móvil anual (Tashman, 2000, doi:10.1016/S0169-2070(00)00065-0). Para cad
 
 Reglas:
 - **Diseño congelado.** Variables, ventana y red se leen del resultado principal; no se vuelven a elegir.
-- **Sin fuga de datos.** Las referencias (climatología y persistencia) se ajustan solo con datos ≤ Y−2. La normalización, el SPI y el umbral de lluvia se ajustan solo con el entrenamiento original (hasta 2015). Por eso el primer año evaluado es 2016.
+- **Sin fuga de datos.** Las referencias (climatología y persistencia) y la normalización se ajustan solo con datos ≤ Y−2. El SPI y el umbral de lluvia se ajustan con el entrenamiento original (hasta 2015). Por eso el primer año evaluado es 2016. En ese corte, el año de validación (2015) entró en el ajuste del SPI y del umbral: solo afecta al régimen "validación del diseño", que ya se lee como optimista.
 - **Dos regímenes:**
   - años ≤ 2020: "validación del diseño". Es optimista, porque esos años sirvieron para elegir el diseño;
   - años posteriores: "fuera de muestra".
 - **Lectura principal.** Por año la muestra es pequeña (12 meses en sequía y sismos). Se lee la habilidad agregada por régimen sobre las predicciones concatenadas, con IC90 por bootstrap de bloques y Diebold-Mariano.
+- **Qué modelo se lee.** La lectura principal es `seleccion_validacion`: en cada año, las predicciones del modelo que eligió la validación de ese corte. Es el procedimiento completo, sin mirar la prueba. Las demás filas (cada modelo por separado) son comparaciones. Destacar la que tuvo mejor cifra en la prueba sería elegir con la prueba.
+- **Bloque del bootstrap.** Los años concatenados son consecutivos, así que un bloque puede cruzar de un año al siguiente sin romper la dependencia. El bloque es el mayor entre el de la tarea y el de Politis-White, y se guarda en el resultado.
 
 ### Dinámica en ventanas
 - Ventanas deslizantes de N años con paso anual (`config/historial.yaml`).
 - N se elige para tener ≥ 240 puntos y una entropía de permutación de orden ≥ 4 con n ≥ 5·d! (Riedl et al., 2013, doi:10.1140/epjst/e2013-01862-7).
+- El **orden** de la entropía de permutación es uno por serie (el que cumple n ≥ 5·d! en su ventana evaluable más corta). Así los valores de una serie son comparables entre ventanas. Antes podía cambiar entre ventanas de la misma serie.
+- **Comparaciones múltiples.** Cada p de ventana se lee por separado y las ventanas se solapan. Por eso cada ventana guarda también el p ajustado por Holm (error de familia) y el q de Benjamini-Hochberg (falsos descubrimientos) dentro de su serie. Con 39 sustitutos el p mínimo es 0,025: con decenas de ventanas, ninguna supera Holm. El conteo sin corregir es **descriptivo**.
 - En cada ventana, con el embedding estimado en la propia ventana: entropía de permutación, entropía muestral, λ de Rosenstein, determinismo, K de la prueba 0-1 y p de no linealidad frente a 39 sustitutos IAAFT.
 - Prueba (`tests/experimentos/test_historial.py`): el método distingue el mapa logístico del ruido en cada ventana.
 
@@ -183,3 +194,5 @@ tv experimentos --solo historial  # solo el historial año a año y la dinámica
 tv informe                     # docs/experimentos.md (solo cifras de los JSON)
 pytest                         # motor, caos, humo con un recorte real de los datos e integración con el backend
 ```
+
+Determinismo: ver [`auditoria-metricas.md`](auditoria-metricas.md#reproducibilidad), que compara dos corridas completas con las mismas semillas.

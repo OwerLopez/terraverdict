@@ -542,8 +542,8 @@
  },
  "imerg": {
   "ok": false,
-  "error": "PermissionError: GES DISC respondió 401: <!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html><head>\n<title>401 Unauthorized</title>\n</head><body>\n<h1>Unauthorized</h1>\n<p>This server could not verify that you\nare authorized to access th. Si es 'EULA Acceptance Failure', el dueño de la cuenta de",
-  "segundos": 389.7
+  "error": "ConnectionError: HTTPSConnectionPool(host='gpm1.gesdisc.eosdis.nasa.gov', port=443): Max retries exceeded with url: /opendap/GPM_L3/GPM_3IMERGDF.07/2000/07/3B-DAY.MS.MRG.3IMERG.20000710-S000000-E235959.V07B.nc4.ascii?precipitation.precipitation%5B0:0%5D%5B1084:1087%5D%5B736:740%5D (Caused by NameRes",
+  "segundos": 5149.6
  },
  "chirps_ciudad_local": {
   "ok": true,
@@ -1451,13 +1451,55 @@
   "nota": "Tomado del manifiesto de una corrida anterior."
  },
  "modis_lst_ciudad": {
-  "ok": false,
-  "error": "RetryError: HTTPSConnectionPool(host='modis.ornl.gov', port=443): Max retries exceeded with url: /rst/api/v1/MOD11A2/dates?latitude=-16.4&longitude=-71.535 (Caused by ResponseError('too many 502 error responses'))",
-  "segundos": 236.6
+  "ok": true,
+  "salida": [
+   {
+    "archivo": "modis_ciudad_LST_Day_1km.json",
+    "sha256": "1e2efa50e5752b045b2a2c668b2083c3ae8dfc4194ec051aad9e3cf589c30fbb",
+    "bytes": 180126,
+    "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Day_1km",
+    "producto": "MOD11A2",
+    "version": "061",
+    "descargado_utc": "2026-11-15T19:40:31+00:00",
+    "fechas": 1225
+   },
+   {
+    "archivo": "modis_ciudad_LST_Night_1km.json",
+    "sha256": "1ca923f5231fa2740281517298fb8cc120489cdf9a6f401903e41783c324aba8",
+    "bytes": 182358,
+    "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Night_1km",
+    "producto": "MOD11A2",
+    "version": "061",
+    "descargado_utc": "2026-11-15T19:48:37+00:00",
+    "fechas": 1225
+   }
+  ],
+  "nota": "Tomado del manifiesto (todas las bandas)."
  },
  "modis_lst_cabecera": {
-  "ok": false,
-  "error": "RetryError: HTTPSConnectionPool(host='modis.ornl.gov', port=443): Max retries exceeded with url: /rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Day_1km&startDate=A2005305&endDate=A2006009&kmAboveBelow=0&kmLeftRight=0 (Caused by ResponseError('too many 502 error responses'))",
-  "segundos": 1231.5
+  "ok": true,
+  "salida": [
+   {
+    "archivo": "modis_cabecera_LST_Day_1km.json",
+    "sha256": "64370a990e76babf08b6b3ac62917d8acbd389f0e107d1292c645b0b22985287",
+    "bytes": 180082,
+    "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Day_1km",
+    "producto": "MOD11A2",
+    "version": "061",
+    "descargado_utc": "2026-11-15T19:53:42+00:00",
+    "fechas": 1225
+   },
+   {
+    "archivo": "modis_cabecera_LST_Night_1km.json",
+    "sha256": "eb29fb908214681c9e1de707a590e6e4d4ed48b283d0150c511a1ab1e2f93b1f",
+    "bytes": 182442,
+    "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Night_1km",
+    "producto": "MOD11A2",
+    "version": "061",
+    "descargado_utc": "2026-11-15T19:56:58+00:00",
+    "fechas": 1225
+   }
+  ],
+  "nota": "Tomado del manifiesto (todas las bandas)."
  }
 }

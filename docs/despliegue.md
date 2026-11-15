@@ -22,7 +22,7 @@ TerraVerdict tiene tres formas de desplegarse. Todas sirven los mismos resultado
   1. migra;
   2. importa catálogos, eventos y el contrato científico;
   3. crea el administrador si existen `TV_ADMIN_EMAIL` y `TV_ADMIN_PASSWORD`.
-- `api/requirements.txt`: dependencias de la función, fijadas a las versiones con las que pasan las 67 pruebas del backend. Una prueba (`tests/integridad/test_despliegue.py`) exige que cubran todo `backend/pyproject.toml`.
+- `api/requirements.txt`: dependencias de la función, fijadas a las versiones con las que pasan las pruebas del backend (73 al 2026-11-15). Una prueba (`tests/integridad/test_despliegue.py`) exige que cubran todo `backend/pyproject.toml`.
 
 ### Verificación realizada (local, Python 3.12, el que usa Vercel por defecto)
 - Entorno nuevo con solo `api/requirements.txt`, en modo producción, con `/tmp` vacío.

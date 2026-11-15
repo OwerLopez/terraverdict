@@ -4,27 +4,27 @@
 
 | Campo | Valor |
 |---|---|
-| Generado (UTC) | 2026-11-15T16:57:23+00:00 |
-| Commit del código | `571b8edc64b09be3f21f90ffa75c70a5941d64c7` |
+| Generado (UTC) | 2026-11-15T21:28:43+00:00 |
+| Commit del código | `98846dfe121502312b8e4386cc85c94020d52034` |
 | Modo | completo |
-| Configuración (SHA-256) | `3cbb05a406bb35a4…` |
+| Configuración (SHA-256) | `0382c23985f0b0c0…` |
 | Versiones | python 3.13.15, numpy 2.5.4, torch 2.15.0+cpu, scikit_learn 1.9.1 |
-| Crudos con hash | 73 |
-| Tiempo por experimento (s) | volcanes 0, deslizamientos 0, sismos 14, fuentes 1, sequia 56, sequia_chirps 27, lluvia_extrema 173, lluvia_extrema_chirps 159, caos 55, nacional 49, historial 1232 |
+| Crudos con hash | 113 |
+| Tiempo por experimento (s) | volcanes 0, deslizamientos 0, sismos 94, fuentes 1, sequia 605, sequia_chirps 671, lluvia_extrema 448, lluvia_extrema_chirps 1151, caos 60, nacional 30, historial 3333 |
 
-**Cómo leer.** La partición es temporal y está congelada (entrenamiento 1981–2015, validación 2016–2020, prueba 2021–2026). Todo se elige con validación; la prueba se usa una vez. Una habilidad está **confirmada** solo si su IC90 por bootstrap de bloques queda por encima de 0 **y** la prueba de Diebold-Mariano frente a la climatología da p < 0,10; si solo se cumple una de las dos, es un **indicio**.
+**Cómo leer.** La partición es temporal y está congelada (entrenamiento 1981–2015, validación 2016–2020, prueba 2021–2026). Todo se elige con validación; la prueba se usa una vez. Una habilidad está **confirmada** solo si su IC90 por bootstrap de bloques queda por encima de 0 **y** la prueba de Diebold-Mariano frente a la climatología da p < 0,10; si solo se cumple una de las dos, es un **indicio**. Las reglas de método y los hiperparámetros están en `config/modelos.yaml`; su auditoría, en `docs/auditoria-metricas.md`.
 
 ## Resumen
 
 | Tarea | Modelo elegido (validación) | Habilidad en prueba | IC90 | p DM | Lectura | Publicación |
 |---|---|---|---|---|---|---|
-| Lluvia fuerte t+1 · POWER | SSM selectivo | 0,080 | 0,003 a 0,151 | 0,152 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | publica |
-| Lluvia fuerte t+1 · CHIRPS | Ensamble (3 mejores en validación) | 0,046 | -0,007 a 0,090 | 0,165 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | publica |
-| SPI-3 a 1 mes(es) · POWER | N-BEATS | 0,776 | 0,675 a 0,843 | 0,017 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
-| SPI-3 a 3 mes(es) · POWER | iTransformer | 0,198 | 0,119 a 0,263 | 0,013 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
-| SPI-3 a 1 mes(es) · CHIRPS | Ensamble (3 mejores en validación) | 0,616 | 0,491 a 0,770 | 0,015 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
-| SPI-3 a 3 mes(es) · CHIRPS | DLinear | 0,087 | 0,048 a 0,114 | 0,003 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
-| Conteo sísmico mensual | Ensamble (3 mejores en validación) | 0,253 | 0,066 a 0,492 | 0,074 | confirmada (IC90 > 0 y DM p < 0,10); refleja agrupamiento de réplicas, no es pronóstico de sismos | publica |
+| Lluvia fuerte t+1 · POWER | Ensamble ponderado (pesos de validación) | 0,092 | 0,021 a 0,166 | 0,096 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| Lluvia fuerte t+1 · CHIRPS | GRU | 0,051 | 0,013 a 0,086 | 0,050 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| SPI-3 a 1 mes(es) · POWER | Ridge | 0,680 | 0,539 a 0,780 | 0,022 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| SPI-3 a 3 mes(es) · POWER | iTransformer | 0,141 | 0,094 a 0,191 | 0,006 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| SPI-3 a 1 mes(es) · CHIRPS | Ridge | 0,576 | 0,474 a 0,670 | 0,008 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| SPI-3 a 3 mes(es) · CHIRPS | DLinear | 0,083 | 0,046 a 0,109 | 0,006 | confirmada (IC90 > 0 y DM p < 0,10) | publica |
+| Conteo sísmico mensual | LSTM | 0,257 | 0,057 a 0,495 | 0,073 | confirmada (IC90 > 0 y DM p < 0,10); refleja agrupamiento de réplicas, no es pronóstico de sismos | publica |
 
 ## Lluvia fuerte a 1 día · NASA POWER
 
@@ -47,21 +47,22 @@ Métrica principal: habilidad de Brier frente a la climatología. En **negrita**
 |---|---|---|---|---|---|---|
 | Climatología (referencia) | referencia | 0,000 | 0,000 | 0,000 a 0,000 | — |  |
 | Persistencia (referencia) | referencia | 0,041 | 0,020 | -0,028 a 0,070 | 0,525 |  |
-| **SSM selectivo** | red neuronal | 0,235 | 0,080 | 0,003 a 0,151 | 0,152 | 0,019 |
-| Ensamble (3 mejores en validación) | ensamble | 0,230 | 0,099 | 0,028 a 0,168 | 0,068 |  |
-| LSTM | red neuronal | 0,210 | 0,096 | 0,020 a 0,164 | 0,081 | 0,008 |
-| Regresión logística | clasico | 0,207 | 0,072 | 0,001 a 0,145 | 0,163 |  |
-| GRU | red neuronal | 0,207 | 0,084 | 0,019 a 0,147 | 0,105 | 0,061 |
-| DLinear | red neuronal | 0,202 | 0,048 | -0,033 a 0,131 | 0,391 | 0,069 |
-| iTransformer | red neuronal | 0,201 | 0,048 | -0,026 a 0,122 | 0,353 | 0,041 |
-| N-BEATS | red neuronal | 0,193 | 0,117 | 0,052 a 0,176 | 0,021 | 0,034 |
-| TCN | red neuronal | 0,188 | 0,113 | 0,045 a 0,180 | 0,036 | 0,055 |
-| N-HiTS | red neuronal | 0,185 | 0,097 | 0,025 a 0,164 | 0,066 | 0,028 |
-| MLP | red neuronal | 0,179 | 0,086 | 0,017 a 0,157 | 0,109 | 0,009 |
-| Gradient boosting | clasico | 0,153 | 0,086 | 0,033 a 0,134 | 0,032 |  |
-| PatchTST | red neuronal | 0,047 | 0,001 | -0,043 a 0,036 | 0,959 | 0,080 |
+| **Ensamble ponderado (pesos de validación)** | ensamble | 0,177 | 0,092 | 0,021 a 0,166 | 0,096 |  |
+| Ensamble (3 mejores en validación) | ensamble | 0,177 | 0,096 | 0,028 a 0,168 | 0,077 |  |
+| SSM selectivo | red neuronal | 0,173 | 0,071 | -0,010 a 0,140 | 0,199 | 0,022 |
+| iTransformer | red neuronal | 0,164 | 0,055 | -0,020 a 0,139 | 0,323 | 0,062 |
+| GRU | red neuronal | 0,148 | 0,076 | 0,011 a 0,146 | 0,135 | 0,010 |
+| Regresión logística | clasico | 0,141 | 0,072 | 0,001 a 0,145 | 0,163 |  |
+| DLinear | red neuronal | 0,119 | 0,020 | -0,063 a 0,109 | 0,721 | 0,057 |
+| LSTM | red neuronal | 0,115 | 0,062 | -0,007 a 0,134 | 0,224 | 0,010 |
+| TCN | red neuronal | 0,109 | 0,078 | 0,005 a 0,154 | 0,161 | 0,016 |
+| N-HiTS | red neuronal | 0,107 | 0,062 | -0,006 a 0,125 | 0,200 | 0,050 |
+| N-BEATS | red neuronal | 0,106 | 0,078 | 0,008 a 0,152 | 0,143 | 0,043 |
+| MLP | red neuronal | 0,105 | 0,087 | 0,013 a 0,165 | 0,107 | 0,013 |
+| Gradient boosting | clasico | 0,096 | 0,086 | 0,033 a 0,134 | 0,032 |  |
+| PatchTST | red neuronal | -0,003 | -0,001 | -0,060 a 0,040 | 0,974 | 0,005 |
 
-Lectura (regla IC90): habilidad del modelo elegido indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10).
 
 ### Variables seleccionadas (mRMR con prior físico, solo entrenamiento)
 
@@ -92,32 +93,36 @@ Elegida: **14 días** (mejor en validación). Sugeridas por la señal: decorrela
 
 | Conjunto de variables | gbm | logistica | ssm_selectivo |
 |---|---|---|---|
-| seleccion mrmr | 0,153 / 0,086 | 0,207 / 0,072 | 0,223 / 0,070 |
-| solo historia lluvia | 0,142 / 0,031 | 0,198 / 0,084 | 0,209 / 0,088 |
-| sin oni | 0,189 / 0,078 | 0,206 / 0,106 | 0,202 / 0,092 |
-| todas las variables | 0,203 / 0,054 | 0,208 / 0,090 | 0,212 / 0,047 |
+| seleccion mrmr | 0,096 / 0,086 | 0,141 / 0,072 | 0,166 / 0,055 |
+| solo historia lluvia | 0,090 / 0,031 | 0,146 / 0,084 | 0,119 / 0,094 |
+| sin oni | 0,145 / 0,078 | 0,152 / 0,106 | 0,167 / 0,077 |
+| todas las variables | 0,159 / 0,054 | 0,152 / 0,090 | 0,121 / 0,089 |
 
 ### Calibración del modelo elegido (prueba)
 
-ECE = 0,032.
+ECE = 0,035.
 
 | Probabilidad pronosticada | Frecuencia observada | n |
 |---|---|---|
-| 0,000 | 0,022 | 91 |
-| 0,007 | 0,024 | 127 |
-| 0,051 | 0,025 | 157 |
-| 0,082 | 0,083 | 228 |
-| 0,158 | 0,107 | 178 |
-| 0,370 | 0,306 | 245 |
+| 0,007 | 0,010 | 98 |
+| 0,018 | 0,019 | 106 |
+| 0,040 | 0,078 | 90 |
+| 0,054 | 0,052 | 116 |
+| 0,080 | 0,094 | 85 |
+| 0,105 | 0,041 | 121 |
+| 0,148 | 0,088 | 102 |
+| 0,211 | 0,170 | 94 |
+| 0,280 | 0,218 | 101 |
+| 0,464 | 0,407 | 113 |
 
 ### Eventos documentados en el periodo de prueba
 
 | Evento | Mes | Días con lluvia fuerte | P media del modelo esos días | P climatológica esos días |
 |---|---|---|---|---|
-| Represas del sistema Chili con 159 de 409 hm³ útiles | 2023-11 | 3 | 0,097 | 0,015 |
-| SEDAPAR paraliza sus dos plantas por huaicos y rebose de Aguada Blanca | 2024-03 | 4 | 0,258 | 0,089 |
-| Turbidez de 5000 NTU detiene la producción de agua potable | 2025-02 | 9 | 0,513 | 0,151 |
-| Segundo episodio de turbidez con el Chili a 50 m³/s | 2025-02 | 9 | 0,513 | 0,151 |
+| Represas del sistema Chili con 159 de 409 hm³ útiles | 2023-11 | 3 | 0,089 | 0,015 |
+| SEDAPAR paraliza sus dos plantas por huaicos y rebose de Aguada Blanca | 2024-03 | 4 | 0,305 | 0,089 |
+| Turbidez de 5000 NTU detiene la producción de agua potable | 2025-02 | 9 | 0,500 | 0,151 |
+| Segundo episodio de turbidez con el Chili a 50 m³/s | 2025-02 | 9 | 0,500 | 0,151 |
 
 ### Deriva de las entradas
 
@@ -162,21 +167,22 @@ Métrica principal: habilidad de Brier frente a la climatología. En **negrita**
 |---|---|---|---|---|---|---|
 | Climatología (referencia) | referencia | 0,000 | 0,000 | 0,000 a 0,000 | — |  |
 | Persistencia (referencia) | referencia | 0,014 | 0,106 | 0,056 a 0,154 | 0,000 |  |
-| **Ensamble (3 mejores en validación)** | ensamble | 0,109 | 0,046 | -0,007 a 0,090 | 0,165 |  |
-| Regresión logística | clasico | 0,090 | -0,024 | -0,105 a 0,045 | 0,622 |  |
-| GRU | red neuronal | 0,089 | 0,027 | -0,023 a 0,066 | 0,320 | 0,036 |
-| SSM selectivo | red neuronal | 0,087 | 0,016 | -0,059 a 0,088 | 0,703 | 0,045 |
-| Gradient boosting | clasico | 0,086 | 0,019 | -0,025 a 0,057 | 0,433 |  |
-| N-BEATS | red neuronal | 0,085 | -0,016 | -0,086 a 0,043 | 0,694 | 0,060 |
-| iTransformer | red neuronal | 0,083 | 0,075 | 0,014 a 0,127 | 0,043 | 0,080 |
-| N-HiTS | red neuronal | 0,080 | -0,014 | -0,065 a 0,031 | 0,611 | 0,054 |
-| MLP | red neuronal | 0,075 | -0,030 | -0,108 a 0,034 | 0,491 | 0,011 |
-| LSTM | red neuronal | 0,073 | -0,001 | -0,047 a 0,040 | 0,975 | 0,061 |
-| TCN | red neuronal | 0,064 | 0,062 | 0,024 a 0,097 | 0,025 | 0,164 |
-| DLinear | red neuronal | 0,055 | 0,012 | -0,049 a 0,061 | 0,708 | 0,203 |
-| PatchTST | red neuronal | 0,026 | -0,024 | -0,069 a 0,020 | 0,360 | 0,019 |
+| **GRU** | red neuronal | 0,046 | 0,051 | 0,013 a 0,086 | 0,050 | 0,039 |
+| Ensamble ponderado (pesos de validación) | ensamble | 0,025 | 0,069 | 0,025 a 0,106 | 0,010 |  |
+| Regresión logística | clasico | 0,023 | -0,024 | -0,105 a 0,045 | 0,622 |  |
+| Ensamble (3 mejores en validación) | ensamble | 0,019 | 0,058 | 0,013 a 0,098 | 0,048 |  |
+| iTransformer | red neuronal | 0,016 | 0,069 | 0,022 a 0,115 | 0,032 | 0,076 |
+| Gradient boosting | clasico | 0,014 | 0,019 | -0,025 a 0,057 | 0,433 |  |
+| SSM selectivo | red neuronal | 0,010 | 0,041 | -0,046 a 0,118 | 0,449 | 0,004 |
+| TCN | red neuronal | -0,008 | 0,052 | 0,023 a 0,077 | 0,012 | 0,022 |
+| PatchTST | red neuronal | -0,010 | 0,005 | -0,021 a 0,032 | 0,757 | 0,005 |
+| DLinear | red neuronal | -0,026 | 0,028 | -0,023 a 0,072 | 0,384 | 0,115 |
+| N-HiTS | red neuronal | -0,026 | 0,029 | 0,001 a 0,053 | 0,095 | 0,072 |
+| N-BEATS | red neuronal | -0,029 | 0,043 | 0,003 a 0,080 | 0,103 | 0,012 |
+| LSTM | red neuronal | -0,029 | 0,027 | -0,012 a 0,060 | 0,282 | 0,053 |
+| MLP | red neuronal | -0,055 | 0,039 | 0,010 a 0,065 | 0,041 | 0,009 |
 
-Lectura (regla IC90): habilidad del modelo elegido no confirmada (IC90 incluye 0 y DM p ≥ 0,10).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10).
 
 ### Variables seleccionadas (mRMR con prior físico, solo entrenamiento)
 
@@ -207,36 +213,32 @@ Elegida: **14 días** (mejor en validación). Sugeridas por la señal: decorrela
 
 | Conjunto de variables | gbm | gru | logistica |
 |---|---|---|---|
-| seleccion mrmr | 0,086 / 0,019 | 0,089 / 0,038 | 0,090 / -0,024 |
-| solo historia lluvia | 0,064 / 0,065 | 0,117 / 0,091 | 0,106 / 0,054 |
-| sin oni | 0,068 / 0,075 | 0,100 / 0,082 | 0,086 / 0,058 |
-| todas las variables | 0,071 / 0,054 | 0,100 / 0,070 | 0,085 / 0,069 |
+| seleccion mrmr | 0,014 / 0,019 | 0,053 / 0,041 | 0,023 / -0,024 |
+| solo historia lluvia | 0,006 / 0,065 | 0,046 / 0,085 | 0,049 / 0,054 |
+| sin oni | 0,019 / 0,075 | 0,012 / 0,055 | 0,023 / 0,058 |
+| todas las variables | 0,022 / 0,054 | 0,029 / 0,053 | 0,022 / 0,069 |
 
 ### Calibración del modelo elegido (prueba)
 
-ECE = 0,017.
+ECE = 0,016.
 
 | Probabilidad pronosticada | Frecuencia observada | n |
 |---|---|---|
-| 0,001 | 0,000 | 74 |
-| 0,003 | 0,000 | 129 |
-| 0,006 | 0,000 | 104 |
-| 0,013 | 0,000 | 78 |
-| 0,027 | 0,032 | 125 |
-| 0,057 | 0,080 | 88 |
-| 0,086 | 0,059 | 119 |
-| 0,130 | 0,059 | 102 |
-| 0,166 | 0,144 | 104 |
-| 0,253 | 0,252 | 103 |
+| 0,000 | 0,000 | 257 |
+| 0,015 | 0,023 | 177 |
+| 0,030 | 0,010 | 104 |
+| 0,067 | 0,072 | 152 |
+| 0,115 | 0,039 | 128 |
+| 0,202 | 0,211 | 208 |
 
 ### Eventos documentados en el periodo de prueba
 
 | Evento | Mes | Días con lluvia fuerte | P media del modelo esos días | P climatológica esos días |
 |---|---|---|---|---|
 | Represas del sistema Chili con 159 de 409 hm³ útiles | 2023-11 | 0 | — | — |
-| SEDAPAR paraliza sus dos plantas por huaicos y rebose de Aguada Blanca | 2024-03 | 3 | 0,141 | 0,115 |
-| Turbidez de 5000 NTU detiene la producción de agua potable | 2025-02 | 3 | 0,190 | 0,136 |
-| Segundo episodio de turbidez con el Chili a 50 m³/s | 2025-02 | 3 | 0,190 | 0,136 |
+| SEDAPAR paraliza sus dos plantas por huaicos y rebose de Aguada Blanca | 2024-03 | 3 | 0,125 | 0,115 |
+| Turbidez de 5000 NTU detiene la producción de agua potable | 2025-02 | 3 | 0,157 | 0,136 |
+| Segundo episodio de turbidez con el Chili a 50 m³/s | 2025-02 | 3 | 0,157 | 0,136 |
 
 ### Deriva de las entradas
 
@@ -280,23 +282,24 @@ Métrica principal: habilidad (1 − ECM/ECM de la climatología). En **negrita*
 |---|---|---|---|---|---|---|
 | Climatología (referencia) | referencia | 0,000 | 0,000 | 0,000 a 0,000 | — |  |
 | Persistencia (referencia) | referencia | 0,393 | 0,456 | 0,130 a 0,671 | 0,114 |  |
-| **N-BEATS** | red neuronal | 0,740 | 0,776 | 0,675 a 0,843 | 0,017 | 0,012 |
-| N-HiTS | red neuronal | 0,740 | 0,776 | 0,675 a 0,843 | 0,017 | 0,012 |
-| Ensamble (3 mejores en validación) | ensamble | 0,739 | 0,764 | 0,666 a 0,837 | 0,016 |  |
-| TCN | red neuronal | 0,718 | 0,724 | 0,615 a 0,806 | 0,015 | 0,012 |
-| MLP | red neuronal | 0,681 | 0,720 | 0,627 a 0,784 | 0,016 | 0,021 |
-| GRU | red neuronal | 0,639 | 0,655 | 0,561 a 0,731 | 0,014 | 0,019 |
-| Ridge | clasico | 0,634 | 0,680 | 0,539 a 0,780 | 0,022 |  |
-| LSTM | red neuronal | 0,619 | 0,624 | 0,505 a 0,725 | 0,016 | 0,013 |
+| **Ridge** | clasico | 0,634 | 0,680 | 0,539 a 0,780 | 0,022 |  |
+| TCN | red neuronal | 0,620 | 0,634 | 0,506 a 0,731 | 0,019 | 0,012 |
+| N-BEATS | red neuronal | 0,610 | 0,643 | 0,510 a 0,737 | 0,019 | 0,008 |
+| N-HiTS | red neuronal | 0,610 | 0,643 | 0,510 a 0,737 | 0,019 | 0,008 |
+| Ensamble (3 mejores en validación) | ensamble | 0,609 | 0,664 | 0,530 a 0,760 | 0,018 |  |
+| MLP | red neuronal | 0,606 | 0,657 | 0,525 a 0,750 | 0,020 | 0,017 |
 | Gradient boosting | clasico | 0,597 | 0,576 | 0,493 a 0,658 | 0,008 |  |
-| iTransformer | red neuronal | 0,593 | 0,549 | 0,425 a 0,639 | 0,014 | 0,024 |
-| PatchTST | red neuronal | 0,572 | 0,545 | 0,396 a 0,676 | 0,014 | 0,056 |
-| SSM selectivo | red neuronal | 0,489 | 0,387 | 0,227 a 0,508 | 0,024 | 0,025 |
-| DLinear | red neuronal | 0,306 | 0,275 | 0,203 a 0,337 | 0,014 | 0,253 |
+| Ensamble ponderado (pesos de validación) | ensamble | 0,592 | 0,678 | 0,543 a 0,774 | 0,019 |  |
+| GRU | red neuronal | 0,591 | 0,605 | 0,504 a 0,688 | 0,015 | 0,005 |
+| iTransformer | red neuronal | 0,569 | 0,535 | 0,411 a 0,620 | 0,014 | 0,007 |
+| PatchTST | red neuronal | 0,559 | 0,547 | 0,409 a 0,657 | 0,016 | 0,043 |
+| LSTM | red neuronal | 0,555 | 0,555 | 0,414 a 0,675 | 0,020 | 0,001 |
+| SSM selectivo | red neuronal | 0,456 | 0,352 | 0,218 a 0,455 | 0,021 | 0,021 |
+| DLinear | red neuronal | 0,074 | 0,051 | 0,039 a 0,069 | 0,003 | 0,050 |
 
-Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,587. Cobertura del intervalo conformal del 90 % en prueba: 0,900 (ancho 2,531).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,412. Cobertura del intervalo conformal del 90 % en prueba: 0,900 (ancho 3,209).
 
-Categoría sequía (SPI-3 ≤ −1) en prueba: aciertos 2, falsas alarmas 0, fallos 1; POD 0,667, FAR 0,000, CSI 0,667.
+Categoría sequía (SPI-3 ≤ −1) en prueba: aciertos 1, falsas alarmas 0, fallos 2; POD 0,333, FAR 0,000, CSI 0,333.
 
 - Decisión: **Se publica**.
 
@@ -313,22 +316,23 @@ Métrica principal: habilidad (1 − ECM/ECM de la climatología). En **negrita*
 | Modelo | Familia | Validación | Prueba | IC90 prueba | p Diebold-Mariano | Dispersión entre semillas |
 |---|---|---|---|---|---|---|
 | Climatología (referencia) | referencia | 0,000 | 0,000 | 0,000 a 0,000 | — |  |
-| Persistencia (referencia) | referencia | -0,335 | -0,305 | -0,722 a 0,148 | 0,243 |  |
-| **iTransformer** | red neuronal | 0,362 | 0,198 | 0,119 a 0,263 | 0,013 | 0,020 |
-| Ensamble (3 mejores en validación) | ensamble | 0,330 | 0,205 | 0,090 a 0,285 | 0,031 |  |
-| N-HiTS | red neuronal | 0,301 | 0,209 | 0,065 a 0,321 | 0,084 | 0,023 |
-| DLinear | red neuronal | 0,291 | 0,181 | 0,066 a 0,268 | 0,043 | 0,058 |
-| N-BEATS | red neuronal | 0,287 | 0,144 | 0,034 a 0,234 | 0,060 | 0,028 |
-| GRU | red neuronal | 0,273 | 0,033 | -0,103 a 0,140 | 0,651 | 0,014 |
-| MLP | red neuronal | 0,266 | 0,134 | 0,027 a 0,224 | 0,081 | 0,015 |
-| LSTM | red neuronal | 0,266 | 0,139 | 0,025 a 0,219 | 0,071 | 0,023 |
-| TCN | red neuronal | 0,249 | 0,167 | 0,002 a 0,308 | 0,173 | 0,052 |
-| Gradient boosting | clasico | 0,236 | 0,040 | -0,125 a 0,124 | 0,532 |  |
-| Ridge | clasico | 0,174 | -0,235 | -0,702 a 0,036 | 0,175 |  |
-| SSM selectivo | red neuronal | 0,160 | 0,148 | 0,016 a 0,260 | 0,099 | 0,026 |
-| PatchTST | red neuronal | 0,039 | 0,135 | 0,042 a 0,168 | 0,067 | 0,084 |
+| Persistencia (referencia) | referencia | -0,335 | -0,305 | -0,722 a 0,148 | 0,259 |  |
+| **iTransformer** | red neuronal | 0,267 | 0,141 | 0,094 a 0,191 | 0,006 | 0,010 |
+| Gradient boosting | clasico | 0,236 | 0,040 | -0,125 a 0,124 | 0,545 |  |
+| DLinear | red neuronal | 0,235 | 0,149 | 0,054 a 0,225 | 0,042 | 0,063 |
+| N-HiTS | red neuronal | 0,223 | 0,122 | 0,025 a 0,179 | 0,105 | 0,021 |
+| N-BEATS | red neuronal | 0,211 | 0,064 | -0,022 a 0,120 | 0,195 | 0,038 |
+| MLP | red neuronal | 0,175 | 0,053 | -0,020 a 0,103 | 0,232 | 0,042 |
+| Ridge | clasico | 0,174 | -0,235 | -0,702 a 0,036 | 0,190 |  |
+| Ensamble (3 mejores en validación) | ensamble | 0,169 | 0,124 | 0,048 a 0,177 | 0,029 |  |
+| TCN | red neuronal | 0,114 | -0,046 | -0,234 a 0,079 | 0,588 | 0,033 |
+| LSTM | red neuronal | 0,103 | -0,013 | -0,079 a 0,037 | 0,735 | 0,044 |
+| Ensamble ponderado (pesos de validación) | ensamble | 0,078 | 0,122 | 0,063 a 0,165 | 0,015 |  |
+| GRU | red neuronal | 0,067 | -0,047 | -0,126 a -0,001 | 0,193 | 0,028 |
+| SSM selectivo | red neuronal | 0,056 | 0,051 | -0,068 a 0,159 | 0,517 | 0,008 |
+| PatchTST | red neuronal | -0,066 | -0,019 | -0,056 a 0,001 | 0,110 | 0,138 |
 
-Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,386. Cobertura del intervalo conformal del 90 % en prueba: 0,817 (ancho 4,277).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,342. Cobertura del intervalo conformal del 90 % en prueba: 0,833 (ancho 4,337).
 
 Categoría sequía (SPI-3 ≤ −1) en prueba: aciertos 0, falsas alarmas 0, fallos 3; POD 0,000, FAR —, CSI 0,000.
 
@@ -354,21 +358,22 @@ Métrica principal: habilidad (1 − ECM/ECM de la climatología). En **negrita*
 |---|---|---|---|---|---|---|
 | Climatología (referencia) | referencia | 0,000 | 0,000 | 0,000 a 0,000 | — |  |
 | Persistencia (referencia) | referencia | -0,114 | -0,053 | -0,501 a 0,359 | 0,844 |  |
-| **Ensamble (3 mejores en validación)** | ensamble | 0,727 | 0,616 | 0,491 a 0,770 | 0,015 |  |
-| N-BEATS | red neuronal | 0,727 | 0,600 | 0,471 a 0,758 | 0,018 | 0,019 |
-| N-HiTS | red neuronal | 0,727 | 0,600 | 0,471 a 0,758 | 0,018 | 0,019 |
-| MLP | red neuronal | 0,713 | 0,633 | 0,517 a 0,782 | 0,011 | 0,018 |
-| TCN | red neuronal | 0,681 | 0,530 | 0,449 a 0,666 | 0,010 | 0,027 |
-| Ridge | clasico | 0,658 | 0,576 | 0,474 a 0,670 | 0,008 |  |
-| LSTM | red neuronal | 0,636 | 0,524 | 0,453 a 0,638 | 0,005 | 0,012 |
-| GRU | red neuronal | 0,628 | 0,576 | 0,504 a 0,668 | 0,004 | 0,010 |
+| **Ridge** | clasico | 0,658 | 0,576 | 0,474 a 0,670 | 0,008 |  |
+| Ensamble ponderado (pesos de validación) | ensamble | 0,639 | 0,568 | 0,470 a 0,660 | 0,008 |  |
+| Ensamble (3 mejores en validación) | ensamble | 0,570 | 0,498 | 0,419 a 0,604 | 0,008 |  |
 | Gradient boosting | clasico | 0,517 | 0,408 | 0,300 a 0,535 | 0,018 |  |
-| DLinear | red neuronal | 0,490 | 0,461 | 0,397 a 0,560 | 0,000 | 0,169 |
-| iTransformer | red neuronal | 0,459 | 0,533 | 0,436 a 0,625 | 0,002 | 0,075 |
-| PatchTST | red neuronal | 0,301 | 0,281 | 0,213 a 0,363 | 0,000 | 0,163 |
-| SSM selectivo | red neuronal | 0,276 | 0,249 | 0,151 a 0,402 | 0,005 | 0,033 |
+| N-BEATS | red neuronal | 0,513 | 0,370 | 0,229 a 0,536 | 0,033 | 0,029 |
+| N-HiTS | red neuronal | 0,513 | 0,370 | 0,229 a 0,536 | 0,033 | 0,029 |
+| MLP | red neuronal | 0,486 | 0,380 | 0,248 a 0,540 | 0,027 | 0,106 |
+| DLinear | red neuronal | 0,479 | 0,438 | 0,377 a 0,530 | 0,000 | 0,162 |
+| GRU | red neuronal | 0,425 | 0,287 | 0,197 a 0,425 | 0,020 | 0,040 |
+| TCN | red neuronal | 0,408 | 0,284 | 0,148 a 0,467 | 0,024 | 0,035 |
+| LSTM | red neuronal | 0,379 | 0,210 | 0,106 a 0,371 | 0,043 | 0,034 |
+| iTransformer | red neuronal | 0,329 | 0,428 | 0,330 a 0,551 | 0,003 | 0,022 |
+| SSM selectivo | red neuronal | 0,190 | 0,215 | 0,100 a 0,397 | 0,009 | 0,062 |
+| PatchTST | red neuronal | 0,125 | 0,125 | 0,075 a 0,181 | 0,005 | 0,048 |
 
-Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,636. Cobertura del intervalo conformal del 90 % en prueba: 0,933 (ancho 2,467).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,598. Cobertura del intervalo conformal del 90 % en prueba: 0,883 (ancho 2,354).
 
 Categoría sequía (SPI-3 ≤ −1) en prueba: aciertos 1, falsas alarmas 1, fallos 1; POD 0,500, FAR 0,500, CSI 0,333.
 
@@ -387,22 +392,23 @@ Métrica principal: habilidad (1 − ECM/ECM de la climatología). En **negrita*
 | Modelo | Familia | Validación | Prueba | IC90 prueba | p Diebold-Mariano | Dispersión entre semillas |
 |---|---|---|---|---|---|---|
 | Climatología (referencia) | referencia | 0,000 | 0,000 | 0,000 a 0,000 | — |  |
-| Persistencia (referencia) | referencia | -0,621 | -0,498 | -1,104 a 0,055 | 0,102 |  |
-| **DLinear** | red neuronal | 0,057 | 0,087 | 0,048 a 0,114 | 0,003 | 0,020 |
-| Ensamble (3 mejores en validación) | ensamble | 0,051 | 0,072 | 0,031 a 0,112 | 0,007 |  |
-| iTransformer | red neuronal | 0,049 | 0,021 | -0,058 a 0,102 | 0,613 | 0,015 |
-| PatchTST | red neuronal | 0,038 | 0,097 | 0,056 a 0,141 | 0,004 | 0,024 |
-| GRU | red neuronal | 0,015 | -0,057 | -0,113 a -0,005 | 0,112 | 0,041 |
-| TCN | red neuronal | 0,010 | -0,107 | -0,245 a -0,003 | 0,114 | 0,003 |
-| LSTM | red neuronal | -0,001 | -0,018 | -0,034 a -0,003 | 0,098 | 0,021 |
-| SSM selectivo | red neuronal | -0,011 | -0,011 | -0,106 a 0,106 | 0,866 | 0,036 |
-| N-BEATS | red neuronal | -0,015 | -0,152 | -0,314 a -0,010 | 0,114 | 0,033 |
-| N-HiTS | red neuronal | -0,015 | -0,152 | -0,314 a -0,010 | 0,114 | 0,033 |
-| MLP | red neuronal | -0,020 | -0,076 | -0,124 a -0,031 | 0,034 | 0,037 |
-| Gradient boosting | clasico | -0,144 | -0,353 | -0,682 a -0,050 | 0,051 |  |
-| Ridge | clasico | -0,167 | -0,381 | -0,626 a -0,166 | 0,019 |  |
+| Persistencia (referencia) | referencia | -0,621 | -0,498 | -1,104 a 0,055 | 0,114 |  |
+| **DLinear** | red neuronal | 0,053 | 0,083 | 0,046 a 0,109 | 0,006 | 0,025 |
+| Ensamble ponderado (pesos de validación) | ensamble | 0,053 | 0,083 | 0,046 a 0,109 | 0,006 |  |
+| Ensamble (3 mejores en validación) | ensamble | 0,011 | -0,011 | -0,024 a 0,001 | 0,160 |  |
+| GRU | red neuronal | -0,011 | -0,099 | -0,157 a -0,045 | 0,014 | 0,065 |
+| LSTM | red neuronal | -0,018 | -0,033 | -0,051 a -0,017 | 0,003 | 0,033 |
+| MLP | red neuronal | -0,038 | -0,098 | -0,141 a -0,052 | 0,011 | 0,045 |
+| PatchTST | red neuronal | -0,078 | -0,028 | -0,083 a 0,018 | 0,344 | 0,023 |
+| TCN | red neuronal | -0,080 | -0,240 | -0,431 a -0,086 | 0,023 | 0,019 |
+| iTransformer | red neuronal | -0,093 | -0,177 | -0,263 a -0,082 | 0,018 | 0,054 |
+| N-BEATS | red neuronal | -0,141 | -0,339 | -0,525 a -0,150 | 0,012 | 0,056 |
+| N-HiTS | red neuronal | -0,141 | -0,339 | -0,525 a -0,150 | 0,012 | 0,056 |
+| Gradient boosting | clasico | -0,144 | -0,353 | -0,682 a -0,050 | 0,059 |  |
+| SSM selectivo | red neuronal | -0,165 | -0,205 | -0,352 a -0,046 | 0,035 | 0,060 |
+| Ridge | clasico | -0,167 | -0,381 | -0,626 a -0,166 | 0,023 |  |
 
-Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,391. Cobertura del intervalo conformal del 90 % en prueba: 0,950 (ancho 4,022).
+Lectura (regla IC90): habilidad del modelo elegido confirmada (IC90 > 0 y DM p < 0,10). Habilidad frente a persistencia en prueba: 0,388. Cobertura del intervalo conformal del 90 % en prueba: 0,950 (ancho 4,006).
 
 Categoría sequía (SPI-3 ≤ −1) en prueba: aciertos 0, falsas alarmas 0, fallos 2; POD 0,000, FAR —, CSI 0,000.
 
@@ -432,17 +438,18 @@ Métrica principal: ganancia de información frente a Poisson de tasa constante 
 |---|---|---|---|---|---|---|
 | Climatología (referencia) | referencia | 0,000 | 0,000 | 0,000 a 0,000 | — |  |
 | Persistencia (referencia) | referencia | -0,759 | -0,804 | -1,223 a -0,259 | 0,009 |  |
-| **Ensamble (3 mejores en validación)** | ensamble | 0,289 | 0,253 | 0,066 a 0,492 | 0,074 |  |
-| PatchTST | red neuronal | 0,275 | 0,234 | 0,021 a 0,474 | 0,113 | 0,026 |
-| LSTM | red neuronal | 0,265 | 0,272 | 0,074 a 0,512 | 0,066 | 0,008 |
-| iTransformer | red neuronal | 0,261 | 0,173 | 0,014 a 0,438 | 0,223 | 0,065 |
-| GRU | red neuronal | 0,257 | 0,250 | 0,042 a 0,504 | 0,100 | 0,014 |
-| TCN | red neuronal | 0,181 | 0,247 | 0,064 a 0,488 | 0,057 | 0,031 |
-| N-HiTS | red neuronal | 0,167 | 0,213 | 0,007 a 0,479 | 0,153 | 0,032 |
-| N-BEATS | red neuronal | 0,136 | 0,234 | 0,086 a 0,437 | 0,041 | 0,050 |
-| DLinear | red neuronal | 0,128 | 0,157 | -0,023 a 0,433 | 0,286 | 0,047 |
-| MLP | red neuronal | 0,128 | 0,181 | -0,002 a 0,435 | 0,200 | 0,075 |
-| SSM selectivo | red neuronal | 0,089 | 0,033 | -0,149 a 0,214 | 0,779 | 0,053 |
+| **LSTM** | red neuronal | 0,287 | 0,257 | 0,057 a 0,495 | 0,073 | 0,008 |
+| Ensamble ponderado (pesos de validación) | ensamble | 0,270 | 0,257 | 0,057 a 0,495 | 0,073 |  |
+| Ensamble (3 mejores en validación) | ensamble | 0,210 | 0,222 | 0,050 a 0,426 | 0,066 |  |
+| PatchTST | red neuronal | 0,192 | 0,159 | -0,002 a 0,366 | 0,168 | 0,033 |
+| GRU | red neuronal | 0,192 | 0,191 | 0,046 a 0,388 | 0,092 | 0,091 |
+| N-HiTS | red neuronal | 0,182 | 0,215 | 0,026 a 0,442 | 0,096 | 0,035 |
+| TCN | red neuronal | 0,160 | 0,223 | 0,071 a 0,432 | 0,041 | 0,037 |
+| iTransformer | red neuronal | 0,142 | 0,020 | -0,120 a 0,276 | 0,882 | 0,060 |
+| N-BEATS | red neuronal | 0,096 | 0,175 | 0,047 a 0,361 | 0,070 | 0,050 |
+| DLinear | red neuronal | 0,041 | 0,059 | -0,090 a 0,303 | 0,651 | 0,105 |
+| MLP | red neuronal | 0,022 | 0,080 | -0,103 a 0,316 | 0,569 | 0,077 |
+| SSM selectivo | red neuronal | -0,121 | -0,113 | -0,302 a 0,056 | 0,324 | 0,106 |
 | Gradient boosting | clasico | -0,238 | -0,074 | -0,544 a 0,306 | 0,775 |  |
 | GLM de Poisson | clasico | -0,306 | -0,494 | -0,798 a -0,120 | 0,032 |  |
 
@@ -517,10 +524,10 @@ Un veredicto 'compatible_con_caos_baja_dimension' exigiría no linealidad, deter
 | Serie | n | Veredicto | p asimetría temporal | p predicción por análogos | D2 | λ | K (0-1) |
 |---|---|---|---|---|---|---|---|
 | lluvia pentadas cabecera | 3 348 | **lineal estocástica** | 0,530 | 0,050 | 1,488 | 0,271 | 0,997 |
-| lluvia pentadas cabecera chirps | 3 341 | **lineal estocástica** | 0,720 | 0,090 | 1,428 | 0,125 | 0,998 |
 | temperatura diaria cabecera | 16 740 | **no lineal, sin caos demostrado** | 0,010 | 0,080 | no satura | 0,021 | 0,997 |
 | spi3 mensual cabecera | 538 | **lineal estocástica** | 0,100 | 0,540 | no satura | 0,048 | 0,993 |
 | oni mensual | 921 | **no lineal, sin caos demostrado** | 0,010 | 0,010 | no satura | -0,002 | 0,999 |
+| lluvia pentadas cabecera chirps | 3 341 | **lineal estocástica** | 0,720 | 0,090 | 1,428 | 0,125 | 0,998 |
 | sismos conteo mensual | 646 | **lineal estocástica** | 0,860 | 0,710 | 0,000 | 0,062 | 0,997 |
 | sismos intereventos log | 1 256 | **no lineal, sin caos demostrado** | 0,960 | 0,010 | no satura | 0,116 | 0,999 |
 
@@ -537,6 +544,7 @@ En las series sin no linealidad significativa, D2, λ y K se informan pero **no 
 | power_ciudad | 7 538 | 0,199 | 0,015 | 0,580 | 0,70 | 7,3 / 13,6 |
 | chirps_ciudad_celda_power | 7 538 | 0,200 | 0,035 | 0,441 | 1,87 | 12,3 / 13,6 |
 | chirps_ciudad_local | 7 538 | 0,191 | -0,013 | 0,422 | 1,69 | 15,0 / 13,6 |
+| imerg_ciudad | 464 | 0,277 | 0,130 | — | 0,69 | 10,4 / 18,5 |
 
 ### Lluvia en la cabecera entre productos
 
@@ -544,7 +552,10 @@ En las series sin no linealidad significativa, D2, λ y K se informan pero **no 
 |---|---|---|---|---|---|
 | power_cabecera · chirps_cabecera_celda_power | 16 709 | 0,318 | 0,800 | 198 / 470 | 0,132 / 0,270 |
 | power_cabecera · chirps_cabecera_local | 16 709 | 0,290 | 0,781 | 198 / 448 | 0,132 / 0,241 |
+| power_cabecera · imerg_cabecera | 1 096 | 0,234 | 0,880 | 207 / 419 | 0,149 / 0,242 |
 | chirps_cabecera_celda_power · chirps_cabecera_local | 16 709 | 0,940 | 0,992 | 470 / 448 | 0,270 / 0,241 |
+| chirps_cabecera_celda_power · imerg_cabecera | 1 096 | 0,610 | 0,982 | 490 / 419 | 0,272 / 0,242 |
+| chirps_cabecera_local · imerg_cabecera | 1 096 | 0,584 | 0,982 | 475 / 419 | 0,254 / 0,242 |
 
 ### Tendencia de la lluvia de dic–mar por fuente (Theil-Sen; p conservador de Mann-Kendall)
 
@@ -554,8 +565,6 @@ En las series sin no linealidad significativa, D2, λ y K se informan pero **no 
 | chirps_cabecera_celda_power | 1982–2026 | 395 | 31,6 | 10,2 a 51,3 | 0,035 |
 | chirps_cabecera_local | 1982–2026 | 378 | 21,2 | 1,0 a 37,3 | 0,117 |
 
-Nota: IMERG no se descargó: GES DISC exige que la cuenta Earthdata acepte su licencia (ver registro_descarga.json).
-
 ### Temperatura
 
 | Variable de la estación GHCN | Días | Sesgo POWER − estación (°C) | r de anomalías diarias |
@@ -563,10 +572,19 @@ Nota: IMERG no se descargó: GES DISC exige que la cuenta Earthdata acepte su li
 | TMAX | 8 578 | -3,19 | 0,401 |
 | TMIN | 12 135 | -3,65 | 0,518 |
 
-MODIS no disponible en esta corrida.
+| Punto | Banda MODIS | Frente a | Compuestos | r de anomalías | Media LST / POWER (°C) |
+|---|---|---|---|---|---|
+| ciudad | LST_Day_1km | T2M_MAX | 1 219 | 0,224 | 32,1 / 19,4 |
+| ciudad | LST_Night_1km | T2M_MIN | 1 164 | 0,227 | 10,8 / 5,0 |
+| cabecera | LST_Day_1km | T2M_MAX | 1 208 | 0,322 | 28,6 / 15,2 |
+| cabecera | LST_Night_1km | T2M_MIN | 1 185 | 0,448 | -4,2 / -0,3 |
 
 | Fuente | Periodo | Media (°C) | Sen (°C/década) | IC90 | p |
 |---|---|---|---|---|---|
+| modis_lst_ciudad | 2001–2025 | 21,60 | -0,472 | -0,777 a -0,150 | 0,107 |
+| power_t2m_ciudad | 2001–2025 | 11,12 | 0,282 | 0,111 a 0,498 | 0,172 |
+| modis_lst_cabecera | 2001–2025 | 12,51 | -0,044 | -0,403 a 0,289 | 0,907 |
+| power_t2m_cabecera | 2001–2025 | 6,09 | 0,203 | 0,120 a 0,415 | 0,385 |
 | power_t2m_ciudad | 1981–2025 | 10,84 | 0,274 | 0,202 a 0,342 | 0,011 |
 
 MODIS LST mide la superficie, no el aire: los niveles difieren por construcción. Se comparan anomalías y tendencias en el mismo periodo (2001–2025).
@@ -594,7 +612,7 @@ El IGP publica los sismos que reporta (percibidos o relevantes), no su catálogo
 
 ## Escala nacional · 25 departamentos
 
-**Clima:** NASA POWER (MERRA-2), celda de la capital de cada departamento. Tendencias 1981–2025 con el Sello de Confianza del paquete; SPI con parámetros gamma de 1981–2015 (último mes disponible). Con una sola familia de datos el Sello no puede dar 'robusta': la independencia queda pendiente.
+**Clima:** NASA POWER (MERRA-2), celda de la capital de cada departamento. Tendencias 1981–2025 con el Sello de Confianza del paquete; SPI con parámetros gamma del entrenamiento (último mes disponible). Con una sola familia de datos el Sello no puede dar 'robusta': la independencia queda pendiente.
 
 | Departamento | T media (°C) | Tendencia T (°C/década) [IC90] · Sello | Lluvia anual (mm) | Tendencia lluvia (mm/década) · Sello | SPI-12 | Deslizamientos GLC |
 |---|---|---|---|---|---|---|
@@ -644,152 +662,169 @@ Para cada año Y desde 2016: entrenamiento con datos ≤ Y−2, validación en Y
 
 Métrica: habilidad de Brier frente a la climatología. Red congelada: SSM selectivo, ventana 14.
 
-| Año | Régimen | n | SSM selectivo [IC90] | Mejor clásico | Persistencia |
-|---|---|---|---|---|---|
-| 2016 | validación del diseño | 182 | -0,006 [-0,118 a 0,090] | Regresión logística 0,120 | 0,082 |
-| 2017 | validación del diseño | 181 | 0,224 [0,085 a 0,366] | Regresión logística 0,069 | 0,117 |
-| 2018 | validación del diseño | 181 | 0,018 [-0,159 a 0,171] | Regresión logística 0,041 | -0,015 |
-| 2019 | validación del diseño | 181 | 0,039 [-0,089 a 0,123] | Gradient boosting -0,023 | -0,053 |
-| 2020 | validación del diseño | 182 | 0,262 [0,114 a 0,378] | Regresión logística 0,269 | 0,033 |
-| 2021 | fuera de muestra | 181 | -0,197 [-0,532 a -0,030] | Gradient boosting -0,208 | -0,048 |
-| 2022 | fuera de muestra | 181 | -0,066 [-0,203 a -0,004] | Gradient boosting -0,029 | -0,117 |
-| 2023 | fuera de muestra | 181 | 0,071 [-0,031 a 0,162] | Regresión logística 0,066 | 0,046 |
-| 2024 | fuera de muestra | 182 | 0,037 [-0,173 a 0,196] | Gradient boosting -0,010 | 0,048 |
-| 2025 | fuera de muestra | 181 | 0,058 [-0,373 a 0,433] | Regresión logística 0,061 | 0,027 |
-| 2026 | fuera de muestra | 120 | 0,198 [-0,056 a 0,365] | Gradient boosting 0,272 | 0,082 |
+| Año | Régimen | n | Elegido en validación | SSM selectivo [IC90] | Clásico elegido en validación | Persistencia |
+|---|---|---|---|---|---|---|
+| 2016 | validación del diseño | 182 | Ensamble ponderado (pesos de validación) 0,117 | 0,110 [0,019 a 0,197] | Gradient boosting 0,087 | 0,082 |
+| 2017 | validación del diseño | 181 | Regresión logística 0,101 | 0,174 [0,044 a 0,315] | Regresión logística 0,101 | 0,117 |
+| 2018 | validación del diseño | 181 | Ensamble (3 mejores en validación) 0,052 | 0,020 [-0,144 a 0,144] | Regresión logística 0,037 | -0,015 |
+| 2019 | validación del diseño | 181 | Regresión logística -0,073 | 0,016 [-0,099 a 0,102] | Regresión logística -0,073 | -0,053 |
+| 2020 | validación del diseño | 182 | Ensamble (3 mejores en validación) 0,264 | 0,271 [0,126 a 0,386] | Gradient boosting 0,153 | 0,033 |
+| 2021 | fuera de muestra | 181 | Regresión logística -0,207 | -0,457 [-1,025 a -0,221] | Regresión logística -0,207 | -0,048 |
+| 2022 | fuera de muestra | 181 | SSM selectivo -0,073 | -0,073 [-0,146 a -0,034] | Gradient boosting -0,029 | -0,117 |
+| 2023 | fuera de muestra | 181 | Ensamble (3 mejores en validación) 0,064 | 0,051 [0,004 a 0,108] | Regresión logística 0,066 | 0,046 |
+| 2024 | fuera de muestra | 182 | Ensamble (3 mejores en validación) 0,049 | 0,051 [-0,149 a 0,180] | Regresión logística -0,033 | 0,048 |
+| 2025 | fuera de muestra | 181 | Gradient boosting 0,022 | 0,168 [-0,134 a 0,401] | Gradient boosting 0,022 | 0,027 |
+| 2026 | fuera de muestra | 120 | Regresión logística 0,233 | 0,227 [-0,023 a 0,387] | Regresión logística 0,233 | 0,082 |
 
-Agregado por régimen (predicciones concatenadas):
+Agregado por régimen (predicciones concatenadas). En **negrita**, la lectura principal: el modelo que eligió la validación de cada año (el procedimiento completo, sin mirar la prueba). Las demás filas son comparaciones: elegir entre ellas la de mejor cifra en la prueba sería sesgo de selección.
 
-| Régimen | Modelo | Habilidad | IC90 | p DM | Años |
-|---|---|---|---|---|---|
-| validación del diseño | Ensamble (3 mejores en validación) | 0,136 | 0,065 a 0,183 | 0,003 | 5 |
-| validación del diseño | SSM selectivo | 0,130 | 0,054 a 0,183 | 0,007 | 5 |
-| validación del diseño | Regresión logística | 0,104 | 0,015 a 0,159 | 0,040 | 5 |
-| validación del diseño | Gradient boosting | 0,048 | -0,037 a 0,110 | 0,305 | 5 |
-| validación del diseño | Persistencia (referencia) | 0,039 | -0,010 a 0,077 | 0,125 | 5 |
-| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
-| fuera de muestra | Ensamble (3 mejores en validación) | 0,087 | 0,009 a 0,166 | 0,119 | 6 |
-| fuera de muestra | SSM selectivo | 0,036 | -0,081 a 0,138 | 0,624 | 6 |
-| fuera de muestra | Gradient boosting | 0,031 | -0,033 a 0,090 | 0,463 | 6 |
-| fuera de muestra | Regresión logística | 0,029 | -0,048 a 0,099 | 0,555 | 6 |
-| fuera de muestra | Persistencia (referencia) | 0,015 | -0,032 a 0,066 | 0,614 | 6 |
-| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 6 |
+| Régimen | Modelo | Habilidad | IC90 | p DM | Lectura | Bloque | Años |
+|---|---|---|---|---|---|---|---|
+| fuera de muestra | **Elegido en validación (año a año)** | 0,031 | -0,040 a 0,090 | 0,461 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 10 | 6 |
+| fuera de muestra | SSM selectivo | 0,037 | -0,060 a 0,129 | 0,556 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 18 | 6 |
+| fuera de muestra | Gradient boosting | 0,031 | -0,033 a 0,090 | 0,463 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 10 | 6 |
+| fuera de muestra | Regresión logística | 0,019 | -0,059 a 0,090 | 0,696 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 10 | 6 |
+| fuera de muestra | Ensamble ponderado (pesos de validación) | 0,048 | -0,023 a 0,107 | 0,292 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 10 | 6 |
+| fuera de muestra | Ensamble (3 mejores en validación) | 0,072 | 0,001 a 0,140 | 0,149 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | 10 | 6 |
+| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 10 | 6 |
+| fuera de muestra | Persistencia (referencia) | 0,015 | -0,032 a 0,066 | 0,614 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 10 | 6 |
+| validación del diseño | **Elegido en validación (año a año)** | 0,112 | 0,028 a 0,164 | 0,021 | confirmada (IC90 > 0 y DM p < 0,10) | 10 | 5 |
+| validación del diseño | SSM selectivo | 0,136 | 0,063 a 0,184 | 0,003 | confirmada (IC90 > 0 y DM p < 0,10) | 10 | 5 |
+| validación del diseño | Gradient boosting | 0,048 | -0,018 a 0,106 | 0,305 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 25 | 5 |
+| validación del diseño | Regresión logística | 0,111 | 0,024 a 0,168 | 0,028 | confirmada (IC90 > 0 y DM p < 0,10) | 10 | 5 |
+| validación del diseño | Ensamble ponderado (pesos de validación) | 0,127 | 0,054 a 0,173 | 0,006 | confirmada (IC90 > 0 y DM p < 0,10) | 10 | 5 |
+| validación del diseño | Ensamble (3 mejores en validación) | 0,135 | 0,065 a 0,179 | 0,004 | confirmada (IC90 > 0 y DM p < 0,10) | 10 | 5 |
+| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 10 | 5 |
+| validación del diseño | Persistencia (referencia) | 0,039 | -0,010 a 0,077 | 0,125 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 10 | 5 |
 
 ### SPI-3 dentro de 1 mes(es)
 
-Métrica: habilidad (1 − ECM/ECM de la climatología). Red congelada: N-BEATS, ventana 3.
+Métrica: habilidad (1 − ECM/ECM de la climatología). Red congelada: TCN, ventana 3.
 
-| Año | Régimen | n | N-BEATS [IC90] | Mejor clásico | Persistencia |
-|---|---|---|---|---|---|
-| 2016 | validación del diseño | 12 | 0,600 [0,518 a 0,671] | Ridge 0,425 | 0,571 |
-| 2017 | validación del diseño | 12 | 0,711 [0,637 a 0,826] | Gradient boosting 0,780 | 0,506 |
-| 2018 | validación del diseño | 12 | 0,779 [0,670 a 0,966] | Ridge 0,667 | 0,627 |
-| 2019 | validación del diseño | 12 | 0,848 [0,846 a 0,969] | Ridge 0,782 | -0,308 |
-| 2020 | validación del diseño | 12 | 0,326 [-0,095 a 0,708] | Gradient boosting 0,518 | 0,425 |
-| 2021 | fuera de muestra | 12 | 0,731 [-0,740 a 0,800] | Ridge 0,791 | 0,772 |
-| 2022 | fuera de muestra | 12 | 0,459 [0,340 a 0,733] | Gradient boosting 0,366 | -1,078 |
-| 2023 | fuera de muestra | 12 | 0,743 [0,431 a 0,770] | Ridge 0,682 | 0,343 |
-| 2024 | fuera de muestra | 12 | -0,291 [-0,291 a 0,363] | Ridge 0,345 | -0,110 |
-| 2025 | fuera de muestra | 12 | 0,347 [0,308 a 0,365] | Ridge 0,834 | 0,742 |
+| Año | Régimen | n | Elegido en validación | TCN [IC90] | Clásico elegido en validación | Persistencia |
+|---|---|---|---|---|---|---|
+| 2016 | validación del diseño | 12 | Ensamble (3 mejores en validación) 0,475 | 0,525 [0,466 a 0,628] | Gradient boosting 0,351 | 0,571 |
+| 2017 | validación del diseño | 12 | TCN 0,619 | 0,619 [0,503 a 0,897] | Ridge 0,571 | 0,506 |
+| 2018 | validación del diseño | 12 | Gradient boosting 0,525 | 0,635 [0,474 a 0,912] | Gradient boosting 0,525 | 0,627 |
+| 2019 | validación del diseño | 12 | Ridge 0,782 | 0,675 [0,675 a 0,829] | Ridge 0,782 | -0,308 |
+| 2020 | validación del diseño | 12 | Ensamble (3 mejores en validación) 0,531 | 0,475 [0,037 a 0,746] | Ridge 0,484 | 0,425 |
+| 2021 | fuera de muestra | 12 | Ensamble (3 mejores en validación) 0,760 | 0,603 [0,112 a 0,623] | Gradient boosting 0,785 | 0,772 |
+| 2022 | fuera de muestra | 12 | Ridge 0,131 | 0,260 [0,079 a 0,601] | Ridge 0,131 | -1,078 |
+| 2023 | fuera de muestra | 12 | Gradient boosting 0,609 | 0,643 [0,312 a 0,654] | Gradient boosting 0,609 | 0,343 |
+| 2024 | fuera de muestra | 12 | Ridge 0,345 | 0,545 [0,537 a 0,705] | Ridge 0,345 | -0,110 |
+| 2025 | fuera de muestra | 12 | TCN 0,780 | 0,780 [0,742 a 0,820] | Ridge 0,834 | 0,742 |
 
-Agregado por régimen (predicciones concatenadas):
+Agregado por régimen (predicciones concatenadas). En **negrita**, la lectura principal: el modelo que eligió la validación de cada año (el procedimiento completo, sin mirar la prueba). Las demás filas son comparaciones: elegir entre ellas la de mejor cifra en la prueba sería sesgo de selección.
 
-| Régimen | Modelo | Habilidad | IC90 | p DM | Años |
-|---|---|---|---|---|---|
-| validación del diseño | N-BEATS | 0,694 | 0,603 a 0,800 | 0,002 | 5 |
-| validación del diseño | Ensamble (3 mejores en validación) | 0,673 | 0,595 a 0,795 | 0,001 | 5 |
-| validación del diseño | Ridge | 0,620 | 0,509 a 0,759 | 0,002 | 5 |
-| validación del diseño | Gradient boosting | 0,582 | 0,512 a 0,730 | 0,000 | 5 |
-| validación del diseño | Persistencia (referencia) | 0,393 | 0,242 a 0,618 | 0,034 | 5 |
-| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
-| fuera de muestra | Ridge | 0,711 | 0,572 a 0,811 | 0,023 | 5 |
-| fuera de muestra | Ensamble (3 mejores en validación) | 0,685 | 0,604 a 0,740 | 0,014 | 5 |
-| fuera de muestra | Gradient boosting | 0,660 | 0,548 a 0,734 | 0,017 | 5 |
-| fuera de muestra | N-BEATS | 0,525 | 0,344 a 0,685 | 0,029 | 5 |
-| fuera de muestra | Persistencia (referencia) | 0,456 | 0,130 a 0,671 | 0,114 | 5 |
-| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
+| Régimen | Modelo | Habilidad | IC90 | p DM | Lectura | Bloque | Años |
+|---|---|---|---|---|---|---|---|
+| fuera de muestra | **Elegido en validación (año a año)** | 0,658 | 0,531 a 0,743 | 0,021 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | TCN | 0,667 | 0,547 a 0,745 | 0,019 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | Gradient boosting | 0,660 | 0,548 a 0,734 | 0,017 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | Ridge | 0,711 | 0,572 a 0,811 | 0,023 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | Ensamble ponderado (pesos de validación) | 0,680 | 0,559 a 0,753 | 0,018 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | Ensamble (3 mejores en validación) | 0,710 | 0,595 a 0,786 | 0,016 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| fuera de muestra | Persistencia (referencia) | 0,456 | 0,130 a 0,671 | 0,114 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | 6 | 5 |
+| validación del diseño | **Elegido en validación (año a año)** | 0,585 | 0,494 a 0,747 | 0,000 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | TCN | 0,605 | 0,529 a 0,704 | 0,001 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Gradient boosting | 0,582 | 0,512 a 0,730 | 0,000 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Ridge | 0,620 | 0,509 a 0,759 | 0,002 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Ensamble ponderado (pesos de validación) | 0,579 | 0,489 a 0,733 | 0,000 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Ensamble (3 mejores en validación) | 0,635 | 0,562 a 0,757 | 0,000 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| validación del diseño | Persistencia (referencia) | 0,393 | 0,242 a 0,618 | 0,034 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
 
 ### SPI-3 dentro de 3 mes(es)
 
 Métrica: habilidad (1 − ECM/ECM de la climatología). Red congelada: iTransformer, ventana 24.
 
-| Año | Régimen | n | iTransformer [IC90] | Mejor clásico | Persistencia |
-|---|---|---|---|---|---|
-| 2016 | validación del diseño | 12 | 0,287 [0,228 a 0,612] | Ridge -0,182 | -0,104 |
-| 2017 | validación del diseño | 12 | 0,573 [0,389 a 0,827] | Gradient boosting 0,536 | 0,164 |
-| 2018 | validación del diseño | 12 | 0,422 [0,422 a 0,699] | Gradient boosting 0,477 | 0,204 |
-| 2019 | validación del diseño | 12 | 0,430 [0,368 a 0,455] | Gradient boosting 0,363 | -1,720 |
-| 2020 | validación del diseño | 12 | -1,105 [-3,247 a 0,240] | Ridge -0,118 | -0,705 |
-| 2021 | fuera de muestra | 12 | 0,290 [-2,029 a 0,344] | Gradient boosting 0,072 | -0,059 |
-| 2022 | fuera de muestra | 12 | -0,494 [-1,002 a 0,053] | Gradient boosting -0,498 | -2,811 |
-| 2023 | fuera de muestra | 12 | 0,091 [-0,056 a 0,151] | Gradient boosting 0,175 | -0,369 |
-| 2024 | fuera de muestra | 12 | -0,020 [-1,186 a 0,216] | Gradient boosting 0,579 | -0,854 |
-| 2025 | fuera de muestra | 12 | 0,350 [0,252 a 0,425] | Ridge 0,424 | 0,086 |
+| Año | Régimen | n | Elegido en validación | iTransformer [IC90] | Clásico elegido en validación | Persistencia |
+|---|---|---|---|---|---|---|
+| 2016 | validación del diseño | 12 | iTransformer 0,294 | 0,294 [0,269 a 0,384] | Ridge -0,182 | -0,104 |
+| 2017 | validación del diseño | 12 | iTransformer 0,421 | 0,421 [0,260 a 0,695] | Ridge 0,497 | 0,164 |
+| 2018 | validación del diseño | 12 | Ensamble (3 mejores en validación) 0,438 | 0,315 [0,311 a 0,631] | Ridge 0,434 | 0,204 |
+| 2019 | validación del diseño | 12 | Gradient boosting 0,363 | 0,282 [0,207 a 0,291] | Gradient boosting 0,363 | -1,720 |
+| 2020 | validación del diseño | 12 | Gradient boosting -0,506 | -0,055 [-0,706 a 0,187] | Gradient boosting -0,506 | -0,705 |
+| 2021 | fuera de muestra | 12 | iTransformer 0,154 | 0,154 [-0,954 a 0,200] | Gradient boosting 0,072 | -0,059 |
+| 2022 | fuera de muestra | 12 | iTransformer -0,378 | -0,378 [-0,772 a 0,047] | Ridge -1,329 | -2,811 |
+| 2023 | fuera de muestra | 12 | iTransformer 0,092 | 0,092 [0,023 a 0,120] | Gradient boosting 0,175 | -0,369 |
+| 2024 | fuera de muestra | 12 | Gradient boosting 0,579 | 0,411 [0,145 a 0,673] | Gradient boosting 0,579 | -0,854 |
+| 2025 | fuera de muestra | 12 | Ensamble (3 mejores en validación) 0,439 | 0,422 [0,342 a 0,466] | Gradient boosting 0,416 | 0,086 |
 
-Agregado por régimen (predicciones concatenadas):
+Agregado por régimen (predicciones concatenadas). En **negrita**, la lectura principal: el modelo que eligió la validación de cada año (el procedimiento completo, sin mirar la prueba). Las demás filas son comparaciones: elegir entre ellas la de mejor cifra en la prueba sería sesgo de selección.
 
-| Régimen | Modelo | Habilidad | IC90 | p DM | Años |
-|---|---|---|---|---|---|
-| validación del diseño | Ensamble (3 mejores en validación) | 0,260 | 0,022 a 0,468 | 0,151 | 5 |
-| validación del diseño | iTransformer | 0,208 | -0,137 a 0,483 | 0,375 | 5 |
-| validación del diseño | Gradient boosting | 0,166 | -0,152 a 0,434 | 0,406 | 5 |
-| validación del diseño | Ridge | 0,154 | -0,111 a 0,387 | 0,421 | 5 |
-| validación del diseño | Persistencia (referencia) | -0,335 | -0,731 a 0,143 | 0,251 | 5 |
-| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
-| fuera de muestra | Ensamble (3 mejores en validación) | 0,248 | 0,102 a 0,385 | 0,063 | 5 |
-| fuera de muestra | Gradient boosting | 0,239 | 0,061 a 0,383 | 0,121 | 5 |
-| fuera de muestra | iTransformer | 0,181 | -0,029 a 0,298 | 0,143 | 5 |
-| fuera de muestra | Ridge | 0,030 | -0,346 a 0,302 | 0,870 | 5 |
-| fuera de muestra | Persistencia (referencia) | -0,305 | -0,722 a 0,148 | 0,243 | 5 |
-| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
+| Régimen | Modelo | Habilidad | IC90 | p DM | Lectura | Bloque | Años |
+|---|---|---|---|---|---|---|---|
+| fuera de muestra | **Elegido en validación (año a año)** | 0,232 | 0,073 a 0,375 | 0,089 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | iTransformer | 0,218 | 0,050 a 0,352 | 0,094 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | Gradient boosting | 0,239 | 0,061 a 0,383 | 0,133 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | 6 | 5 |
+| fuera de muestra | Ridge | 0,030 | -0,346 a 0,302 | 0,874 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| fuera de muestra | Ensamble ponderado (pesos de validación) | 0,231 | 0,077 a 0,383 | 0,084 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | Ensamble (3 mejores en validación) | 0,253 | 0,110 a 0,400 | 0,070 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| fuera de muestra | Persistencia (referencia) | -0,305 | -0,722 a 0,148 | 0,259 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| validación del diseño | **Elegido en validación (año a año)** | 0,265 | 0,040 a 0,458 | 0,135 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | 6 | 5 |
+| validación del diseño | iTransformer | 0,269 | 0,155 a 0,384 | 0,006 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Gradient boosting | 0,166 | -0,152 a 0,434 | 0,422 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| validación del diseño | Ridge | 0,154 | -0,111 a 0,387 | 0,437 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| validación del diseño | Ensamble ponderado (pesos de validación) | 0,307 | 0,105 a 0,470 | 0,070 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Ensamble (3 mejores en validación) | 0,270 | 0,080 a 0,435 | 0,078 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| validación del diseño | Persistencia (referencia) | -0,335 | -0,731 a 0,143 | 0,267 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
 
 ### conteo mensual de sismos M ≥ 4.5 del mes siguiente
 
-Métrica: ganancia de información frente a Poisson de tasa constante (bits/mes). Red congelada: PatchTST, ventana 12.
+Métrica: ganancia de información frente a Poisson de tasa constante (bits/mes). Red congelada: LSTM, ventana 12.
 
-| Año | Régimen | n | PatchTST [IC90] | Mejor clásico | Persistencia |
-|---|---|---|---|---|---|
-| 2016 | validación del diseño | 12 | 0,268 [-0,218 a 0,514] | GLM de Poisson 0,085 | -0,581 |
-| 2017 | validación del diseño | 12 | 0,303 [0,229 a 0,343] | GLM de Poisson 0,273 | 0,026 |
-| 2018 | validación del diseño | 12 | -0,002 [-0,558 a 0,209] | GLM de Poisson -0,041 | -0,100 |
-| 2019 | validación del diseño | 12 | -0,013 [-0,100 a 0,142] | Gradient boosting -0,170 | -1,855 |
-| 2020 | validación del diseño | 12 | 0,035 [-0,102 a 0,161] | Gradient boosting -0,539 | -1,348 |
-| 2021 | fuera de muestra | 12 | 0,805 [0,805 a 1,527] | Gradient boosting 0,541 | -0,244 |
-| 2022 | fuera de muestra | 12 | 0,488 [0,488 a 0,750] | GLM de Poisson 0,109 | -0,075 |
-| 2023 | fuera de muestra | 12 | -0,040 [-0,237 a 0,185] | Gradient boosting -0,203 | -2,073 |
-| 2024 | fuera de muestra | 12 | 0,200 [-0,025 a 0,688] | Gradient boosting -0,300 | -0,180 |
-| 2025 | fuera de muestra | 12 | 0,013 [-0,176 a 0,059] | GLM de Poisson 0,060 | -1,025 |
-| 2026 | fuera de muestra | 10 | 0,031 [0,031 a 0,397] | GLM de Poisson -0,806 | -1,716 |
+| Año | Régimen | n | Elegido en validación | LSTM [IC90] | Clásico elegido en validación | Persistencia |
+|---|---|---|---|---|---|---|
+| 2016 | validación del diseño | 12 | LSTM 0,302 | 0,302 [-0,036 a 0,436] | Gradient boosting -0,091 | -0,581 |
+| 2017 | validación del diseño | 12 | Ensamble ponderado (pesos de validación) 0,549 | 0,492 [0,280 a 0,658] | GLM de Poisson 0,277 | 0,026 |
+| 2018 | validación del diseño | 12 | LSTM 0,220 | 0,220 [-0,206 a 0,307] | GLM de Poisson -0,045 | -0,100 |
+| 2019 | validación del diseño | 12 | LSTM 0,237 | 0,237 [0,000 a 0,351] | GLM de Poisson -0,752 | -1,855 |
+| 2020 | validación del diseño | 12 | LSTM 0,129 | 0,129 [-0,002 a 0,297] | Gradient boosting -0,560 | -1,348 |
+| 2021 | fuera de muestra | 12 | LSTM 0,739 | 0,739 [0,739 a 1,562] | Gradient boosting 0,657 | -0,244 |
+| 2022 | fuera de muestra | 12 | Ensamble ponderado (pesos de validación) 0,345 | 0,442 [0,442 a 0,691] | Gradient boosting -0,152 | -0,075 |
+| 2023 | fuera de muestra | 12 | LSTM 0,007 | 0,007 [-0,245 a 0,322] | GLM de Poisson -1,272 | -2,073 |
+| 2024 | fuera de muestra | 12 | LSTM 0,184 | 0,184 [-0,200 a 0,798] | Gradient boosting -0,392 | -0,180 |
+| 2025 | fuera de muestra | 12 | LSTM -0,027 | -0,027 [-0,314 a 0,010] | Gradient boosting -0,473 | -1,025 |
+| 2026 | fuera de muestra | 10 | Ensamble ponderado (pesos de validación) -0,454 | -0,120 [-0,122 a -0,057] | GLM de Poisson -0,803 | -1,716 |
 
-Agregado por régimen (predicciones concatenadas):
+Agregado por régimen (predicciones concatenadas). En **negrita**, la lectura principal: el modelo que eligió la validación de cada año (el procedimiento completo, sin mirar la prueba). Las demás filas son comparaciones: elegir entre ellas la de mejor cifra en la prueba sería sesgo de selección.
 
-| Régimen | Modelo | Habilidad | IC90 | p DM | Años |
-|---|---|---|---|---|---|
-| validación del diseño | PatchTST | 0,118 | -0,183 a 0,339 | 0,476 | 5 |
-| validación del diseño | Ensamble (3 mejores en validación) | 0,051 | -0,196 a 0,244 | 0,711 | 5 |
-| validación del diseño | Gradient boosting | -0,224 | -0,464 a -0,045 | 0,107 | 5 |
-| validación del diseño | GLM de Poisson | -0,313 | -0,704 a -0,021 | 0,170 | 5 |
-| validación del diseño | Persistencia (referencia) | -0,771 | -1,379 a -0,353 | 0,022 | 5 |
-| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 5 |
-| fuera de muestra | PatchTST | 0,256 | 0,093 a 0,484 | 0,040 | 6 |
-| fuera de muestra | Ensamble (3 mejores en validación) | 0,051 | -0,140 a 0,278 | 0,702 | 6 |
-| fuera de muestra | Gradient boosting | -0,266 | -0,561 a 0,034 | 0,160 | 6 |
-| fuera de muestra | GLM de Poisson | -0,388 | -0,650 a -0,077 | 0,042 | 6 |
-| fuera de muestra | Persistencia (referencia) | -0,862 | -1,261 a -0,351 | 0,003 | 6 |
-| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | 6 |
+| Régimen | Modelo | Habilidad | IC90 | p DM | Lectura | Bloque | Años |
+|---|---|---|---|---|---|---|---|
+| fuera de muestra | **Elegido en validación (año a año)** | 0,149 | -0,029 a 0,395 | 0,281 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 6 |
+| fuera de muestra | LSTM | 0,214 | 0,037 a 0,438 | 0,105 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | 6 | 6 |
+| fuera de muestra | Gradient boosting | -0,263 | -0,604 a 0,003 | 0,180 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 6 |
+| fuera de muestra | GLM de Poisson | -0,388 | -0,648 a -0,081 | 0,041 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | 6 | 6 |
+| fuera de muestra | Ensamble ponderado (pesos de validación) | 0,124 | -0,053 a 0,378 | 0,374 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 6 |
+| fuera de muestra | Ensamble (3 mejores en validación) | 0,016 | -0,202 a 0,242 | 0,910 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 6 |
+| fuera de muestra | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 6 |
+| fuera de muestra | Persistencia (referencia) | -0,862 | -1,261 a -0,351 | 0,003 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | 6 | 6 |
+| validación del diseño | **Elegido en validación (año a año)** | 0,288 | 0,071 a 0,461 | 0,024 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | LSTM | 0,276 | 0,072 a 0,449 | 0,025 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Gradient boosting | -0,292 | -0,525 a -0,142 | 0,031 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | 6 | 5 |
+| validación del diseño | GLM de Poisson | -0,310 | -0,698 a -0,018 | 0,175 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| validación del diseño | Ensamble ponderado (pesos de validación) | 0,276 | 0,068 a 0,439 | 0,028 | confirmada (IC90 > 0 y DM p < 0,10) | 6 | 5 |
+| validación del diseño | Ensamble (3 mejores en validación) | 0,073 | -0,149 a 0,247 | 0,572 | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| validación del diseño | Climatología (referencia) | 0,000 | 0,000 a 0,000 | — | no confirmada (IC90 incluye 0 y DM p ≥ 0,10) | 6 | 5 |
+| validación del diseño | Persistencia (referencia) | -0,771 | -1,379 a -0,353 | 0,022 | indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10) | 6 | 5 |
 
 ### Dinámica en ventanas deslizantes
 
-| Serie | Ventana | Fin de ventana | Ventanas | Entropía de permutación | No lineales (p ≤ 0,05) |
-|---|---|---|---|---|---|
-| lluvia pentadas cabecera | 15 años | 1995–2026 | 32 | 0,971 a 0,982 | 10 de 32 |
-| temperatura diaria cabecera | 5 años | 1985–2026 | 42 | 0,907 a 0,938 | 9 de 42 |
-| spi3 mensual cabecera | 25 años | 2005–2025 | 21 | 0,909 a 0,949 | 2 de 21 |
-| oni mensual | 30 años | 1979–2026 | 48 | 0,553 a 0,749 | 23 de 48 |
-| sismos conteo mensual | 20 años | 1992–2025 | 34 | 0,917 a 0,952 | 0 de 34 |
-| sismos intereventos log | 20 años | 1992–2026 | 35 | 0,979 a 0,999 | 0 de 35 |
+| Serie | Ventana | Fin de ventana | Ventanas | Entropía de permutación | p ≤ 0,05 sin corregir | Tras corregir (Holm · BH) |
+|---|---|---|---|---|---|---|
+| lluvia pentadas cabecera | 15 años | 1995–2026 | 32 | 0,971 a 0,982 (orden 5) | 10 de 32 | 0 · 0 |
+| temperatura diaria cabecera | 5 años | 1985–2026 | 42 | 0,907 a 0,938 (orden 5) | 9 de 42 | 0 · 0 |
+| spi3 mensual cabecera | 25 años | 2005–2025 | 21 | 0,909 a 0,949 (orden 4) | 2 de 21 | 0 · 0 |
+| oni mensual | 30 años | 1979–2026 | 48 | 0,553 a 0,749 (orden 4) | 23 de 48 | 0 · 0 |
+| lluvia pentadas cabecera chirps | 15 años | 1995–2026 | 32 | 0,963 a 0,972 (orden 5) | 4 de 32 | 0 · 0 |
+| sismos conteo mensual | 20 años | 1992–2025 | 34 | 0,916 a 0,951 (orden 4) | 0 de 34 | 0 · 0 |
+| sismos intereventos log | 20 años | 1992–2026 | 35 | 0,985 a 0,998 (orden 4) | 0 de 35 | 0 · 0 |
 
-Series sin crudos locales: lluvia_pentadas_cabecera_chirps (No hay CHIRPS 'cabecera_local' en /home/user/terraverdict/data/raw/chirps: correr tv ingest-fenomenos).
+Cada p de ventana se lee por separado y las ventanas se solapan: el conteo sin corregir es descriptivo. Con 39 sustitutos el p mínimo posible es 0,025, así que con decenas de ventanas ninguna puede superar Holm; Benjamini-Hochberg solo las retiene si muchas ventanas llegan al mínimo.
 
 ## Limitaciones
 
@@ -799,10 +834,9 @@ Series sin crudos locales: lluvia_pentadas_cabecera_chirps (No hay CHIRPS 'cabec
 - **lluvia_extrema_chirps**: Deriva de las entradas respecto del entrenamiento (PSI > 0,25).
 - **volcanes**: Sin datos de monitoreo continuo (sismicidad volcánica, gases, deformación) no se pronostican erupciones.
 - **volcanes**: La probabilidad anual es una frecuencia histórica; el estado actual de cada volcán lo informa el OVS-IGP.
-- **lluvia_extrema**: la habilidad del modelo elegido cae de 0,235 en validación a 0,080 en prueba; se informa tal cual (la prueba no se usa para reajustar).
-- **lluvia_extrema_chirps**: la habilidad del modelo elegido cae de 0,109 en validación a 0,046 en prueba; se informa tal cual (la prueba no se usa para reajustar).
-- **sequia h3**: la habilidad del modelo elegido cae de 0,362 en validación a 0,198 en prueba; se informa tal cual (la prueba no se usa para reajustar).
-- **sequia_chirps h1**: la habilidad del modelo elegido cae de 0,727 en validación a 0,616 en prueba; se informa tal cual (la prueba no se usa para reajustar).
+- **lluvia_extrema**: la habilidad del modelo elegido cae de 0,177 en validación a 0,092 en prueba; se informa tal cual (la prueba no se usa para reajustar).
+- **sequia h3**: la habilidad del modelo elegido cae de 0,267 en validación a 0,141 en prueba; se informa tal cual (la prueba no se usa para reajustar).
+- **sequia_chirps h1**: la habilidad del modelo elegido cae de 0,658 en validación a 0,576 en prueba; se informa tal cual (la prueba no se usa para reajustar).
 - **sismos**: la Mc por década supera a la Mc usada (4,5) en 1970s (4,9), 1980s (5,1), 1990s (4,6): el conteo de esos años está incompleto y la tasa aparente crece con el tiempo.
 - **sismos**: el conteo mensual incluye réplicas; una ganancia frente a Poisson refleja agrupamiento (réplicas), no capacidad de pronosticar sismos.
 - Los resultados son experimentales y describen la escala de cada producto (celdas de 0,05° a 0,5°), no puntos.

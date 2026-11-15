@@ -17,5 +17,43 @@
   ],
   "dias": 365,
   "dias_faltantes": []
+ },
+ {
+  "archivo": "imerg_diaria_1999.txt",
+  "sha256": "6ec614985770952c76ab065ed97889c599e0bde88fe4083f6ad9cd88336fee6e",
+  "bytes": 114215,
+  "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+  "producto": "GPM_3IMERGDF_V07",
+  "version": "V07B",
+  "descargado_utc": "2026-11-15T20:01:14+00:00",
+  "indices_lon": [
+   1084,
+   1087
+  ],
+  "indices_lat": [
+   736,
+   740
+  ],
+  "dias": 365,
+  "dias_faltantes": []
+ },
+ {
+  "archivo": "imerg_diaria_2000.txt",
+  "sha256": "ed3cf1425daf034603e1165364c927b08f510ab437e4a67dbc285b22f7b23e0f",
+  "bytes": 116284,
+  "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+  "producto": "GPM_3IMERGDF_V07",
+  "version": "V07B",
+  "descargado_utc": "2026-11-15T21:24:02+00:00",
+  "indices_lon": [
+   1084,
+   1087
+  ],
+  "indices_lat": [
+   736,
+   740
+  ],
+  "dias": 366,
+  "dias_faltantes": []
  }
 ]

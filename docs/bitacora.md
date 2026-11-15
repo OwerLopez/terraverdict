@@ -14,9 +14,9 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Parte | Estado | Evidencia | Cómo correrlo |
 |---|---|---|---|
 | Preregistro y partición temporal | ✅ Congelados el 15-11 | Prueba que falla ante cualquier cambio | `pytest tests/unit/test_preregistro_congelado.py` |
-| Ingesta de fuentes reales | ✅ POWER (Arequipa, celdas y 25 departamentos), USGS (Arequipa y Perú), GVP, GLC, GHCN y ONI con SHA-256 · ⏳ IMERG (solo 1998; falta token Earthdata), MODIS (ORNL con 502), CHIRPS e IGP (bloqueados por el proxy de este entorno) | `data/raw/*/manifiesto.json` | `tv ingest-fenomenos` |
+| Ingesta de fuentes reales | ✅ POWER (Arequipa, celdas y 25 departamentos), USGS (Arequipa y Perú), GVP, GLC, GHCN, ONI, CHIRPS, IGP y MODIS LST con SHA-256 · ⏳ IMERG (1998–2000; la descarga sigue) | `data/raw/*/manifiesto.json` | `tv ingest-fenomenos` |
 | Cadena de custodia | ✅ Crudos verificados contra su manifiesto antes de entrenar; resultados sellados; el publicador rechaza lo alterado | `tests/integridad/` | `tv verificar-integridad` |
-| Motor (modelos, evaluación, incertidumbre, selección) | ✅ 10 redes, IC90, Diebold-Mariano, conformal y abstención | `tests/motor/` | `pytest tests/motor` |
+| Motor (modelos, evaluación, incertidumbre, selección) | ✅ 10 redes, 2 ensambles, IC90, Diebold-Mariano, conformal y abstención; protocolo auditado (`docs/auditoria-metricas.md`) | `tests/motor/` | `pytest tests/motor` |
 | Corrida completa de experimentos | ✅ 10 experimentos con procedencia, incluida la escala nacional | `resultados/*.json`, `resultados/indice.json` | `tv experimentos` |
 | Escala nacional | ✅ 25 departamentos: Sello de temperatura y lluvia, SPI y sismicidad por celda | `resultados/nacional.json`, vista `/peru` | `tv experimentos --solo nacional` |
 | Caos en series reales | ✅ 7 series, ninguna caótica | `resultados/caos.json` | (incluido en `tv experimentos`) |
@@ -42,6 +42,65 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Frontend | ✅ Glassmorphism azul y 5 vistas nuevas | 23 pruebas; `docs/capturas/` | `cd frontend && npm test` |
 | CI, Docker y documentación | ✅ · ⏳ falta construir las imágenes y ver la primera ejecución de CI | `.github/`, `docker-compose.yml`, `docs/` | ver `pendientes.md` |
 | Prueba E2E (Playwright) | ⏳ Bloqueada: la descarga del navegador no fue autorizada en este entorno | — | ver `pendientes.md` |
+
+---
+
+## 2026-11-15 · Auditoría de métricas y pesos: validación honesta y cifras sin elegir con la prueba
+
+**Autor:** MaxsForocca (con asistencia de Claude)
+
+**Qué se hizo.** Se auditó, archivo por archivo, cómo se calcula y se usa cada métrica y de dónde sale cada peso o elección. Informe completo: [`auditoria-metricas.md`](auditoria-metricas.md), con 19 hallazgos (H1–H19), la tabla por métrica y por parámetro, y los riesgos que quedan.
+
+**Defectos corregidos (los principales):**
+- **H1–H2. Elección con la prueba.** El historial destacaba la mejor cifra de prueba de cada tarea ("Ridge 0,711", "PatchTST 0,256"), y la web elegía el "mejor clásico" por su cifra fuera de muestra. Ahora la lectura principal es `seleccion_validacion`: el modelo que eligió la validación de cada año.
+- **H3–H5 y H16. Fugas en la selección.**
+  - La calibración isotónica y los ensambles se puntuaban sobre la misma validación con que se ajustaban; ahora se puntúan fuera de pliegue (5 bloques contiguos).
+  - La parada temprana de las redes usaba la validación; ahora usa el último 15 % del entrenamiento.
+  - El cuantil conformal de los ensambles usa residuos fuera de pliegue.
+- **H6.** La Mc de sismos usaba todo el catálogo; ahora solo el entrenamiento. No cambia la cifra: manda el piso de 4,5.
+- **H7–H8.** Diebold-Mariano usa el horizonte (h = 3 en sequía). El bloque del bootstrap es el mayor entre el fijo y el de Politis-White, y se guarda en cada resultado.
+- **H9.** El ECE de un pronóstico constante daba 0.
+- **H10–H11.** Caos en ventanas:
+  - ahora usa un orden de permutación por serie;
+  - guarda p de Holm y q de BH; ninguna ventana sobrevive a la corrección, y el conteo sin corregir queda rotulado como descriptivo;
+  - el "p mínimo posible" ya no es el mínimo observado.
+- **H12.** Cifras escritas a mano en la web ("25 departamentos", "Lima y Callao", "1981–2025", "< 200 mm", "10 redes", "350 km"): ahora salen del expediente.
+- **H13.** Verificador: el tope fijo de 1000 valores se reemplazó por la probabilidad de que una cifra inventada con el mismo formato coincida por azar (> 0,05 → coincidencia débil).
+- **H14–H15, H17.** El prior de lluvia se lee del catálogo, con ablación. Los hiperparámetros pasan a `config/modelos.yaml` (con justificación y SHA-256 en la procedencia). La regla de evidencia tiene una sola fuente.
+- **Ensamble con pesos aprendidos.** Se agregó `ensamble_ponderado` (pesos ≥ 0 que suman 1, ajustados en validación) como candidato junto al promedio. Solo gana en la lluvia (POWER). En la sequía a 3 meses sobreajusta: 0,078 frente a 0,169 del promedio, ambos fuera de pliegue.
+
+**Datos (H18–H19).**
+- En esta máquina, 24 crudos (POWER, celdas POWER y GVP) no coincidían con los manifiestos del repositorio y faltaban los 36 nacionales. La cadena de custodia bloqueó la corrida.
+- Se volvieron a descargar **solo** esos crudos de su fuente oficial. Los nacionales los descargó el propio experimento. Los manifiestos tienen los nuevos SHA-256.
+- Las informaciones mutuas y las cifras de Ridge coinciden con las de antes: los datos del entrenamiento no cambiaron.
+- MODIS se completó (ciudad y cabecera, día y noche, tras reintentos por 502/503 de ORNL). IMERG va en 1998–2000.
+- `fuentes` ya no falla con una descarga de MODIS a medias, y dos ingestas en paralelo ya no se pisan el registro de descargas.
+
+**Resultados nuevos** (todas las cifras de `resultados/*.json`; tabla completa en `auditoria-metricas.md` §10):
+
+| Tarea | Antes | Ahora | Por qué |
+|---|---|---|---|
+| Lluvia t+1 (POWER), prueba | SSM 0,080, p DM 0,152: indicio | Ensamble ponderado 0,092 [0,021; 0,166], p 0,096: **confirmada** | Calibración fuera de pliegue |
+| Sequía h1 (POWER), prueba | N-BEATS 0,776 | Ridge 0,680 [0,539; 0,780]: confirmada | Sin parada temprana en la validación, N-BEATS baja de 0,740 a 0,610 en validación |
+| Sequía h3 (POWER), prueba | iTransformer 0,198 | iTransformer 0,141 [0,094; 0,191]: confirmada | Ídem |
+| Sismos, prueba | Ensamble 0,253 bits | LSTM 0,257 bits [0,057; 0,495]: confirmada | El ensamble ya no compite con ventaja |
+| Historial fuera de muestra: lluvia | "ensamble 0,087, indicio" | Elegido en validación 0,031 [−0,040; 0,090]: **no confirmada** | H1 |
+| Historial fuera de muestra: sequía h1 / h3 | "Ridge 0,711" / "ensamble 0,248" | 0,658 [0,531; 0,743] / 0,232 [0,073; 0,375]: confirmadas | H1 |
+| Historial fuera de muestra: sismos | "PatchTST 0,256, confirmada" | 0,149 bits [−0,029; 0,395]: **no confirmada** | H1 |
+
+**Reproducibilidad.** Dos corridas completas con el mismo commit, una de ellas en paralelo con otra, dan 163 856 valores **idénticos bit a bit** (torch 2.15 en CPU, hilos ≤ 4). Después se repitió solo `fuentes`, con MODIS completo.
+
+**Evidencia**
+- Ciencia: 135 pruebas pasan y 2 se omiten (20 nuevas: `tests/motor/test_auditoria_metricas.py` y `tests/experimentos/test_historial.py`).
+- Backend: 73 (1 nueva). Frontend: 33. E2E: 2 de 2.
+- `tv verificar-integridad`: 116 crudos verificados, 0 alterados; 11 resultados sellados.
+- Contrato: 15 expedientes (`tv publicar --exportar`). OpenAPI y tipos del frontend regenerados.
+- En esta máquina, `npm test` exige `NODE_OPTIONS=--no-experimental-webstorage` porque Node 26 trae su propio `localStorage`. CI usa Node 22 y no lo necesita.
+
+**Pendiente:**
+- Vercel: solo el owner (DiegoNiS), porque MaxsForocca no tiene permisos.
+- Terminar IMERG.
+- Decidir si la Mc debe variar por década (riesgo 1 de la auditoría).
 
 ---
 
