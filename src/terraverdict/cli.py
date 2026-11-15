@@ -154,5 +154,14 @@ def experimentos(
     typer.echo(json.dumps(ejecutar(rapido=rapido, solo=solo or None), ensure_ascii=False, indent=1))
 
 
+@app.command("informe")
+def informe(resultados: Path = Path("resultados"), salida: Path = Path("docs/experimentos.md")) -> None:
+    """Genera docs/experimentos.md solo con las cifras de resultados/*.json."""
+    from .experimentos.informe import generar
+
+    salida.write_text(generar(resultados), encoding="utf-8")
+    typer.echo(f"Informe escrito en {salida}")
+
+
 if __name__ == "__main__":
     app()

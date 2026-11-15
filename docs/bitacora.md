@@ -25,6 +25,30 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Informe de experimentos generado desde los resultados (pendiente 1.3)
+**Autor:** MaxsForocca · **Aportes:** Ower Frank
+
+**Qué se hizo**
+- `tv informe` (`experimentos/informe.py`) escribe `docs/experimentos.md` **solo** con cifras de `resultados/*.json`.
+- **Contenido:**
+  - procedencia de la corrida y resumen;
+  - por fenómeno: modelos con validación, prueba, IC90, Diebold-Mariano y dispersión entre semillas;
+  - variables elegidas y descartadas con su motivo, ventana, ablaciones, curva de confiabilidad, eventos documentados, deriva y abstención;
+  - sismos, volcanes, deslizamientos, dinámica, contraste de fuentes y limitaciones.
+- **Lecturas por reglas explícitas, no por redacción:**
+  - "confirmada" solo si el IC90 completo es > 0;
+  - en la dinámica, las medidas de caos no se interpretan si no hay no linealidad.
+- **Limitaciones derivadas de los números:**
+  - caída de habilidad de más de 0,05 entre validación y prueba;
+  - Mc por década mayor que la usada;
+  - deriva y abstenciones.
+
+**Evidencia**
+- `tests/experimentos/test_informe.py`: secciones de los 9 experimentos, commit de la procedencia, cifras iguales a las del JSON con el mismo redondeo, sin `None` ni `nan`, y celdas con `|` escapadas.
+- El informe tiene unas 600 líneas.
+
+---
+
 ## 2026-11-15 · Caos en series reales (pendiente 1.2)
 **Autor:** MaxsForocca · **Aportes:** Ower Frank (método validado)
 

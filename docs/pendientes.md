@@ -38,7 +38,7 @@ tv experimentos          # corrida completa (aprox. 30–60 min en CPU de 4 núc
 
 **Nota.** El método ya está validado: 14 pruebas con Lorenz, Hénon, logístico, AR(1) y seno.
 
-### 1.3 Informe de experimentos
+### 1.3 Informe de experimentos · ✅ hecho (15-11-2026, `docs/experimentos.md`; ver bitácora)
 **Qué falta.** `docs/experimentos.md` generado desde `resultados/*.json`, con:
 - tabla por fenómeno: modelo, habilidad en validación, habilidad en prueba con IC90 y Diebold-Mariano;
 - ablaciones, ventana elegida, variables seleccionadas, calibración y abstenciones;
