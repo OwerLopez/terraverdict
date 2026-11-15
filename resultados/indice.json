@@ -1,6 +1,6 @@
 {
- "generado_utc": "2026-11-15T10:06:56+00:00",
- "commit": "eec6c5cc8532ca0e7ecb1c616630c17a1cf75673",
+ "generado_utc": "2026-11-15T13:08:59+00:00",
+ "commit": "f663f3c726b2207261dec65574cd0d669539dd60",
  "tiempos_segundos": {
   "volcanes": 0.0,
   "deslizamientos": 0.3,
@@ -11,7 +11,7 @@
   "lluvia_extrema": 172.6,
   "lluvia_extrema_chirps": 158.8,
   "caos": 55.0,
-  "nacional": 53.2
+  "nacional": 49.2
  },
  "corridas": {
   "caos": {
@@ -40,9 +40,9 @@
    "segundos": 158.8
   },
   "nacional": {
-   "commit": "eec6c5cc8532ca0e7ecb1c616630c17a1cf75673",
-   "generado_utc": "2026-11-15T10:06:56+00:00",
-   "segundos": 53.2
+   "commit": "f663f3c726b2207261dec65574cd0d669539dd60",
+   "generado_utc": "2026-11-15T13:08:59+00:00",
+   "segundos": 49.2
   },
   "sequia": {
    "commit": "41198fee2d6f1e8ef3b333a241aed8def4f56cab",
@@ -76,5 +76,17 @@
   "sequia_chirps",
   "sismos",
   "volcanes"
- ]
+ ],
+ "sellos_sha256": {
+  "caos.json": "abe863729979457aa8801e2d1b6b41d78fef6be18bbcbd1e8faa027a62cad77c",
+  "deslizamientos.json": "d70fb313c1593f329ac0425330d791cb13096ad8190559b74b4c56c332728eb9",
+  "fuentes.json": "585f6353c53b6c7b1fac17e654757af6372d0e9a83fcb81abfe5c3292a462919",
+  "lluvia_extrema.json": "78b55f90d0aa561c491f8585888897a019bf04d4f28f2758eb667b14612330fc",
+  "lluvia_extrema_chirps.json": "66ecca40ec1ea84bdccd35c74087d252f61b919bfb4fcd739b050a01ef42afa1",
+  "nacional.json": "c6cc4f23c72c1f6314b679478177bed25e1493a5d8685639eceafa8e81124f20",
+  "sequia.json": "91730f01034bec6b4d0ea21c81213dc0c9a2bb4fb5bb26711aac8efe173e357b",
+  "sequia_chirps.json": "b1ba6d85d949942113d66a104bc267af57b0e41b9b3809f8c3ed631d9c9b39a1",
+  "sismos.json": "907652f099f9ec948c080239b6530e2d38699f363295a820dc4e01c74e41c568",
+  "volcanes.json": "461b8d5d0c019d613241a0e56643ffe4d9587c9b6452c2803161bbc8ff6e3253"
+ }
 }

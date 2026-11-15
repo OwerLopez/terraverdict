@@ -6832,8 +6832,8 @@
  },
  "lectura": "Mismo motor y mismas reglas en todo el país. Con una sola familia de datos (POWER) el Sello no puede dar 'robusta': la prueba de independencia queda pendiente y el veredicto máximo es 'frágil'.",
  "procedencia": {
-  "generado_utc": "2026-11-15T10:06:56+00:00",
-  "commit": "eec6c5cc8532ca0e7ecb1c616630c17a1cf75673",
+  "generado_utc": "2026-11-15T13:08:59+00:00",
+  "commit": "f663f3c726b2207261dec65574cd0d669539dd60",
   "config_sha256": "0382c23985f0b0c04460a28fde87d7e034710eef454c6cc2211280cb64323687",
   "preregistro_sha256": "c40676fd76ab55434bb8f0a89fe6c1bcf8845551dd884b41444682f3bd00d596",
   "crudos": {
@@ -6964,7 +6964,7 @@
      "archivo": "ghcn_PE000084752.csv",
      "sha256": "1963def04a0c425d2dad4511d7ae6f88f733485645f30dd44acbc526e8edfd88",
      "url": "https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/PE000084752.csv",
-     "descargado_utc": "2026-11-15T05:05:50+00:00"
+     "descargado_utc": "2026-11-15T10:32:08+00:00"
     }
    ],
    "glc": [
@@ -6972,21 +6972,21 @@
      "archivo": "glc.csv",
      "sha256": "2c4898899dd4f373c4320e121c5b655ebb5394d431fa42e57ec4828d07d48b04",
      "url": "https://data.nasa.gov/docs/legacy/Global_Landslide_Catalog_Export/Global_Landslide_Catalog_Export_rows.csv",
-     "descargado_utc": "2026-11-15T05:07:20+00:00"
+     "descargado_utc": "2026-11-15T10:32:16+00:00"
     }
    ],
    "gvp": [
     {
      "archivo": "gvp_volcanes.geojson",
-     "sha256": "ca537d1fc0619b06f11ae62d16df0b75162a17706d75bf8541e290eb3b8c8778",
+     "sha256": "b8c5cbf50f54298cda1b6ebdd6c8865df73e0ee447a84d3d9290b0ae8a350324",
      "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Volcanoes&outputFormat=application%2Fjson&CQL_FILTER=Country%3D%27Peru%27",
-     "descargado_utc": "2026-11-15T05:05:57+00:00"
+     "descargado_utc": "2026-11-15T10:32:14+00:00"
     },
     {
      "archivo": "gvp_erupciones.geojson",
-     "sha256": "7af6c4421fe0086a9ce13fac2b9c4007d0b27f80be50b0461bb3a2113b45f16b",
+     "sha256": "30c6d7f04ace0189c235efbd3367b09cdb3df97a8e0715565579382eb6c4c088",
      "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Eruptions&outputFormat=application%2Fjson&CQL_FILTER=Volcano_Number+IN+%28354000%2C354001%2C354003%2C354004%2C354005%2C354006%2C354010%2C354020%2C354031%2C354030%2C354040%2C354050%2C354060%29",
-     "descargado_utc": "2026-11-15T05:05:57+00:00"
+     "descargado_utc": "2026-11-15T10:32:14+00:00"
     }
    ],
    "igp": [
@@ -7094,143 +7094,143 @@
      "archivo": "oni.ascii.txt",
      "sha256": "118c563331335c8649cdc2677e6be7ae89d1259d901345fcddbc2857af280f7f",
      "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
-     "descargado_utc": "2026-11-15T05:05:47+00:00"
+     "descargado_utc": "2026-11-15T10:32:07+00:00"
     }
    ],
    "power": [
     {
      "archivo": "power_diario_ciudad.json",
-     "sha256": "dffe19e526277b9a478a56f9f3cd5ca88ec13d9eeaa9c5a84e24e8d9ac13d9b9",
+     "sha256": "0b51b5e2b50c3a2bfae5230600e301c9139e695ddf4ebe37498da9b27cb6c107",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.535&latitude=-16.4&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:05:42+00:00"
+     "descargado_utc": "2026-11-15T10:32:04+00:00"
     },
     {
      "archivo": "power_diario_cabecera.json",
-     "sha256": "5f2d72eb0a4dde1585081aefa694908a4a9a9f8bb4546aaf7fcecf69fcbfaff6",
+     "sha256": "3bef566863c817d629032b7b080d3d407cb540c0c66faf905eaeb6e2009968b2",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.25&latitude=-15.95&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:05:45+00:00"
+     "descargado_utc": "2026-11-15T10:32:06+00:00"
     },
     {
      "archivo": "power_-71.25_-15.95_1981_2025.json",
-     "sha256": "7fae526361348299f42bbf814b8cd4a6fbd2e88e23919d119cd9b170f1000c7b",
+     "sha256": "140f4f19d7919632ae697645981fba9d4abb860059a1e4d43ecd6fb23bf0d766",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M&community=AG&longitude=-71.25&latitude=-15.95&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T05:05:46+00:00"
+     "descargado_utc": "2026-11-15T10:32:07+00:00"
     }
    ],
    "power_celdas": [
     {
      "archivo": "power_diario_celda_-75.0_-13.0.json",
-     "sha256": "322bbe04fe70a904ffc0d742b69931757cdd67b2dd3773c321c176a7af361faf",
+     "sha256": "2362dae29e3db0f597db41757c904208f80547d72ad3c530986e19b7798b07db",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:22+00:00"
+     "descargado_utc": "2026-11-15T10:34:52+00:00"
     },
     {
      "archivo": "power_diario_celda_-75.0_-12.5.json",
-     "sha256": "99b0c98aa3417bf5d4f9bb22cbd8edec605c50208d574e57b942bedefc220aa8",
+     "sha256": "9aa48a0f69884640de9b569728d677bd72a18edf0d6042c0c15318ac2b6903d6",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-12.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:23+00:00"
+     "descargado_utc": "2026-11-15T10:34:53+00:00"
     },
     {
      "archivo": "power_diario_celda_-74.375_-13.0.json",
-     "sha256": "44b74ecc4fd8e7019d1aa9581e92a71d5b22c25de47427d56a23b2741487f520",
+     "sha256": "112ee847b48d9607c0ed292c8a4a7ffa7e382b9e3e8761bf2c7bfee805710960",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-74.375&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:24+00:00"
+     "descargado_utc": "2026-11-15T10:34:54+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.75_-15.5.json",
-     "sha256": "1d2321997236bd79568f9e869fe63fadd76782a3ecded9c8dd974bb353b7e811",
+     "sha256": "fbd75c0366b87aaea59cb1156b2127033e5ff06c8c5ce91a130822d67fae12d5",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-15.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:25+00:00"
+     "descargado_utc": "2026-11-15T10:34:54+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.75_-13.5.json",
-     "sha256": "7e7d94666113ff111099180fbc63f95eb6c869f067d46ff1b0a799eb91f02c9f",
+     "sha256": "d178ca2a03786e923fdfa0858ccfc23aac8d05e7b2116c60f9e4e04e9035c5e6",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:26+00:00"
+     "descargado_utc": "2026-11-15T10:34:55+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-15.0.json",
-     "sha256": "a97a02c807ce2509e729487331ee8af4e4b7199dd15f459a75dbd58ddc8ec8e1",
+     "sha256": "36fe5804d3c115b9b6efae2fa6219a20b99d2f714f8d0de3fbe8a7d52ee709a9",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-15.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:27+00:00"
+     "descargado_utc": "2026-11-15T10:34:56+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-14.0.json",
-     "sha256": "9edff17a055c10d9ea33aac8a8998624327a0e50f1358b28c970baca4d27b364",
+     "sha256": "34ea5fa207ed3d28d565c6029b4623b184bfebf82b99cbde89377cf2c5656dd5",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-14.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:28+00:00"
+     "descargado_utc": "2026-11-15T10:34:57+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-13.5.json",
-     "sha256": "0be7429291c02b5ae67edfc27fa91b9f936e1fba3ed97ca511507affb2353458",
+     "sha256": "e340f1208c7099ca9309ee8a36be6ed61735cd52e7d00b4755222d4a4fe7a141",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:30+00:00"
+     "descargado_utc": "2026-11-15T10:34:58+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-12.5.json",
-     "sha256": "b221a7338a406cfd2eb61223264fa97d57a6324d19bda7e3109b71c55980fbd9",
+     "sha256": "5bc91f15d34ee9ee028d1b72105f2f64f72e2f2952c6934ea64395acf61be929",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-12.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:31+00:00"
+     "descargado_utc": "2026-11-15T10:34:59+00:00"
     },
     {
      "archivo": "power_diario_celda_-72.5_-13.5.json",
-     "sha256": "f9a34899fac7006226becbefc9bcefd74c48c6f07dedbce1cde00982a6c5b686",
+     "sha256": "22a1eddb61f1127c8469492b092757866623f0f60b843ffc280c8f3cd310d03f",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:32+00:00"
+     "descargado_utc": "2026-11-15T10:35:00+00:00"
     },
     {
      "archivo": "power_diario_celda_-72.5_-13.0.json",
-     "sha256": "e082dcdbf281ceab46581ca6c920d3d4fc91de8552171026692ce8694ce72a0b",
+     "sha256": "d2d5b80846b066bc17f420acdafda143bff8642e09928930ee5847ae73aebf7f",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:33+00:00"
+     "descargado_utc": "2026-11-15T10:35:01+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.875_-15.5.json",
-     "sha256": "42276470c44bf17d43b286b01cd0c81a4143e44e7f4ed5b2e2ca3645d7e49720",
+     "sha256": "bfa8ab3a25ac9d0516d15e1ca0a3619de015b387c17ce9c6691fbaef5734b2e1",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-15.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:34+00:00"
+     "descargado_utc": "2026-11-15T10:35:02+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.875_-13.5.json",
-     "sha256": "3d51535b58de0d18011f34fc90ae869f8c5c1021fba073e73fdb7dd492b3d104",
+     "sha256": "079ee32694c5ead1fdd94412e674019415185bb8e0d9004db502c69858ea0b11",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:36+00:00"
+     "descargado_utc": "2026-11-15T10:35:03+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.875_-13.0.json",
-     "sha256": "d696d1700825490c0c88d0ebbc88c789452746b9f7e13127b59ce1cbacd44bb4",
+     "sha256": "615f97b2b83ae5a221ffdedde8609476b80776e5563009a0a9805eb64e8d53d7",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:37+00:00"
+     "descargado_utc": "2026-11-15T10:35:03+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.25_-16.5.json",
-     "sha256": "4ff33962125f4d28be1d0ff8ed82de851f1b9f230f80cf1298efce4ee521a050",
+     "sha256": "fda8b3676b1c1d57d08cdffaf76849ea10eb23e5c83f6915e4125152628d1970",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-16.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:38+00:00"
+     "descargado_utc": "2026-11-15T10:35:04+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.25_-15.5.json",
-     "sha256": "1cf6f453dd8cf278a6ecf6bc062fa552978afaad1bb5f0d6ce805e2bbd70d97c",
+     "sha256": "fec51bb1b58010dc73511c5b0c507daf4c368e642ce24905017bcb7cef8e1387",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-15.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:39+00:00"
+     "descargado_utc": "2026-11-15T10:35:05+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.25_-13.0.json",
-     "sha256": "0fdf339d7546d96b84cefc4c40703b3c8f7545eca59fecd699176d05079eba83",
+     "sha256": "6703f0a016fae6f5ab70aa31f1f4892ffe168f3aa338b44e6c2bc8da0ff92d8c",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:40+00:00"
+     "descargado_utc": "2026-11-15T10:35:06+00:00"
     },
     {
      "archivo": "power_diario_celda_-70.625_-14.0.json",
-     "sha256": "f87ec1b30d7595da48124688febb7c2ea064538f6f800a6a23481a27030221d5",
+     "sha256": "022fd1f4c29b033a11481ef0c24e6bb6340199b0b659722c3398f8f7ca732858",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.625&latitude=-14.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:41+00:00"
+     "descargado_utc": "2026-11-15T10:35:07+00:00"
     },
     {
      "archivo": "power_diario_celda_-70.0_-14.0.json",
-     "sha256": "bc6609e74667948ad4c7f0ab6f6c784337c6a2edcde03db2b77bc8786516f251",
+     "sha256": "53cc357046d8f3ba6ce9379cf38965d924793f9ab5a87726ff162fe325c3b0ad",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.0&latitude=-14.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T05:07:42+00:00"
+     "descargado_utc": "2026-11-15T10:35:08+00:00"
     }
    ],
    "power_nacional": [
@@ -7390,67 +7390,67 @@
      "archivo": "usgs_1973_1977.csv",
      "sha256": "b195959730b48df2e75aa6717fb4f3756c757bb082ae7469a71e910673c600f7",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:50+00:00"
+     "descargado_utc": "2026-11-15T10:32:09+00:00"
     },
     {
      "archivo": "usgs_1978_1982.csv",
      "sha256": "f5275542fa290568268cc283c383960d0fb0aca64196f1f95d6b608d6ca1dda1",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:51+00:00"
+     "descargado_utc": "2026-11-15T10:32:09+00:00"
     },
     {
      "archivo": "usgs_1983_1987.csv",
      "sha256": "a48602fb11ae60cb2f92b54e1184f8749216244fe24556a0f4e3774902898d6f",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:51+00:00"
+     "descargado_utc": "2026-11-15T10:32:10+00:00"
     },
     {
      "archivo": "usgs_1988_1992.csv",
      "sha256": "d8fbf64991aaff8006c81f70969123d39a6d5e6734994ef1804fe30679705ac1",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:52+00:00"
+     "descargado_utc": "2026-11-15T10:32:10+00:00"
     },
     {
      "archivo": "usgs_1993_1997.csv",
      "sha256": "bca383f30e8896dbd442ee4ac540a72d98032ceb638733d3f7dbd6cb37635091",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:53+00:00"
+     "descargado_utc": "2026-11-15T10:32:10+00:00"
     },
     {
      "archivo": "usgs_1998_2002.csv",
      "sha256": "c577f921f4848c1f48ce6620d6768ceaf7a0b02a625f2b6bb51d7d46e9ee7bc1",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:53+00:00"
+     "descargado_utc": "2026-11-15T10:32:11+00:00"
     },
     {
      "archivo": "usgs_2003_2007.csv",
      "sha256": "06081ab1876bf0e64f82bead8c9db41413781969d68729c83515156f0be28f3d",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:54+00:00"
+     "descargado_utc": "2026-11-15T10:32:11+00:00"
     },
     {
      "archivo": "usgs_2008_2012.csv",
      "sha256": "d53710ae5b3c6aa725ce50edd488b0130eddaeed2bc2c2167e4de8ee0723a3eb",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:54+00:00"
+     "descargado_utc": "2026-11-15T10:32:12+00:00"
     },
     {
      "archivo": "usgs_2013_2017.csv",
      "sha256": "d33196222084b31a4e1cfb3d0148d0e4f02041e09f2c36852b650761c08e7b82",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:55+00:00"
+     "descargado_utc": "2026-11-15T10:32:13+00:00"
     },
     {
      "archivo": "usgs_2018_2022.csv",
      "sha256": "72b239f770ea156f37966ec04fa7ca0d2646f44dfd306f91d5be517712f45f6c",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:55+00:00"
+     "descargado_utc": "2026-11-15T10:32:13+00:00"
     },
     {
      "archivo": "usgs_2023_2026.csv",
      "sha256": "dbe080e268a56779c5d3d14a658202be8a11f5ac16fdc8b9718b3a1ad4317231",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T05:05:56+00:00"
+     "descargado_utc": "2026-11-15T10:32:14+00:00"
     }
    ],
    "usgs_nacional": [
@@ -7528,7 +7528,12 @@
    "torch": "2.15.0+cpu",
    "scikit_learn": "1.9.1"
   },
-  "segundos": 53.2,
+  "integridad_crudos": {
+   "verificados": 74,
+   "faltantes": 36,
+   "sin_manifiesto": 0
+  },
+  "segundos": 49.2,
   "modo": "completo"
  }
 }

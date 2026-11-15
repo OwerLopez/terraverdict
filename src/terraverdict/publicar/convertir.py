@@ -14,6 +14,8 @@ import math
 from pathlib import Path
 from typing import Any
 
+from ..integridad import exigir_resultado_integro
+
 # Fuentes del catálogo (config/fuentes.yaml) y carpetas de data/raw que usa cada experimento.
 FUENTES = {
     "volcanes": (["gvp_volcanes", "usgs_comcat"], ["gvp", "usgs"]),
@@ -560,6 +562,7 @@ def de_resultados(carpeta: Path, eventos_minimos: int = 30) -> list[dict[str, An
         nombre = ruta.stem
         if nombre in ("indice", "fuentes"):
             continue
+        exigir_resultado_integro(ruta)  # un resultado alterado tras la corrida no se publica
         r = json.loads(ruta.read_text())
         if nombre.startswith("lluvia_extrema"):
             salida += de_lluvia(nombre, r)

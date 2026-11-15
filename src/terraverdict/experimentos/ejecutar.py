@@ -19,6 +19,7 @@ from typing import Any
 import numpy as np
 
 from ..config import cargar_yaml
+from ..integridad import exigir_crudos_integros, sellar_resultados
 from . import caos_real, deslizamientos, fuentes, lluvia, nacional, sequia, sismos, volcanes
 
 RAIZ = Path(__file__).resolve().parents[3]
@@ -83,6 +84,13 @@ def ejecutar(
     cfg = cargar_yaml(config)
     salida.mkdir(parents=True, exist_ok=True)
     proc = procedencia(raw, config)
+    # Cadena de custodia: no se entrena sobre crudos que no coinciden con su manifiesto.
+    custodia = exigir_crudos_integros(raw)
+    proc["integridad_crudos"] = {
+        "verificados": custodia["verificados"],
+        "faltantes": len(custodia["faltantes"]),
+        "sin_manifiesto": len(custodia["sin_manifiesto"]),
+    }
     if rapido:
         redes, semillas = redes or ["gru", "tcn"], semillas or (0,)
     tiempos: dict[str, float] = {}
@@ -138,6 +146,7 @@ def ejecutar(
         "tiempos_segundos": {**previo.get("tiempos_segundos", {}), **tiempos},
         "corridas": dict(sorted(corridas.items())),
         "experimentos": sorted(p.stem for p in salida.glob("*.json") if p.stem != "indice"),
+        "sellos_sha256": sellar_resultados(salida),
     }
     (salida / "indice.json").write_text(json.dumps(indice, ensure_ascii=False, indent=1), encoding="utf-8")
     return indice

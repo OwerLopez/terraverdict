@@ -1,23 +1,23 @@
 [
  {
   "archivo": "gvp_volcanes.geojson",
-  "sha256": "ca537d1fc0619b06f11ae62d16df0b75162a17706d75bf8541e290eb3b8c8778",
+  "sha256": "b8c5cbf50f54298cda1b6ebdd6c8865df73e0ee447a84d3d9290b0ae8a350324",
   "bytes": 26491,
   "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Volcanoes&outputFormat=application%2Fjson&CQL_FILTER=Country%3D%27Peru%27",
   "producto": "SMITHSONIAN_GVP_VOTW",
   "version": null,
-  "descargado_utc": "2026-11-15T05:05:57+00:00",
+  "descargado_utc": "2026-11-15T10:32:14+00:00",
   "capa": "GVP-VOTW:Smithsonian_VOTW_Holocene_Volcanoes",
   "pais": "Peru"
  },
  {
   "archivo": "gvp_erupciones.geojson",
-  "sha256": "7af6c4421fe0086a9ce13fac2b9c4007d0b27f80be50b0461bb3a2113b45f16b",
+  "sha256": "30c6d7f04ace0189c235efbd3367b09cdb3df97a8e0715565579382eb6c4c088",
   "bytes": 64113,
   "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Eruptions&outputFormat=application%2Fjson&CQL_FILTER=Volcano_Number+IN+%28354000%2C354001%2C354003%2C354004%2C354005%2C354006%2C354010%2C354020%2C354031%2C354030%2C354040%2C354050%2C354060%29",
   "producto": "SMITHSONIAN_GVP_VOTW",
   "version": null,
-  "descargado_utc": "2026-11-15T05:05:57+00:00",
+  "descargado_utc": "2026-11-15T10:32:14+00:00",
   "capa": "GVP-VOTW:Smithsonian_VOTW_Holocene_Eruptions",
   "volcanes": [
    354000,

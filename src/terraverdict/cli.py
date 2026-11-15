@@ -191,5 +191,17 @@ def publicar(
         raise typer.Exit(1)
 
 
+@app.command("verificar-integridad")
+def verificar_integridad(raw: Path = Path("data/raw"), resultados: Path = Path("resultados")) -> None:
+    """Cadena de custodia: crudos frente a sus manifiestos y resultados frente a sus sellos SHA-256."""
+    from .integridad import verificar_crudos, verificar_resultados
+
+    c = verificar_crudos(raw)
+    r = verificar_resultados(resultados) if (resultados / "indice.json").exists() else {"ok": True, "sellados": 0}
+    typer.echo(json.dumps({"crudos": c, "resultados": r}, ensure_ascii=False, indent=1))
+    if not (c["ok"] and r["ok"]):
+        raise typer.Exit(code=1)
+
+
 if __name__ == "__main__":
     app()

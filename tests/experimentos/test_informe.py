@@ -67,4 +67,7 @@ def test_regla_de_evidencia_exige_ic_y_diebold_mariano() -> None:
     assert informe.nivel_evidencia(base) == "confirmada"
     assert informe.nivel_evidencia({**base, "diebold_mariano_vs_climatologia": {"p": 0.15}}) == "indicio"
     assert informe.nivel_evidencia({**base, "ic90_prueba": [-0.01, 0.2]}) == "indicio"
-    assert informe.nivel_evidencia({"ic90_prueba": [-0.01, 0.2], "diebold_mariano_vs_climatologia": {"p": 0.4}}) == "no_confirmada"
+    assert (
+        informe.nivel_evidencia({"ic90_prueba": [-0.01, 0.2], "diebold_mariano_vs_climatologia": {"p": 0.4}})
+        == "no_confirmada"
+    )

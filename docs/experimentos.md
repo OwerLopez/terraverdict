@@ -4,13 +4,13 @@
 
 | Campo | Valor |
 |---|---|
-| Generado (UTC) | 2026-11-15T10:06:56+00:00 |
-| Commit del código | `eec6c5cc8532ca0e7ecb1c616630c17a1cf75673` |
+| Generado (UTC) | 2026-11-15T13:08:59+00:00 |
+| Commit del código | `f663f3c726b2207261dec65574cd0d669539dd60` |
 | Modo | completo |
 | Configuración (SHA-256) | `3cbb05a406bb35a4…` |
 | Versiones | python 3.13.15, numpy 2.5.4, torch 2.15.0+cpu, scikit_learn 1.9.1 |
 | Crudos con hash | 73 |
-| Tiempo por experimento (s) | volcanes 0, deslizamientos 0, sismos 14, fuentes 1, sequia 56, sequia_chirps 27, lluvia_extrema 173, lluvia_extrema_chirps 159, caos 55, nacional 53 |
+| Tiempo por experimento (s) | volcanes 0, deslizamientos 0, sismos 14, fuentes 1, sequia 56, sequia_chirps 27, lluvia_extrema 173, lluvia_extrema_chirps 159, caos 55, nacional 49 |
 
 **Cómo leer.** La partición es temporal y está congelada (entrenamiento 1981–2015, validación 2016–2020, prueba 2021–2026). Todo se elige con validación; la prueba se usa una vez. Una habilidad está **confirmada** solo si su IC90 por bootstrap de bloques queda por encima de 0 **y** la prueba de Diebold-Mariano frente a la climatología da p < 0,10; si solo se cumple una de las dos, es un **indicio**.
 

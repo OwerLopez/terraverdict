@@ -27,6 +27,23 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · Cadena de custodia del pipeline (integridad SHA-256 de punta a punta)
+**Autor:** Ower Frank
+
+**Qué se hizo**
+- `src/terraverdict/integridad.py` añade tres capas:
+  1. Antes de entrenar, cada crudo se compara con el SHA-256 de su manifiesto, y un archivo alterado detiene la corrida (`IntegridadComprometida`).
+  2. El orquestador sella cada `resultados/*.json` con su SHA-256 en `indice.json`.
+  3. El publicador se niega a publicar un resultado que no coincide con su sello.
+- Nuevo comando `tv verificar-integridad`, que audita crudos y resultados y devuelve código 1 si algo no cuadra. La procedencia de cada resultado registra cuántos crudos se verificaron.
+
+**Evidencia**
+- `tests/integridad`: crudo alterado → la corrida se detiene; resultado alterado → no se publica; faltantes y archivos sin manifiesto se informan sin ser fatales.
+- La verificación encontró un caso real. Los crudos locales de esta máquina (GVP, POWER) no coincidían con los manifiestos fusionados desde otra máquina del equipo. Se volvieron a descargar y se repitió la corrida nacional sobre la base verificada: 74 crudos verificados, 0 alterados, 10 resultados sellados.
+- Los 36 crudos "faltantes" (CHIRPS, IGP e IMERG) solo existen donde los descargó MaxsForocca. Desde este entorno el proxy bloquea ClimateSERV, ultimosismo.igp.gob.pe y modis.ornl.gov, e IMERG requiere token. Sus resultados conservan su propia procedencia.
+
+---
+
 ## 2026-11-15 · Interfaz bilingüe español/inglés y vista nacional
 **Autor:** Ower Frank
 
