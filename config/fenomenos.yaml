@@ -24,7 +24,7 @@ descarga:
   # Fuentes añadidas el 2026-11-15 (consulta real; ver docs/bitacora.md)
   chirps: {desde: 1981, hasta: 2026, hasta_fecha: "10/31/2026", caja_local_grados: 0.1}   # ClimateSERV, sin cuenta
   igp: {desde: 2012, hasta: 2026}                                  # sismos reportados por el IGP (API pública)
-  imerg: {desde: "2000-06-01", hasta: "2026-06-30"}                # GES DISC con token Earthdata (requiere EULA)
+  imerg: {desde: "1998-01-01", hasta: "2025-09-30"}                # IMERG V07 Final: rango publicado en CMR (2026-11-15); token Earthdata + EULA de GES DISC
   modis_lst: {desde: "2000-01-01"}                                 # MOD11A2 por ORNL DAAC, sin cuenta
 
 particion_temporal:                    # CONGELADA 2026-11-15 (equipo). Misma regla que config/dominios.yaml: la prueba se usa una sola vez

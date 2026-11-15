@@ -38,6 +38,20 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-15 · IMERG desbloqueado: cliente reanudable (descarga en curso)
+**Autor:** MaxsForocca · **Aportes:** Ower Frank
+
+- Con la licencia de GES DISC aceptada, OPeNDAP devuelve datos con el token. El formato coincide con el lector (`precipitation.precipitation[0][i], …`).
+- **Causa de los 401 de la prueba manual:** `.env` pasó al formato `EARTHDATA_TOKEN=…` y el comando de prueba leía el archivo completo como token. El código (`token_earthdata`) ya admitía ambos formatos.
+- **Rango real en CMR:** IMERG V07 Final va de 1998-01-01 a 2025-09-30. `config/fenomenos.yaml` ahora usa ese rango.
+- **Cliente:**
+  - reanudable (salta los años completos según el manifiesto);
+  - registra los días 404 en `dias_faltantes`, sin rellenarlos;
+  - 12 hilos: con 24, GES DISC respondió 503.
+- **Estado:** descarga en curso (~4 min por año, ~2 h en total). Los pasos para terminarla están en `pendientes.md` → bloqueos externos.
+
+---
+
 ## 2026-11-15 · Revisión del despliegue con docker compose
 **Autor:** MaxsForocca · **Aportes:** Ower Frank
 

@@ -12,6 +12,7 @@ IMERG Final V07 diaria (Huffman et al., doi:10.5067/GPM/IMERGDF/DAY/07): rejilla
 from __future__ import annotations
 
 import datetime as dt
+import json
 import os
 import re
 from concurrent.futures import ThreadPoolExecutor
@@ -68,33 +69,53 @@ def descargar_imerg(
     desde: dt.date,
     hasta: dt.date,
     raw: str | Path,
-    hilos: int = 8,
+    hilos: int = 12,
 ) -> list[dict[str, Any]]:
-    """Una caja de celdas IMERG por día; se guarda un crudo por año (respuestas ASCII concatenadas)."""
+    """Una caja de celdas IMERG por día; se guarda un crudo por año (respuestas ASCII concatenadas).
+
+    Reanudable: un año ya guardado y completo según el manifiesto no se vuelve a pedir. Un día que el
+    servidor no tiene (404) se registra en `dias_faltantes` del manifiesto; no se rellena.
+    """
+    raw = Path(raw)
     s = sesion()
     s.headers["Authorization"] = f"Bearer {token_earthdata()}"
     _verificar(s.get(_url_dia(desde, lon, lat), timeout=120))  # falla temprano si no hay acceso
+    man = raw / "manifiesto.json"
+    previos = {e["archivo"]: e for e in json.loads(man.read_text())} if man.exists() else {}
     entradas = []
     for anio in range(desde.year, hasta.year + 1):
         a, b = max(desde, dt.date(anio, 1, 1)), min(hasta, dt.date(anio, 12, 31))
         dias = [a + dt.timedelta(days=i) for i in range((b - a).days + 1)]
+        nombre = f"imerg_diaria_{anio}.txt"
+        previo = previos.get(nombre)
+        if previo and previo.get("dias") == len(dias) and (raw / nombre).exists():
+            entradas.append(previo)
+            continue
 
-        def bajar(d: dt.date) -> str:
+        def bajar(d: dt.date) -> str | None:
             r = s.get(_url_dia(d, lon, lat), timeout=180)
+            if r.status_code == 404:
+                return None
             _verificar(r)
             return f"### {d.isoformat()}\n{r.text}"
 
         with ThreadPoolExecutor(hilos) as ex:
             bloques = list(ex.map(bajar, dias))
+        faltantes = [d.isoformat() for d, bl in zip(dias, bloques, strict=True) if bl is None]
         entradas.append(
             guardar_crudo(
                 raw,
-                f"imerg_diaria_{anio}.txt",
-                "\n".join(bloques).encode(),
+                nombre,
+                "\n".join(bl for bl in bloques if bl is not None).encode(),
                 url=_url_dia(a, lon, lat).split("?")[0].rsplit("/", 3)[0],
                 producto=PRODUCTO,
                 version="V07B",
-                extra={"indices_lon": list(lon), "indices_lat": list(lat), "dias": len(dias)},
+                extra={
+                    "indices_lon": list(lon),
+                    "indices_lat": list(lat),
+                    "dias": len(dias),
+                    "dias_faltantes": faltantes,
+                },
             )
         )
     return entradas
