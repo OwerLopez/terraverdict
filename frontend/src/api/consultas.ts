@@ -125,8 +125,9 @@ export function useCancelarProceso() {
 
 export function useVerificarTexto() {
   return useMutation({
-    mutationFn: (cuerpo: Esquemas["SolicitudVerificacion"]) =>
-      pedir(api.POST("/api/v1/asistente/verificar", { body: cuerpo })),
+    // Sin `tolerancia_relativa` se usa la del backend (única fuente: app/services/verificador.py).
+    mutationFn: (cuerpo: Omit<Esquemas["SolicitudVerificacion"], "tolerancia_relativa"> & { tolerancia_relativa?: number }) =>
+      pedir(api.POST("/api/v1/asistente/verificar", { body: cuerpo as Esquemas["SolicitudVerificacion"] })),
   });
 }
 

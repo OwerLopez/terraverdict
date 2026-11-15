@@ -1,0 +1,109 @@
+# Hiperparámetros y reglas de método de los experimentos de pronóstico (tv experimentos).
+#
+# Antes de la auditoría del 2026-11-15 (docs/auditoria-metricas.md) estos valores estaban en el
+# código. Ahora viven aquí y cada experimento guarda el SHA-256 de este archivo en su procedencia.
+#
+# Regla para leer este archivo: cada valor es una de estas tres cosas.
+#   - FIJADO A PRIORI: decisión de diseño anterior a ver la prueba. No se ajusta con validación,
+#     porque la validación ya se usa para elegir la ventana y el modelo.
+#   - CANDIDATOS: lista fija; la VALIDACIÓN elige entre ellos (nunca la prueba).
+#   - REGLA: criterio de lectura o de publicación, igual para todas las tareas.
+# Cambiar un valor cambia el hash y obliga a repetir `tv experimentos` y a registrarlo en la bitácora.
+
+version: 2
+
+clasicos:
+  # FIJADO A PRIORI. Regularización moderada sobre entradas estandarizadas (media y desviación del
+  # entrenamiento). La entrada es la ventana aplanada (L × variables, hasta 30 × 8 = 240 columnas).
+  # Se eligió más fuerte que el valor por defecto de scikit-learn (C = 1, alpha = 1) porque las
+  # columnas de una ventana están muy correlacionadas.
+  logistica: {C: 0.5, max_iter: 3000}
+  ridge: {alpha: 3.0}
+  poisson_glm: {alpha: 1.0, max_iter: 1000}
+  # Gradient boosting por histogramas (Ke et al., 2017, LightGBM, NeurIPS). Tasa de aprendizaje
+  # menor que la de scikit-learn (0,1) y hojas más pocas (15 frente a 31): series cortas.
+  gbm_clasificacion: {max_iter: 300, learning_rate: 0.05, max_leaf_nodes: 15, l2_regularization: 1.0}
+  gbm_regresion: {max_iter: 300, learning_rate: 0.05, max_leaf_nodes: 15, l2_regularization: 1.0}
+  gbm_conteo: {max_iter: 200, learning_rate: 0.05, max_leaf_nodes: 15}
+
+redes:
+  # FIJADO A PRIORI. Las épocas son un TOPE: el entrenamiento se detiene antes por parada temprana.
+  # 60 épocas en lluvia (≈ 9000 ventanas diarias por época); 150 en las tareas mensuales (≈ 400).
+  epocas: {lluvia: 60, sequia: 150, sismos: 150}
+  lote: 128
+  tasa_aprendizaje: 0.001       # AdamW (Loshchilov y Hutter, 2019, arXiv:1711.05101)
+  decaimiento_pesos: 0.0001
+  paciencia: 10
+  # Parada temprana con el TRAMO FINAL DEL ENTRENAMIENTO, no con la validación. Antes la parada
+  # temprana usaba la validación, la misma que elige el modelo: la red elegía su mejor época mirando
+  # el conjunto con que después competía, y su puntaje de validación quedaba optimista frente a los
+  # modelos clásicos. El tramo es el último 15 % de las ventanas de entrenamiento (temporal).
+  fraccion_parada_temprana: 0.15
+  # Semillas: presupuesto de cómputo. El resultado informa la media de las predicciones y la
+  # dispersión del puntaje entre semillas.
+  semillas: {lluvia: [0, 1], sequia: [0, 1, 2], sismos: [0, 1, 2]}
+
+ventanas:
+  # CANDIDATOS: la validación elige (con un modelo lineal, antes del zoológico). Se suman las
+  # longitudes que sugiere la propia señal (decorrelación y embedding de Takens).
+  lluvia_dias: [3, 7, 14, 30]       # escalas sinóptica (3–7 d), quincenal y mensual
+  sequia_meses: [3, 6, 12, 24]      # escalas estándar de acumulación del SPI (McKee et al., 1993)
+  # FIJADO A PRIORI: un ciclo anual completo de conteos. No se elige con validación.
+  sismos_meses: 12
+
+seleccion_variables:
+  # Peso del prior físico del catálogo (config/fenomenos.yaml, campo `relevancia`) en el puntaje de
+  # mRMR: peso · IM · (1 − redundancia). FIJADO A PRIORI. Cada resultado guarda una ablación con
+  # pesos iguales para medir si el prior cambia la selección.
+  pesos_prior: {alta: 1.0, media: 0.8, baja: 0.6}
+  permutaciones_nulo: 50
+  maximo_lluvia: 6
+
+ensamble:
+  # El ensamble se elige y se pondera SOLO con la validación, y su puntaje de validación se mide con
+  # validación cruzada por bloques contiguos (los miembros y pesos de cada bloque salen de los demás
+  # bloques). Así no compite con ventaja frente a los modelos individuales.
+  miembros: 3
+  # promedio: pesos iguales. pesos_validacion: pesos ≥ 0 que suman 1 y minimizan la pérdida de la
+  # validación (apilamiento restringido; Breiman, 1996, doi:10.1007/BF00117832). Ambos compiten
+  # como candidatos; el modelo publicado sigue siendo el de mejor puntaje de validación.
+  variantes: [promedio, pesos_validacion]
+  pliegues_validacion: 5
+
+calibracion:
+  # Isotónica ajustada en validación (para la prueba). Para el PUNTAJE de validación se usa la
+  # versión cruzada por bloques: cada bloque se calibra con los demás. Sin esto la calibración se
+  # evaluaba sobre los mismos datos con que se ajustó.
+  pliegues_validacion: 5
+
+evaluacion:
+  # REGLA de lectura (igual en todas las tareas, en la web y en el informe):
+  #   confirmada: IC90 inferior > 0 y p de Diebold-Mariano < 0,10; indicio: solo una; no confirmada: ninguna.
+  nivel_ic: 0.90
+  p_diebold_mariano: 0.10
+  bootstrap_repeticiones: 500
+  bootstrap_semilla: 0
+  # Bloque del bootstrap: el mayor entre el de la tarea (abajo) y el automático de Politis y White
+  # (2004, doi:10.1081/ETC-120028836; corrección de Patton, Politis y White, 2009) estimado sobre el
+  # diferencial de pérdidas. El bloque usado queda en el resultado.
+  bloque_bootstrap: {lluvia: 10, sequia: 6, sismos: 6}
+
+sismos:
+  # FIJADO A PRIORI. Mc = máxima curvatura + 0,2 (Woessner y Wiemer, 2005), calculada SOLO con el
+  # entrenamiento, con un piso conservador de 4,5. El piso se documenta como decisión de diseño: la
+  # Mc por década del catálogo va de 4,4 a 5,1 (resultados/sismos.json), así que antes de los años
+  # 2000 el catálogo puede estar incompleto incluso con 4,5 (limitación declarada).
+  mc_correccion_maxima_curvatura: 0.2
+  mc_piso: 4.5
+
+nacional:
+  # FIJADO A PRIORI. Por debajo de 200 mm/año el SPI es poco fiable: muchos meses con lluvia cero
+  # deforman el ajuste gamma (Guía del usuario del SPI, OMM-N.° 1090, 2012).
+  umbral_spi_mm_anual: 200.0
+
+caos_ventanas:
+  # REGLA. Las ventanas se solapan y cada p se lee por separado. Además se informa el p ajustado por
+  # Holm (error de familia) y por Benjamini-Hochberg (tasa de falsos descubrimientos) dentro de cada
+  # serie. Con 39 sustitutos el p mínimo es 0,025: con muchas ventanas ninguna supera la corrección,
+  # así que el conteo de ventanas con p ≤ 0,05 es descriptivo, no una prueba.
+  alfa: 0.05

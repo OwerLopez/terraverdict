@@ -24,10 +24,34 @@ from ..evaluacion.incertidumbre import decidir_abstencion, deriva
 from ..seleccion.variables import mrmr
 from ..senales.procesamiento import ventana_adaptativa
 from . import datos_reales as D
-from .comun import Particion, Tarea, construir, evaluar_zoo, explicar, limpiar, serie_prueba
+from .comun import Particion, Tarea, construir, evaluar_zoo, explicar, limpiar, parametros, serie_prueba
 
 MESES_HUMEDOS = [11, 12, 1, 2, 3, 4]
 RAIZ = Path(__file__).resolve().parents[3]
+
+
+# Columna del experimento → id de la variable en config/fenomenos.yaml (lluvia_extrema.variables).
+# El prior físico (`relevancia`) se lee del catálogo con este mapa: no se escribe en el código.
+VARIABLES_CATALOGO = {
+    "lluvia_log": "lluvia_diaria",
+    "humedad_especifica": "humedad_especifica",
+    "humedad_relativa": "humedad_relativa",
+    "temperatura": "temperatura_aire_2m",
+    "amplitud_termica": "amplitud_termica",
+    "presion": "presion_superficie",
+    "viento": "viento_2m",
+    "radiacion": "radiacion_onda_corta",
+    "oni": "indice_oni",
+}
+
+
+def prior_catalogo(cfg: dict[str, Any], columnas: list[str]) -> dict[str, str]:
+    """Relevancia física (alta, media o baja) de cada columna, tomada del catálogo de fenómenos."""
+    catalogo = {v["id"]: v["relevancia"] for v in cfg["fenomenos"]["lluvia_extrema"]["variables"]}
+    faltan = [c for c in columnas if VARIABLES_CATALOGO.get(c) not in catalogo]
+    if faltan:
+        raise KeyError(f"Variables sin relevancia en config/fenomenos.yaml: {faltan}")
+    return {c: catalogo[VARIABLES_CATALOGO[c]] for c in columnas}
 
 
 FUENTES_LLUVIA = {
@@ -81,14 +105,13 @@ def tarea(cfg: dict[str, Any], raw: Path, fuente: str = "power") -> tuple[Tarea,
     evento = (lluvia >= umbral).astype(float)
     objetivo = evento.shift(-1)  # emitido en t, verifica t+1
     fechas = X.index[pd.DatetimeIndex(X.index + pd.Timedelta(days=1)).month.isin(MESES_HUMEDOS)]
+    P = parametros(cfg)
 
     def referencias(hasta: str):
         # Climatología por día del año (±15 días) y persistencia de Markov, ajustadas con datos ≤ hasta
         ent = evento.index <= pd.Timestamp(hasta)
         doy = evento.index.dayofyear
-        clim_doy = {
-            d: float(evento[ent & (np.abs(((doy - d + 182) % 365) - 182) <= 15)].mean()) for d in range(1, 367)
-        }
+        clim_doy = {d: float(evento[ent & (np.abs(((doy - d + 182) % 365) - 182) <= 15)].mean()) for d in range(1, 367)}
         hoy, manana = evento[ent].to_numpy()[:-1], evento[ent].to_numpy()[1:]
         p1, p0 = float(manana[hoy == 1].mean()), float(manana[hoy == 0].mean())
 
@@ -112,8 +135,9 @@ def tarea(cfg: dict[str, Any], raw: Path, fuente: str = "power") -> tuple[Tarea,
         horizonte=pd.Timedelta(days=1),
         referencias=referencias,
         fechas=fechas,
-        epocas=60,
-        bloque_bootstrap=10,
+        epocas=int(P["redes"]["epocas"]["lluvia"]),
+        bloque_bootstrap=int(P["evaluacion"]["bloque_bootstrap"]["lluvia"]),
+        horizonte_pasos=1,
     )
     return t, lluvia, qc, umbral
 
@@ -128,9 +152,11 @@ def ejecutar(
     raw: Path,
     registro=print,
     redes: list[str] | None = None,
-    semillas: tuple[int, ...] = (0, 1),
+    semillas: tuple[int, ...] | None = None,
     fuente: str = "power",
 ) -> dict[str, Any]:
+    P = parametros(cfg)
+    semillas = tuple(P["redes"]["semillas"]["lluvia"]) if semillas is None else semillas
     pt = cfg["particion_temporal"]
     particion = Particion(tuple(pt["entrenamiento"]), tuple(pt["validacion"]), tuple(pt["prueba"]))
     t, _, qc, umbral = tarea(cfg, raw, fuente)
@@ -143,29 +169,32 @@ def ejecutar(
     referencias = t.referencias(particion.entrenamiento[1])
 
     # Selección de variables (solo entrenamiento): mRMR + prior físico del catálogo
-    catalogo = {v["id"]: v["relevancia"] for v in cfg["fenomenos"]["lluvia_extrema"]["variables"]}
-    prior = {
-        "lluvia_log": "alta",
-        "humedad_especifica": catalogo.get("humedad_especifica", "alta"),
-        "humedad_relativa": "media",
-        "temperatura": "media",
-        "amplitud_termica": "media",
-        "presion": "baja",
-        "viento": "baja",
-        "radiacion": "media",
-        "oni": "media",
-    }
     candidatas = [c for c in X.columns if not c.startswith("estacion")]
+    prior = prior_catalogo(cfg, candidatas)
+    ps = P["seleccion_variables"]
     tr = (X.index <= particion.entrenamiento[1]) & X.index.isin(fechas) & objetivo.notna()
-    seleccion = mrmr(
-        X.loc[tr, candidatas].to_numpy(),
-        objetivo[tr].to_numpy().astype(int),
-        candidatas,
-        prior,
-        clasificacion=True,
-        siempre=["lluvia_log"],
-        maximo=6,
-    )
+
+    def seleccionar(pesos: dict[str, float]) -> dict[str, Any]:
+        return mrmr(
+            X.loc[tr, candidatas].to_numpy(),
+            objetivo[tr].to_numpy().astype(int),
+            candidatas,
+            prior,
+            clasificacion=True,
+            siempre=["lluvia_log"],
+            maximo=int(ps["maximo_lluvia"]),
+            permutaciones=int(ps["permutaciones_nulo"]),
+            pesos=pesos,
+        )
+
+    seleccion = seleccionar(ps["pesos_prior"])
+    # Ablación del prior: la misma selección con pesos iguales. Mide si el prior físico cambia algo.
+    sin_prior = seleccionar({k: 1.0 for k in ps["pesos_prior"]})
+    seleccion["prior"] = prior
+    seleccion["ablacion_prior"] = {
+        "pesos_iguales": sin_prior["seleccionadas"],
+        "cambia_la_seleccion": sin_prior["seleccionadas"] != seleccion["seleccionadas"],
+    }
     columnas = seleccion["seleccionadas"] + ["estacion_seno", "estacion_coseno"]
     registro(f"lluvia: umbral {umbral:.2f} mm/d; variables {columnas}")
 
@@ -179,19 +208,32 @@ def ejecutar(
         from sklearn.linear_model import LogisticRegression
 
         d = construir(X[columnas], objetivo, L, particion, fechas, pd.Timedelta(days=1))
-        m = LogisticRegression(C=0.5, max_iter=3000).fit(
+        m = LogisticRegression(**P["clasicos"]["logistica"]).fit(
             d.X["entrenamiento"].reshape(len(d.X["entrenamiento"]), -1), d.y["entrenamiento"]
         )
         p = m.predict_proba(d.X["validacion"].reshape(len(d.X["validacion"]), -1))[:, 1]
         return M.habilidad_brier(d.y["validacion"], p, referencias(d)["validacion"]["climatologia"])
 
-    ventana = ventana_adaptativa([3, 7, 14, 30], evaluar_L, {"decorrelacion_acf": l_acf, "embedding_takens": 4 * tau})
+    ventana = ventana_adaptativa(
+        list(P["ventanas"]["lluvia_dias"]), evaluar_L, {"decorrelacion_acf": l_acf, "embedding_takens": 4 * tau}
+    )
     L = ventana["elegida"]
     registro(f"lluvia: ventana elegida {L} días")
 
     d = construir(X[columnas], objetivo, L, particion, fechas, pd.Timedelta(days=1))
     refs = referencias(d)
-    zoo = evaluar_zoo(d, "clasificacion", refs, redes=redes, semillas=semillas, epocas=60, registro=registro)
+    zoo = evaluar_zoo(
+        d,
+        "clasificacion",
+        refs,
+        redes=redes,
+        semillas=semillas,
+        epocas=t.epocas,
+        bloque_bootstrap=t.bloque_bootstrap,
+        horizonte_pasos=t.horizonte_pasos,
+        cfg=cfg,
+        registro=registro,
+    )
     mejor = zoo["mejor_validacion"]
 
     # Ablaciones: modelos clásicos + la mejor red (una semilla), misma ventana
@@ -211,6 +253,10 @@ def ejecutar(
             referencias(da),
             redes=[mejor_red] if mejor_red else [],
             semillas=(0,),
+            epocas=t.epocas,
+            bloque_bootstrap=t.bloque_bootstrap,
+            horizonte_pasos=t.horizonte_pasos,
+            cfg=cfg,
             registro=lambda _: None,
         )
         ablaciones[nombre] = {

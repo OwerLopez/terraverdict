@@ -405,6 +405,21 @@ class ModeloEvaluado(Esquema):
     p_diebold_mariano: Probabilidad | None = Field(None, description="Frente a la climatología, en prueba.")
     dispersion_semillas: NumeroFinitoOpcional = None
     referencia: str | None = Field(None, max_length=300, description="Artículo de la arquitectura.")
+    miembros: list[str] = Field(
+        default_factory=list, max_length=10, description="Ensambles: modelos elegidos en validación."
+    )
+    pesos: list[NumeroFinito] = Field(
+        default_factory=list, max_length=10, description="Ensambles: pesos ajustados en validación (suman 1)."
+    )
+    bloque_bootstrap: int | None = Field(
+        None, ge=1, description="Bloque del bootstrap del IC90 (mayor entre el de la tarea y Politis-White)."
+    )
+
+    @model_validator(mode="after")
+    def _pesos(self) -> ModeloEvaluado:
+        if self.pesos and (len(self.pesos) != len(self.miembros) or abs(sum(self.pesos) - 1) > 1e-3):
+            raise ValueError("Los pesos del ensamble deben ser uno por miembro y sumar 1.")
+        return self
 
 
 class Ablacion(Esquema):
@@ -680,6 +695,11 @@ class AgregadoModelo(Esquema):
     p_diebold_mariano: Probabilidad | None = None
     n: int = Field(ge=1)
     anios: int = Field(ge=1)
+    bloque_bootstrap: int | None = Field(None, ge=1, description="Bloque usado en el IC90.")
+    elegidos: list[str] = Field(
+        default_factory=list,
+        description="Solo en `seleccion_validacion`: el modelo que eligió la validación de cada año.",
+    )
 
 
 class DisenoCongelado(Esquema):
@@ -694,6 +714,10 @@ class HistorialTarea(Esquema):
     descripcion: str
     diseno: DisenoCongelado
     metrica_principal: str
+    lectura_principal: str | None = Field(
+        None,
+        description="Clave del agregado que se lee primero: el procedimiento elegido en validación, no el mejor en prueba.",
+    )
     anios: list[AnioHistorial] = Field(min_length=1)
     agregado: dict[Regimen, dict[str, AgregadoModelo]] = Field(default_factory=dict)
 
@@ -710,6 +734,12 @@ class VentanaCaos(Esquema):
     determinismo: Probabilidad | None = None
     k_01: NumeroFinitoOpcional = None
     p_no_linealidad: Probabilidad | None = None
+    p_holm: Probabilidad | None = Field(
+        None, description="p ajustado por Holm entre las ventanas de la serie."
+    )
+    q_bh: Probabilidad | None = Field(
+        None, description="q de Benjamini-Hochberg entre las ventanas de la serie."
+    )
     embedding: dict[str, int] | None = None
 
     @model_validator(mode="after")
@@ -719,11 +749,21 @@ class VentanaCaos(Esquema):
         return self
 
 
+class ResumenCaosVentanas(Esquema):
+    alfa: Probabilidad
+    evaluadas: int = Field(ge=0)
+    p_sin_corregir: int = Field(ge=0, description="Ventanas con p ≤ α leídas por separado (descriptivo).")
+    p_holm: int = Field(ge=0)
+    q_bh: int = Field(ge=0)
+    p_minimo_posible: Probabilidad
+
+
 class HistorialCaosSerie(Esquema):
     fuente: str
     unidad_tiempo: str
     ventana_anios: int = Field(ge=1)
     ventanas: list[VentanaCaos]
+    resumen: ResumenCaosVentanas | None = None
 
 
 class ResultadoHistorialMetricas(Esquema):

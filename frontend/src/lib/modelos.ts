@@ -19,6 +19,8 @@ const NOMBRES: Record<string, [string, string]> = {
   itransformer: ["iTransformer", "iTransformer"],
   ssm_selectivo: ["SSM selectivo", "Selective SSM"],
   ensamble_top3: ["Ensamble (3 mejores)", "Ensemble (top 3)"],
+  ensamble_ponderado: ["Ensamble ponderado", "Weighted ensemble"],
+  seleccion_validacion: ["Elegido en validación (año a año)", "Chosen on validation (each year)"],
 };
 
 const FAMILIAS: Record<string, [string, string]> = {
@@ -38,10 +40,16 @@ export const nombreFamilia = (clave: string): string => {
   return par ? t(par[0], par[1]) : clave;
 };
 
-/** Regla del proyecto (docs/metodologia.md): confirmada = IC90 > 0 Y Diebold-Mariano p < 0,10. */
+/**
+ * Umbral de Diebold-Mariano de la regla de evidencia. Debe coincidir con
+ * config/modelos.yaml (evaluacion.p_diebold_mariano); una prueba del paquete científico lo exige.
+ */
+export const UMBRAL_P_DM = 0.1;
+
+/** Regla del proyecto (docs/metodologia.md): confirmada = IC90 > 0 Y Diebold-Mariano p < UMBRAL_P_DM. */
 export function evidencia(icInferior: number | null | undefined, p: number | null | undefined): "confirmada" | "indicio" | "no_confirmada" {
   const ic = (icInferior ?? -1) > 0;
-  const dm = (p ?? 1) < 0.1;
+  const dm = (p ?? 1) < UMBRAL_P_DM;
   return ic && dm ? "confirmada" : ic || dm ? "indicio" : "no_confirmada";
 }
 

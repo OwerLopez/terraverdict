@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { ErrorApi, type Esquemas } from "../api/cliente";
 import { useConsultarAsistente, useExpediente, useExpedientes, useVerificarTexto } from "../api/consultas";
 import { Boton, Encabezado, Insignia, Tarjeta } from "../componentes/ui";
-import { numeroEs } from "../lib/formato";
+import { numero, numeroEs } from "../lib/formato";
 import { t } from "../lib/i18n";
 
 type Mensaje = { rol: "persona" | "sistema"; texto: string; tono?: "neutral" | "critical" };
@@ -111,10 +111,6 @@ function marcarCifras(texto: string, cifras: Esquemas["CifraDetectada"][]) {
   return partes;
 }
 
-/** Con más valores que esto, la tolerancia relativa (0,5 %) cubre buena parte de cualquier rango y una
- *  coincidencia deja de ser evidencia de respaldo. Un expediente de tendencia aporta decenas de valores. */
-const VALORES_RESPALDO_MAXIMOS = 1000;
-
 function Verificador() {
   const expedientes = useExpedientes();
   const lista = useMemo(() => expedientes.data?.items ?? [], [expedientes.data]);
@@ -181,7 +177,7 @@ function Verificador() {
         className="mt-3"
         icono={ShieldCheck}
         disabled={!texto.trim() || seleccion.length === 0 || verificar.isPending}
-        onClick={() => verificar.mutate({ texto, expediente_ids: seleccion, tolerancia_relativa: 0.005 })}
+        onClick={() => verificar.mutate({ texto, expediente_ids: seleccion })}
       >
         {t("Verificar cifras", "Verify figures")}
       </Boton>
@@ -197,7 +193,14 @@ function Verificador() {
               p.cifra ? (
                 <mark
                   key={i}
-                  title={p.cifra.trazable ? t(`Coincide con ${p.cifra.coincide_con}`, `Matches ${p.cifra.coincide_con}`) : t("Sin respaldo en los expedientes", "Not backed by the case files")}
+                  title={
+                    p.cifra.trazable
+                      ? t(
+                          `Coincide con ${p.cifra.coincide_con}; probabilidad de coincidir por azar ${numero(p.cifra.probabilidad_azar, 3)}`,
+                          `Matches ${p.cifra.coincide_con}; chance-match probability ${numero(p.cifra.probabilidad_azar, 3)}`,
+                        )
+                      : t("Sin respaldo en los expedientes", "Not backed by the case files")
+                  }
                   className="rounded px-0.5 font-semibold"
                   style={{
                     background: "transparent",
@@ -215,11 +218,11 @@ function Verificador() {
           <p className="text-[12px] text-ink-3">
             {t("Subrayado verde: cifra respaldada. Subrayado rojo: cifra sin respaldo. Valores permitidos evaluados:", "Green underline: backed figure. Red underline: unbacked figure. Allowed values evaluated:")} {verificar.data.valores_permitidos}.
           </p>
-          {verificar.data.valores_permitidos > VALORES_RESPALDO_MAXIMOS && (
+          {(verificar.data.coincidencias_debiles ?? []).length > 0 && (
             <p role="alert" className="text-[12px]" style={{ color: "var(--warning)" }}>
               {t(
-                "Con tantos valores de respaldo, una coincidencia puede ser azar. Verifique contra el expediente que cita el texto.",
-                "With this many backing values a match may be chance. Verify against the case file the text cites.",
+                `Coincidencias débiles (${(verificar.data.coincidencias_debiles ?? []).join(", ")}): una cifra inventada con el mismo formato coincidiría por azar con probabilidad mayor que ${numero(verificar.data.alfa_coincidencia, 2)}. Verifique contra el expediente que cita el texto.`,
+                `Weak matches (${(verificar.data.coincidencias_debiles ?? []).join(", ")}): an invented figure with the same format would match by chance with probability above ${numero(verificar.data.alfa_coincidencia, 2)}. Verify against the case file the text cites.`,
               )}
             </p>
           )}

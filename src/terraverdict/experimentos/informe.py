@@ -15,6 +15,11 @@ from pathlib import Path
 from typing import Any
 
 from ..publicar.convertir import veredicto_backend
+from .comun import parametros
+
+# Regla de lectura de config/modelos.yaml (la misma que usa la web)
+P_DM = float(parametros()["evaluacion"]["p_diebold_mariano"])
+P_DM_TEXTO = f"{P_DM:.2f}".replace(".", ",")
 
 NOMBRES = {
     "ref_climatologia": "Climatología (referencia)",
@@ -34,6 +39,8 @@ NOMBRES = {
     "itransformer": "iTransformer",
     "ssm_selectivo": "SSM selectivo",
     "ensamble_top3": "Ensamble (3 mejores en validación)",
+    "ensamble_ponderado": "Ensamble ponderado (pesos de validación)",
+    "seleccion_validacion": "Elegido en validación (año a año)",
 }
 VEREDICTOS = {
     "lineal_estocastica": "lineal estocástica",
@@ -85,7 +92,7 @@ def nivel_evidencia(m: dict[str, Any]) -> str:
     lo = (m.get("ic90_prueba") or [None])[0]
     p = (m.get("diebold_mariano_vs_climatologia") or {}).get("p")
     ic = lo is not None and lo > 0
-    dm = p is not None and p < 0.10
+    dm = p is not None and p < P_DM
     return "confirmada" if ic and dm else ("indicio" if ic or dm else "no_confirmada")
 
 
@@ -93,9 +100,9 @@ def lectura_habilidad(m: dict[str, Any]) -> str:
     if (m.get("ic90_prueba") or [None])[0] is None:
         return "sin IC"
     return {
-        "confirmada": "confirmada (IC90 > 0 y DM p < 0,10)",
-        "indicio": "indicio (solo una de las dos pruebas: IC90 > 0 o DM p < 0,10)",
-        "no_confirmada": "no confirmada (IC90 incluye 0 y DM p ≥ 0,10)",
+        "confirmada": f"confirmada (IC90 > 0 y DM p < {P_DM_TEXTO})",
+        "indicio": f"indicio (solo una de las dos pruebas: IC90 > 0 o DM p < {P_DM_TEXTO})",
+        "no_confirmada": f"no confirmada (IC90 incluye 0 y DM p ≥ {P_DM_TEXTO})",
     }[nivel_evidencia(m)]
 
 
@@ -731,37 +738,72 @@ def seccion_historial(r: dict[str, Any]) -> str:
                 filas.append([a["anio"], REGIMEN[a["regimen"]], "—", "—", "—", f"omitido: {a['omitido']}"])
                 continue
             mm = a["modelos"]
+            elegido = a.get("elegido_en_validacion")
+            # Clásico de referencia elegido por VALIDACIÓN del corte (nunca por la cifra de prueba)
             clasicos = [k for k, v in mm.items() if v["familia"] == "clasico"]
-            mejor_clasico = max(clasicos, key=lambda k: mm[k]["prueba"] if mm[k]["prueba"] is not None else -1e9)
+            clasico = max(clasicos, key=lambda k: mm[k]["validacion"] if mm[k]["validacion"] is not None else -1e9)
             filas.append(
                 [
                     a["anio"],
                     REGIMEN[a["regimen"]],
                     n(a["n"]["prueba"]),
+                    f"{NOMBRES.get(elegido, elegido)} {n(mm.get(elegido, {}).get('prueba'))}" if elegido else "—",
                     f"{n(mm[red]['prueba'])} [{ic(mm[red]['ic90'])}]",
-                    f"{NOMBRES.get(mejor_clasico, mejor_clasico)} {n(mm[mejor_clasico]['prueba'])}",
+                    f"{NOMBRES.get(clasico, clasico)} {n(mm[clasico]['prueba'])}",
                     n(mm.get("ref_persistencia", {}).get("prueba")),
                 ]
             )
         partes.append(
-            tabla(["Año", "Régimen", "n", f"{NOMBRES.get(red, red)} [IC90]", "Mejor clásico", "Persistencia"], filas)
+            tabla(
+                [
+                    "Año",
+                    "Régimen",
+                    "n",
+                    "Elegido en validación",
+                    f"{NOMBRES.get(red, red)} [IC90]",
+                    "Clásico elegido en validación",
+                    "Persistencia",
+                ],
+                filas,
+            )
         )
         filas = []
-        for regimen, modelos in t.get("agregado", {}).items():
-            for modelo, v in sorted(modelos.items(), key=lambda kv: -(kv[1]["valor"] or -1e9)):
+        principal_agr = t.get("lectura_principal")
+        familias = {k: v["familia"] for a in t["anios"] for k, v in (a.get("modelos") or {}).items()}
+        orden_familia = {"referencia": 4, "clasico": 2, "red_neuronal": 1, "ensamble": 3}
+
+        # Orden fijo, independiente de las cifras de prueba: primero la lectura principal y la red congelada
+        primeros = [k for k in (principal_agr, red) if k]
+        for regimen in ("fuera_de_muestra", "validacion_del_diseno"):
+            claves = t.get("agregado", {}).get(regimen, {})
+            resto = sorted(
+                (k for k in claves if k not in primeros), key=lambda k: (orden_familia.get(familias.get(k, ""), 5), k)
+            )
+            for modelo in [*(k for k in primeros if k in claves), *resto]:
+                v = t["agregado"][regimen][modelo]
                 filas.append(
                     [
                         REGIMEN[regimen],
-                        NOMBRES.get(modelo, modelo),
+                        ("**" + NOMBRES.get(modelo, modelo) + "**")
+                        if modelo == principal_agr
+                        else NOMBRES.get(modelo, modelo),
                         n(v["valor"]),
                         ic(v["ic90"]),
                         n(v["p_diebold_mariano"]),
+                        lectura_habilidad(
+                            {"ic90_prueba": v["ic90"], "diebold_mariano_vs_climatologia": {"p": v["p_diebold_mariano"]}}
+                        ),
+                        v.get("bloque_bootstrap", "—"),
                         v["anios"],
                     ]
                 )
         if filas:
-            partes.append("Agregado por régimen (predicciones concatenadas):")
-            partes.append(tabla(["Régimen", "Modelo", "Habilidad", "IC90", "p DM", "Años"], filas))
+            partes.append(
+                "Agregado por régimen (predicciones concatenadas). En **negrita**, la lectura principal: el modelo "
+                "que eligió la validación de cada año (el procedimiento completo, sin mirar la prueba). Las demás "
+                "filas son comparaciones: elegir entre ellas la de mejor cifra en la prueba sería sesgo de selección."
+            )
+            partes.append(tabla(["Régimen", "Modelo", "Habilidad", "IC90", "p DM", "Lectura", "Bloque", "Años"], filas))
     if r.get("caos"):
         partes.append("### Dinámica en ventanas deslizantes")
         filas = []
@@ -770,22 +812,40 @@ def seccion_historial(r: dict[str, Any]) -> str:
             if not ok:
                 continue
             pe = [f["entropia_permutacion"] for f in ok if f.get("entropia_permutacion") is not None]
+            ordenes = sorted({f["orden_permutacion"] for f in ok if f.get("orden_permutacion") is not None})
             nl = sum(1 for f in ok if f.get("p_no_linealidad") is not None and f["p_no_linealidad"] <= 0.05)
+            holm = sum(1 for f in ok if f.get("p_holm") is not None and f["p_holm"] <= 0.05)
+            bh = sum(1 for f in ok if f.get("q_bh") is not None and f["q_bh"] <= 0.05)
             filas.append(
                 [
                     nombre.replace("_", " "),
                     f"{c['ventana_anios']} años",
                     f"{ok[0]['fin']}–{ok[-1]['fin']}",
                     len(ok),
-                    f"{n(min(pe))} a {n(max(pe))}" if pe else "—",
+                    (f"{n(min(pe))} a {n(max(pe))}" if pe else "—")
+                    + (f" (orden {', '.join(map(str, ordenes))})" if ordenes else ""),
                     f"{nl} de {len(ok)}",
+                    f"{holm} · {bh}",
                 ]
             )
         partes.append(
             tabla(
-                ["Serie", "Ventana", "Fin de ventana", "Ventanas", "Entropía de permutación", "No lineales (p ≤ 0,05)"],
+                [
+                    "Serie",
+                    "Ventana",
+                    "Fin de ventana",
+                    "Ventanas",
+                    "Entropía de permutación",
+                    "p ≤ 0,05 sin corregir",
+                    "Tras corregir (Holm · BH)",
+                ],
                 filas,
             )
+        )
+        partes.append(
+            "Cada p de ventana se lee por separado y las ventanas se solapan: el conteo sin corregir es "
+            "descriptivo. Con 39 sustitutos el p mínimo posible es 0,025, así que con decenas de ventanas "
+            "ninguna puede superar Holm; Benjamini-Hochberg solo las retiene si muchas ventanas llegan al mínimo."
         )
         if r.get("series_omitidas"):
             partes.append(
@@ -820,7 +880,9 @@ def generar(resultados: Path) -> str:
         "**Cómo leer.** La partición es temporal y está congelada (entrenamiento 1981–2015, validación 2016–2020, "
         "prueba 2021–2026). Todo se elige con validación; la prueba se usa una vez. Una habilidad está **confirmada** "
         "solo si su IC90 por bootstrap de bloques queda por encima de 0 **y** la prueba de Diebold-Mariano frente a la "
-        "climatología da p < 0,10; si solo se cumple una de las dos, es un **indicio**.",
+        f"climatología da p < {P_DM_TEXTO}; si solo se cumple una de las dos, es un **indicio**. "
+        "Las reglas de método y los hiperparámetros están en `config/modelos.yaml`; su auditoría, en "
+        "`docs/auditoria-metricas.md`.",
         "## Resumen",
         resumen(res),
     ]

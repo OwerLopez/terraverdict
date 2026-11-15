@@ -885,6 +885,16 @@ export interface components {
             n: number;
             /** Anios */
             anios: number;
+            /**
+             * Bloque Bootstrap
+             * @description Bloque usado en el IC90.
+             */
+            bloque_bootstrap?: number | null;
+            /**
+             * Elegidos
+             * @description Solo en `seleccion_validacion`: el modelo que eligió la validación de cada año.
+             */
+            elegidos?: string[];
         };
         /**
          * Alcance
@@ -1115,6 +1125,11 @@ export interface components {
             trazable: boolean;
             /** Coincide Con */
             coincide_con: number | null;
+            /**
+             * Probabilidad Azar
+             * @description Probabilidad de que una cifra inventada con el mismo formato coincida por azar.
+             */
+            probabilidad_azar?: number | null;
         };
         /** ClaveCreada */
         ClaveCreada: {
@@ -1808,6 +1823,7 @@ export interface components {
             ventana_anios: number;
             /** Ventanas */
             ventanas: components["schemas"]["VentanaCaos"][];
+            resumen?: components["schemas"]["ResumenCaosVentanas"] | null;
         };
         /**
          * HistorialMetricas
@@ -1845,6 +1861,11 @@ export interface components {
             diseno: components["schemas"]["DisenoCongelado"];
             /** Metrica Principal */
             metrica_principal: string;
+            /**
+             * Lectura Principal
+             * @description Clave del agregado que se lee primero: el procedimiento elegido en validación, no el mejor en prueba.
+             */
+            lectura_principal?: string | null;
             /** Anios */
             anios: components["schemas"]["AnioHistorial"][];
             /** Agregado */
@@ -2003,6 +2024,21 @@ export interface components {
              * @description Artículo de la arquitectura.
              */
             referencia?: string | null;
+            /**
+             * Miembros
+             * @description Ensambles: modelos elegidos en validación.
+             */
+            miembros?: string[];
+            /**
+             * Pesos
+             * @description Ensambles: pesos ajustados en validación (suman 1).
+             */
+            pesos?: number[];
+            /**
+             * Bloque Bootstrap
+             * @description Bloque del bootstrap del IC90 (mayor entre el de la tarea y Politis-White).
+             */
+            bloque_bootstrap?: number | null;
         };
         /** ModeloMapa */
         ModeloMapa: {
@@ -2769,6 +2805,34 @@ export interface components {
             no_trazables: string[];
             /** Valores Permitidos */
             valores_permitidos: number;
+            /**
+             * Alfa Coincidencia
+             * @description Umbral de probabilidad de coincidencia por azar.
+             */
+            alfa_coincidencia: number;
+            /**
+             * Coincidencias Debiles
+             * @description Cifras respaldadas cuya coincidencia sería probable por azar (> alfa_coincidencia).
+             */
+            coincidencias_debiles?: string[];
+        };
+        /** ResumenCaosVentanas */
+        ResumenCaosVentanas: {
+            /** Alfa */
+            alfa: number;
+            /** Evaluadas */
+            evaluadas: number;
+            /**
+             * P Sin Corregir
+             * @description Ventanas con p ≤ α leídas por separado (descriptivo).
+             */
+            p_sin_corregir: number;
+            /** P Holm */
+            p_holm: number;
+            /** Q Bh */
+            q_bh: number;
+            /** P Minimo Posible */
+            p_minimo_posible: number;
         };
         /** ResumenSistema */
         ResumenSistema: {
@@ -3001,6 +3065,7 @@ export interface components {
             expediente_ids: string[];
             /**
              * Tolerancia Relativa
+             * @description Tolerancia relativa además del redondeo (0,005: media unidad del tercer dígito significativo).
              * @default 0.005
              */
             tolerancia_relativa: number;
@@ -3276,6 +3341,16 @@ export interface components {
             k_01?: number | null;
             /** P No Linealidad */
             p_no_linealidad?: number | null;
+            /**
+             * P Holm
+             * @description p ajustado por Holm entre las ventanas de la serie.
+             */
+            p_holm?: number | null;
+            /**
+             * Q Bh
+             * @description q de Benjamini-Hochberg entre las ventanas de la serie.
+             */
+            q_bh?: number | null;
             /** Embedding */
             embedding?: {
                 [key: string]: number;

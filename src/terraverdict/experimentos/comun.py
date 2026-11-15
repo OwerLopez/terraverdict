@@ -13,14 +13,18 @@ from __future__ import annotations
 import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from functools import lru_cache
+from pathlib import Path
 from typing import Any
 
 import numpy as np
 import pandas as pd
 from numpy.lib.stride_tricks import sliding_window_view
+from scipy.optimize import Bounds, LinearConstraint, minimize
 from sklearn.ensemble import HistGradientBoostingClassifier, HistGradientBoostingRegressor
 from sklearn.linear_model import LogisticRegression, PoissonRegressor, Ridge
 
+from ..config import cargar_yaml
 from ..evaluacion import metricas as M
 from ..evaluacion.explicabilidad import importancia_permutacion
 from ..evaluacion.incertidumbre import (
@@ -80,6 +84,7 @@ class Tarea:
     fechas: pd.DatetimeIndex | None = None
     epocas: int = 60
     bloque_bootstrap: int = 10
+    horizonte_pasos: int = 1  # pasos de tiempo del pronóstico (Diebold-Mariano con corrección HLN)
 
 
 def construir(
@@ -121,26 +126,36 @@ def _plano(X: np.ndarray) -> np.ndarray:
     return X.reshape(len(X), -1)
 
 
-def _clasicos(tipo: str, semilla: int) -> dict[str, Any]:
+RUTA_MODELOS = Path(__file__).resolve().parents[3] / "config" / "modelos.yaml"
+
+
+def parametros(cfg: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Hiperparámetros y reglas de `config/modelos.yaml` (o los que trae `cfg["modelos"]`)."""
+    if cfg is not None and cfg.get("modelos"):
+        return cfg["modelos"]
+    return _modelos_por_defecto()
+
+
+@lru_cache(maxsize=1)
+def _modelos_por_defecto() -> dict[str, Any]:
+    return cargar_yaml(RUTA_MODELOS)
+
+
+def _clasicos(tipo: str, semilla: int, cfg: dict[str, Any] | None = None) -> dict[str, Any]:
+    c = parametros(cfg)["clasicos"]
     if tipo == "clasificacion":
         return {
-            "logistica": LogisticRegression(C=0.5, max_iter=3000),
-            "gbm": HistGradientBoostingClassifier(
-                max_iter=300, learning_rate=0.05, max_leaf_nodes=15, l2_regularization=1.0, random_state=semilla
-            ),
+            "logistica": LogisticRegression(**c["logistica"]),
+            "gbm": HistGradientBoostingClassifier(**c["gbm_clasificacion"], random_state=semilla),
         }
     if tipo == "conteo":
         return {
-            "poisson_glm": PoissonRegressor(alpha=1.0, max_iter=1000),
-            "gbm": HistGradientBoostingRegressor(
-                loss="poisson", max_iter=200, learning_rate=0.05, max_leaf_nodes=15, random_state=semilla
-            ),
+            "poisson_glm": PoissonRegressor(**c["poisson_glm"]),
+            "gbm": HistGradientBoostingRegressor(loss="poisson", **c["gbm_conteo"], random_state=semilla),
         }
     return {
-        "ridge": Ridge(alpha=3.0),
-        "gbm": HistGradientBoostingRegressor(
-            max_iter=300, learning_rate=0.05, max_leaf_nodes=15, l2_regularization=1.0, random_state=semilla
-        ),
+        "ridge": Ridge(**c["ridge"]),
+        "gbm": HistGradientBoostingRegressor(**c["gbm_regresion"], random_state=semilla),
     }
 
 
@@ -208,6 +223,57 @@ def _perdidas(tipo: str, y: np.ndarray, p: np.ndarray) -> np.ndarray:
     return (p - y) ** 2
 
 
+def pliegues_contiguos(n: int, k: int) -> list[np.ndarray]:
+    """Bloques contiguos (en el tiempo) de la validación, para ajustar y evaluar sin solaparse."""
+    k = max(2, min(k, n // 2)) if n >= 4 else 1
+    return [b for b in np.array_split(np.arange(n), k) if len(b)]
+
+
+def calibrar_cruzado(pva: np.ndarray, yva: np.ndarray, pliegues: list[np.ndarray]) -> np.ndarray:
+    """Probabilidades de validación calibradas FUERA DE PLIEGUE: cada bloque se calibra con los demás.
+
+    Con ellas se calcula el puntaje de validación. La calibración que se aplica a la prueba se ajusta
+    con toda la validación. Si un pliegue deja una sola clase en el resto, ese bloque usa la tasa del resto.
+    """
+    salida = np.empty(len(pva))
+    if len(pliegues) < 2:
+        return CalibradorIsotonico().ajustar(pva, yva).transformar(pva)
+    for idx in pliegues:
+        resto = np.setdiff1d(np.arange(len(pva)), idx)
+        if len(np.unique(yva[resto])) < 2:
+            salida[idx] = np.clip(float(yva[resto].mean()), 1e-4, 1 - 1e-4)
+        else:
+            salida[idx] = CalibradorIsotonico().ajustar(pva[resto], yva[resto]).transformar(pva[idx])
+    return salida
+
+
+def _perdida_media(tipo: str, y: np.ndarray, p: np.ndarray) -> float:
+    return float(np.mean(_perdidas(tipo, y, np.clip(p, 1e-9, None) if tipo == "conteo" else p)))
+
+
+def pesos_validacion(tipo: str, y: np.ndarray, P: np.ndarray) -> np.ndarray:
+    """Pesos ≥ 0 que suman 1 y minimizan la pérdida de la tarea (Brier, ECM o Poisson) sobre `P`
+    (n × miembros). Apilamiento restringido (Breiman, 1996). Se ajustan SOLO con validación."""
+    m = P.shape[1]
+    if m == 1:
+        return np.ones(1)
+    restriccion = LinearConstraint(np.ones((1, m)), 1.0, 1.0)
+    res = minimize(  # type: ignore[call-overload]  # stubs de scipy: options es un TypedDict
+        lambda w: _perdida_media(tipo, y, P @ w),
+        np.full(m, 1.0 / m),
+        method="SLSQP",
+        bounds=Bounds(np.zeros(m), np.ones(m)),
+        constraints=restriccion,
+        options={"maxiter": 200, "ftol": 1e-10},
+    )
+    w = np.clip(res.x if res.success else np.full(m, 1.0 / m), 0.0, None)
+    return w / w.sum() if w.sum() > 0 else np.full(m, 1.0 / m)
+
+
+def _combinar(variante: str, tipo: str, y: np.ndarray, Pva: np.ndarray) -> np.ndarray:
+    return np.full(Pva.shape[1], 1.0 / Pva.shape[1]) if variante == "promedio" else pesos_validacion(tipo, y, Pva)
+
+
 def evaluar_zoo(
     d: Datos,
     tipo: str,
@@ -217,64 +283,94 @@ def evaluar_zoo(
     semillas: tuple[int, ...] = (0, 1),
     epocas: int = 60,
     bloque_bootstrap: int = 10,
+    horizonte_pasos: int = 1,
+    cfg: dict[str, Any] | None = None,
     registro: Callable[[str], None] = print,
 ) -> dict[str, Any]:
-    """Entrena y evalúa referencias, modelos clásicos y redes. `referencias[parte][nombre]` son
-    predicciones de referencia (climatología obligatoria) alineadas con d.y[parte]."""
+    """Entrena y evalúa referencias, modelos clásicos, redes y ensambles.
+
+    `referencias[parte][nombre]` son predicciones de referencia (climatología obligatoria)
+    alineadas con d.y[parte]. Reglas (docs/auditoria-metricas.md):
+    - el modelo publicado es el de mejor `puntaje_validacion`; la prueba no interviene;
+    - la calibración y los ensambles se puntúan FUERA DE PLIEGUE dentro de la validación;
+    - la parada temprana de las redes usa el tramo final del entrenamiento, no la validación;
+    - el IC90 usa bootstrap de bloques con el bloque mayor entre el de la tarea y el de
+      Politis-White; Diebold-Mariano usa el horizonte del pronóstico.
+    """
+    P = parametros(cfg)
     redes = REDES if redes is None else redes
     ytr, yva, yte = d.y["entrenamiento"], d.y["validacion"], d.y["prueba"]
+    ev = P["evaluacion"]
+    pliegues = pliegues_contiguos(len(yva), int(P["calibracion"]["pliegues_validacion"]))
     resultados: dict[str, Any] = {}
     predicciones: dict[str, dict[str, np.ndarray]] = {}
+    clim_va, clim_te = referencias["validacion"]["climatologia"], referencias["prueba"]["climatologia"]
 
-    def registrar(nombre: str, familia: str, pva: np.ndarray, pte: np.ndarray, extra: dict[str, Any]) -> None:
+    def fn(yy: np.ndarray, pp: np.ndarray, rr: np.ndarray) -> float:
+        return puntaje_validacion(tipo, yy, pp, rr)
+
+    def registrar(
+        nombre: str,
+        familia: str,
+        pva: np.ndarray,
+        pte: np.ndarray,
+        extra: dict[str, Any],
+        pva_oof: np.ndarray | None = None,
+    ) -> None:
+        """`pva_oof`: predicciones de validación fuera de pliegue (ensambles); si falta, se calculan."""
         crudo_va = pva
         umbral = q = None
         if tipo == "clasificacion":
             if familia not in ("referencia", "ensamble"):  # las referencias se evalúan tal cual
                 cal = CalibradorIsotonico().ajustar(pva, yva)
-                pva, pte = cal.transformar(pva), cal.transformar(pte)
-            umbral = M.mejor_umbral_csi(yva, pva)
+                pva_oof = calibrar_cruzado(pva, yva, pliegues)
+                pte = cal.transformar(pte)
+            umbral = M.mejor_umbral_csi(yva, pva if pva_oof is None else pva_oof)
         elif tipo == "regresion":
-            q = cuantil_conformal(yva - pva, 0.90)
-        val = puntaje_validacion(tipo, yva, pva, referencias["validacion"]["climatologia"])
+            q = cuantil_conformal(yva - pva, float(ev["nivel_ic"]))
+        va_puntaje = pva if pva_oof is None else pva_oof
+        val = puntaje_validacion(tipo, yva, va_puntaje, clim_va)
         prueba = _metricas(tipo, yte, pte, referencias["prueba"], umbral, q)
         principal = (
             "bss_climatologia"
             if tipo == "clasificacion"
             else ("ganancia_informacion_bits" if tipo == "conteo" else "habilidad_climatologia")
         )
-        if tipo == "clasificacion":
-
-            def fn(yy, pp, rr):
-                return M.habilidad_brier(yy, pp, rr)
-        elif tipo == "conteo":
-
-            def fn(yy, pp, rr):
-                return (M.log_verosimilitud_poisson(yy, pp) - M.log_verosimilitud_poisson(yy, rr)) / np.log(2)
-        else:
-
-            def fn(yy, pp, rr):
-                return M.habilidad_mse(yy, pp, rr)
-
-        ic = M.bootstrap_bloques(fn, yte, pte, referencias["prueba"]["climatologia"], bloque=bloque_bootstrap)
-        dm = M.diebold_mariano(_perdidas(tipo, yte, pte), _perdidas(tipo, yte, referencias["prueba"]["climatologia"]))
+        dif = _perdidas(tipo, yte, pte) - _perdidas(tipo, yte, clim_te)
+        bloque = max(int(bloque_bootstrap), M.bloque_politis_white(dif))
+        ic = M.bootstrap_bloques(
+            fn,
+            yte,
+            pte,
+            clim_te,
+            bloque=bloque,
+            n=int(ev["bootstrap_repeticiones"]),
+            semilla=int(ev["bootstrap_semilla"]),
+            nivel=float(ev["nivel_ic"]),
+        )
+        dm = M.diebold_mariano(_perdidas(tipo, yte, pte), _perdidas(tipo, yte, clim_te), horizonte=horizonte_pasos)
         resultados[nombre] = {
             "familia": familia,
             "puntaje_validacion": val,
             "prueba": prueba,
             "metrica_principal": principal,
             "ic90_prueba": list(ic),
+            "bloque_bootstrap": bloque,
             "diebold_mariano_vs_climatologia": dm,
             "umbral_decision": umbral,
             "q_conformal_90": q,
             **extra,
         }
-        predicciones[nombre] = {"validacion": pva, "prueba": pte, "validacion_cruda": crudo_va}
+        predicciones[nombre] = {
+            "validacion": va_puntaje,
+            "prueba": pte,
+            "validacion_cruda": crudo_va,
+        }
 
     for nombre, ref in referencias["validacion"].items():
         registrar(f"ref_{nombre}", "referencia", ref, referencias["prueba"][nombre], {"descripcion": nombre})
 
-    for nombre, modelo in _clasicos(tipo, 0).items():
+    for nombre, modelo in _clasicos(tipo, 0, cfg).items():
         t = time.perf_counter()
         modelo.fit(_plano(d.X["entrenamiento"]), ytr)
         registrar(
@@ -290,6 +386,12 @@ def evaluar_zoo(
     if tipo == "clasificacion":
         pos = max(1.0, float(ytr.sum()))
         peso = float(np.sqrt((len(ytr) - pos) / pos))
+    pr = P["redes"]
+    # Parada temprana con el tramo final del entrenamiento (temporal): la validación queda intacta
+    # para elegir el modelo.
+    n_pt = max(1, round(len(ytr) * float(pr["fraccion_parada_temprana"])))
+    Xaj, yaj = d.X["entrenamiento"][:-n_pt], ytr[:-n_pt]
+    Xpt, ypt = d.X["entrenamiento"][-n_pt:], ytr[-n_pt:]
     for red in redes:
         pva_s, pte_s, puntajes, info = [], [], [], []
         for s in semillas:
@@ -297,19 +399,23 @@ def evaluar_zoo(
             modelo = ARQUITECTURAS[red](d.L, len(d.nombres), 1)
             modelo, h = entrenar(
                 modelo,
-                d.X["entrenamiento"],
-                ytr,
-                d.X["validacion"],
-                yva,
+                Xaj,
+                yaj,
+                Xpt,
+                ypt,
                 tarea=tipo,
                 epocas=epocas,
+                lote=int(pr["lote"]),
+                lr=float(pr["tasa_aprendizaje"]),
+                paciencia=int(pr["paciencia"]),
+                decaimiento=float(pr["decaimiento_pesos"]),
                 peso_positivo=peso,
                 semilla=s,
             )
             pva, pte = predecir(modelo, d.X["validacion"], tipo), predecir(modelo, d.X["prueba"], tipo)
             pva_s.append(pva)
             pte_s.append(pte)
-            puntajes.append(puntaje_validacion(tipo, yva, pva, referencias["validacion"]["climatologia"]))
+            puntajes.append(puntaje_validacion(tipo, yva, pva, clim_va))
             info.append(
                 {
                     "semilla": s,
@@ -327,6 +433,7 @@ def evaluar_zoo(
                 "referencia": REFERENCIAS[red],
                 "parametros": contar_parametros(modelo),
                 "semillas": info,
+                "parada_temprana": f"último {float(pr['fraccion_parada_temprana']):.0%} del entrenamiento ({n_pt} ventanas)",
                 "puntaje_validacion_por_semilla": [float(v) for v in puntajes],
                 "dispersion_semillas": float(np.std(puntajes)),
             },
@@ -334,19 +441,60 @@ def evaluar_zoo(
         registro(f"  {red}: validación {resultados[red]['puntaje_validacion']:.4f} ± {np.std(puntajes):.4f}")
 
     candidatos = [k for k, v in resultados.items() if v["familia"] != "referencia"]
-    top = sorted(candidatos, key=lambda k: -resultados[k]["puntaje_validacion"])[:3]
-    pva = np.mean([predicciones[k]["validacion"] for k in top], 0)
-    pte = np.mean([predicciones[k]["prueba"] for k in top], 0)
-    registrar("ensamble_top3", "ensamble", pva, pte, {"miembros": top})
-    if tipo == "clasificacion":  # el ensamble ya promedia probabilidades calibradas
-        resultados["ensamble_top3"]["nota"] = "Promedio de probabilidades calibradas de los 3 mejores en validación"
-    mejor = max([*candidatos, "ensamble_top3"], key=lambda k: resultados[k]["puntaje_validacion"])
+    pe = P["ensamble"]
+    k_miembros = int(pe["miembros"])
+    ensambles = []
+    for variante in pe["variantes"]:
+        nombre_e = "ensamble_top3" if variante == "promedio" else "ensamble_ponderado"
+        # Puntaje de validación fuera de pliegue: en cada bloque, miembros y pesos salen de los demás bloques
+        oof = np.empty(len(yva))
+        for idx in pliegues:
+            resto = np.setdiff1d(np.arange(len(yva)), idx)
+            top_r = sorted(
+                candidatos,
+                key=lambda k: (
+                    -puntaje_validacion(tipo, yva[resto], predicciones[k]["validacion"][resto], clim_va[resto])
+                ),
+            )[:k_miembros]
+            Pr = np.column_stack([predicciones[k]["validacion"][resto] for k in top_r])
+            w_r = _combinar(variante, tipo, yva[resto], Pr)
+            oof[idx] = np.column_stack([predicciones[k]["validacion"][idx] for k in top_r]) @ w_r
+        # Para la prueba: miembros y pesos con toda la validación
+        top = sorted(candidatos, key=lambda k: -resultados[k]["puntaje_validacion"])[:k_miembros]
+        Pva = np.column_stack([predicciones[k]["validacion"] for k in top])
+        w = _combinar(variante, tipo, yva, Pva)
+        pte = np.column_stack([predicciones[k]["prueba"] for k in top]) @ w
+        registrar(
+            nombre_e,
+            "ensamble",
+            Pva @ w,
+            pte,
+            {
+                "miembros": top,
+                "pesos": [round(float(x), 4) for x in w],
+                "variante": variante,
+                "nota": (
+                    "Promedio simple" if variante == "promedio" else "Pesos ≥ 0 que suman 1, ajustados en validación"
+                )
+                + f" de los {k_miembros} mejores en validación; puntaje de validación fuera de pliegue ({len(pliegues)} bloques)",
+            },
+            pva_oof=oof,
+        )
+        ensambles.append(nombre_e)
+    todos = [*candidatos, *ensambles]
+    mejor = max(todos, key=lambda k: resultados[k]["puntaje_validacion"])
     return {
         "modelos": resultados,
         "mejor_validacion": mejor,
-        "ranking_validacion": sorted(
-            [*candidatos, "ensamble_top3"], key=lambda k: -resultados[k]["puntaje_validacion"]
-        ),
+        "ranking_validacion": sorted(todos, key=lambda k: -resultados[k]["puntaje_validacion"]),
+        "protocolo": {
+            "seleccion": "mayor puntaje de validación (la prueba no interviene)",
+            "calibracion": f"isotónica; puntaje de validación fuera de pliegue ({len(pliegues)} bloques contiguos)",
+            "parada_temprana": f"último {float(pr['fraccion_parada_temprana']):.0%} del entrenamiento",
+            "ensambles": list(pe["variantes"]),
+            "horizonte_diebold_mariano": horizonte_pasos,
+            "bloque_bootstrap_minimo": int(bloque_bootstrap),
+        },
         "_predicciones": predicciones,
     }
 

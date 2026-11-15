@@ -93,7 +93,12 @@ class ConsultaAsistente(Esquema):
 class SolicitudVerificacion(Esquema):
     texto: str = Field(min_length=1, max_length=20_000)
     expediente_ids: list[str] = Field(min_length=1, max_length=50)
-    tolerancia_relativa: float = Field(0.005, ge=0, le=0.1)
+    tolerancia_relativa: float = Field(
+        0.005,
+        ge=0,
+        le=0.1,
+        description="Tolerancia relativa además del redondeo (0,005: media unidad del tercer dígito significativo).",
+    )
 
 
 class CifraDetectada(Esquema):
@@ -101,6 +106,12 @@ class CifraDetectada(Esquema):
     valor: float
     trazable: bool
     coincide_con: float | None
+    probabilidad_azar: float | None = Field(
+        None,
+        ge=0,
+        le=1,
+        description="Probabilidad de que una cifra inventada con el mismo formato coincida por azar.",
+    )
 
 
 class ResultadoVerificacionTexto(Esquema):
@@ -108,3 +119,8 @@ class ResultadoVerificacionTexto(Esquema):
     cifras: list[CifraDetectada]
     no_trazables: list[str]
     valores_permitidos: int
+    alfa_coincidencia: float = Field(description="Umbral de probabilidad de coincidencia por azar.")
+    coincidencias_debiles: list[str] = Field(
+        default_factory=list,
+        description="Cifras respaldadas cuya coincidencia sería probable por azar (> alfa_coincidencia).",
+    )

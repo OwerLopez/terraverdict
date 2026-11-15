@@ -61,6 +61,8 @@ def procedencia(raw: Path, config: Path) -> dict[str, Any]:
         "generado_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "commit": commit,
         "config_sha256": hashlib.sha256(config.read_bytes()).hexdigest(),
+        # Hiperparámetros y reglas de método (docs/auditoria-metricas.md)
+        "modelos_sha256": hashlib.sha256((RAIZ / "config" / "modelos.yaml").read_bytes()).hexdigest(),
         "preregistro_sha256": hashlib.sha256((RAIZ / "preregistro.yaml").read_bytes()).hexdigest(),
         "crudos": manifiestos,
         "versiones": {
@@ -82,6 +84,7 @@ def ejecutar(
     semillas: tuple[int, ...] | None = None,
 ) -> dict[str, Any]:
     cfg = cargar_yaml(config)
+    cfg["modelos"] = cargar_yaml(RAIZ / "config" / "modelos.yaml")
     salida.mkdir(parents=True, exist_ok=True)
     proc = procedencia(raw, config)
     # Cadena de custodia: no se entrena sobre crudos que no coinciden con su manifiesto.

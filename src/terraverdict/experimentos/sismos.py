@@ -20,7 +20,7 @@ import pandas as pd
 from ..evaluacion.incertidumbre import decidir_abstencion
 from ..ingest import usgs
 from ..senales.procesamiento import regimenes
-from .comun import Particion, Tarea, construir, evaluar_zoo, limpiar, serie_prueba
+from .comun import Particion, Tarea, construir, evaluar_zoo, limpiar, parametros, serie_prueba
 
 
 def catalogo(raw: Path) -> pd.DataFrame:
@@ -29,10 +29,10 @@ def catalogo(raw: Path) -> pd.DataFrame:
     return ev.sort_values("tiempo").reset_index(drop=True)
 
 
-def magnitud_completitud(m: np.ndarray, paso: float = 0.1) -> float:
+def magnitud_completitud(m: np.ndarray, paso: float = 0.1, correccion: float = 0.2) -> float:
     bins = np.arange(np.floor(m.min() / paso) * paso, m.max() + paso, paso)
     h, bordes = np.histogram(m, bins)
-    return float(round(bordes[int(np.argmax(h))] + 0.2, 1))
+    return float(round(bordes[int(np.argmax(h))] + correccion, 1))
 
 
 def valor_b(m: np.ndarray, mc: float, paso: float = 0.1, n_boot: int = 500, semilla: int = 0) -> dict[str, Any]:
@@ -73,11 +73,20 @@ def gardner_knopoff(ev: pd.DataFrame) -> np.ndarray:
     return independiente
 
 
-def preparar(raw: Path) -> dict[str, Any]:
-    """Catálogo, completitud, desagrupamiento y series mensuales (compartido por el experimento y el historial)."""
+def preparar(raw: Path, cfg: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Catálogo, completitud, desagrupamiento y series mensuales (compartido por el experimento y el historial).
+
+    La Mc que define el objetivo se calcula SOLO con el entrenamiento de la partición congelada
+    (antes usaba todo el catálogo, prueba incluida), con el piso de `config/modelos.yaml`.
+    """
     ev = catalogo(raw)
-    mc_total = magnitud_completitud(ev["magnitud"].to_numpy())
-    mc = max(mc_total, 4.5)  # completitud conservadora para toda la serie
+    ps = parametros(cfg)["sismos"]
+    fin_ent = (cfg or {}).get("particion_temporal", {}).get("entrenamiento", [None, "2015-12-31"])[1]
+    ent = ev["tiempo"] <= pd.Timestamp(fin_ent) + pd.Timedelta(days=1)
+    mc_total = magnitud_completitud(
+        ev.loc[ent, "magnitud"].to_numpy(), correccion=float(ps["mc_correccion_maxima_curvatura"])
+    )
+    mc = max(mc_total, float(ps["mc_piso"]))  # completitud conservadora para toda la serie
     ev["independiente"] = gardner_knopoff(ev)
     completos = ev[ev["magnitud"] >= mc - 1e-9]
     mensual = completos.set_index("tiempo").resample("MS")["magnitud"].count()
@@ -99,7 +108,7 @@ def preparar(raw: Path) -> dict[str, Any]:
 def tarea(cfg: dict[str, Any], raw: Path, prep: dict[str, Any] | None = None) -> Tarea:
     """Conteo mensual de sismos M ≥ Mc del mes siguiente frente a un Poisson de tasa constante.
     La tasa de la climatología se estima solo con los meses ≤ `hasta`."""
-    prep = prep or preparar(raw)
+    prep = prep or preparar(raw, cfg)
     mensual, mensual_ind, maxmag = prep["mensual"], prep["mensual_ind"], prep["maxmag"]
     X = pd.DataFrame(
         {"conteo_log": np.log1p(mensual), "conteo_independiente_log": np.log1p(mensual_ind), "magnitud_maxima": maxmag},
@@ -120,6 +129,7 @@ def tarea(cfg: dict[str, Any], raw: Path, prep: dict[str, Any] | None = None) ->
 
         return construir_refs
 
+    P = parametros(cfg)
     return Tarea(
         nombre="sismos_conteo_mensual",
         tipo="conteo",
@@ -127,12 +137,10 @@ def tarea(cfg: dict[str, Any], raw: Path, prep: dict[str, Any] | None = None) ->
         objetivo=mensual.shift(-1).astype(float),
         horizonte=pd.DateOffset(months=1),
         referencias=referencias,
-        epocas=150,
-        bloque_bootstrap=6,
+        epocas=int(P["redes"]["epocas"]["sismos"]),
+        bloque_bootstrap=int(P["evaluacion"]["bloque_bootstrap"]["sismos"]),
+        horizonte_pasos=1,
     )
-
-
-VENTANA_CONTEOS_MESES = 12  # un ciclo anual completo de conteos como historia de entrada
 
 
 def ejecutar(
@@ -140,9 +148,12 @@ def ejecutar(
     raw: Path,
     registro=print,
     redes: list[str] | None = None,
-    semillas: tuple[int, ...] = (0, 1, 2),
+    semillas: tuple[int, ...] | None = None,
 ) -> dict[str, Any]:
-    prep = preparar(raw)
+    P = parametros(cfg)
+    semillas = tuple(P["redes"]["semillas"]["sismos"]) if semillas is None else semillas
+    ventana_meses = int(P["ventanas"]["sismos_meses"])  # fijada a priori: un ciclo anual de conteos
+    prep = preparar(raw, cfg)
     ev, mc_total, mc, completos = prep["ev"], prep["mc_total"], prep["mc"], prep["completos"]
     mensual, mensual_ind = prep["mensual"], prep["mensual_ind"]
     m = ev["magnitud"].to_numpy()
@@ -173,9 +184,18 @@ def ejecutar(
     tasa = float(mensual[mensual.index <= particion.entrenamiento[1]].mean())
     referencias = t.referencias(particion.entrenamiento[1])
 
-    d = construir(X, objetivo, VENTANA_CONTEOS_MESES, particion, None, pd.DateOffset(months=1))
+    d = construir(X, objetivo, ventana_meses, particion, None, pd.DateOffset(months=1))
     zoo = evaluar_zoo(
-        d, "conteo", referencias(d), redes=redes, semillas=semillas, epocas=150, bloque_bootstrap=6, registro=registro
+        d,
+        "conteo",
+        referencias(d),
+        redes=redes,
+        semillas=semillas,
+        epocas=t.epocas,
+        bloque_bootstrap=t.bloque_bootstrap,
+        horizonte_pasos=t.horizonte_pasos,
+        cfg=cfg,
+        registro=registro,
     )
     mejor = zoo["mejor_validacion"]
     abst = decidir_abstencion(
@@ -194,7 +214,13 @@ def ejecutar(
             "hasta": str(ev["tiempo"].iloc[-1].date()),
             "tipos_magnitud": ev["tipo_magnitud"].value_counts().head(6).to_dict(),
         },
-        "completitud": {"mc_maxima_curvatura": mc_total, "mc_por_decada": por_decada, "mc_usada": mc},
+        "completitud": {
+            "mc_maxima_curvatura": mc_total,
+            "mc_calculada_con": f"eventos hasta {pt['entrenamiento'][1]} (entrenamiento)",
+            "mc_piso": float(P["sismos"]["mc_piso"]),
+            "mc_por_decada": por_decada,
+            "mc_usada": mc,
+        },
         "valor_b": {"todos": b_total, "desagrupados": b_ind},
         "desagrupamiento": {
             "metodo": "Gardner y Knopoff (1974)",
@@ -225,6 +251,8 @@ def ejecutar(
         ],
         "pronostico_conteos": {
             "definicion": f"conteo mensual de sismos M ≥ {mc} del mes siguiente",
+            "ventana_meses": ventana_meses,
+            "columnas": list(X.columns),
             "tasa_media_entrenamiento": tasa,
             "zoo": limpiar(zoo),
             "abstencion": abst,
@@ -234,6 +262,8 @@ def ejecutar(
         "_series": {
             "mensual_independiente": mensual_ind,
             "intereventos_log": np.log(np.maximum(intervalos, 1e-3)),
-            "intereventos_tiempos": pd.DatetimeIndex(completos.loc[completos["independiente"], "tiempo"].to_numpy()[1:]),
+            "intereventos_tiempos": pd.DatetimeIndex(
+                completos.loc[completos["independiente"], "tiempo"].to_numpy()[1:]
+            ),
         },
     }

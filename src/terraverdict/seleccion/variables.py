@@ -2,7 +2,9 @@
 
 mRMR (Peng, Long y Ding, 2005, doi:10.1109/TPAMI.2005.159) con información mutua estimada por
 k vecinos (Kraskov, Stögbauer y Grassberger, 2004, doi:10.1103/PhysRevE.69.066138, en scikit-learn),
-ponderada por el prior físico del catálogo (alta = 1,0; media = 0,8; baja = 0,6).
+ponderada por el prior físico del catálogo. Pesos por defecto: alta = 1,0; media = 0,8; baja = 0,6
+(fijados a priori; los experimentos los leen de config/modelos.yaml y guardan una ablación con pesos
+iguales para medir su efecto).
 
 - Relevancia: IM(variable; objetivo).
 - Redundancia: |ρ de Spearman| máxima con las variables ya elegidas, en [0, 1]. No se usa IM entre
@@ -36,6 +38,7 @@ def mrmr(
     maximo: int = 8,
     semilla: int = 0,
     permutaciones: int = 50,
+    pesos: dict[str, float] | None = None,
 ) -> dict:
     estimar = mutual_info_classif if clasificacion else mutual_info_regression
     mi = estimar(X, y, n_neighbors=5, random_state=semilla)
@@ -62,7 +65,8 @@ def mrmr(
         puntajes = []
         for i in candidatas:
             r = float(np.max(rho[i, elegidas_idx])) if elegidas_idx else 0.0
-            p = PESOS.get(prior.get(nombres[i], "media"), 0.8)
+            tabla_pesos = PESOS if pesos is None else pesos
+            p = float(tabla_pesos[prior.get(nombres[i], "media")])
             puntajes.append((p * mi[i] * (1 - r), i, r, p))
         puntaje, i, r, p = max(puntajes)
         if mi[i] * (1 - r) <= umbral[i]:
@@ -96,4 +100,5 @@ def mrmr(
         "umbral_nulo": {n: float(v) for n, v in zip(nombres, umbral, strict=False)},
         "permutaciones": permutaciones,
         "redundancia": "|rho de Spearman| máxima con las ya elegidas",
+        "pesos_prior": dict(PESOS if pesos is None else pesos),
     }

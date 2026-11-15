@@ -42,7 +42,13 @@ def auc(y: np.ndarray, p: np.ndarray) -> float:
 def confiabilidad(y: np.ndarray, p: np.ndarray, bins: int = 10) -> dict:
     """Curva de confiabilidad y error de calibración esperado (ECE) con bins de igual frecuencia."""
     y, p = np.asarray(y, float), np.asarray(p, float)
+    if len(p) == 0:
+        return {"ece": float("nan"), "curva": []}
     bordes = np.unique(np.quantile(p, np.linspace(0, 1, bins + 1)))
+    if len(bordes) < 2:
+        # Pronóstico constante: un solo bin. Antes no quedaba ningún bin y el ECE salía 0 aunque el
+        # pronóstico estuviera mal calibrado (defecto encontrado en la auditoría del 2026-11-15).
+        bordes = np.array([bordes[0], bordes[0]])
     idx = np.clip(np.searchsorted(bordes, p, side="right") - 1, 0, len(bordes) - 2)
     curva, ece = [], 0.0
     for b in range(len(bordes) - 1):
@@ -101,6 +107,8 @@ def bootstrap_bloques(
     """IC por bootstrap de bloques móviles (conserva la autocorrelación de los errores)."""
     rng = np.random.default_rng(semilla)
     N = len(arreglos[0])
+    if N < 2:
+        return float("nan"), float("nan")
     bloque = max(1, min(bloque, N // 2))
     valores = []
     for _ in range(n):
@@ -115,6 +123,78 @@ def bootstrap_bloques(
     return float(np.quantile(valores, a)), float(np.quantile(valores, 1 - a))
 
 
+def bloque_politis_white(x: np.ndarray) -> int:
+    """Longitud de bloque automática para el bootstrap de bloques móviles.
+
+    Politis y White (2004), doi:10.1081/ETC-120028836, con la corrección de Patton, Politis y White
+    (2009), doi:10.1080/07474930802459016: b = (2·G²/D)^(1/3)·n^(1/3), con G y D estimados con la
+    ventana plana-trapezoidal sobre las autocovarianzas hasta el rezago M = 2·m̂, donde m̂ es el
+    primer rezago tras el cual K_N autocorrelaciones seguidas son no significativas. Devuelve 1 si la
+    serie no muestra autocorrelación (ruido blanco).
+    """
+    x = np.asarray(x, float)
+    x = x[np.isfinite(x)]
+    n = len(x)
+    if n < 8:
+        return 1
+    x = x - x.mean()
+    acov0 = float(np.dot(x, x) / n)
+    if acov0 <= 0:
+        return 1
+    kn = max(5, int(np.ceil(np.sqrt(np.log10(n)))))
+    max_rezago = min(n - 1, int(np.ceil(np.sqrt(n))) + kn)
+    acov = np.array([np.dot(x[: n - k], x[k:]) / n for k in range(max_rezago + 1)])
+    rho = acov / acov0
+    c = 2.0 * np.sqrt(np.log10(n) / n)
+    m_hat = max_rezago - kn
+    for m in range(0, max_rezago - kn + 1):
+        if np.all(np.abs(rho[m + 1 : m + kn + 1]) < c):
+            m_hat = m
+            break
+    if m_hat == 0:
+        return 1
+    M = min(2 * m_hat, max_rezago)
+    k = np.arange(-M, M + 1)
+    t = np.abs(k) / M
+    lam = np.where(t <= 0.5, 1.0, np.where(t <= 1.0, 2.0 * (1.0 - t), 0.0))
+    R = acov[np.abs(k)]
+    G = float(np.sum(lam * np.abs(k) * R))
+    D = 4.0 / 3.0 * float(np.sum(lam * R)) ** 2  # bootstrap de bloques circular/móvil
+    if D <= 0:
+        return 1
+    b = (2.0 * G**2 / D) ** (1.0 / 3.0) * n ** (1.0 / 3.0)
+    tope = int(np.ceil(min(3.0 * np.sqrt(n), n / 3.0)))
+    return int(min(max(1, int(np.ceil(b))), tope))
+
+
+def ajuste_holm(p: list[float | None] | np.ndarray) -> list[float | None]:
+    """p ajustados de Holm (1979): controlan el error de familia con cualquier dependencia."""
+    valores = [None if v is None or not np.isfinite(v) else float(v) for v in p]
+    idx = [i for i, v in enumerate(valores) if v is not None]
+    m = len(idx)
+    salida: list[float | None] = [None] * len(valores)
+    acumulado = 0.0
+    for rango, i in enumerate(sorted(idx, key=lambda j: valores[j])):  # type: ignore[arg-type, return-value]
+        acumulado = max(acumulado, min(1.0, (m - rango) * valores[i]))  # type: ignore[operator]
+        salida[i] = acumulado
+    return salida
+
+
+def ajuste_bh(p: list[float | None] | np.ndarray) -> list[float | None]:
+    """q de Benjamini y Hochberg (1995), doi:10.1111/j.2517-6161.1995.tb02031.x (tasa de falsos
+    descubrimientos; válido con dependencia positiva, como la de ventanas que se solapan)."""
+    valores = [None if v is None or not np.isfinite(v) else float(v) for v in p]
+    idx = sorted((i for i, v in enumerate(valores) if v is not None), key=lambda j: valores[j])  # type: ignore[arg-type, return-value]
+    m = len(idx)
+    salida: list[float | None] = [None] * len(valores)
+    minimo = 1.0
+    for rango in range(m - 1, -1, -1):
+        i = idx[rango]
+        minimo = min(minimo, m / (rango + 1) * valores[i])  # type: ignore[operator]
+        salida[i] = minimo
+    return salida
+
+
 def diebold_mariano(perdida_a: np.ndarray, perdida_b: np.ndarray, horizonte: int = 1) -> dict:
     """Prueba de Diebold y Mariano (1995), doi:10.1080/07350015.1995.10524599, con varianza HAC.
 
@@ -123,8 +203,14 @@ def diebold_mariano(perdida_a: np.ndarray, perdida_b: np.ndarray, horizonte: int
     """
     d = np.asarray(perdida_a, float) - np.asarray(perdida_b, float)
     n = len(d)
+    if n < 3 or not np.all(np.isfinite(d)):
+        return {
+            "estadistico": float("nan"),
+            "p": float("nan"),
+            "diferencia_media": float(np.mean(d)) if n else float("nan"),
+        }
     dm = float(d.mean())
-    rezagos = max(horizonte - 1, int(np.floor(n ** (1 / 3))))
+    rezagos = min(n - 1, max(horizonte - 1, int(np.floor(n ** (1 / 3)))))
     gamma0 = float(np.mean((d - dm) ** 2))
     var = gamma0 + 2 * sum(
         (1 - k / (rezagos + 1)) * float(np.mean((d[k:] - dm) * (d[:-k] - dm))) for k in range(1, rezagos + 1)

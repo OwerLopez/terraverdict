@@ -117,6 +117,9 @@ def comparacion(
                 "p_diebold_mariano": dm,
                 "dispersion_semillas": _f(m.get("dispersion_semillas")),
                 "referencia": m.get("referencia"),
+                "miembros": list(m.get("miembros", [])),
+                "pesos": [float(w) for w in m.get("pesos", [])],
+                "bloque_bootstrap": m.get("bloque_bootstrap"),
             }
         )
     fechas = serie_prueba["fechas"]
@@ -580,29 +583,35 @@ def de_historial(r: dict[str, Any]) -> list[dict[str, Any]]:
     caos = {
         k: {**_limpio(v), "ventanas": [{**_limpio(f)} for f in v["ventanas"]]} for k, v in r.get("caos", {}).items()
     }
-    # Lectura con las cifras de la corrida: habilidad agregada fuera de muestra de la red congelada
+    # Lectura con las cifras de la corrida: habilidad agregada fuera de muestra del procedimiento
+    # elegido en validación (año a año). No se destaca el modelo con mejor cifra en la prueba.
     frases = []
     for nombre, t in tareas.items():
-        fuera = t.get("agregado", {}).get("fuera_de_muestra", {}).get(t["diseno"]["red"])
+        clave = t.get("lectura_principal") or t["diseno"]["red"]
+        fuera = t.get("agregado", {}).get("fuera_de_muestra", {}).get(clave)
         if fuera and fuera.get("valor") is not None:
             lo = (fuera.get("ic90") or [None])[0]
+            quien = "elegido en validación" if clave == "seleccion_validacion" else clave
             frases.append(
-                f"{nombre}: {t['diseno']['red']} {_texto(fuera['valor'])} fuera de muestra "
-                f"({fuera['anios']} años, IC90 inferior {_texto(lo)})"
+                f"{nombre}: {quien} {_texto(fuera['valor'])} fuera de muestra "
+                f"({fuera['anios']} años, IC90 inferior {_texto(lo)}, p DM {_texto(fuera.get('p_diebold_mariano'))})"
             )
-    no_lineales = {
-        k: sum(1 for f in v["ventanas"] if f.get("p_no_linealidad") is not None and f["p_no_linealidad"] <= 0.05)
-        for k, v in caos.items()
-    }
-    evaluadas = {k: sum(1 for f in v["ventanas"] if "omitido" not in f or not f["omitido"]) for k, v in caos.items()}
+
+    def _conteo(v: dict[str, Any]) -> str:
+        res = v.get("resumen")
+        if res:
+            return f"{res['p_sin_corregir']}/{res['evaluadas']} sin corregir, {res['q_bh']} con BH"
+        n = sum(1 for f in v["ventanas"] if f.get("p_no_linealidad") is not None and f["p_no_linealidad"] <= 0.05)
+        return f"{n}/{sum(1 for f in v['ventanas'] if not f.get('omitido'))} sin corregir"
+
     lectura = (
         "Origen móvil anual con el diseño congelado. Los años hasta "
         f"{r['metodo']['frontera_diseno']} se usaron para elegir el diseño (lectura optimista); los "
         "posteriores son fuera de muestra. Por año la muestra es pequeña: la lectura principal es la "
-        "habilidad agregada por régimen con su IC90. "
+        "habilidad agregada por régimen del modelo que eligió la validación de cada año. "
         + ("; ".join(frases) + ". " if frases else "")
-        + "Ventanas con no linealidad significativa (p ≤ 0,05): "
-        + ", ".join(f"{k} {no_lineales[k]}/{evaluadas[k]}" for k in caos)
+        + "Ventanas con no linealidad (p ≤ 0,05): "
+        + ", ".join(f"{k} {_conteo(v)}" for k, v in caos.items())
         + "."
     )
     resultado = {

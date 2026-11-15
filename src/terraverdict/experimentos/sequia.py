@@ -18,7 +18,7 @@ from ..evaluacion import metricas as M
 from ..evaluacion.incertidumbre import decidir_abstencion, deriva
 from ..senales.procesamiento import regimenes, spi, ventana_adaptativa
 from . import datos_reales as D
-from .comun import Particion, Tarea, construir, evaluar_zoo, explicar, limpiar, serie_prueba
+from .comun import Particion, Tarea, construir, evaluar_zoo, explicar, limpiar, parametros, serie_prueba
 
 
 def preparar(raw: Path, hasta_entrenamiento: str, fuente: str = "power") -> tuple[pd.DataFrame, dict[str, Any]]:
@@ -73,6 +73,7 @@ def tarea(cfg: dict[str, Any], raw: Path, h: int, fuente: str = "power", X: pd.D
 
         return construir_refs
 
+    P = parametros(cfg)
     return Tarea(
         nombre=f"sequia_h{h}_{fuente}",
         tipo="regresion",
@@ -80,8 +81,9 @@ def tarea(cfg: dict[str, Any], raw: Path, h: int, fuente: str = "power", X: pd.D
         objetivo=X["spi3"].shift(-h),
         horizonte=pd.DateOffset(months=h),
         referencias=referencias,
-        epocas=150,
-        bloque_bootstrap=6,
+        epocas=int(P["redes"]["epocas"]["sequia"]),
+        bloque_bootstrap=int(P["evaluacion"]["bloque_bootstrap"]["sequia"]),
+        horizonte_pasos=h,
     )
 
 
@@ -90,9 +92,11 @@ def ejecutar(
     raw: Path,
     registro=print,
     redes: list[str] | None = None,
-    semillas: tuple[int, ...] = (0, 1, 2),
+    semillas: tuple[int, ...] | None = None,
     fuente: str = "power",
 ) -> dict[str, Any]:
+    P = parametros(cfg)
+    semillas = tuple(P["redes"]["semillas"]["sequia"]) if semillas is None else semillas
     pt = cfg["particion_temporal"]
     X, qc = preparar(raw, pt["entrenamiento"][1], fuente)
     # La prueba termina en el último mes con lluvia mensual disponible (POWER mensual llega a 2025-12)
@@ -116,19 +120,28 @@ def ejecutar(
             from sklearn.linear_model import Ridge
 
             d = construir(X[columnas], objetivo, L, particion, None, pd.DateOffset(months=h))
-            mdl = Ridge(alpha=3.0).fit(
+            mdl = Ridge(**P["clasicos"]["ridge"]).fit(
                 d.X["entrenamiento"].reshape(len(d.y["entrenamiento"]), -1), d.y["entrenamiento"]
             )
             p = mdl.predict(d.X["validacion"].reshape(len(d.y["validacion"]), -1))
             return M.habilidad_mse(d.y["validacion"], p, np.zeros(len(p)))
 
-        ventana = ventana_adaptativa([3, 6, 12, 24], evaluar_L, {"memoria_spi": 3 + h})
+        ventana = ventana_adaptativa(list(P["ventanas"]["sequia_meses"]), evaluar_L, {"memoria_spi": 3 + h})
         L = ventana["elegida"]
         d = construir(X[columnas], objetivo, L, particion, None, pd.DateOffset(months=h))
         refs = referencias(d)
         registro(f"sequía h={h}: ventana {L} meses, n={ {k: len(v) for k, v in d.y.items()} }")
         zoo = evaluar_zoo(
-            d, "regresion", refs, redes=redes, semillas=semillas, epocas=150, bloque_bootstrap=6, registro=registro
+            d,
+            "regresion",
+            refs,
+            redes=redes,
+            semillas=semillas,
+            epocas=t.epocas,
+            bloque_bootstrap=t.bloque_bootstrap,
+            horizonte_pasos=t.horizonte_pasos,
+            cfg=cfg,
+            registro=registro,
         )
         mejor = zoo["mejor_validacion"]
         p = zoo["_predicciones"][mejor]["prueba"]

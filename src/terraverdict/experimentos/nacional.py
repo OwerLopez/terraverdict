@@ -26,10 +26,12 @@ from ..config import cargar_preregistro, cargar_yaml
 from ..ingest import glc, gvp, noaa, power, usgs
 from ..senales.procesamiento import spi
 from ..trends.analizar import analizar_serie
+from .comun import parametros
 from .sismos import magnitud_completitud, valor_b
 
 RAIZ = Path(__file__).resolve().parents[3]
-UMBRAL_SPI_MM = 200.0
+# Fijado a priori en config/modelos.yaml (nacional.umbral_spi_mm_anual), con su justificación.
+UMBRAL_SPI_MM = float(parametros()["nacional"]["umbral_spi_mm_anual"])
 
 
 def _normalizar(texto: str | None) -> str:

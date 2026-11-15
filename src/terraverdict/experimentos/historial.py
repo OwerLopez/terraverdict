@@ -14,6 +14,9 @@
    - años posteriores: "fuera_de_muestra".
    Además de cada año, se informa la habilidad agregada por régimen sobre las predicciones
    concatenadas, con IC90 por bootstrap de bloques y Diebold-Mariano frente a la climatología.
+   La LECTURA PRINCIPAL es `seleccion_validacion`: en cada año, las predicciones del modelo que
+   eligió la validación de ese corte (Y−1). Es el procedimiento completo, sin mirar la prueba.
+   Destacar el modelo con mejor cifra en la prueba sería elegir con la prueba (sesgo de selección).
 
 2. Dinámica en ventanas deslizantes de N años (paso anual). En cada ventana se calculan con los
    mismos métodos validados del diagnóstico de caos (tests/caos):
@@ -44,9 +47,11 @@ from ..caos.surrogates import asimetria_temporal, prueba
 from ..config import cargar_yaml
 from ..evaluacion import metricas as M
 from . import caos_real, lluvia, sequia, sismos
-from .comun import Particion, Tarea, construir, evaluar_zoo, puntaje_validacion
+from .comun import Particion, Tarea, construir, evaluar_zoo, parametros, puntaje_validacion
 
 RAIZ = Path(__file__).resolve().parents[3]
+
+SELECCION = "seleccion_validacion"  # el modelo que eligió la validación de cada corte
 
 METRICA_PRINCIPAL = {
     "clasificacion": "bss_climatologia",
@@ -102,12 +107,15 @@ def disenos(cfg: dict[str, Any], raw: Path, resultados: Path) -> dict[str, dict[
     if ruta.exists():
         r = _json(ruta)
         t = sismos.tarea(cfg, raw)
+        pc = r["pronostico_conteos"]
+        if "ventana_meses" not in pc:
+            raise KeyError("resultados/sismos.json no guarda `ventana_meses`: repetir `tv experimentos --solo sismos`.")
         salida[t.nombre] = {
             "tarea": t,
             "fenomeno": "sismos",
-            "descripcion": r["pronostico_conteos"]["definicion"],
-            "columnas": list(t.X.columns),
-            "L": sismos.VENTANA_CONTEOS_MESES,
+            "descripcion": pc["definicion"],
+            "columnas": list(pc.get("columnas", t.X.columns)),
+            "L": int(pc["ventana_meses"]),
             "red": mejor_red(r["pronostico_conteos"]["zoo"]),
         }
     return salida
@@ -150,9 +158,11 @@ def origen_movil(
     semillas: tuple[int, ...] = (0,),
     n_minimo: int = 10,
     eventos_minimos: int = 3,
+    cfg: dict[str, Any] | None = None,
     registro: Callable[[str], None] = print,
 ) -> dict[str, Any]:
     principal = METRICA_PRINCIPAL[t.tipo]
+    ev = parametros(cfg)["evaluacion"]
     anios: list[dict[str, Any]] = []
     # predicciones concatenadas por régimen y modelo, para la habilidad agregada
     acumulado: dict[str, dict[str, dict[str, list[np.ndarray]]]] = {}
@@ -178,6 +188,8 @@ def origen_movil(
             semillas=semillas,
             epocas=t.epocas,
             bloque_bootstrap=t.bloque_bootstrap,
+            horizonte_pasos=t.horizonte_pasos,
+            cfg=cfg,
             registro=lambda _: None,
         )
         modelos = {}
@@ -194,6 +206,12 @@ def origen_movil(
             pred["y"].append(d.y["prueba"])
             pred["p"].append(zoo["_predicciones"][nombre]["prueba"])
             pred["ref"].append(refs["prueba"]["climatologia"])
+        elegido = zoo["mejor_validacion"]
+        pred = acumulado.setdefault(regimen, {}).setdefault(SELECCION, {"y": [], "p": [], "ref": [], "elegidos": []})
+        pred["y"].append(d.y["prueba"])
+        pred["p"].append(zoo["_predicciones"][elegido]["prueba"])
+        pred["ref"].append(refs["prueba"]["climatologia"])
+        pred["elegidos"].append(elegido)
         fila = {
             "anio": y,
             "regimen": regimen,
@@ -210,17 +228,33 @@ def origen_movil(
         agregado[regimen] = {}
         for nombre, p in por_modelo.items():
             yy, pp, rr = (np.concatenate(p[k]) for k in ("y", "p", "ref"))
-            ic = M.bootstrap_bloques(
-                lambda a, b, c: puntaje_validacion(t.tipo, a, b, c), yy, pp, rr, bloque=t.bloque_bootstrap
+            # Los años concatenados son consecutivos: el bloque respeta la autocorrelación si es al
+            # menos el de Politis-White del diferencial de pérdidas (se guarda el usado).
+            bloque = max(
+                t.bloque_bootstrap, M.bloque_politis_white(_perdida(t.tipo, yy, pp) - _perdida(t.tipo, yy, rr))
             )
-            dm = M.diebold_mariano(_perdida(t.tipo, yy, pp), _perdida(t.tipo, yy, rr))
+            ic = M.bootstrap_bloques(
+                lambda a, b, c: puntaje_validacion(t.tipo, a, b, c),
+                yy,
+                pp,
+                rr,
+                bloque=bloque,
+                n=int(ev["bootstrap_repeticiones"]),
+                semilla=int(ev["bootstrap_semilla"]),
+                nivel=float(ev["nivel_ic"]),
+            )
+            dm = M.diebold_mariano(_perdida(t.tipo, yy, pp), _perdida(t.tipo, yy, rr), horizonte=t.horizonte_pasos)
             agregado[regimen][nombre] = {
                 "valor": _escalar(puntaje_validacion(t.tipo, yy, pp, rr)),
                 "ic90": [_escalar(v) for v in ic],
                 "p_diebold_mariano": _escalar(dm["p"]),
                 "n": len(yy),
                 "anios": len(p["y"]),
+                "bloque_bootstrap": int(bloque),
             }
+            if nombre == SELECCION:
+                agregado[regimen][nombre]["elegidos"] = list(p["elegidos"])
+    return {"metrica_principal": principal, "lectura_principal": SELECCION, "anios": anios, "agregado": agregado}
     return {"metrica_principal": principal, "anios": anios, "agregado": agregado}
 
 
@@ -244,15 +278,21 @@ def orden_permutacion(n: int, factor: int = 5, minimo: int = 3, maximo: int = 6)
     return d
 
 
-def invariantes_ventana(x: np.ndarray, rng: np.random.Generator, n_sustitutos: int) -> dict[str, Any]:
-    """Invariantes de una ventana, con el embedding estimado en la propia ventana."""
+def invariantes_ventana(
+    x: np.ndarray, rng: np.random.Generator, n_sustitutos: int, orden: int | None = None
+) -> dict[str, Any]:
+    """Invariantes de una ventana, con el embedding estimado en la propia ventana.
+
+    `orden` de la entropía de permutación: fijo por serie (lo decide `caos_ventanas`) para que las
+    ventanas de una misma serie sean comparables entre sí.
+    """
     x = np.asarray(x, float)
     x = (x - x.mean()) / (x.std() or 1.0)
     n = len(x)
     tau = int(retardo_optimo(x, max_lag=max(2, min(60, n // 10)))["tau"])
     m = max(2, dimension_embedding(falsos_vecinos(x, tau, m_max=8)))
     theiler = int(min(max(tau, round(periodo_medio(x))), max(1, n // 20)))
-    orden = orden_permutacion(n)
+    orden = orden_permutacion(n) if orden is None else orden
     lyap = lyapunov_rosenstein(x, m, tau, theiler)
     sampen = entropia_muestral(x)
     no_lineal = prueba(x, lambda s: asimetria_temporal(s, 1), n_sustitutos, "dos", rng)
@@ -276,20 +316,32 @@ def caos_ventanas(
     rng: np.random.Generator,
     n_minimo: int = 240,
 ) -> list[dict[str, Any]]:
+    """Invariantes por ventana. El orden de la entropía de permutación es UNO por serie: el mayor
+    que cumple n ≥ 5·d! en la ventana evaluable más corta. Además de cada p (lectura descriptiva) se
+    guardan los p ajustados por Holm y por Benjamini-Hochberg dentro de la serie."""
     serie = serie.dropna().sort_index()
     if serie.empty:
         return []
     primero, ultimo = serie.index[0].year, serie.index[-1].year
-    filas = []
+    tramos = []
     for fin in range(primero + ventana_anios - 1, ultimo + 1, paso_anios):
         inicio = fin - ventana_anios + 1
-        tramo = serie[(serie.index.year >= inicio) & (serie.index.year <= fin)]
+        tramos.append((inicio, fin, serie[(serie.index.year >= inicio) & (serie.index.year <= fin)]))
+    evaluables = [len(t) for _, _, t in tramos if len(t) >= n_minimo and float(t.std()) != 0.0]
+    orden = orden_permutacion(min(evaluables)) if evaluables else None
+    filas = []
+    for inicio, fin, tramo in tramos:
         fila: dict[str, Any] = {"inicio": inicio, "fin": fin, "n": len(tramo)}
         if len(tramo) < n_minimo or float(tramo.std()) == 0.0:
             fila["omitido"] = f"menos de {n_minimo} puntos o serie constante"
         else:
-            fila.update(invariantes_ventana(tramo.to_numpy(float), rng, n_sustitutos))
+            fila.update(invariantes_ventana(tramo.to_numpy(float), rng, n_sustitutos, orden))
         filas.append(fila)
+    ps = [f.get("p_no_linealidad") for f in filas]
+    for f, holm, bh in zip(filas, M.ajuste_holm(ps), M.ajuste_bh(ps), strict=True):
+        if "omitido" not in f:
+            f["p_holm"] = _escalar(holm)
+            f["q_bh"] = _escalar(bh)
     return filas
 
 
@@ -339,6 +391,7 @@ def ejecutar(
                 semillas=tuple(cp["semillas"]),
                 n_minimo=cp["n_minimo_prueba"],
                 eventos_minimos=cp["eventos_minimos"],
+                cfg=cfg,
                 registro=registro,
             ),
         }
@@ -354,19 +407,39 @@ def ejecutar(
         if max_cortes is not None:
             serie = serie[serie.index.year > serie.index[-1].year - ventana - max_cortes + 1]
         filas = caos_ventanas(serie, ventana, cc["paso_anios"], cc["n_sustitutos"], rng)
-        caos[nombre] = {"fuente": fuente, "unidad_tiempo": unidad, "ventana_anios": ventana, "ventanas": filas}
+        alfa = float(parametros(cfg)["caos_ventanas"]["alfa"])
+        evaluadas = [f for f in filas if "omitido" not in f]
+        caos[nombre] = {
+            "fuente": fuente,
+            "unidad_tiempo": unidad,
+            "ventana_anios": ventana,
+            "ventanas": filas,
+            "resumen": {
+                "alfa": alfa,
+                "evaluadas": len(evaluadas),
+                "p_sin_corregir": sum(1 for f in evaluadas if (f.get("p_no_linealidad") or 1.0) <= alfa),
+                "p_holm": sum(1 for f in evaluadas if (f.get("p_holm") or 1.0) <= alfa),
+                "q_bh": sum(1 for f in evaluadas if (f.get("q_bh") or 1.0) <= alfa),
+                "p_minimo_posible": 1.0 / (cc["n_sustitutos"] + 1),
+            },
+        }
         registro(f"historial caos {nombre}: {sum('omitido' not in f for f in filas)} ventanas")
 
     return {
         "fenomeno": "historial",
         "tarea": "historial_metricas",
-        "configuracion": {"archivo": "config/historial.yaml", "sha256": hashlib.sha256(config.read_bytes()).hexdigest()},
+        "configuracion": {
+            "archivo": "config/historial.yaml",
+            "sha256": hashlib.sha256(config.read_bytes()).hexdigest(),
+        },
         "metodo": {
             "pronostico": "origen móvil anual (entrena ≤ Y−2, valida Y−1, prueba Y) con el diseño congelado",
             "anio_inicial": anio_inicial,
             "frontera_diseno": frontera,
             "semillas": cp["semillas"],
             "caos": f"ventanas deslizantes, paso {cc['paso_anios']} año(s), {cc['n_sustitutos']} sustitutos IAAFT",
+            "lectura_principal": SELECCION,
+            "correccion_ventanas": "Holm (error de familia) y Benjamini-Hochberg (falsos descubrimientos) dentro de cada serie",
         },
         "pronostico": pronostico,
         "caos": caos,

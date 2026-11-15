@@ -99,3 +99,35 @@ def test_caos_en_ventanas_distingue_mapa_logistico_de_ruido() -> None:
         assert c["entropia_permutacion"] < r["entropia_permutacion"]  # el caos determinista tiene orden ordinal
         assert c["p_no_linealidad"] <= 0.05 < r["p_no_linealidad"]  # y se distingue de su sustituto lineal
         assert c["lyapunov"] > 0
+
+
+def test_lectura_principal_es_el_modelo_elegido_en_validacion_de_cada_anio() -> None:
+    """El agregado `seleccion_validacion` concatena, año a año, el modelo que eligió la validación
+    del corte: es el procedimiento completo y no depende de las cifras de prueba."""
+    t = _tarea_ar1([])
+    r = origen_movil(t, ["x"], 6, "mlp", 2019, 2023, frontera_diseno=2020, registro=lambda _: None)
+    assert r["lectura_principal"] == "seleccion_validacion"
+    elegidos = {a["anio"]: a["elegido_en_validacion"] for a in r["anios"] if not a.get("omitido")}
+    for regimen, anios in (("validacion_del_diseno", [2019, 2020]), ("fuera_de_muestra", [2021, 2022, 2023])):
+        s = r["agregado"][regimen]["seleccion_validacion"]
+        assert s["elegidos"] == [elegidos[y] for y in anios]
+        assert s["anios"] == len(anios) and s["bloque_bootstrap"] >= t.bloque_bootstrap
+        # Con un único modelo elegido todos los años, el agregado coincide con el de ese modelo
+        if len(set(s["elegidos"])) == 1:
+            assert s["valor"] == pytest.approx(r["agregado"][regimen][s["elegidos"][0]]["valor"])
+
+
+def test_caos_en_ventanas_usa_un_solo_orden_y_corrige_por_comparaciones_multiples() -> None:
+    rng = np.random.default_rng(2)
+    # Tres años diarios completos y el cuarto con 200 días: las ventanas de 2 años tienen 730 y 565
+    # puntos, que por sí solas darían órdenes 5 y 4 (n ≥ 5·d!). La serie debe usar uno solo.
+    fechas = pd.date_range("2001-01-01", "2003-12-31", freq="D").append(pd.date_range("2004-01-01", periods=200))
+    serie = pd.Series(rng.normal(size=len(fechas)), index=fechas)
+    filas = caos_ventanas(serie, 2, 1, 9, np.random.default_rng(0))
+    evaluadas = [f for f in filas if "omitido" not in f]
+    assert {f["n"] for f in evaluadas} == {730, 565}
+    assert len({f["orden_permutacion"] for f in evaluadas}) == 1
+    assert evaluadas[0]["orden_permutacion"] == orden_permutacion(min(f["n"] for f in evaluadas))
+    for f in evaluadas:
+        assert f["p_holm"] >= f["p_no_linealidad"] and f["q_bh"] >= f["p_no_linealidad"]
+        assert f["p_holm"] >= f["q_bh"] - 1e-12

@@ -7,6 +7,7 @@ import { TablaDatos } from "../componentes/fenomenos/TablaDatos";
 import { Dato, Encabezado, ErrorCarga, EstadoVacio, Esqueleto, Insignia, Tarjeta } from "../componentes/ui";
 import { numero, valorP } from "../lib/formato";
 import { t } from "../lib/i18n";
+import { UMBRAL_P_DM, evidencia as reglaEvidencia } from "../lib/modelos";
 
 type Comparacion = Esquemas["ResultadoComparacionModelos"];
 type Modelo = Esquemas["ModeloEvaluado"];
@@ -21,12 +22,10 @@ const familia = (f: string) => (FAMILIAS_ES_EN[f] ? t(...(FAMILIAS_ES_EN[f] as [
 
 /**
  * Nivel de evidencia de la habilidad en prueba (regla del proyecto, docs/metodologia.md):
- * confirmada = IC90 por bootstrap > 0 Y Diebold-Mariano p < 0,10; indicio = solo una de las dos.
+ * confirmada = IC90 por bootstrap > 0 Y Diebold-Mariano p < UMBRAL_P_DM; indicio = solo una de las dos.
  */
 export function nivelEvidencia(m: { intervalo_prueba?: { lo: number } | null; p_diebold_mariano?: number | null }): "confirmada" | "indicio" | "no_confirmada" {
-  const ic = (m.intervalo_prueba?.lo ?? -1) > 0;
-  const dm = (m.p_diebold_mariano ?? 1) < 0.1;
-  return ic && dm ? "confirmada" : ic || dm ? "indicio" : "no_confirmada";
+  return reglaEvidencia(m.intervalo_prueba?.lo, m.p_diebold_mariano);
 }
 
 /** Habilidad en prueba con IC90, un renglón por modelo; el elegido por validación va resaltado. */
@@ -163,7 +162,7 @@ export function ModelosPagina() {
             <Dato
               etiqueta={t("Publicación", "Publication")}
               valor={<span className="text-[18px]">{r.abstencion.publicar ? t("Se publica", "Published") : t("Abstención", "Abstention")}</span>}
-              nota={evidencia === "confirmada" ? t("Habilidad confirmada: IC90 > 0 y Diebold-Mariano p < 0,10", "Skill confirmed: 90 % CI > 0 and Diebold-Mariano p < 0.10") : evidencia === "indicio" ? t("Solo indicio: cumple una de las dos pruebas (IC90 > 0 o DM p < 0,10)", "Indication only: meets one of the two tests (90 % CI > 0 or DM p < 0.10)") : t("Habilidad no confirmada en prueba", "Skill not confirmed on test")}
+              nota={evidencia === "confirmada" ? t(`Habilidad confirmada: IC90 > 0 y Diebold-Mariano p < ${numero(UMBRAL_P_DM, 2)}`, `Skill confirmed: 90 % CI > 0 and Diebold-Mariano p < ${numero(UMBRAL_P_DM, 2)}`) : evidencia === "indicio" ? t(`Solo indicio: cumple una de las dos pruebas (IC90 > 0 o DM p < ${numero(UMBRAL_P_DM, 2)})`, `Indication only: meets one of the two tests (90 % CI > 0 or DM p < ${numero(UMBRAL_P_DM, 2)})`) : t("Habilidad no confirmada en prueba", "Skill not confirmed on test")}
               icono={r.abstencion.publicar ? CheckCircle2 : ShieldAlert}
               tono={r.abstencion.publicar ? "good" : "warning"}
             />

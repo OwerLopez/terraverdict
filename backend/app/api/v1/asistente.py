@@ -56,9 +56,13 @@ def verificar(datos: SolicitudVerificacion, sesion: SesionDep) -> ResultadoVerif
     return ResultadoVerificacionTexto(
         aprobado=resultado.aprobado,
         cifras=[
-            CifraDetectada(texto=c.texto, valor=c.valor, trazable=v is not None, coincide_con=v)
-            for c, v in resultado.cifras
+            CifraDetectada(
+                texto=c.texto, valor=c.valor, trazable=v is not None, coincide_con=v, probabilidad_azar=p
+            )
+            for (c, v), p in zip(resultado.cifras, resultado.azar, strict=True)
         ],
         no_trazables=resultado.no_trazables,
         valores_permitidos=len(permitidos),
+        alfa_coincidencia=verificador.ALFA_COINCIDENCIA,
+        coincidencias_debiles=resultado.coincidencias_debiles,
     )

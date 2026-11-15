@@ -9,7 +9,7 @@ import { Boton, Encabezado, ErrorCarga, EstadoVacio, Esqueleto, Segmentado, Tarj
 import { RAMPA_AZUL, RAMPA_NARANJA, colorDivergente, colorSecuencial, useColores } from "../lib/colores";
 import { fechaHora, numero, valorP } from "../lib/formato";
 import { t } from "../lib/i18n";
-import { evidencia, nombreFamilia, nombreModelo, nombreSerie, nombreTarea } from "../lib/modelos";
+import { UMBRAL_P_DM, evidencia, nombreFamilia, nombreModelo, nombreSerie, nombreTarea } from "../lib/modelos";
 import { FichaMetrica, ImportanciaVariables, InsigniaEvidencia, TEXTO_EVIDENCIA, bilingue, partesTitulo } from "../componentes/metricas/compartidos";
 
 type Ficha = Esquemas["FichaMetrica"];
@@ -63,7 +63,7 @@ function MapaMetricas({ mapas, fichas }: { mapas: Mapas; fichas: Map<string, Fic
     if (v === null) return { texto: "—", detalle };
     const e = escala.get(col.id) ?? 1;
     const color =
-      metrica === "p_dm" ? colorDivergente(v, 0.5, 0.1, false) : metrica === "dispersion" ? colorSecuencial(v / e) : colorDivergente(v, e);
+      metrica === "p_dm" ? colorDivergente(v, 0.5, UMBRAL_P_DM, false) : metrica === "dispersion" ? colorSecuencial(v / e) : colorDivergente(v, e);
     return { texto: metrica === "p_dm" ? valorP(v) : numero(v, metrica === "dispersion" ? 3 : 2), color, detalle, marcada: tarea?.mejor_validacion === c.modelo };
   };
 
@@ -103,7 +103,7 @@ function MapaMetricas({ mapas, fichas }: { mapas: Mapas; fichas: Map<string, Fic
             <LeyendaEscala
               colores={DIVERGENTE}
               izquierda={metrica === "p_dm" ? t("p alto (sin evidencia)", "high p (no evidence)") : t("peor que la climatología", "worse than climatology")}
-              centro={metrica === "p_dm" ? t("centro: p = 0,10", "centre: p = 0.10") : t("gris: igual que la climatología (0)", "grey: same as climatology (0)")}
+              centro={metrica === "p_dm" ? t(`centro: p = ${numero(UMBRAL_P_DM, 2)}`, `centre: p = ${numero(UMBRAL_P_DM, 2)}`) : t("gris: igual que la climatología (0)", "grey: same as climatology (0)")}
               derecha={metrica === "p_dm" ? t("p bajo (evidencia)", "low p (evidence)") : t("mejor", "better")}
               nota={metrica !== "p_dm" ? t("Cada columna usa la métrica principal de su tarea (Brier, ECM o bits) y su propia escala de color.", "Each column uses its task's main metric (Brier, MSE or bits) and its own colour scale.") : undefined}
             />
@@ -148,9 +148,20 @@ function HistorialPronostico({ historial, fichas }: { historial: Historial; fich
 
   if (!tarea) return null;
   const red = tarea.diseno.red;
-  const fuera = tarea.agregado?.fuera_de_muestra ?? {};
+  const principal = tarea.lectura_principal ?? null;
+  // Clásico de comparación elegido por VALIDACIÓN (media del puntaje de validación de cada corte):
+  // elegirlo por la cifra de prueba sería sesgo de selección.
   const clasicos = modelos.filter(([, f]) => f === "clasico").map(([k]) => k);
-  const mejorClasico = clasicos.sort((a, b) => (fuera[b]?.valor ?? -1e9) - (fuera[a]?.valor ?? -1e9))[0];
+  const validacionMedia = (k: string) => {
+    const v = tarea.anios.map((a) => a.modelos?.[k]?.validacion).filter((x): x is number => typeof x === "number");
+    return v.length ? v.reduce((s, x) => s + x, 0) / v.length : -1e9;
+  };
+  const mejorClasico = [...clasicos].sort((a, b) => validacionMedia(b) - validacionMedia(a))[0];
+  const ordenAgregado = (claves: string[]) => {
+    const primeros = [principal, red].filter((k): k is string => !!k && claves.includes(k));
+    const familia = (k: string) => ORDEN_FAMILIA[modelos.find(([m]) => m === k)?.[1] ?? ""] ?? 9;
+    return [...primeros, ...claves.filter((k) => !primeros.includes(k)).sort((a, b) => familia(a) - familia(b) || a.localeCompare(b))];
+  };
   const escala = Math.max(1e-9, ...tarea.anios.flatMap((a) => Object.values(a.modelos ?? {}).map((m) => Math.abs(m.prueba ?? 0))));
   const columnas: ColumnaMatriz[] = tarea.anios.map((a) => ({ id: String(a.anio), etiqueta: String(a.anio), sub: `n ${a.n.prueba ?? 0}`, grupo: REGIMEN[a.regimen]() }));
   const datos = tarea.anios
@@ -207,7 +218,7 @@ function HistorialPronostico({ historial, fichas }: { historial: Historial; fich
           <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12.5px] text-ink-2" aria-label={t("Leyenda", "Legend")}>
             <li className="flex items-center gap-1.5"><span className="h-0.5 w-4 rounded" style={{ background: c.serie1 }} />{nombreModelo(red)}</li>
             <li className="flex items-center gap-1.5"><span className="h-3 w-4 rounded-sm" style={{ background: c.banda }} />{t("IC90 de la red", "Network 90 % CI")}</li>
-            {mejorClasico && <li className="flex items-center gap-1.5"><span className="h-0 w-4 border-t-2 border-dashed" style={{ borderColor: c.serie2 }} />{nombreModelo(mejorClasico)}</li>}
+            {mejorClasico && <li className="flex items-center gap-1.5"><span className="h-0 w-4 border-t-2 border-dashed" style={{ borderColor: c.serie2 }} />{nombreModelo(mejorClasico)} ({t("clásico elegido en validación", "classical chosen on validation")})</li>}
             <li className="flex items-center gap-1.5"><span className="h-0 w-4 border-t-2 border-dotted" style={{ borderColor: c.tinta3 }} />{nombreModelo("ref_persistencia")}</li>
           </ul>
           <Boton tamano="sm" variante="fantasma" icono={Table2} onClick={() => setTabla((v) => !v)} aria-pressed={tabla}>
@@ -245,7 +256,13 @@ function HistorialPronostico({ historial, fichas }: { historial: Historial; fich
       </div>
 
       <div className="mt-5">
-        <h3 className="mb-2 text-[13.5px] font-semibold text-ink">{t("Habilidad agregada por régimen (lectura principal)", "Aggregated skill by regime (main reading)")}</h3>
+        <h3 className="mb-1 text-[13.5px] font-semibold text-ink">{t("Habilidad agregada por régimen", "Aggregated skill by regime")}</h3>
+        <p className="mb-2 text-[12.5px] text-ink-2">
+          {t(
+            "Lectura principal (primera fila de cada régimen): el modelo que eligió la validación de cada año. Las demás filas son comparaciones en orden fijo; elegir entre ellas la de mejor cifra en la prueba sería sesgo de selección.",
+            "Main reading (first row of each regime): the model chosen on each year's validation. The other rows are comparisons in a fixed order; picking the one with the best test score would be selection bias.",
+          )}
+        </p>
         <div className="overflow-x-auto rounded-xl border border-line">
           <table className="w-full text-[12.5px]">
             <caption className="sr-only">{t("Habilidad agregada por régimen", "Aggregated skill by regime")}</caption>
@@ -262,13 +279,13 @@ function HistorialPronostico({ historial, fichas }: { historial: Historial; fich
             </thead>
             <tbody>
               {(["fuera_de_muestra", "validacion_del_diseno"] as const).flatMap((reg) =>
-                Object.entries(tarea.agregado?.[reg] ?? {})
-                  .filter(([k]) => k !== "ref_climatologia")
-                  .sort((a, b) => (b[1].valor ?? -1e9) - (a[1].valor ?? -1e9))
+                ordenAgregado(Object.keys(tarea.agregado?.[reg] ?? {}).filter((k) => k !== "ref_climatologia"))
+                  .map((k) => [k, (tarea.agregado?.[reg] ?? {})[k]] as const)
+                  .filter((par): par is readonly [string, NonNullable<(typeof par)[1]>] => !!par[1])
                   .map(([k, v]) => (
-                    <tr key={`${reg}-${k}`} className="border-t border-line">
+                    <tr key={`${reg}-${k}`} className={`border-t border-line ${k === principal ? "bg-surface-2" : ""}`}>
                       <td className="px-3 py-1.5 text-ink-2">{REGIMEN[reg]()}</td>
-                      <td className="px-3 py-1.5 font-medium text-ink">{nombreModelo(k)}{k === red ? ` · ${t("red congelada", "frozen network")}` : ""}</td>
+                      <td className={`px-3 py-1.5 text-ink ${k === principal ? "font-semibold" : "font-medium"}`}>{nombreModelo(k)}{k === red ? ` · ${t("red congelada", "frozen network")}` : ""}{k === principal ? ` · ${t("lectura principal", "main reading")}` : ""}</td>
                       <td className="cifra px-3 py-1.5 text-right">{numero(v.valor, 3)}</td>
                       <td className="cifra px-3 py-1.5 text-right">{numero(v.ic90?.[0], 3)} – {numero(v.ic90?.[1], 3)}</td>
                       <td className="cifra px-3 py-1.5 text-right">{valorP(v.p_diebold_mariano)}</td>
@@ -298,7 +315,10 @@ function HistorialCaos({ historial, fichas }: { historial: Historial; fichas: Ma
   const valores = series.flatMap(([, s]) => s.ventanas.map((v) => v[metrica] as number | null | undefined)).filter((v): v is number => typeof v === "number");
   const min = Math.min(...valores);
   const max = Math.max(...valores);
-  const pMinimo = Math.min(...series.flatMap(([, s]) => s.ventanas.map((v) => v.p_no_linealidad ?? 1)));
+  // p mínimo POSIBLE con el número de sustitutos (lo guarda el resultado); sin él, se rotula como observado
+  const minimosPosibles = series.map(([, s]) => s.resumen?.p_minimo_posible).filter((v): v is number => typeof v === "number");
+  const pMinimoEsPosible = minimosPosibles.length === series.length && minimosPosibles.length > 0;
+  const pMinimo = pMinimoEsPosible ? Math.min(...minimosPosibles) : Math.min(...series.flatMap(([, s]) => s.ventanas.map((v) => v.p_no_linealidad ?? 1)));
   if (!series.length) return null;
   const ficha = fichas.get(metrica);
   const nombres: Record<MetricaCaos, string> = {
@@ -329,7 +349,16 @@ function HistorialCaos({ historial, fichas }: { historial: Historial; fichas: Ma
         titulo={t("Invariantes de caos por serie y ventana", "Chaos invariants by series and window")}
         etiquetaFilas={t("Serie", "Series")}
         anchoFila={220}
-        filas={series.map(([k, s]) => ({ id: k, etiqueta: nombreSerie(k), sub: t(`ventana de ${s.ventana_anios} años`, `${s.ventana_anios}-year window`) }))}
+        filas={series.map(([k, s]) => ({
+          id: k,
+          etiqueta: nombreSerie(k),
+          sub: s.resumen
+            ? t(
+                `ventana de ${s.ventana_anios} años · p ≤ ${numero(s.resumen.alfa, 2)}: ${s.resumen.p_sin_corregir}/${s.resumen.evaluadas} sin corregir, ${s.resumen.q_bh} con BH, ${s.resumen.p_holm} con Holm`,
+                `${s.ventana_anios}-year window · p ≤ ${numero(s.resumen.alfa, 2)}: ${s.resumen.p_sin_corregir}/${s.resumen.evaluadas} uncorrected, ${s.resumen.q_bh} with BH, ${s.resumen.p_holm} with Holm`,
+              )
+            : t(`ventana de ${s.ventana_anios} años`, `${s.ventana_anios}-year window`),
+        }))}
         columnas={anios.map((a) => ({ id: String(a), etiqueta: `’${String(a).slice(2)}`, sub: undefined }))}
         celda={(f, col) => {
           const s = historial.caos?.[f.id];
@@ -346,14 +375,14 @@ function HistorialCaos({ historial, fichas }: { historial: Historial; fichas: Ma
             color,
             marcada: metrica === "p_no_linealidad" && x <= 0.05,
             detalle: t(
-              `${f.etiqueta}, ventana ${rango} (n ${v.n}): entropía de permutación ${numero(v.entropia_permutacion, 3)} (orden ${v.orden_permutacion}), entropía muestral ${numero(v.entropia_muestral, 3)}, λ ${numero(v.lyapunov, 4)}, determinismo ${numero(v.determinismo, 3)}, K ${numero(v.k_01, 2)}, p no linealidad ${valorP(v.p_no_linealidad)}`,
-              `${f.etiqueta}, window ${rango} (n ${v.n}): permutation entropy ${numero(v.entropia_permutacion, 3)} (order ${v.orden_permutacion}), sample entropy ${numero(v.entropia_muestral, 3)}, λ ${numero(v.lyapunov, 4)}, determinism ${numero(v.determinismo, 3)}, K ${numero(v.k_01, 2)}, nonlinearity p ${valorP(v.p_no_linealidad)}`,
+              `${f.etiqueta}, ventana ${rango} (n ${v.n}): entropía de permutación ${numero(v.entropia_permutacion, 3)} (orden ${v.orden_permutacion}), entropía muestral ${numero(v.entropia_muestral, 3)}, λ ${numero(v.lyapunov, 4)}, determinismo ${numero(v.determinismo, 3)}, K ${numero(v.k_01, 2)}, p no linealidad ${valorP(v.p_no_linealidad)} (sin corregir; Holm ${valorP(v.p_holm)}, BH ${valorP(v.q_bh)})`,
+              `${f.etiqueta}, window ${rango} (n ${v.n}): permutation entropy ${numero(v.entropia_permutacion, 3)} (order ${v.orden_permutacion}), sample entropy ${numero(v.entropia_muestral, 3)}, λ ${numero(v.lyapunov, 4)}, determinism ${numero(v.determinismo, 3)}, K ${numero(v.k_01, 2)}, nonlinearity p ${valorP(v.p_no_linealidad)} (uncorrected; Holm ${valorP(v.p_holm)}, BH ${valorP(v.q_bh)})`,
             ),
           };
         }}
         leyenda={
           metrica === "p_no_linealidad" ? (
-            <LeyendaEscala colores={[...RAMPA_AZUL]} izquierda={t("p alto: compatible con ruido lineal", "high p: consistent with linear noise")} centro={t("borde: p ≤ 0,05 (no linealidad significativa)", "outline: p ≤ 0.05 (significant nonlinearity)")} derecha={t(`p bajo: no lineal (mínimo posible ${valorP(pMinimo)})`, `low p: nonlinear (lowest possible ${valorP(pMinimo)})`)} />
+            <LeyendaEscala colores={[...RAMPA_AZUL]} izquierda={t("p alto: compatible con ruido lineal", "high p: consistent with linear noise")} centro={t("borde: p ≤ 0,05 sin corregir (descriptivo: las ventanas se solapan y no se ajustan por comparaciones múltiples)", "outline: p ≤ 0.05 uncorrected (descriptive: windows overlap and are not adjusted for multiple comparisons)")} derecha={pMinimoEsPosible ? t(`p bajo: no lineal (mínimo posible ${valorP(pMinimo)})`, `low p: nonlinear (lowest possible ${valorP(pMinimo)})`) : t(`p bajo: no lineal (mínimo observado ${valorP(pMinimo)})`, `low p: nonlinear (lowest observed ${valorP(pMinimo)})`)} />
           ) : (
             <LeyendaEscala colores={[...RAMPA_AZUL]} izquierda={numero(min, 2)} derecha={numero(max, 2)} nota={t("Escala común a todas las series para comparar entre ellas.", "One scale for all series so they can be compared.")} />
           )

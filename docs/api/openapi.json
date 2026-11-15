@@ -3539,6 +3539,27 @@
             "type": "integer",
             "minimum": 1.0,
             "title": "Anios"
+          },
+          "bloque_bootstrap": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bloque Bootstrap",
+            "description": "Bloque usado en el IC90."
+          },
+          "elegidos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Elegidos",
+            "description": "Solo en `seleccion_validacion`: el modelo que eligió la validación de cada año."
           }
         },
         "additionalProperties": false,
@@ -4183,6 +4204,20 @@
               }
             ],
             "title": "Coincide Con"
+          },
+          "probabilidad_azar": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Probabilidad Azar",
+            "description": "Probabilidad de que una cifra inventada con el mismo formato coincida por azar."
           }
         },
         "additionalProperties": false,
@@ -6307,6 +6342,16 @@
             },
             "type": "array",
             "title": "Ventanas"
+          },
+          "resumen": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResumenCaosVentanas"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,
@@ -6395,6 +6440,18 @@
           "metrica_principal": {
             "type": "string",
             "title": "Metrica Principal"
+          },
+          "lectura_principal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lectura Principal",
+            "description": "Clave del agregado que se lee primero: el procedimiento elegido en validación, no el mejor en prueba."
           },
           "anios": {
             "items": {
@@ -6850,6 +6907,37 @@
             ],
             "title": "Referencia",
             "description": "Artículo de la arquitectura."
+          },
+          "miembros": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Miembros",
+            "description": "Ensambles: modelos elegidos en validación."
+          },
+          "pesos": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Pesos",
+            "description": "Ensambles: pesos ajustados en validación (suman 1)."
+          },
+          "bloque_bootstrap": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bloque Bootstrap",
+            "description": "Bloque del bootstrap del IC90 (mayor entre el de la tarea y Politis-White)."
           }
         },
         "additionalProperties": false,
@@ -8989,6 +9077,19 @@
           "valores_permitidos": {
             "type": "integer",
             "title": "Valores Permitidos"
+          },
+          "alfa_coincidencia": {
+            "type": "number",
+            "title": "Alfa Coincidencia",
+            "description": "Umbral de probabilidad de coincidencia por azar."
+          },
+          "coincidencias_debiles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Coincidencias Debiles",
+            "description": "Cifras respaldadas cuya coincidencia sería probable por azar (> alfa_coincidencia)."
           }
         },
         "additionalProperties": false,
@@ -8997,9 +9098,58 @@
           "aprobado",
           "cifras",
           "no_trazables",
-          "valores_permitidos"
+          "valores_permitidos",
+          "alfa_coincidencia"
         ],
         "title": "ResultadoVerificacionTexto"
+      },
+      "ResumenCaosVentanas": {
+        "properties": {
+          "alfa": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Alfa"
+          },
+          "evaluadas": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Evaluadas"
+          },
+          "p_sin_corregir": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "P Sin Corregir",
+            "description": "Ventanas con p ≤ α leídas por separado (descriptivo)."
+          },
+          "p_holm": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "P Holm"
+          },
+          "q_bh": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Q Bh"
+          },
+          "p_minimo_posible": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "P Minimo Posible"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "alfa",
+          "evaluadas",
+          "p_sin_corregir",
+          "p_holm",
+          "q_bh",
+          "p_minimo_posible"
+        ],
+        "title": "ResumenCaosVentanas"
       },
       "ResumenSistema": {
         "properties": {
@@ -9663,6 +9813,7 @@
             "maximum": 0.1,
             "minimum": 0.0,
             "title": "Tolerancia Relativa",
+            "description": "Tolerancia relativa además del redondeo (0,005: media unidad del tercer dígito significativo).",
             "default": 0.005
           }
         },
@@ -10487,6 +10638,34 @@
               }
             ],
             "title": "P No Linealidad"
+          },
+          "p_holm": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P Holm",
+            "description": "p ajustado por Holm entre las ventanas de la serie."
+          },
+          "q_bh": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Q Bh",
+            "description": "q de Benjamini-Hochberg entre las ventanas de la serie."
           },
           "embedding": {
             "anyOf": [
