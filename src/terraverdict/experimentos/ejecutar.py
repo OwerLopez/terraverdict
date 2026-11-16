@@ -19,7 +19,7 @@ from typing import Any
 import numpy as np
 
 from ..config import cargar_yaml
-from ..integridad import exigir_crudos_integros, sellar_resultados
+from ..integridad import escribir_texto, exigir_crudos_integros, sellar_resultados
 from . import caos_real, deslizamientos, fuentes, historial, lluvia, nacional, relevancia, sequia, sismos, volcanes
 
 RAIZ = Path(__file__).resolve().parents[3]
@@ -107,7 +107,7 @@ def ejecutar(
         r = funcion()
         tiempos[nombre] = round(time.perf_counter() - t, 1)
         r["procedencia"] = {**proc, "segundos": tiempos[nombre], "modo": "rapido" if rapido else "completo"}
-        (salida / f"{nombre}.json").write_text(json.dumps(_json(r), ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+        escribir_texto(salida / f"{nombre}.json", json.dumps(_json(r), ensure_ascii=False, indent=1))
         hechos[nombre] = r
         return r
 
@@ -156,5 +156,5 @@ def ejecutar(
         "experimentos": sorted(p.stem for p in salida.glob("*.json") if p.stem != "indice"),
         "sellos_sha256": sellar_resultados(salida),
     }
-    (salida / "indice.json").write_text(json.dumps(indice, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+    escribir_texto(salida / "indice.json", json.dumps(indice, ensure_ascii=False, indent=1))
     return indice

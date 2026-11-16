@@ -59,3 +59,25 @@ def test_la_cli_imprime_unicode_con_una_consola_cp1252() -> None:
     )
     assert r.returncode == 0, r.stderr.decode("utf-8", "replace")
     assert "→" in r.stdout.decode("utf-8")
+
+
+def test_escritura_atomica_reintenta_un_bloqueo_transitorio(tmp_path: Path, monkeypatch: object) -> None:
+    """Un bloqueo momentáneo (antivirus en Windows) no tumba la corrida ni deja archivos a medias."""
+    import os
+
+    from terraverdict.integridad import escribir_texto
+
+    destino = tmp_path / "r.json"
+    original = os.replace
+    fallos = {"n": 2}
+
+    def replace(a: str, b: str) -> None:
+        if fallos["n"]:
+            fallos["n"] -= 1
+            raise OSError(22, "Invalid argument")
+        original(a, b)
+
+    monkeypatch.setattr(os, "replace", replace)  # type: ignore[attr-defined]
+    escribir_texto(destino, "á\n")
+    assert destino.read_bytes() == "á\n".encode()
+    assert [p.name for p in tmp_path.iterdir()] == ["r.json"]  # sin temporales huérfanos

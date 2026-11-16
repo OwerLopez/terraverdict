@@ -78,3 +78,29 @@ def exigir_resultado_integro(ruta: Path) -> None:
     sellos = json.loads(indice_ruta.read_text(encoding="utf-8")).get("sellos_sha256", {})
     if ruta.name in sellos and sha256_archivo(ruta) != sellos[ruta.name]:
         raise IntegridadComprometida(f"{ruta.name} no coincide con su sello en indice.json: no se publica.")
+
+
+def escribir_texto(ruta: Path, texto: str, intentos: int = 6) -> None:
+    """Escritura atómica en UTF-8 y LF: archivo temporal en la misma carpeta y `os.replace`.
+
+    Un lector nunca ve un resultado escrito a medias. En Windows, el antivirus o el indexador pueden
+    bloquear un archivo durante un instante (`OSError` 13 o 22 al abrirlo): se reintenta con espera
+    creciente antes de fallar, en vez de perder una corrida completa de experimentos.
+    """
+    import os
+    import tempfile
+    import time
+
+    ruta = Path(ruta)
+    for i in range(intentos):
+        fd, tmp = tempfile.mkstemp(prefix=f".{ruta.name}.", dir=ruta.parent)
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
+                f.write(texto)
+            os.replace(tmp, ruta)
+            return
+        except OSError:
+            Path(tmp).unlink(missing_ok=True)
+            if i == intentos - 1:
+                raise
+            time.sleep(0.2 * 2**i)
