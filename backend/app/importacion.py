@@ -46,7 +46,7 @@ from app.services import expedientes as servicio_expedientes
 from app.services import series as servicio_series
 
 log = logging.getLogger("terraverdict.importacion")
-REPOSITORIO = "DiegoNiS/terraverdict"
+REPOSITORIO = "OwerLopez/terraverdict"
 IMPORTADOR = "servicio:importador-repositorio"
 
 NOMBRES_FUENTES = {
@@ -545,7 +545,7 @@ def _expediente_tendencia(
     )
 
 
-def importar_analisis_preliminar(sesion: Session, raiz: Path) -> dict[str, int]:
+def importar_analisis_preliminar(sesion: Session, raiz: Path, con_expedientes: bool = True) -> dict[str, int]:
     ruta = raiz / "docs" / "verificacion" / "analisis_preliminar.json"
     analisis = _leer_json(ruta)
     generado = analisis["generado_utc"]
@@ -725,8 +725,18 @@ def importar_analisis_preliminar(sesion: Session, raiz: Path) -> dict[str, int]:
             "Preliminar: un solo producto y sin prueba de sensor.",
         ),
     ]
+    if not con_expedientes:
+        # Reemplazadas por las tendencias del motor (tv trends: ONI, otras familias y Sello completo).
+        return {"series": 2, "expedientes_nuevos": 0}
     creados = sum(1 for e in exps if servicio_expedientes.publicar(sesion, e, IMPORTADOR)[1])
     return {"series": 2, "expedientes_nuevos": creados}
+
+
+def _contrato_trae_tendencias(raiz: Path) -> bool:
+    ruta = raiz / "resultados" / "contrato" / "expedientes.json"
+    if not ruta.exists():
+        return False
+    return any(e.get("resultado", {}).get("tipo") == "tendencia" for e in json.loads(ruta.read_text(encoding="utf-8")))
 
 
 def importar_expedientes_ciencia(sesion: Session, raiz: Path) -> dict[str, int]:
@@ -812,7 +822,42 @@ def importar_ejecuciones(sesion: Session, raiz: Path) -> dict[str, int]:
         sesion.add(proceso)
         nuevas += 1
     sesion.commit()
-    return {"leidas": len(lista), "nuevas": nuevas}
+    integradas = _marcar_fuentes_integradas(sesion, lista)
+    return {"leidas": len(lista), "nuevas": nuevas, "fuentes_integradas": integradas}
+
+
+def _marcar_fuentes_integradas(sesion: Session, ejecuciones: list[dict[str, Any]]) -> int:
+    """Una fuente pasa a "integrado" solo con una descarga completada y registrada (archivos con SHA-256).
+
+    La evidencia (pasos, archivos, fecha y un SHA-256 de muestra) queda en `Fuente.evidencia["integracion"]`.
+    Responder HTTP 200 o figurar en un catálogo no basta.
+    """
+    por_fuente: dict[str, list[dict[str, Any]]] = {}
+    for e in ejecuciones:
+        if e["tipo"] == TipoProceso.ingesta.value and e["estado"] == EstadoProceso.completado.value:
+            por_fuente.setdefault(e["parametros"]["fuente_id"], []).append(e)
+    marcadas = 0
+    for fuente_id, pasos in por_fuente.items():
+        fuente = sesion.get(Fuente, fuente_id)
+        archivos = [ev.get("datos") or {} for p in pasos for ev in p.get("eventos", [])]
+        archivos = [a for a in archivos if a.get("sha256")]
+        if fuente is None or not archivos:
+            continue
+        ultimo = max((p.get("finalizado_utc") or "" for p in pasos), default="")
+        fuente.estado_verificacion = EstadoVerificacion.integrado.value
+        fuente.verificado_en = _fecha_utc(ultimo) or fuente.verificado_en
+        fuente.evidencia = {
+            **(fuente.evidencia or {}),
+            "integracion": {
+                "pasos": sorted(p["parametros"]["paso"] for p in pasos),
+                "archivos": len(archivos),
+                "ultima_descarga_utc": ultimo,
+                "ejemplo": {k: archivos[0].get(k) for k in ("archivo", "sha256", "url", "producto") if archivos[0].get(k)},
+            },
+        }
+        marcadas += 1
+    sesion.commit()
+    return marcadas
 
 
 def importar_todo(sesion: Session, raiz: Path, incluir_ciencia: bool = True) -> dict[str, Any]:
@@ -823,7 +868,9 @@ def importar_todo(sesion: Session, raiz: Path, incluir_ciencia: bool = True) -> 
     resumen["informes_verificacion_nuevos"] = importar_verificacion(sesion, raiz)
     resumen["eventos"] = importar_eventos(sesion, raiz)
     resumen["observaciones_autodema"] = importar_autodema(sesion, raiz)
-    resumen["analisis_preliminar"] = importar_analisis_preliminar(sesion, raiz)
+    resumen["analisis_preliminar"] = importar_analisis_preliminar(
+        sesion, raiz, con_expedientes=not (incluir_ciencia and _contrato_trae_tendencias(raiz))
+    )
     if incluir_ciencia:
         resumen["expedientes_ciencia"] = importar_expedientes_ciencia(sesion, raiz)
         resumen["ejecuciones_pipeline"] = importar_ejecuciones(sesion, raiz)

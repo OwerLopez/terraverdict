@@ -5110,6 +5110,7 @@
       "EstadoVerificacion": {
         "type": "string",
         "enum": [
+          "integrado",
           "verificado",
           "parcial",
           "no_verificado",

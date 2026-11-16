@@ -62,8 +62,8 @@ def _raiz(tmp_path: Path, lista: list[dict[str, Any]]) -> Path:
 def test_importa_ejecuciones_terminadas_con_eventos_e_idempotente(app: Any, tmp_path: Path) -> None:
     raiz = _raiz(tmp_path, EJECUCIONES)
     with app.state.fabrica_sesiones() as s:
-        assert importar_ejecuciones(s, raiz) == {"leidas": 3, "nuevas": 3}
-        assert importar_ejecuciones(s, raiz) == {"leidas": 3, "nuevas": 0}
+        assert importar_ejecuciones(s, raiz) == {"leidas": 3, "nuevas": 3, "fuentes_integradas": 1}
+        assert importar_ejecuciones(s, raiz) == {"leidas": 3, "nuevas": 0, "fuentes_integradas": 1}
         procesos = {p.tipo + ":" + p.estado: p for p in s.scalars(select(Proceso))}
         rel = procesos["relevancia:completado"]
         assert rel.progreso == 1.0 and rel.solicitado_por == "pipeline"
@@ -87,3 +87,18 @@ def test_la_api_lista_las_ejecuciones(app: Any, cliente: TestClient, tmp_path: P
     r = cliente.get("/api/v1/procesos").json()
     assert r["total"] == 3
     assert {p["estado"] for p in r["items"]} == {"completado", "fallido"}
+
+
+def test_solo_una_descarga_completada_con_sha256_integra_una_fuente(app: Any, tmp_path: Path) -> None:
+    from app.db.models import Fuente
+
+    with app.state.fabrica_sesiones() as s:
+        antes_modis = s.get(Fuente, "modis_lst_ornl").estado_verificacion
+        r = importar_ejecuciones(s, _raiz(tmp_path, EJECUCIONES))
+        assert r["fuentes_integradas"] == 1
+        usgs = s.get(Fuente, "usgs_comcat")
+        assert usgs.estado_verificacion == "integrado"
+        assert usgs.evidencia["integracion"]["archivos"] == 1
+        assert usgs.evidencia["integracion"]["ejemplo"]["sha256"] == "ab"
+        # La descarga de MODIS falló: su estado no cambia.
+        assert s.get(Fuente, "modis_lst_ornl").estado_verificacion == antes_modis

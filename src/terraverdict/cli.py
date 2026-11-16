@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import copy
 import json
 import sys
@@ -46,16 +47,54 @@ def _series(series_json: Path | None, raw: Path, cfg: dict):
             k: (np.array([int(a) for a in v["serie"]]), np.array(list(v["serie"].values())), v.get("unidad", ""))
             for k, v in j["series"].items()
         }, {int(k): v for k, v in j.get("oni", {}).items()}
-    pw = sorted(raw.glob("power_*.json"))
+    # `tv ingest-power` guarda en data/raw; `tv ingest-fenomenos`, en data/raw/power y data/raw/noaa.
+    pw = sorted([*raw.glob("power_-*.json"), *(raw / "power").glob("power_-*.json")])
     if not pw:
-        raise typer.BadParameter("No hay data/raw/power_*.json: corre `tv ingest-power` o usa --series")
+        raise typer.BadParameter("No hay POWER mensual en data/raw: corre `tv ingest-fenomenos` o usa --series")
     par, _ = power.cargar(pw[-1])
     a, b = cfg["periodos"]["power"]
     ta, tv = temperatura_media_anual(mensual(par, "T2M"), a, b)
     la, lv = lluvia_dic_mar(mensual(par, "PRECTOTCORR"), a, b)
-    oni_f = raw / "oni.ascii.txt"
-    oni = noaa.cargar_oni(oni_f) if oni_f.exists() else {}
+    oni_f = next((f for f in (raw / "oni.ascii.txt", raw / "noaa" / "oni.ascii.txt") if f.exists()), None)
+    oni = noaa.cargar_oni(oni_f) if oni_f else {}
     return {"t2m_media_anual": (ta, tv, "C"), "lluvia_dic_mar": (la, lv, "mm")}, oni
+
+
+def _otras_familias(raw: Path, cfg: dict, anios_ref: np.ndarray | None = None) -> dict[str, list[dict]]:
+    """Pendiente de Sen de la misma variable en familias de datos independientes de MERRA-2.
+
+    Lluvia dic–mar: CHIRPS (satélite IR + pluviómetros) e IMERG Final (microondas pasivas + GPCC), en la
+    celda de la cabecera y con la misma definición de temporada que POWER. La temperatura del aire no
+    tiene una segunda familia verificada (ERA5 sin verificar; MODIS mide la superficie, no el aire): su
+    independencia queda pendiente y así se informa.
+    """
+    import pandas as pd
+
+    from .experimentos import datos_reales as D
+    from .trends.sen import sen_por_decada
+
+    def temporadas(diaria: pd.Series) -> tuple[np.ndarray, np.ndarray]:
+        m = diaria.resample("MS").sum(min_count=25)  # un mes con > 6 días faltantes no cuenta
+        pr = {(f.year, f.month): v / f.days_in_month for f, v in m.items() if np.isfinite(v)}
+        return lluvia_dic_mar(pr, int(m.index[0].year), int(m.index[-1].year))
+
+    otras: list[dict] = []
+    cab = cargar_yaml(Path("config/fenomenos.yaml"))["puntos"]["cabecera"]
+    fuentes: list[tuple[str, pd.Series | None]] = []
+    with contextlib.suppress(FileNotFoundError):
+        fuentes.append(("CHIRPS_V2", D.chirps_diario(raw, "cabecera_local")))
+    fuentes.append(("IMERG_FINAL", D.imerg_diario(raw, cab["lon"], cab["lat"])))
+    for producto, diaria in fuentes:
+        if diaria is None or diaria.dropna().empty:
+            continue
+        a, v = temporadas(diaria)
+        if anios_ref is not None:  # mismas temporadas que la serie principal: pendientes comparables
+            comun = np.isin(a, anios_ref)
+            a, v = a[comun], v[comun]
+        if len(a) >= 10:
+            s = sen_por_decada(a, v)
+            otras.append({"producto": producto, "sen": s["pendiente"], "sen_por_decada": s["sen_por_decada"], "periodo": [int(a[0]), int(a[-1])], "n": len(a)})
+    return {"lluvia_dic_mar": otras} if otras else {}
 
 
 @app.command("trends")
@@ -68,8 +107,19 @@ def trends(
 ) -> None:
     cfg, prereg = cargar_yaml(config), cargar_preregistro(pre)
     datos, oni = _series(series, raw, cfg)
+    productos = cargar_yaml(Path("config/familias.yaml"))["productos"]
+    otras = {} if series else _otras_familias(raw, cfg, datos["lluvia_dic_mar"][0])
     for nombre, (anios, x, _unidad) in datos.items():
-        res = analizar_serie(anios, x, prereg, oni=oni or None)
+        res = analizar_serie(
+            anios,
+            x,
+            prereg,
+            oni=oni or None,
+            otras_familias=otras.get(nombre),
+            productos=productos if nombre in otras else None,
+        )
+        if nombre in otras:
+            res["independencia"]["detalle"] = otras[nombre]
         exp = construir_expediente(
             id=f"TV-{cfg['cuenca'].upper()}-{nombre.upper()}-001",
             objeto={"cuenca": cfg["cuenca"]},
@@ -78,7 +128,7 @@ def trends(
             valores=x,
             resultado=res,
             pre=prereg,
-            productos=[{"id": "NASA_POWER_MERRA2"}],
+            productos=[{"id": "NASA_POWER_MERRA2"}, *({"id": o["producto"]} for o in otras.get(nombre, []))],
         )
         ruta = guardar(exp, out)
         typer.echo(

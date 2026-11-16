@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Activity, BookOpenText, BrainCircuit, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, ShieldCheck, Sun, Workflow, X, type LucideIcon } from "lucide-react";
+import { Activity, BookOpenText, BrainCircuit, ChevronDown, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, ShieldCheck, Sun, Workflow, X, type LucideIcon } from "lucide-react";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ErrorApi } from "../api/cliente";
@@ -11,40 +11,47 @@ import { ChatFlotante } from "./ChatFlotante";
 import { Dialogo } from "./Dialogo";
 import { Boton, Insignia, Segmentado } from "./ui";
 
-const NAVEGACION: { grupo: [string, string]; items: { a: string; texto: [string, string]; icono: LucideIcon }[] }[] = [
+type GrupoNav = { grupo: [string, string]; plegable?: boolean; items: { a: string; texto: [string, string]; icono: LucideIcon }[] };
+
+/**
+ * Navegación por importancia: primero los resultados, luego la exploración de datos y, plegada, la
+ * auditoría (procedencia, procesos, verificación). Nada se elimina: lo técnico sigue a un clic.
+ */
+const NAVEGACION: GrupoNav[] = [
   {
-    grupo: ["Explorar", "Explore"],
+    grupo: ["Resultados", "Results"],
     items: [
       { a: "/", texto: ["Panel", "Dashboard"], icono: LayoutDashboard },
       { a: "/mapa", texto: ["Mapa satelital", "Satellite map"], icono: Globe2 },
-      { a: "/series", texto: ["Series", "Time series"], icono: LineChart },
-      { a: "/expedientes", texto: ["Expedientes", "Case files"], icono: FileCheck2 },
+      { a: "/peru", texto: ["Perú: escala nacional", "Peru: national scale"], icono: MapPinned },
+      { a: "/metricas", texto: ["Pronósticos y métricas", "Forecasts & metrics"], icono: ChartColumnBig },
+      { a: "/relevancia", texto: ["Matriz de relevancia", "Relevance matrix"], icono: Grid3x3 },
     ],
   },
   {
     grupo: ["Fenómenos naturales", "Natural hazards"],
     items: [
-      { a: "/peru", texto: ["Perú: escala nacional", "Peru: national scale"], icono: MapPinned },
-      { a: "/fenomenos", texto: ["Catálogo de fenómenos", "Hazard catalog"], icono: Layers3 },
       { a: "/sismos", texto: ["Sismos", "Earthquakes"], icono: Activity },
       { a: "/volcanes", texto: ["Volcanes", "Volcanoes"], icono: Mountain },
       { a: "/caos", texto: ["Dinámica y caos", "Dynamics & chaos"], icono: Orbit },
       { a: "/modelos", texto: ["Modelos", "Models"], icono: BrainCircuit },
-      { a: "/metricas", texto: ["Métricas e historial", "Metrics & history"], icono: ChartColumnBig },
+      { a: "/fenomenos", texto: ["Catálogo de fenómenos", "Hazard catalog"], icono: Layers3 },
     ],
   },
   {
-    grupo: ["Ciencia de datos", "Data science"],
+    grupo: ["Explorar datos", "Explore data"],
     items: [
-      { a: "/relevancia", texto: ["Matriz de relevancia", "Relevance matrix"], icono: Grid3x3 },
-      { a: "/procesos", texto: ["Procesos", "Pipeline jobs"], icono: Workflow },
-    ],
-  },
-  {
-    grupo: ["Evidencia", "Evidence"],
-    items: [
-      { a: "/fuentes", texto: ["Fuentes verificadas", "Verified sources"], icono: Satellite },
+      { a: "/expedientes", texto: ["Expedientes", "Case files"], icono: FileCheck2 },
+      { a: "/series", texto: ["Series de tiempo", "Time series"], icono: LineChart },
       { a: "/eventos", texto: ["Crónica de eventos", "Event chronicle"], icono: CalendarClock },
+    ],
+  },
+  {
+    grupo: ["Auditoría y procedencia", "Audit & provenance"],
+    plegable: true,
+    items: [
+      { a: "/fuentes", texto: ["Fuentes y su estado", "Sources & status"], icono: Satellite },
+      { a: "/procesos", texto: ["Ejecuciones del pipeline", "Pipeline runs"], icono: Workflow },
       { a: "/asistente", texto: ["Verificador numérico", "Numeric verifier"], icono: ShieldCheck },
     ],
   },
@@ -178,34 +185,51 @@ function Acceso() {
   );
 }
 
+function ItemNav({ i, alNavegar }: { i: GrupoNav["items"][number]; alNavegar?: () => void }) {
+  return (
+    <li>
+      <NavLink
+        to={i.a}
+        end={i.a === "/"}
+        onClick={alNavegar}
+        className={({ isActive }) =>
+          clsx(
+            "flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13.5px] font-medium transition-colors",
+            isActive ? "bg-accent-soft text-accent-ink" : "text-ink-2 hover:bg-surface-2 hover:text-ink",
+          )
+        }
+      >
+        <i.icono aria-hidden className="h-4 w-4" />
+        {t(...i.texto)}
+      </NavLink>
+    </li>
+  );
+}
+
 function Navegacion({ alNavegar }: { alNavegar?: () => void }) {
+  const { pathname } = useLocation();
   return (
     <nav aria-label={t("Principal", "Main")} className="space-y-5">
-      {NAVEGACION.map((g) => (
-        <div key={g.grupo[0]}>
-          <p className="etiqueta mb-1.5 px-3">{t(...g.grupo)}</p>
-          <ul className="space-y-0.5">
-            {g.items.map((i) => (
-              <li key={i.a}>
-                <NavLink
-                  to={i.a}
-                  end={i.a === "/"}
-                  onClick={alNavegar}
-                  className={({ isActive }) =>
-                    clsx(
-                      "flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13.5px] font-medium transition-colors",
-                      isActive ? "bg-accent-soft text-accent-ink" : "text-ink-2 hover:bg-surface-2 hover:text-ink",
-                    )
-                  }
-                >
-                  <i.icono aria-hidden className="h-4 w-4" />
-                  {t(...i.texto)}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {NAVEGACION.map((g) =>
+        g.plegable ? (
+          <details key={g.grupo[0]} open={g.items.some((i) => pathname.startsWith(i.a))} className="group">
+            <summary className="etiqueta mb-1.5 flex cursor-pointer list-none items-center justify-between rounded-md px-3 py-1 hover:text-ink">
+              {t(...g.grupo)}
+              <ChevronDown aria-hidden className="h-3.5 w-3.5 transition-transform group-open:rotate-180" />
+            </summary>
+            <ul className="space-y-0.5">
+              {g.items.map((i) => <ItemNav key={i.a} i={i} alNavegar={alNavegar} />)}
+            </ul>
+          </details>
+        ) : (
+          <div key={g.grupo[0]}>
+            <p className="etiqueta mb-1.5 px-3">{t(...g.grupo)}</p>
+            <ul className="space-y-0.5">
+              {g.items.map((i) => <ItemNav key={i.a} i={i} alNavegar={alNavegar} />)}
+            </ul>
+          </div>
+        ),
+      )}
     </nav>
   );
 }

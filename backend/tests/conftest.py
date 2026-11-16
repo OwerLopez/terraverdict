@@ -100,7 +100,7 @@ def otro_trabajador(sesion: Session) -> dict[str, str]:
 
 PROCEDENCIA = {
     "fuentes": [{"fuente_id": "imerg_final_mensual", "coleccion": "GPM_3IMERGM", "version": "07"}],
-    "codigo": {"repositorio": "DiegoNiS/terraverdict", "commit": "abc1234"},
+    "codigo": {"repositorio": "OwerLopez/terraverdict", "commit": "abc1234"},
     "pasos": [
         {"id": "descarga", "nombre": "Descarga"},
         {"id": "tendencia", "nombre": "Theil-Sen", "entradas": ["paso:descarga"]},

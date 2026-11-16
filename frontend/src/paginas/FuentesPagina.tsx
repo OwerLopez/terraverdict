@@ -6,7 +6,13 @@ import { ChipEstado, Encabezado, Esqueleto, ErrorCarga, ESTADOS_VERIFICACION, Se
 import { fecha } from "../lib/formato";
 import { t } from "../lib/i18n";
 
-type Filtro = "todas" | "verificado" | "parcial" | "sin_evidencia";
+type Integracion = { archivos?: number; ultima_descarga_utc?: string; ejemplo?: { sha256?: string } };
+/** Evidencia de integración registrada por la ingesta (archivos con SHA-256 y fecha de la última descarga). */
+const integracion = (f: { evidencia?: unknown }): Integracion | undefined =>
+  (f.evidencia as { integracion?: Integracion } | null | undefined)?.integracion;
+const diaIso = (iso?: string) => (iso ? iso.slice(0, 10) : "—");
+
+type Filtro = "todas" | "integrado" | "verificado" | "parcial" | "sin_evidencia";
 
 export function FuentesPagina() {
   const fuentes = useFuentes();
@@ -56,6 +62,7 @@ export function FuentesPagina() {
               { valor: "verificado", texto: t("Verificadas", "Verified") },
               { valor: "parcial", texto: t("Parciales", "Partial") },
               { valor: "sin_evidencia", texto: t("Sin evidencia", "No evidence") },
+              { valor: "integrado", texto: t("Integradas", "Integrated") },
             ]}
           />
         }
@@ -100,7 +107,14 @@ export function FuentesPagina() {
                     </td>
                     <td className="cifra px-3 py-2.5 text-ink-2">{f.periodo ? `${f.periodo[0] ?? "?"} → ${f.periodo[1] ?? t("vigente", "ongoing")}` : "—"}</td>
                     <td className="px-3 py-2.5 font-mono text-[12px] text-ink-2">{f.familia ?? "—"}</td>
-                    <td className="px-5 py-2.5"><ChipEstado mapa={ESTADOS_VERIFICACION} valor={f.estado_verificacion} /></td>
+                    <td className="px-5 py-2.5">
+                      <ChipEstado mapa={ESTADOS_VERIFICACION} valor={f.estado_verificacion} />
+                      {integracion(f) && (
+                        <p className="mt-1 max-w-[220px] text-[11.5px] leading-snug text-ink-3" title={integracion(f)?.ejemplo?.sha256}>
+                          {t(`${integracion(f)?.archivos} archivos con SHA-256 · ${diaIso(integracion(f)?.ultima_descarga_utc)}`, `${integracion(f)?.archivos} files with SHA-256 · ${diaIso(integracion(f)?.ultima_descarga_utc)}`)}
+                        </p>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>

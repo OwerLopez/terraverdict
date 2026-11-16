@@ -17,9 +17,10 @@ function inicial(): Idioma {
     const guardado = localStorage.getItem(CLAVE);
     if (guardado === "es" || guardado === "en") return guardado;
   } catch {
-    /* almacenamiento no disponible: se usa el idioma del navegador */
+    /* almacenamiento no disponible: se usa el idioma principal */
   }
-  return typeof navigator !== "undefined" && navigator.language?.toLowerCase().startsWith("es") === false ? "en" : "es";
+  // Inglés es el idioma principal (evaluación internacional); el español se elige con el selector y se recuerda.
+  return "en";
 }
 
 let actual: Idioma = inicial();

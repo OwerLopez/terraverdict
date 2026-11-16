@@ -300,17 +300,31 @@ function DetalleExpediente({ id }: { id: string }) {
             </ul>
           </div>
           <div>
-            <p className="etiqueta mb-2">{t("Código", "Code")}</p>
-            <p className="text-ink">{e.procedencia.codigo?.repositorio ?? "—"}</p>
-            <p className="font-mono text-[12px] text-ink-2">{e.procedencia.codigo?.script ?? ""}</p>
+            <p className="etiqueta mb-2">{t("Código fuente", "Source code")}</p>
+            {e.procedencia.codigo?.repositorio ? (
+              <a
+                href={`https://github.com/${e.procedencia.codigo.repositorio}${e.procedencia.codigo.commit ? `/commit/${e.procedencia.codigo.commit}` : ""}`}
+                target="_blank"
+                rel="noreferrer"
+                className="text-accent-ink hover:underline"
+              >
+                {e.procedencia.codigo.commit ? t(`Versión ${e.procedencia.codigo.commit.slice(0, 7)}`, `Version ${e.procedencia.codigo.commit.slice(0, 7)}`) : e.procedencia.codigo.repositorio}
+              </a>
+            ) : (
+              <p className="text-ink">—</p>
+            )}
+            <p className="mt-2 text-[12px] text-ink-3">{t("Generado", "Generated")} {fechaHora(e.procedencia.generado_utc)}</p>
           </div>
-          <div>
-            <p className="etiqueta mb-2">{t("Entradas (SHA-256)", "Inputs (SHA-256)")}</p>
-            {Object.entries(e.procedencia.hash_entradas ?? {}).map(([k, v]) => (
-              <p key={k} className="truncate font-mono text-[11.5px] text-ink-2" title={v}>{k}: {v.slice(0, 16)}…</p>
-            ))}
-            <p className="mt-2 text-[12px] text-ink-3">{t("Generado", "Generated")} {fechaHora(e.procedencia.generado_utc)} · {t("publicado por", "published by")} {e.creado_por}</p>
-          </div>
+          <details className="md:col-span-1">
+            <summary className="etiqueta cursor-pointer">{t("Detalles técnicos", "Technical details")}</summary>
+            <div className="mt-2 space-y-1">
+              {e.procedencia.codigo?.script && <p className="font-mono text-[11.5px] text-ink-2">{e.procedencia.codigo.script}</p>}
+              {Object.entries(e.procedencia.hash_entradas ?? {}).map(([k, v]) => (
+                <p key={k} className="truncate font-mono text-[11.5px] text-ink-2" title={v}>{k}: {v.slice(0, 16)}…</p>
+              ))}
+              <p className="text-[12px] text-ink-3">{t("Publicado por", "Published by")} {e.creado_por}</p>
+            </div>
+          </details>
         </div>
       </Tarjeta>
     </div>

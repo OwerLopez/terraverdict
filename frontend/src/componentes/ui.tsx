@@ -2,6 +2,7 @@
 import { clsx } from "clsx";
 import {
   BookOpen,
+  Database,
   AlertTriangle,
   Ban,
   Calculator,
@@ -18,10 +19,10 @@ import {
   XCircle,
   type LucideIcon,
 } from "lucide-react";
-import { useState, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { useId, useLayoutEffect, useRef, useState, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { ErrorApi } from "../api/cliente";
 import { t } from "../lib/i18n";
-import { PanelLateral, primeraOracion } from "./PanelLateral";
+import { primeraOracion } from "./PanelLateral";
 
 export type Tono = "neutral" | "accent" | "good" | "warning" | "serious" | "critical";
 
@@ -134,6 +135,7 @@ function bilingue(pares: Record<string, [string, string]>): Record<string, strin
 }
 
 export const ESTADOS_VERIFICACION: Record<string, Def> = {
+  integrado: def("good", Database, "Integrado", "Integrated"),
   verificado: def("good", CheckCircle2, "Verificado", "Verified"),
   parcial: def("warning", AlertTriangle, "Parcial", "Partial"),
   no_verificado: def("critical", XCircle, "No verificado", "Not verified"),
@@ -255,6 +257,56 @@ export function ErrorCarga({ error, className }: { error: unknown; className?: s
   );
 }
 
+/**
+ * Ayuda contextual: ventana flotante pequeña que aparece al pasar el cursor o al enfocar el botón
+ * (y con un toque en pantallas táctiles). Para explicaciones breves; el contenido analítico va en
+ * paneles laterales (`PanelLateral`).
+ */
+export function AyudaFlotante({ etiqueta, children }: { etiqueta: ReactNode; children: ReactNode }) {
+  const [visible, setVisible] = useState(false);
+  const [fijo, setFijo] = useState(false);
+  const [aDerecha, setADerecha] = useState(false);
+  const ancla = useRef<HTMLSpanElement>(null);
+  const id = useId();
+  const abierto = visible || fijo;
+  // Si la ventana (420 px) no cabe a la derecha del botón, se alinea a su borde derecho.
+  useLayoutEffect(() => {
+    if (!abierto || !ancla.current) return;
+    const r = ancla.current.getBoundingClientRect();
+    setADerecha(r.left + Math.min(420, window.innerWidth * 0.88) > window.innerWidth - 16);
+  }, [abierto]);
+  return (
+    <span
+      ref={ancla}
+      className="relative inline-block align-middle"
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+      onKeyDown={(e) => e.key === "Escape" && (setVisible(false), setFijo(false))}
+    >
+      <button
+        type="button"
+        aria-describedby={abierto ? id : undefined}
+        aria-expanded={abierto}
+        onFocus={() => setVisible(true)}
+        onBlur={() => (setVisible(false), setFijo(false))}
+        onClick={() => setFijo((f) => !f)}
+        className="inline-flex items-center gap-1 rounded-full border border-line px-2.5 py-0.5 text-[12.5px] font-medium text-accent-ink hover:bg-surface-2"
+      >
+        <BookOpen aria-hidden className="h-3.5 w-3.5" /> {etiqueta}
+      </button>
+      {abierto && (
+        <span
+          id={id}
+          role="tooltip"
+          className={`chat-flotante-entrada absolute ${aDerecha ? "right-0" : "left-0"} top-full z-40 mt-2 block max-h-[60vh] w-[min(88vw,420px)] overflow-y-auto rounded-xl border border-line bg-surface-solida p-4 text-left text-[13px] font-normal leading-relaxed text-ink-2 shadow-flotante`}
+        >
+          {children}
+        </span>
+      )}
+    </span>
+  );
+}
+
 export function Encabezado({
   eyebrow,
   titulo,
@@ -266,11 +318,10 @@ export function Encabezado({
   titulo: string;
   descripcion?: ReactNode;
   acciones?: ReactNode;
-  /** Contenido extra del panel lateral "Cómo leer esta vista" (método, fuentes, advertencias). */
+  /** Contenido extra de la ayuda "Cómo leer esta vista" (método, fuentes, advertencias). */
   ayuda?: ReactNode;
 }) {
-  const [abierto, setAbierto] = useState(false);
-  // Una descripción larga se resume en su primera oración; el resto vive en el panel lateral.
+  // Una descripción larga se resume en su primera oración; el resto aparece en la ayuda flotante.
   const partes = typeof descripcion === "string" ? primeraOracion(descripcion) : null;
   const hayMas = Boolean(ayuda || partes?.resto);
   return (
@@ -279,27 +330,18 @@ export function Encabezado({
         {eyebrow && <p className="etiqueta mb-1.5">{eyebrow}</p>}
         <h1 className="text-[26px] font-semibold leading-tight tracking-tight text-ink md:text-[30px]">{titulo}</h1>
         {descripcion && (
-          <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
-            {partes ? partes.inicio : descripcion}
+          <div className="mt-2 text-[15px] leading-relaxed text-ink-2">
+            {partes ? partes.inicio : descripcion}{" "}
             {hayMas && (
-              <button
-                type="button"
-                onClick={() => setAbierto(true)}
-                className="ml-2 inline-flex items-center gap-1 rounded-full border border-line px-2.5 py-0.5 align-middle text-[12.5px] font-medium text-accent-ink hover:bg-surface-2"
-              >
-                <BookOpen aria-hidden className="h-3.5 w-3.5" /> {t("Cómo leer esta vista", "How to read this view")}
-              </button>
+              <AyudaFlotante etiqueta={t("Cómo leer esta vista", "How to read this view")}>
+                {partes?.resto && <span className="block">{partes.resto}</span>}
+                {ayuda && <span className="mt-2 block">{ayuda}</span>}
+              </AyudaFlotante>
             )}
-          </p>
+          </div>
         )}
       </div>
       {acciones && <div className="flex shrink-0 flex-wrap gap-2">{acciones}</div>}
-      {hayMas && (
-        <PanelLateral abierto={abierto} alCerrar={() => setAbierto(false)} titulo={titulo}>
-          {descripcion && <p>{descripcion}</p>}
-          {ayuda}
-        </PanelLateral>
-      )}
     </div>
   );
 }

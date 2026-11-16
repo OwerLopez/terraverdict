@@ -7,6 +7,7 @@ productos:
   FLDAS_CHIRPS:   {familia: chirps_ir_pluviometros, nota: "lluvia CHIRPS + resto MERRA-2: dependiente parcial, se cuenta con CHIRPS"}
   IMERG_FINAL:    {familia: imerg_pmw_gpcc, variable: [P]}
   CHIRPS_V3:      {familia: chirps_ir_pluviometros, variable: [P]}
+  CHIRPS_V2:      {familia: chirps_ir_pluviometros, variable: [P], nota: "CHIRPS v2.0 diaria por ClimateSERV (la que descarga tv ingest-fenomenos)"}
   MODIS_LST:      {familia: lst_satelital_termico, variable: [LST]}
   VIIRS_LST:      {familia: lst_satelital_termico, nota: "mismo principio físico; sensor distinto -> cuenta como 1 salvo prueba cruzada"}
   ERA5:           {familia: reanalisis_era5, variable: [T2M, P], estado: no_verificado}

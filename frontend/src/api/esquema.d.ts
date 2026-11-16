@@ -1468,7 +1468,7 @@ export interface components {
          * EstadoVerificacion
          * @enum {string}
          */
-        EstadoVerificacion: "verificado" | "parcial" | "no_verificado" | "sin_evidencia";
+        EstadoVerificacion: "integrado" | "verificado" | "parcial" | "no_verificado" | "sin_evidencia";
         /** EventoDocumentadoSalida */
         EventoDocumentadoSalida: {
             /** Id */

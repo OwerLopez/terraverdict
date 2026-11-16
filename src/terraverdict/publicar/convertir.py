@@ -41,9 +41,6 @@ FUENTES = {
 }
 DOMINIO = {"volcanes": "sur_peru_fenomenos", "deslizamientos": "sur_peru_fenomenos", "sismos": "sur_peru_fenomenos"}
 REPOSITORIO = "OwerLopez/terraverdict"
-# Los expedientes de tendencia preliminares (expedientes/*.json) citan commits del repositorio original;
-# su equivalencia con los hashes actuales está en docs/mapa-commits.md.
-REPOSITORIO_ORIGINAL = "DiegoNiS/terraverdict"
 
 
 def _f(x: Any) -> float | None:
@@ -794,7 +791,7 @@ def de_tendencia(e: dict[str, Any], alfa: float) -> dict[str, Any]:
         resultado,
         {
             "fuentes": [{"fuente_id": "power_mensual"}],
-            "codigo": {"repositorio": REPOSITORIO_ORIGINAL, "commit": proc.get("codigo_commit"), "script": "tv trends"},
+            "codigo": {"repositorio": REPOSITORIO, "commit": proc.get("codigo_commit"), "script": "tv trends"},
             "preregistro_sha256": proc["preregistro_sha256"],
             "hash_entradas": {"entradas": proc["entradas_sha256"]},
             "pasos": _pasos(

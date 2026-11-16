@@ -180,6 +180,7 @@ class EstadoGeometria(StrEnum):
 
 
 class EstadoVerificacion(StrEnum):
+    integrado = "integrado"  # descargada con manifiesto SHA-256 y procesada por el pipeline (registro de ingesta)
     verificado = "verificado"
     parcial = "parcial"  # verificado, con aspectos marcados por confirmar
     no_verificado = "no_verificado"  # la verificación falló

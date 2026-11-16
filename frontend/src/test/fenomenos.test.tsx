@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { AvisoNoOficial } from "../componentes/Marco";
 import { TablaDatos } from "../componentes/fenomenos/TablaDatos";
@@ -14,7 +14,7 @@ describe("fenómenos naturales", () => {
 
   it("cada gráfico tiene su tabla de datos accesible", () => {
     render(<TablaDatos titulo="Sismos por año" columnas={["Año", "Sismos"]} filas={[["2001", 120], ["2002", 98]]} />);
-    expect(screen.getByText("Ver datos en tabla (2 filas)")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Ver datos en tabla (2 filas)" }));
     const tabla = screen.getByRole("table", { name: "Sismos por año" });
     expect(tabla).toBeInTheDocument();
     expect(screen.getAllByRole("columnheader").map((c) => c.textContent)).toEqual(["Año", "Sismos"]);
@@ -23,7 +23,8 @@ describe("fenómenos naturales", () => {
 
   it("la tabla avisa cuando recorta filas", () => {
     render(<TablaDatos titulo="Puntos" columnas={["x"]} filas={[[1], [2], [3]]} maxFilas={2} />);
-    expect(screen.getByText("Se muestran 2 de 3 filas.")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Ver datos en tabla (3 filas)" }));
+    expect(screen.getByText("Se muestran 2 de 3 filas (el CSV las incluye todas).")).toBeInTheDocument();
   });
 
   it("todos los veredictos de dinámica tienen texto, no solo color", () => {
