@@ -298,3 +298,14 @@ def test_el_numero_de_elementos_de_una_lista_publicada_se_respalda() -> None:
     c = Conexion(["Se analizan 3 volcanes; el más activo tiene 22 erupciones [TV-REC-ABCDEF123456]."], [])
     r = asistente.AsistenteGemini(c).responder("¿volcanes?", [volcanes], [])
     assert r.verificacion.aprobado and r.intentos == 1
+
+
+def test_preguntas_de_pronostico_ponen_primero_el_historial() -> None:
+    comparacion = asistente.ExpedienteContexto(
+        "TV-CMP-AAAAAAAAAAAA", "comparacion_modelos", "Sequía: SPI-3 a 1 mes", "", {}
+    )
+    historial = asistente.ExpedienteContexto(
+        "TV-HIS-BBBBBBBBBBBB", "historial_metricas", "Historial de métricas", "", {}
+    )
+    for pregunta in ("¿Qué tan bien se pronostica la sequía?", "How well can drought be forecast?"):
+        assert asistente.seleccionar(pregunta, [comparacion, historial])[0].id == historial.id

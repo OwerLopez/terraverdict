@@ -223,10 +223,20 @@ def puntuar(pregunta: str, exp: ExpedienteContexto) -> float:
     return 3.0 * len(consulta & titulo) + len(consulta & cuerpo)
 
 
+PRONOSTICO = frozenset({"pronos", "foreca", "habili", "skill", "predic", "antici", "ahead"})
+
+
 def seleccionar(
     pregunta: str, candidatos: Sequence[ExpedienteContexto], k: int = MAX_EXPEDIENTES
 ) -> list[ExpedienteContexto]:
-    puntuados = sorted(((puntuar(pregunta, e), e.id, e) for e in candidatos), key=lambda t: (-t[0], t[1]))
+    """Los más pertinentes; si la pregunta trata de pronóstico, el historial (lectura vigente) va primero."""
+    sobre_pronostico = bool(raices(terminos(pregunta)) & PRONOSTICO)
+
+    def puntaje(e: ExpedienteContexto) -> float:
+        extra = 100.0 if sobre_pronostico and e.tipo == "historial_metricas" else 0.0
+        return puntuar(pregunta, e) + extra
+
+    puntuados = sorted(((puntaje(e), e.id, e) for e in candidatos), key=lambda t: (-t[0], t[1]))
     return [e for p, _, e in puntuados[:k] if p > 0]
 
 
