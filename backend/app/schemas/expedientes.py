@@ -565,6 +565,38 @@ class EventoInventario(Esquema):
     percentiles: dict[str, NumeroFinitoOpcional] = Field(default_factory=dict)
 
 
+class CeldaDensidad(Esquema):
+    lat: NumeroFinito
+    lon: NumeroFinito
+    n: int = Field(ge=1)
+
+
+class DensidadCeldas(Esquema):
+    tamano_grados: float = Field(gt=0)
+    celdas: list[CeldaDensidad]
+
+
+class ContrasteInventario(Esquema):
+    """Segunda familia de evidencia: inventario de campo (INGEMMET) frente al catálogo de noticias (GLC)."""
+
+    fuente: str
+    servicio: str
+    registros_nacionales: int = Field(ge=0)
+    registros_dominio: int = Field(ge=0)
+    por_tipo_dominio: dict[str, int]
+    por_departamento_dominio: dict[str, int]
+    eventos_glc_comparados: int = Field(ge=0)
+    mediana_km: NumeroFinitoOpcional = None
+    fraccion_menor_5km: Probabilidad | None = None
+    fraccion_menor_10km: Probabilidad | None = None
+    azar_mediana_km: NumeroFinitoOpcional = None
+    azar_fraccion_menor_5km: Probabilidad | None = None
+    p_valor_binomial_5km: Probabilidad | None = None
+    metodo_linea_base: str
+    densidad_celdas: DensidadCeldas
+    nota: str = Field(max_length=600)
+
+
 class ResultadoInventario(Esquema):
     tipo: Literal["inventario"]
     fenomeno: str
@@ -573,6 +605,7 @@ class ResultadoInventario(Esquema):
     eventos_minimos_umbral: int = Field(ge=1)
     umbral_estimado: bool
     abstencion: Abstencion
+    contraste_ingemmet: ContrasteInventario | None = None
 
     @model_validator(mode="after")
     def _umbral_con_datos(self) -> ResultadoInventario:

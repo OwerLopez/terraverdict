@@ -1,10 +1,10 @@
 import type { ExpressionSpecification } from "maplibre-gl";
-import { CloudRain, Droplets, MapPinned, Thermometer, Waves } from "lucide-react";
+import { CloudRain, Droplets, MapPinned, Mountain, Ruler, Thermometer, Waves } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Esquemas } from "../api/cliente";
-import { useNacional } from "../api/consultas";
+import { useExpedienteVigente, useNacional } from "../api/consultas";
 import { MapaPuntos } from "../componentes/fenomenos/MapaPuntos";
 import { TablaDatos } from "../componentes/fenomenos/TablaDatos";
 import { ChipEstado, Dato, Encabezado, ErrorCarga, EstadoVacio, Esqueleto, Insignia, Segmentado, Tarjeta, VEREDICTOS } from "../componentes/ui";
@@ -66,6 +66,103 @@ function LeyendaRampa({ deps, metrica }: { deps: Departamento[]; metrica: Metric
       <span className="cifra">{numero(max, metrica === "lluvia" ? 0 : 2)}</span>
       <span>{metrica === "lluvia" ? t("mm/año (escala log)", "mm/yr (log scale)") : UNIDADES[metrica]}</span>
     </div>
+  );
+}
+
+type Inventario = Esquemas["ResultadoInventario"];
+const RAMPA_DENSIDAD: ExpressionSpecification = ["interpolate", ["linear"], ["get", "valor"], 0, RAMPA_AZUL[1], 0.5, RAMPA_AZUL[4], 1, RAMPA_AZUL[6]];
+const TIPOS_EN: Record<string, string> = {
+  Flujo: "Flow",
+  Caída: "Fall",
+  Deslizamiento: "Slide",
+  Reptación: "Creep",
+  "Movimiento complejo": "Complex movement",
+  Vuelco: "Topple",
+  "Desplazamiento lateral": "Lateral spread",
+};
+
+/** Deslizamientos con dos familias independientes: catálogo de noticias (NASA GLC) e inventario de campo (INGEMMET). */
+function ContrasteDeslizamientos() {
+  const { detalle } = useExpedienteVigente("inventario");
+  const r = detalle.data?.resultado as Inventario | undefined;
+  const c = r?.contraste_ingemmet;
+  if (!c) return null;
+  const maxN = Math.max(1, ...c.densidad_celdas.celdas.map((x) => x.n));
+  const celdas: Esquemas["Feature"][] = c.densidad_celdas.celdas.map((x, i) => ({
+    type: "Feature",
+    id: `ingemmet-${i}`,
+    geometry: { type: "Point", coordinates: [x.lon, x.lat] },
+    properties: { n: x.n, valor: Math.log10(1 + x.n) / Math.log10(1 + maxN) },
+  }));
+  const tipos = Object.entries(c.por_tipo_dominio).sort((a, b) => b[1] - a[1]);
+  const total = tipos.reduce((a, [, n]) => a + n, 0);
+  const pct = (x: number | null | undefined) => (x === null || x === undefined ? "—" : `${numero(x * 100, 0)} %`);
+  return (
+    <Tarjeta
+      titulo={t("Deslizamientos: dos familias de evidencia independientes", "Landslides: two independent evidence families")}
+      subtitulo={t(
+        `NASA GLC (noticias) frente al inventario de campo de INGEMMET · expediente ${detalle.data?.id ?? ""}`,
+        `NASA GLC (news reports) vs INGEMMET field inventory · case file ${detalle.data?.id ?? ""}`,
+      )}
+      pie={t(
+        `${c.metodo_linea_base} La fecha del inventario es la del levantamiento, no la del evento: se valida el lugar, no el momento. Ambas fuentes favorecen zonas accesibles. Fuente: INGEMMET, GEOCATMIN (solo agregados).`,
+        `Baseline: 2,000 uniform random points inside Peru in the same box (seed 0); p = P(Binom(n, p_random) ≥ k). Inventory dates are survey dates, not event dates: this validates location, not timing. Both sources favour accessible areas. Source: INGEMMET, GEOCATMIN (aggregates only).`,
+      )}
+    >
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Dato
+          etiqueta={t("Inventario INGEMMET", "INGEMMET inventory")}
+          icono={Mountain}
+          valor={numero(c.registros_dominio, 0)}
+          nota={t(`movimientos en masa en el sur (de ${numero(c.registros_nacionales, 0)} en el Perú)`, `mass movements in the south (of ${numero(c.registros_nacionales, 0)} in Peru)`)}
+        />
+        <Dato
+          etiqueta={t("GLC a < 5 km de INGEMMET", "GLC within 5 km of INGEMMET")}
+          icono={Ruler}
+          valor={pct(c.fraccion_menor_5km)}
+          nota={t(`${c.eventos_glc_comparados} eventos; lugares al azar: ${pct(c.azar_fraccion_menor_5km)} · p ${valorP(c.p_valor_binomial_5km)}`, `${c.eventos_glc_comparados} events; random places: ${pct(c.azar_fraccion_menor_5km)} · p ${valorP(c.p_valor_binomial_5km)}`)}
+        />
+        <Dato
+          etiqueta={t("Distancia mediana", "Median distance")}
+          icono={Ruler}
+          valor={`${numero(c.mediana_km ?? NaN, 1)} km`}
+          nota={t(`al azar: ${numero(c.azar_mediana_km ?? NaN, 1)} km`, `random places: ${numero(c.azar_mediana_km ?? NaN, 1)} km`)}
+        />
+      </div>
+      <div className="mt-4 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+        <MapaPuntos
+          puntos={celdas}
+          color={RAMPA_DENSIDAD}
+          radio={["interpolate", ["linear"], ["get", "valor"], 0, 3, 1, 9]}
+          centro={[-72.5, -15.5]}
+          zoom={5}
+          alto={340}
+          descripcion={t("Densidad del inventario INGEMMET en celdas de 0,25°", "INGEMMET inventory density in 0.25° cells")}
+          etiqueta={(p) => t(`${numero(Number(p.n), 0)} registros en la celda`, `${numero(Number(p.n), 0)} records in cell`)}
+        />
+        <div>
+          <p className="etiqueta mb-2">{t("Tipo de movimiento (sur del Perú)", "Movement type (southern Peru)")}</p>
+          <ul className="space-y-2 text-[13px]">
+            {tipos.map(([tipo, n]) => (
+              <li key={tipo}>
+                <div className="flex justify-between gap-2">
+                  <span className="text-ink-2">{t(tipo, TIPOS_EN[tipo] ?? tipo)}</span>
+                  <span className="cifra text-ink">{numero(n, 0)}</span>
+                </div>
+                <div className="mt-1 h-1.5 rounded-full bg-surface-2">
+                  <div className="h-1.5 rounded-full bg-accent" style={{ width: `${(100 * n) / Math.max(1, total)}%` }} />
+                </div>
+              </li>
+            ))}
+          </ul>
+          <TablaDatos
+            titulo={t("Inventario INGEMMET por departamento (sur)", "INGEMMET inventory by department (south)")}
+            columnas={[t("Departamento", "Department"), t("Registros", "Records")]}
+            filas={Object.entries(c.por_departamento_dominio).sort((a, b) => b[1] - a[1]).map(([d, n]) => [d, numero(n, 0)])}
+          />
+        </div>
+      </div>
+    </Tarjeta>
   );
 }
 
@@ -273,6 +370,7 @@ export function NacionalPagina() {
           </Tarjeta>
 
           {r.sismicidad && <Sismicidad s={r.sismicidad} />}
+          <ContrasteDeslizamientos />
         </>
       )}
     </div>

@@ -3967,6 +3967,31 @@
         ],
         "title": "CategoriaEvento"
       },
+      "CeldaDensidad": {
+        "properties": {
+          "lat": {
+            "type": "number",
+            "title": "Lat"
+          },
+          "lon": {
+            "type": "number",
+            "title": "Lon"
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "N"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "lat",
+          "lon",
+          "n"
+        ],
+        "title": "CeldaDensidad"
+      },
       "CeldaImportancia": {
         "properties": {
           "expediente_id": {
@@ -4541,6 +4566,149 @@
         "title": "ConteoVerificacion",
         "description": "Resultado agregado del último informe de verificación de un tipo."
       },
+      "ContrasteInventario": {
+        "properties": {
+          "fuente": {
+            "type": "string",
+            "title": "Fuente"
+          },
+          "servicio": {
+            "type": "string",
+            "title": "Servicio"
+          },
+          "registros_nacionales": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Registros Nacionales"
+          },
+          "registros_dominio": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Registros Dominio"
+          },
+          "por_tipo_dominio": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Por Tipo Dominio"
+          },
+          "por_departamento_dominio": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Por Departamento Dominio"
+          },
+          "eventos_glc_comparados": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Eventos Glc Comparados"
+          },
+          "mediana_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mediana Km"
+          },
+          "fraccion_menor_5km": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fraccion Menor 5Km"
+          },
+          "fraccion_menor_10km": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fraccion Menor 10Km"
+          },
+          "azar_mediana_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Azar Mediana Km"
+          },
+          "azar_fraccion_menor_5km": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Azar Fraccion Menor 5Km"
+          },
+          "p_valor_binomial_5km": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P Valor Binomial 5Km"
+          },
+          "metodo_linea_base": {
+            "type": "string",
+            "title": "Metodo Linea Base"
+          },
+          "densidad_celdas": {
+            "$ref": "#/components/schemas/DensidadCeldas"
+          },
+          "nota": {
+            "type": "string",
+            "maxLength": 600,
+            "title": "Nota"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "fuente",
+          "servicio",
+          "registros_nacionales",
+          "registros_dominio",
+          "por_tipo_dominio",
+          "por_departamento_dominio",
+          "eventos_glc_comparados",
+          "metodo_linea_base",
+          "densidad_celdas",
+          "nota"
+        ],
+        "title": "ContrasteInventario",
+        "description": "Segunda familia de evidencia: inventario de campo (INGEMMET) frente al catálogo de noticias (GLC)."
+      },
       "CotaCifra": {
         "type": "string",
         "enum": [
@@ -4604,6 +4772,29 @@
           "unidad"
         ],
         "title": "CuantilesPronostico"
+      },
+      "DensidadCeldas": {
+        "properties": {
+          "tamano_grados": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Tamano Grados"
+          },
+          "celdas": {
+            "items": {
+              "$ref": "#/components/schemas/CeldaDensidad"
+            },
+            "type": "array",
+            "title": "Celdas"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tamano_grados",
+          "celdas"
+        ],
+        "title": "DensidadCeldas"
       },
       "DepartamentoNacional": {
         "properties": {
@@ -8753,6 +8944,16 @@
           },
           "abstencion": {
             "$ref": "#/components/schemas/Abstencion"
+          },
+          "contraste_ingemmet": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ContrasteInventario"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "additionalProperties": false,

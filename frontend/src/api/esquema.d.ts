@@ -1031,6 +1031,15 @@ export interface components {
          * @enum {string}
          */
         CategoriaEvento: "escasez" | "turbidez" | "colmatacion" | "almacenamiento" | "degradacion" | "clima" | "institucional";
+        /** CeldaDensidad */
+        CeldaDensidad: {
+            /** Lat */
+            lat: number;
+            /** Lon */
+            lon: number;
+            /** N */
+            n: number;
+        };
         /** CeldaImportancia */
         CeldaImportancia: {
             /** Expediente Id */
@@ -1243,6 +1252,47 @@ export interface components {
             correctas: number;
         };
         /**
+         * ContrasteInventario
+         * @description Segunda familia de evidencia: inventario de campo (INGEMMET) frente al catálogo de noticias (GLC).
+         */
+        ContrasteInventario: {
+            /** Fuente */
+            fuente: string;
+            /** Servicio */
+            servicio: string;
+            /** Registros Nacionales */
+            registros_nacionales: number;
+            /** Registros Dominio */
+            registros_dominio: number;
+            /** Por Tipo Dominio */
+            por_tipo_dominio: {
+                [key: string]: number;
+            };
+            /** Por Departamento Dominio */
+            por_departamento_dominio: {
+                [key: string]: number;
+            };
+            /** Eventos Glc Comparados */
+            eventos_glc_comparados: number;
+            /** Mediana Km */
+            mediana_km?: number | null;
+            /** Fraccion Menor 5Km */
+            fraccion_menor_5km?: number | null;
+            /** Fraccion Menor 10Km */
+            fraccion_menor_10km?: number | null;
+            /** Azar Mediana Km */
+            azar_mediana_km?: number | null;
+            /** Azar Fraccion Menor 5Km */
+            azar_fraccion_menor_5km?: number | null;
+            /** P Valor Binomial 5Km */
+            p_valor_binomial_5km?: number | null;
+            /** Metodo Linea Base */
+            metodo_linea_base: string;
+            densidad_celdas: components["schemas"]["DensidadCeldas"];
+            /** Nota */
+            nota: string;
+        };
+        /**
          * CotaCifra
          * @description Cómo debe leerse una cifra citada: la fuente puede dar un valor exacto o solo una cota.
          * @enum {string}
@@ -1267,6 +1317,13 @@ export interface components {
             p90: number;
             /** Unidad */
             unidad: string;
+        };
+        /** DensidadCeldas */
+        DensidadCeldas: {
+            /** Tamano Grados */
+            tamano_grados: number;
+            /** Celdas */
+            celdas: components["schemas"]["CeldaDensidad"][];
         };
         /** DepartamentoNacional */
         DepartamentoNacional: {
@@ -2683,6 +2740,7 @@ export interface components {
             /** Umbral Estimado */
             umbral_estimado: boolean;
             abstencion: components["schemas"]["Abstencion"];
+            contraste_ingemmet?: components["schemas"]["ContrasteInventario"] | null;
         };
         /**
          * ResultadoPanoramaNacional
