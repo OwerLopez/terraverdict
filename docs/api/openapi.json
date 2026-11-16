@@ -4198,6 +4198,18 @@
             "type": "string",
             "title": "Descripcion"
           },
+          "descripcion_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descripcion En",
+            "description": "Descripción en inglés."
+          },
           "cota": {
             "$ref": "#/components/schemas/CotaCifra",
             "description": "Si la fuente da una cota ('más del 70 %') en lugar de un valor exacto.",
@@ -4461,6 +4473,16 @@
             "maxItems": 4,
             "title": "Expediente Ids",
             "description": "Expedientes a usar como contexto. Vacío: el sistema elige los más pertinentes."
+          },
+          "idioma": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Idioma",
+            "description": "Idioma de la respuesta y formato de sus cifras (es: 0,658 · en: 0.658).",
+            "default": "es"
           }
         },
         "additionalProperties": false,
@@ -5119,6 +5141,30 @@
           "descripcion": {
             "type": "string",
             "title": "Descripcion"
+          },
+          "titulo_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Titulo En",
+            "description": "Título en inglés (traducción del equipo)."
+          },
+          "descripcion_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descripcion En",
+            "description": "Descripción en inglés (traducción del equipo)."
           },
           "cifras": {
             "items": {
@@ -9921,6 +9967,16 @@
             "title": "Tolerancia Relativa",
             "description": "Tolerancia relativa además del redondeo (0,005: media unidad del tercer dígito significativo).",
             "default": 0.005
+          },
+          "idioma": {
+            "type": "string",
+            "enum": [
+              "es",
+              "en"
+            ],
+            "title": "Idioma",
+            "description": "Formato de las cifras del texto (es: 0,658 · en: 0.658).",
+            "default": "es"
           }
         },
         "additionalProperties": false,

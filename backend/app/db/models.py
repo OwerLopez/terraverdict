@@ -240,6 +240,8 @@ class EventoDocumentado(Base):
     categoria: Mapped[str] = mapped_column(String(30), index=True)
     titulo: Mapped[str] = mapped_column(String(200))
     descripcion: Mapped[str] = mapped_column(Text)
+    titulo_en: Mapped[str | None] = mapped_column(String(200))
+    descripcion_en: Mapped[str | None] = mapped_column(Text)
     cifras: Mapped[list[dict[str, Any]]] = mapped_column(JSON, default=list)
     fuentes: Mapped[list[dict[str, Any]]] = mapped_column(JSON, default=list)
     dominio_id: Mapped[str | None] = mapped_column(ForeignKey("dominios.id"))

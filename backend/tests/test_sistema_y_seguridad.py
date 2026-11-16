@@ -134,10 +134,14 @@ def test_eventos_distinguen_cifras_exactas_de_cotas(cliente: TestClient) -> None
         "valor": 5000,
         "unidad": "NTU",
         "descripcion": "Turbidez registrada en la captación",
+        "descripcion_en": "Turbidity recorded at the intake",
         "cota": "exacta",
     }
     assert turbidez[1]["cota"] == "minima"  # la fuente dice "más del 70 %"
     assert all(e["fuentes"] for e in eventos.values()), "todo evento debe citar al menos una fuente"
+    # Bilingüe: cada evento y cada cifra trae su versión en inglés.
+    assert all(e["titulo_en"] and e["descripcion_en"] for e in eventos.values())
+    assert all(c["descripcion_en"] for e in eventos.values() for c in e["cifras"])
 
 
 def test_despliegue_nuevo_importa_los_resultados_cientificos(app: Any) -> None:

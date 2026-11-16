@@ -108,11 +108,36 @@ def test_recuperacion_usa_sinonimos_y_descarta_lo_no_pertinente() -> None:
 
 
 def test_contexto_compacto_no_altera_valores() -> None:
-    serie = list(range(100))
-    c = asistente.compactar({"habilidad": 0.6581234567, "serie": serie})
+    serie = [float(v) for v in range(100)]
+    objetos = [{"anio": a} for a in range(20)]
+    c = asistente.compactar({"habilidad": 0.6581234567, "serie": serie, "anios": objetos})
     assert c["habilidad"] == pytest.approx(0.658123, rel=1e-6)
-    assert c["serie"]["n_elementos"] == 100 and c["serie"]["primeros"] == [0, 1, 2, 3]
-    assert c["serie"]["ultimos"] == [98, 99]
+    assert c["serie"] == {"n_valores": 100, "min": 0.0, "max": 99.0}  # valores reales de la serie
+    assert c["anios"]["n_elementos"] == 20 and c["anios"]["ultimos"] == [{"anio": 18}, {"anio": 19}]
+
+
+def test_historial_se_resume_con_la_lectura_vigente_fuera_de_muestra() -> None:
+    r = {
+        "tipo": "historial_metricas",
+        "tareas": {
+            "sequia_h1_power": {
+                "descripcion": "SPI-3 dentro de 1 mes(es)",
+                "metrica_principal": "habilidad_climatologia",
+                "lectura_principal": "seleccion_validacion",
+                "anios": [{"anio": a} for a in range(30)],
+                "agregado": {
+                    "fuera_de_muestra": {
+                        "seleccion_validacion": {"valor": 0.657915},
+                        "ref_persistencia": {"valor": 0.3},
+                    }
+                },
+            }
+        },
+    }
+    c = asistente.contexto_resultado(r)
+    tarea = c["tareas"]["sequia_h1_power"]
+    assert tarea["lectura_vigente_fuera_de_muestra"] == {"valor": 0.657915}
+    assert "anios" not in tarea
 
 
 # --- Proveedor: verificación y reescritura -----------------------------------------------------
@@ -235,7 +260,9 @@ def test_api_valida_entrada(cliente: TestClient) -> None:
     )
 
 
-def test_ip_del_cliente_solo_confia_en_la_cabecera_del_borde_de_vercel(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_ip_del_cliente_solo_confia_en_la_cabecera_del_borde_de_vercel(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     from types import SimpleNamespace
 
     from app.core.security import ip_cliente
@@ -248,3 +275,18 @@ def test_ip_del_cliente_solo_confia_en_la_cabecera_del_borde_de_vercel(monkeypat
     assert ip_cliente(req) == "10.0.0.9"  # fuera de Vercel no se confía en cabeceras
     monkeypatch.setenv("VERCEL", "1")
     assert ip_cliente(req) == "203.0.113.7"
+
+
+def test_respuesta_en_ingles_se_verifica_con_formato_ingles() -> None:
+    c = Conexion(["Skill is 0.658 [TV-TEN-ABCDEF123456]."], [])
+    r = asistente.AsistenteGemini(c).responder("skill?", [EXP], [], "en")
+    assert r.verificacion.aprobado and r.intentos == 1
+
+
+def test_api_acepta_idioma_y_rechaza_otros(cliente: TestClient) -> None:
+    assert (
+        cliente.post(
+            "/api/v1/asistente/consultas", json={"pregunta": "Is it raining less?", "idioma": "fr"}
+        ).status_code
+        == 422
+    )

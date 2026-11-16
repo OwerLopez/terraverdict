@@ -82,7 +82,7 @@ def consultar(
     elegidos = {c.id for c in contexto}
     catalogo = [f"{e.titulo} [{e.id}]" for e in publicados if e.id not in elegidos]
 
-    r = proveedor.responder(datos.pregunta, contexto, catalogo)
+    r = proveedor.responder(datos.pregunta, contexto, catalogo, datos.idioma)
     return RespuestaAsistenteSalida(
         texto=r.texto,
         expedientes_citados=r.expedientes_citados,
@@ -112,5 +112,5 @@ def verificar(datos: SolicitudVerificacion, sesion: SesionDep) -> ResultadoVerif
     )
     expedientes = sesion.scalars(select(Expediente).where(Expediente.id.in_(datos.expediente_ids)))
     permitidos = [v for e in expedientes for v in verificador.valores_numericos(e.resultado)]
-    resultado = verificador.verificar(datos.texto, permitidos, datos.tolerancia_relativa)
+    resultado = verificador.verificar(datos.texto, permitidos, datos.tolerancia_relativa, datos.idioma)
     return _informe(resultado, len(permitidos))

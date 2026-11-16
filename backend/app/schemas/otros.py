@@ -87,6 +87,9 @@ class ConsultaAsistente(Esquema):
         max_length=4,
         description="Expedientes a usar como contexto. Vacío: el sistema elige los más pertinentes.",
     )
+    idioma: Literal["es", "en"] = Field(
+        "es", description="Idioma de la respuesta y formato de sus cifras (es: 0,658 · en: 0.658)."
+    )
 
 
 class SolicitudVerificacion(Esquema):
@@ -98,6 +101,7 @@ class SolicitudVerificacion(Esquema):
         le=0.1,
         description="Tolerancia relativa además del redondeo (0,005: media unidad del tercer dígito significativo).",
     )
+    idioma: Literal["es", "en"] = Field("es", description="Formato de las cifras del texto (es: 0,658 · en: 0.658).")
 
 
 class CifraDetectada(Esquema):

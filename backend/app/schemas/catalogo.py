@@ -61,6 +61,7 @@ class Cifra(Esquema):
     valor: float
     unidad: str = Field(description="Código de unidad; ver GET /api/v1/unidades-medida.")
     descripcion: str
+    descripcion_en: str | None = Field(None, description="Descripción en inglés.")
     cota: CotaCifra = Field(
         default=CotaCifra.exacta,
         description="Si la fuente da una cota ('más del 70 %') en lugar de un valor exacto.",
@@ -81,6 +82,8 @@ class EventoDocumentadoSalida(Esquema):
     categoria: CategoriaEvento
     titulo: str
     descripcion: str
+    titulo_en: str | None = Field(None, description="Título en inglés (traducción del equipo).")
+    descripcion_en: str | None = Field(None, description="Descripción en inglés (traducción del equipo).")
     cifras: list[Cifra]
     fuentes: list[ReferenciaDocumental]
 

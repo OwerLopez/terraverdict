@@ -30,6 +30,16 @@ _PATRON = re.compile(
 )
 
 
+# Inglés: coma de miles y punto decimal (1,026 · 0.658).
+_PATRON_EN = re.compile(
+    r"(?<![\w.,])"
+    r"(?P<signo>[−\-+])?"
+    r"(?P<num>\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)"
+    r"(?P<pct>\s?%)?"
+    r"(?![\w])"
+)
+
+
 ALFA_COINCIDENCIA = 0.05
 TOLERANCIA_RELATIVA = 0.005  # media unidad del tercer dígito significativo: 0,711 ≈ 0,7114
 
@@ -52,10 +62,17 @@ def _a_numero(crudo: str) -> tuple[float, int]:
     return float(limpio.replace(",", ".")), decimales
 
 
-def extraer_cifras(texto: str, *, ignorar_anios: bool = True) -> list[Cifra]:
+def _a_numero_en(crudo: str) -> tuple[float, int]:
+    limpio = crudo.replace(",", "")
+    return float(limpio), (len(limpio.split(".")[1]) if "." in limpio else 0)
+
+
+def extraer_cifras(texto: str, *, ignorar_anios: bool = True, idioma: str = "es") -> list[Cifra]:
+    """Cifras del texto según el formato del idioma: español (0,658 · 1.026) o inglés (0.658 · 1,026)."""
     cifras: list[Cifra] = []
-    for m in _PATRON.finditer(texto):
-        valor, decimales = _a_numero(m.group("num"))
+    patron, convertir = (_PATRON_EN, _a_numero_en) if idioma == "en" else (_PATRON, _a_numero)
+    for m in patron.finditer(texto):
+        valor, decimales = convertir(m.group("num"))
         if m.group("signo") in ("-", "−"):
             valor = -valor
         porcentaje = bool(m.group("pct"))
@@ -157,12 +174,15 @@ class Resultado:
 
 
 def verificar(
-    texto: str, permitidos: Iterable[float], tolerancia_relativa: float = TOLERANCIA_RELATIVA
+    texto: str,
+    permitidos: Iterable[float],
+    tolerancia_relativa: float = TOLERANCIA_RELATIVA,
+    idioma: str = "es",
 ) -> Resultado:
     valores = list(permitidos)
     evaluadas: list[tuple[Cifra, float | None]] = []
     azar: list[float | None] = []
-    for cifra in extraer_cifras(texto):
+    for cifra in extraer_cifras(texto, idioma=idioma):
         match = next((v for v in valores if _coincide(cifra, v, tolerancia_relativa)), None)
         evaluadas.append((cifra, match))
         azar.append(probabilidad_azar(cifra, valores, tolerancia_relativa) if match is not None else None)

@@ -370,6 +370,8 @@ def importar_eventos(sesion: Session, raiz: Path) -> int:
                 categoria=validado.categoria.value,
                 titulo=validado.titulo,
                 descripcion=validado.descripcion,
+                titulo_en=validado.titulo_en,
+                descripcion_en=validado.descripcion_en,
                 cifras=[c.model_dump() for c in validado.cifras],
                 fuentes=[f.model_dump() for f in validado.fuentes],
                 dominio_id="chili_analisis",

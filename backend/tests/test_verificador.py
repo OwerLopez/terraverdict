@@ -52,3 +52,13 @@ def test_probabilidad_de_coincidir_por_azar() -> None:
     assert probabilidad_azar(cifra, denso, 0.005) == pytest.approx(1.0)
     r = verificar("habilidad 0,711 y 5 eventos", [0.7114, *range(1, 10)])
     assert r.aprobado and r.coincidencias_debiles == ["5"]  # un entero de 1 cifra con 9 respaldos es azar
+
+
+def test_formato_ingles_punto_decimal_y_coma_de_miles() -> None:
+    from app.services.verificador import extraer_cifras, verificar
+
+    cifras = [(c.texto, c.valor) for c in extraer_cifras("skill 0.658, 1,026 days, -0.04 and 39 %", idioma="en")]
+    assert cifras == [("0.658", 0.658), ("1,026", 1026.0), ("-0.04", -0.04), ("39 %", 39.0)]
+    assert verificar("Skill was 0.66 over 1,026 days.", [0.658, 1026], idioma="en").aprobado
+    # El mismo texto leído como español no se respaldaría (1,026 sería 1,026 decimal).
+    assert not verificar("Skill was 0.66 over 1,026 days.", [0.658, 1026]).aprobado
