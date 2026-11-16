@@ -217,9 +217,8 @@ def publicar(
         exportar.write_text(json.dumps(lista, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
         # Ejecuciones reales del pipeline (descargas y corridas) para la vista de procesos de la API.
         corridas = convertir.ejecuciones(Path("data/raw"), resultados)
-        (exportar.parent / "ejecuciones.json").write_text(
-            json.dumps(corridas, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n"
-        )
+        texto = json.dumps(corridas, ensure_ascii=False, indent=1)
+        (exportar.parent / "ejecuciones.json").write_text(texto, encoding="utf-8", newline="\n")
         typer.echo(f"{len(lista)} expedientes y {len(corridas)} ejecuciones exportados a {exportar.parent}")
         return
     informe = cliente.publicar(lista, api, cliente.clave_ingesta())
