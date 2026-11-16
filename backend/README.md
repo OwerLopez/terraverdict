@@ -43,8 +43,8 @@ Se leen del entorno o de `backend/.env` (no se versiona).
 | `TV_LOG_NIVEL` | `INFO` | Registros JSON con `request_id` |
 | `TV_GEMINI_API_KEY` | — | Habilita el asistente con Google Gemini; sin ella `POST /asistente/consultas` responde 503 |
 | `TV_GEMINI_MODELO` | `gemini-flash-latest` | Modelo principal |
-| `TV_GEMINI_MODELOS_RESPALDO` | `["gemini-flash-lite-latest"]` | Se usan ante 429/5xx o tiempo agotado |
-| `TV_GEMINI_TIMEOUT_S` | `12` | Tiempo máximo por llamada y modelo |
+| `TV_GEMINI_MODELOS_RESPALDO` | `["gemini-flash-lite-latest", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite"]` | Se usan en orden ante 429/5xx o tiempo agotado (7 s por modelo) |
+| `TV_GEMINI_TIMEOUT_S` | `7` | Tiempo máximo por llamada y modelo |
 | `TV_ASISTENTE_CONSULTAS_POR_MINUTO` | `6` | Límite por IP |
 | `TV_ASISTENTE_CONSULTAS_GLOBALES_POR_MINUTO` | `40` | Tope por instancia (protege la cuota de la clave) |
 | `TV_ADMIN_EMAIL` | — | En serverless, crea el administrador al arrancar (con `TV_ADMIN_PASSWORD`) |

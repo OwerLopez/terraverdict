@@ -40,7 +40,11 @@ class Settings(BaseSettings):
         None, description="Clave de Google Gemini (solo servidor). Sin ella el asistente responde 503."
     )
     gemini_modelo: str = Field("gemini-flash-latest", pattern=r"^[a-z0-9.\-]+$")
-    gemini_modelos_respaldo: list[str] = ["gemini-flash-lite-latest"]
+    gemini_modelos_respaldo: list[str] = [
+        "gemini-flash-lite-latest",
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite",
+    ]
     gemini_timeout_s: float = Field(
         7.0, ge=2, le=50, description="Tiempo máximo por llamada y modelo (luego se usa el de respaldo)."
     )
