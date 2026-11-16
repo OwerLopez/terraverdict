@@ -1,4 +1,4 @@
-# Traspaso de TerraVerdict · cierre del 15-11-2026 (noche)
+# Traspaso de TerraVerdict · actualizado el 16-11-2026 (entrega)
 
 Documento para quien continúe el trabajo. Tiene dos partes: el estado verificado y cómo operarlo (§1–§4),
 y un **prompt de traspaso** listo para pegar en un asistente de código (§5).
@@ -75,7 +75,8 @@ tv ingest-fenomenos                       # todas las fuentes (IMERG ≈ 3–5 m
 tv verificar-integridad
 tv experimentos                           # ≈ 20 min con 20 núcleos
 tv informe
-tv publicar --exportar resultados/contrato/expedientes.json   # también escribe ejecuciones.json
+tv ingest-nino                            # Niño 3.4 y 1+2 mensuales (OISST), para el semáforo
+tv publicar --exportar resultados/contrato/expedientes.json   # también escribe ejecuciones.json e indicadores.json
 pytest
 # Con la API local corriendo sobre el contrato nuevo: traducir al inglés los textos nuevos de los datos
 python scripts/glosario_en.py --api http://127.0.0.1:8000

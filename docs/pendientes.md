@@ -1,6 +1,6 @@
 # Qué falta para terminar TerraVerdict al 100 %
 
-> Actualizado: **15-11-2026 (noche)**, al cierre. Lo hecho y su evidencia está en [`bitacora.md`](bitacora.md);
+> Actualizado: **16-11-2026**, tras la entrega (portada, mapa HLS, indicadores actuales y README en inglés). Lo hecho y su evidencia está en [`bitacora.md`](bitacora.md);
 > cómo operar el proyecto, en [`traspaso.md`](traspaso.md).
 > Regla para cerrar una tarea: código + pruebas que pasan + entrada en la bitácora + commit en `main`.
 
@@ -27,6 +27,9 @@
 |---|---|---|
 | Fuentes nacionales | Equipo / docentes | SENAMHI, IGP (catálogo completo), INGEMMET y ANA no tienen API abierta: convenio o descarga manual verificada |
 | M1 para P2–P4 | Equipo | P2 (bofedales) necesita NDVI de HLS/Landsat por AppEEARS; P3 (represas), la serie de volumen de AUTODEMA (hoy solo reportes aislados en PDF); P4 (turbidez), más de 3 eventos documentados |
+| Base de datos persistente en Vercel | Decisión del equipo | Crear un PostgreSQL gestionado exige abrir un recurso en una cuenta; mientras tanto la demo es de solo lectura y los resultados se reconstruyen del contrato |
+| M3 y M5 | Equipo | Gemelo GR2M + embalse (SWOT/HLS) y erosión RUSLE para priorizar el fondo MERESE por quebrada |
+| Servidor MCP | Equipo | Previsto en la arquitectura; hoy la IA es RAG REST |
 | Persistencia en Vercel (opción C) | Opcional | PostgreSQL gestionado en `TV_DATABASE_URL` para usuarios y claves que sobrevivan entre instancias (`despliegue.md`) |
 | Humedad del suelo en P1 | Opcional | Candidata de la plantilla sin dato medido (GLDAS/SMAP); hoy aparece como "sin resultado" en la matriz |
 | Redes líquidas (LNN/CfC) | Opcional | No implementadas; la familia convolucional (TCN) sí está |

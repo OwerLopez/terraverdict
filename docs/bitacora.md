@@ -28,6 +28,32 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
+## 2026-11-16 · Portada para la evaluación, mapa HLS, indicadores actuales, README en inglés y entrega
+
+**Autor:** Ower Frank. **Commits:** `a59002d` (datos), `80c0a91` (cierre), `1f40faf` (portada y pipeline), `0d2843a` (cono conformal) y el de esta entrada.
+
+### Qué se hizo
+- **Cierre completo** sobre los datos del 15-11 (`cierre.sh`, 32 min): 12 experimentos sellados, tendencias, informe y contrato de 16 expedientes validados contra el esquema del backend. La corrida anterior murió en silencio al cerrarse la sesión que la lanzó; se relanzó desde esta sesión.
+- **Repositorio anterior eliminado del sistema:** el origen era un contrato viejo en Vercel; el nuevo cita solo `OwerLopez/terraverdict`. Se quitaron el remoto `original`, `docs/mapa-commits.md` y las menciones en la documentación (DiegoNiS se mantiene como integrante y en la licencia).
+- **Indicadores actuales** (`publicar/indicadores.py` → `resultados/contrato/indicadores.json`, servidos en `GET /api/v1/portada`): ONI y episodio NOAA, Niño 3.4 y 1+2 mensuales (`tv ingest-nino`, OISST v2.1), SPI-3 actual de la cabecera con POWER diario, frecuencia de sequía por categoría ENSO (Wilson 90 % y Fisher), gradiente altitudinal (GHCN frente a POWER) y series de prueba de la sequía.
+- **Portada:** guía de 3 minutos, semáforo hídrico con la fecha de cada dato, tabla maestra de veredictos, simulador ENSO → sequía, caso de estudio feb-2025, banner del mapa y muro de misiones con atribuciones correctas.
+- **Mapa:** cortina entre fechas (segundo mapa sincronizado) y time-lapse mensual 2020–2026 de Aguada Blanca con HLS de 30 m elegido por `scripts/timelapse_hls.py` (82 de 83 meses sin nubes; los vacíos no se interpolan).
+- **Modelos:** predicción frente a realidad con cono conformal del 90 % (54 de 60 meses dentro en producción, igual a la cobertura publicada).
+- **Informe ejecutivo** imprimible de 2 páginas por expediente (`/informe/:id`), **aviso real de arranque en frío**, **preguntas rápidas** de Terra, **eventos documentados citables** (`TV-EV-…`) con cifras verificadas, lecturas en lenguaje claro de BSS, DM y ECE, matriz de relevancia con pestaña P1 validada, "Dinámica avanzada" como grupo secundario y glosario inglés con términos locales explicados.
+- **Robustez:** `dayofyear` → `day_of_year` (de 16 705 advertencias a 10 en la prueba de publicación); `de_tendencia` detiene la conversión si una prueba del Sello no cabe en el contrato (regresión del 422 de "frágil").
+- **Documentación:** README principal en inglés (`readme.md`) con capturas reales; la propuesta en español pasa a `readme.es.md`; sin promesa de servidor MCP (la IA es RAG REST con verificador).
+
+### Evidencia
+- Integridad: 143 crudos verificados, 12 resultados sellados, sin alteraciones.
+- Pruebas: paquete científico 160 en verde en la corrida del cierre, más 17 nuevas de indicadores y de la regresión de "frágil"; frontend 48 de 48; backend 109 de 109 (incluidas las 4 nuevas de portada y eventos citables).
+- Producción verificada: `/api/v1/portada` con indicadores, `/procesos` con ejecuciones y expedientes con el commit `a59002d`.
+
+### Decisiones
+- No se publican cifras del encargo que los datos no respaldan: la habilidad de la sequía es 0,68 (no "BSS 0,78", que era la correlación); las represas se muestran con su fecha real (feb-2025, 60 %) y el SPI-3 de oct-2026 es húmedo (+1,67).
+- Los logotipos oficiales de NASA no se usan (insignia protegida); se nombran misiones y productos con su atribución.
+
+---
+
 ## 2026-11-15 · Cierre: datos al día, M1, asistente Gemini bilingüe, experiencia de usuario y despliegue
 
 **Autor:** Ower Frank. **Repositorio:** `OwerLopez/terraverdict` (traslado con el historial completo).
