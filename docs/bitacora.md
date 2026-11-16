@@ -9,39 +9,81 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ---
 
-## Estado al 15-11-2026 (resumen para el equipo)
+## Estado al cierre del 15-11-2026 (resumen para el equipo)
 
 | Parte | Estado | Evidencia | Cómo correrlo |
 |---|---|---|---|
+| Aplicación publicada | ✅ <https://terraverdict.vercel.app> | `docs/despliegue.md` (verificación en producción) | `git push` a `main` |
+| Repositorio | ✅ `OwerLopez/terraverdict` con el historial completo | `docs/mapa-commits.md` | — |
 | Preregistro y partición temporal | ✅ Congelados el 15-11 | Prueba que falla ante cualquier cambio | `pytest tests/unit/test_preregistro_congelado.py` |
-| Ingesta de fuentes reales | ✅ POWER (Arequipa, celdas y 25 departamentos), USGS (Arequipa y Perú), GVP, GLC, GHCN, ONI, CHIRPS, IGP y MODIS LST con SHA-256 · ⏳ IMERG (1998–2001; detenida al cerrar la sesión, se reanuda con `docs/traspaso.md`) | `data/raw/*/manifiesto.json` | `tv ingest-fenomenos` |
-| Cadena de custodia | ✅ Crudos verificados contra su manifiesto antes de entrenar; resultados sellados; el publicador rechaza lo alterado | `tests/integridad/` | `tv verificar-integridad` |
-| Motor (modelos, evaluación, incertidumbre, selección) | ✅ 10 redes, 2 ensambles, IC90, Diebold-Mariano, conformal y abstención; protocolo auditado (`docs/auditoria-metricas.md`) | `tests/motor/` | `pytest tests/motor` |
-| Corrida completa de experimentos | ✅ 10 experimentos con procedencia, incluida la escala nacional | `resultados/*.json`, `resultados/indice.json` | `tv experimentos` |
-| Escala nacional | ✅ 25 departamentos: Sello de temperatura y lluvia, SPI y sismicidad por celda | `resultados/nacional.json`, vista `/peru` | `tv experimentos --solo nacional` |
-| Caos en series reales | ✅ 7 series, ninguna caótica | `resultados/caos.json` | (incluido en `tv experimentos`) |
-| Informe de resultados | ✅ Solo cifras de los JSON | `docs/experimentos.md` | `tv informe` |
-| Backend (API REST) | ✅ Tipos M6 y M7, capas, catálogo, importación del contrato | 67 pruebas; OpenAPI sin deriva | `cd backend && pytest` |
-| Publicación ciencia → backend | ✅ Idempotente y por contrato (`resultados/contrato/expedientes.json`) | `tests/integracion/` | `tv publicar --exportar …` |
-| Frontend | ✅ Glassmorphism azul, vistas de fenómenos y Perú; bilingüe español/inglés | 27 pruebas; `docs/capturas/` | `cd frontend && npm test` |
-| Paquete científico | ✅ 108 pruebas pasan (2 omitidas por diseño) | `tests/` | `pytest` |
-| CI, Docker y E2E | ✅ Docker verificado con `docker compose up`; E2E Playwright 2 de 2 | `.github/`, `docker-compose.yml`, `frontend/e2e/` | ver `pendientes.md` |
-| Métricas e historial (M8) | ✅ Mapas de calor por métrica, importancia de variables, historial año a año (2016–2026) y caos en ventanas; 24 fichas de métricas | `resultados/historial.json`, vista `/metricas` | `tv experimentos --solo historial` |
-| Licencias | ✅ Código MIT; cita y términos de cada fuente; inventario de dependencias | `LICENSE`, `docs/licencias-*.md`, `tests/integridad/test_licencias.py` | `python scripts/inventario_licencias.py …` |
-| Despliegue público | ✅ Listo para Vercel y verificado en local (arranque en frío de 3,1 s, E2E 2 de 2) · ⏳ falta conectar el repositorio a Vercel (acción de cuenta) | `vercel.json`, `api/`, `docs/despliegue.md` | ver `despliegue.md` |
+| Ingesta de fuentes reales | ✅ Todas refrescadas el 15-11, incluida IMERG Final diaria 1998–2025 completa | `data/raw/*/manifiesto.json`, `data/raw/registro_descarga.json` | `tv ingest-fenomenos` |
+| Cadena de custodia | ✅ Crudos verificados antes de entrenar; resultados sellados; escritura atómica | `tests/integridad/` | `tv verificar-integridad` |
+| Experimentos | ✅ 12 experimentos con procedencia, un solo commit | `resultados/*.json`, `resultados/indice.json` | `tv experimentos` |
+| M1 · Matriz de Relevancia | ✅ P1 con IMERG | `resultados/relevancia.json`, vista `/relevancia` | `tv experimentos --solo relevancia` |
+| Informe | ✅ Solo cifras de los JSON | `docs/experimentos.md` | `tv informe` |
+| Backend (API REST) | ✅ Asistente Gemini, modo solo lectura, procesos del pipeline | 97 pruebas; OpenAPI sin deriva | `cd backend && pytest` |
+| Frontend | ✅ Chat con citas y sello de verificación; explicación con IA por expediente | 35 pruebas; E2E 2 de 2 | `cd frontend && npm test && npm run e2e` |
+| Paquete científico | ✅ Ver la entrada de cierre | `tests/` | `pytest` |
+| CI | ✅ GitHub Actions (backend, ciencia, frontend y E2E) | `.github/workflows/ci.yml` | — |
 
----|---|---|---|
-| Preregistro y partición temporal | ✅ Congelados el 15-11 | Prueba que falla ante cualquier cambio | `pytest tests/unit/test_preregistro_congelado.py` |
-| Ingesta de fuentes reales | ✅ POWER, CHIRPS, USGS, IGP, GVP, GLC, GHCN y ONI con SHA-256 · ⏳ IMERG (EULA de GES DISC) y MODIS (ORNL con 502) | `data/raw/registro_descarga.json` | `tv ingest-fenomenos` |
-| Motor (modelos, evaluación, incertidumbre, selección) | ✅ 3 defectos corregidos al probarlo | `tests/motor/` | `pytest tests/motor` |
-| Corrida completa de experimentos | ✅ 9 experimentos con procedencia | `resultados/*.json` | `tv experimentos` |
-| Caos en series reales | ✅ 7 series, ninguna caótica | `resultados/caos.json` | (incluido en `tv experimentos`) |
-| Informe de resultados | ✅ Solo cifras de los JSON | `docs/experimentos.md` | `tv informe` |
-| Backend (API REST) | ✅ Tipos M6, capas y catálogo de fenómenos | 66 pruebas; OpenAPI sin deriva | `cd backend && pytest` |
-| Publicación ciencia → backend | ✅ Idempotente; 13 expedientes reales | `tests/integracion/` | `tv publicar` |
-| Frontend | ✅ Glassmorphism azul y 5 vistas nuevas | 23 pruebas; `docs/capturas/` | `cd frontend && npm test` |
-| CI, Docker y documentación | ✅ · ⏳ falta construir las imágenes y ver la primera ejecución de CI | `.github/`, `docker-compose.yml`, `docs/` | ver `pendientes.md` |
-| Prueba E2E (Playwright) | ⏳ Bloqueada: la descarga del navegador no fue autorizada en este entorno | — | ver `pendientes.md` |
+---
+
+## 2026-11-15 · Cierre: datos al día, M1, asistente Gemini bilingüe, experiencia de usuario y despliegue
+
+**Autor:** Ower Frank. **Repositorio:** `OwerLopez/terraverdict` (traslado con el historial completo; `mapa-commits.md`).
+
+### Qué se hizo
+- **Traslado del repositorio** a `OwerLopez/terraverdict` con los 52 commits de `main` (autores, fechas y horas
+  originales; sin las líneas de coautoría de IA). La procedencia de los resultados anteriores se sigue con
+  `docs/mapa-commits.md`.
+- **Portabilidad a Windows** (cada defecto con su prueba en `tests/integridad/test_portabilidad.py`):
+  `.gitattributes` LF (con CRLF los 11 resultados sellados salían "alterados"), lecturas y escrituras en UTF-8 y
+  LF, salida de la CLI en UTF-8 (una corrida se detenía al imprimir "→") y escritura atómica de resultados con
+  reintentos (un bloqueo momentáneo de Windows detuvo una corrida de 14 min).
+- **Datos refrescados** de todas las fuentes e **IMERG Final diaria 1998–2025 completa** (1998–2001 idénticos bit
+  a bit a la descarga de MaxsForocca; ≈ 3–15 min por año según la carga de GES DISC, nunca 45).
+- **M1 · Matriz de Relevancia** para P1 (`experimentos/relevancia.py`; ver `metodologia.md` §9 bis). Al probarlo se
+  corrigieron dos defectos de diseño: el nulo de objetivo desplazado volvía significativo al ruido (se pasó a una
+  prueba condicional por variable) y la estabilidad era trivialmente 1 con k = n (ahora k ≤ n − 1).
+- **Asistente con Google Gemini**: recuperación de expedientes, contexto que conserva las cifras vigentes,
+  verificación numérica de cada cifra (también en formato inglés), reescritura si alguna no tiene respaldo,
+  límites por IP (cabecera del borde de Vercel) y global, modo solo lectura sin secreto JWT.
+- **Experiencia de usuario**: asistente flotante "Terra" en todas las páginas, paneles laterales "Cómo leer esta
+  vista", subtítulos desplegables, chips de citas numeradas, explicación en lenguaje claro por expediente.
+- **Bilingüe**: interfaz en español e inglés; 808 textos de datos traducidos con Gemini y validados (cada
+  traducción conserva todos los dígitos; 0 rechazadas); eventos documentados traducidos por el equipo.
+- **Procesos** con las ejecuciones reales del pipeline; **CSP** y cabeceras de seguridad en el frontend.
+- **Despliegue en Vercel** (proyecto del owner): framework "Other" y `.vercelignore` (Vercel instalaba el paquete
+  científico), protección solo para vistas previas y variables cargadas por el owner.
+- **Mapas analíticos**: capas GIBS con leyenda oficial (NDVI mensual, temperatura superficial, humedad de suelo
+  SMAP), comparación de dos fechas con deslizador, sismos por profundidad y volcanes con ficha; el mapa nacional
+  pasa de puntos a **coropletas por departamento** (límites Natural Earth, declarando que el color es el de la
+  celda POWER de la capital y no un promedio del territorio).
+- **INGEMMET integrado sin desactivar TLS**: el servidor de GEOCATMIN omite el certificado intermedio; se añadió el
+  intermedio oficial de Sectigo (URL AIA del propio certificado) con huella SHA-256 fijada y prueba que rechaza un
+  intermedio alterado. `tv ingest-ingemmet` descarga los 28 915 registros del inventario de movimientos en masa.
+  Resultado: los deslizamientos GLC del sur caen a una mediana de ≈ 1 km de un punto inventariado por INGEMMET;
+  ≈ 80 % a menos de 5 km frente a 39,5 % de 2000 lugares al azar del territorio (p binomial < 0,001). Se declara el
+  sesgo común a zonas accesibles y que la fecha del inventario no es la del evento.
+- **Acceso a fuentes nacionales re-verificado** (`docs/verificacion/fuentes_fenomenos.json`): SENAMHI expone un
+  GeoServer WMS/WFS público, CENEPRED un ArcGIS REST público, SINIA y ANA responden sin API de datos, IGP_OVS no
+  resuelve en DNS. Ninguna consulta desactiva la verificación TLS.
+- **Sello con la prueba de palanca**: el backend solo conocía cinco pruebas; la tendencia de lluvia dic–mar
+  (significativa, pero que no sobrevive al quitar los dos años más influyentes) era rechazada al publicar. Ahora
+  la prueba es parte del contrato y el veredicto "frágil" muestra cuál falló.
+- **Reproducibilidad independiente de IMERG**: los archivos 1998–2001 que descargó MaxsForocca en su equipo son
+  idénticos bit a bit (mismo SHA-256 del manifiesto) a los descargados aquí.
+
+### Evidencia
+- Producción <https://terraverdict.vercel.app>: API, SPA y mapa con la CSP sin errores de consola; asistente con
+  Gemini verificado en vivo (17 de 17 cifras respaldadas en inglés, 9 de 9 en español); inicio de sesión activo.
+- Cifras del historial con los datos refrescados, idénticas en dos corridas: sequía a 1 mes 0,658 (IC90 0,531 a
+  0,743, p 0,021) y a 3 meses 0,232 (IC90 0,073 a 0,375, p 0,089) **confirmadas**; lluvia a 1 día 0,031 y conteo
+  sísmico 0,086 bits **no confirmados** (el conteo pasó de 0,149 por las revisiones del catálogo USGS).
+
+### Decisiones
+- Mc sísmica 4,5 como limitación declarada y 39 sustitutos por ventana (`auditoria-metricas.md` §12).
+- Las claves solo las carga el owner en Vercel; un *Redeploy* no ve variables nuevas (hace falta un despliegue nuevo).
 
 ---
 
