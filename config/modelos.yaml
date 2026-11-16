@@ -107,3 +107,27 @@ caos_ventanas:
   # serie. Con 39 sustitutos el p mínimo es 0,025: con muchas ventanas ninguna supera la corrección,
   # así que el conteo de ventanas con p ≤ 0,05 es descriptivo, no una prueba.
   alfa: 0.05
+
+relevancia:
+  # FIJADO A PRIORI (docs/modulo-relevancia.md §3). Módulo M1, problema P1 (lluvia extrema en la
+  # cabecera): objetivo = día con IMERG Final ≥ percentil 99 del periodo de desarrollo; predictores =
+  # candidatas de config/problemas.yaml medidas el día anterior (sin fuga). Dos modelos para contrastar:
+  # A, logística elastic-net (interpretable; signo del coeficiente estandarizado = dirección); B, árboles
+  # con gradiente de profundidad limitada (no lineal; forma por dependencia parcial).
+  percentil_objetivo: 0.99
+  elastic_net: {C: 1.0, l1_ratio: 0.5}
+  gbm: {max_depth: 3, learning_rate: 0.05, max_iter: 150, min_samples_leaf: 40}
+  # Permutación por bloques: la variable se desplaza circularmente dentro del año apartado al menos
+  # 30 días (rompe su relación con el objetivo y conserva su autocorrelación).
+  desplazamiento_minimo_dias: 30
+  # Estabilidad (Meinshausen y Bühlmann, 2010, doi:10.1111/j.1467-9868.2010.00740.x): remuestreos de
+  # años con reemplazo; frecuencia con que cada variable queda en el top-k fuera de bolsa.
+  remuestreos_estabilidad: 200
+  # Significancia condicional por variable: se desplaza circularmente SOLO esa variable una cantidad
+  # aleatoria de días ≥ 365 (rompe su alineación con el objetivo y conserva su autocorrelación), se
+  # reentrena A en la misma validación cruzada y p = (1 + #desplazamientos sin peor pérdida) / (1 + n);
+  # FDR de Benjamini-Hochberg entre variables. (Desplazar el objetivo quitaba toda la señal y volvía
+  # "significativo" al ruido: el modelo nulo era más débil que el observado.)
+  nulos: 200
+  alfa_fdr: 0.10
+  k_maximo: 10

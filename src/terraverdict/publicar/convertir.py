@@ -33,13 +33,17 @@ FUENTES = {
         ["power_mensual", "oni", "usgs_comcat", "nasa_glc", "gvp_volcanes"],
         ["power_nacional", "usgs_nacional", "noaa", "glc", "gvp"],
     ),
+    "relevancia": (["imerg_final_diaria", "power_diaria", "oni"], ["imerg", "power", "noaa"]),
     "historial": (
         ["power_diaria", "power_mensual", "oni", "usgs_comcat"],
         ["power", "noaa", "usgs"],
     ),
 }
 DOMINIO = {"volcanes": "sur_peru_fenomenos", "deslizamientos": "sur_peru_fenomenos", "sismos": "sur_peru_fenomenos"}
-REPOSITORIO = "DiegoNiS/terraverdict"
+REPOSITORIO = "OwerLopez/terraverdict"
+# Los expedientes de tendencia preliminares (expedientes/*.json) citan commits del repositorio original;
+# su equivalencia con los hashes actuales está en docs/mapa-commits.md.
+REPOSITORIO_ORIGINAL = "DiegoNiS/terraverdict"
 
 
 def _f(x: Any) -> float | None:
@@ -645,6 +649,65 @@ def de_historial(r: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def de_relevancia(r: dict[str, Any]) -> list[dict[str, Any]]:
+    """M1 · Matriz de Relevancia (P1): una fila de la matriz problema × variable."""
+    if r.get("estado") == "sin_datos":
+        return []
+    lo, hi = r["prueba"]["ic90"]
+    habilidad = {
+        "metrica": "BSS frente a la climatología",
+        "valor": r["prueba"]["valor"],
+        "intervalo": {"lo": lo, "hi": hi, "nivel": 0.9},
+        "linea_base": f"climatología (tasa de eventos del desarrollo: {_texto(r['tasa_climatologica'], 4)})",
+        "supera_linea_base": bool(r["prueba"]["valor"] > 0 and lo > 0),
+    }
+    variables = [
+        {
+            "variable_id": v["variable_id"],
+            "importancia": v["importancia"],
+            "estabilidad": v["estabilidad"],
+            "p_ajustado": v["p_ajustado"],
+            "direccion": v["direccion"],
+        }
+        for v in r["variables"]
+    ]
+    resultado = {
+        "tipo": "relevancia",
+        "problema_id": r["problema_id"],
+        "version_modelo": f"{r['modelo_elegido']} · k={r['k']} · {r['desarrollo']}",
+        "particion_prueba": r["particion_prueba"],
+        "habilidad": habilidad,
+        "variables": variables,
+        "publicable": r["publicable"],
+    }
+    significativas = [v["variable_id"] for v in r["variables"] if v["significativa_fdr"]]
+    lectura = "supera a la climatología en la prueba" if r["publicable"] else "no supera a la climatología con el IC90 por encima de 0"
+    return [
+        _expediente(
+            "chili_analisis",
+            f"Relevancia de variables · {r['problema']} (M1, P1)",
+            f"Objetivo: {r['objetivo']}. Variables significativas tras FDR: "
+            f"{', '.join(significativas) or 'ninguna'}. Modelo elegido en validación: {r['modelo_elegido']} "
+            f"(k = {r['k']}); en los años apartados {lectura} (BSS {_texto(r['prueba']['valor'])}, "
+            f"IC90 {_texto(lo)} a {_texto(hi)}). Relevancia predictiva, no causal.",
+            resultado,
+            procedencia(
+                "relevancia",
+                r["procedencia"],
+                _pasos(
+                    ("descarga", "Descarga IMERG, POWER y ONI"),
+                    ("objetivo", "Percentil 99 del desarrollo"),
+                    ("validacion", "Validación cruzada dejando un año fuera"),
+                    ("importancia", "Permutación por bloques (dos modelos)"),
+                    ("estabilidad", "Remuestreo de años"),
+                    ("significancia", "Desplazamiento condicional y FDR"),
+                    ("prueba", "Evaluación única en años apartados"),
+                ),
+            ),
+        )
+    ]
+
+
 def de_resultados(carpeta: Path, eventos_minimos: int = 30) -> list[dict[str, Any]]:
     salida: list[dict[str, Any]] = []
     for ruta in sorted(carpeta.glob("*.json")):
@@ -669,6 +732,8 @@ def de_resultados(carpeta: Path, eventos_minimos: int = 30) -> list[dict[str, An
             salida += de_nacional(r)
         elif nombre == "historial":
             salida += de_historial(r)
+        elif nombre == "relevancia":
+            salida += de_relevancia(r)
     return salida
 
 
@@ -729,7 +794,7 @@ def de_tendencia(e: dict[str, Any], alfa: float) -> dict[str, Any]:
         resultado,
         {
             "fuentes": [{"fuente_id": "power_mensual"}],
-            "codigo": {"repositorio": REPOSITORIO, "commit": proc.get("codigo_commit"), "script": "tv trends"},
+            "codigo": {"repositorio": REPOSITORIO_ORIGINAL, "commit": proc.get("codigo_commit"), "script": "tv trends"},
             "preregistro_sha256": proc["preregistro_sha256"],
             "hash_entradas": {"entradas": proc["entradas_sha256"]},
             "pasos": _pasos(

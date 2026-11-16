@@ -34,6 +34,7 @@ def test_secciones_de_cada_experimento(texto: str) -> None:
         "fuentes": "## Contraste entre fuentes",
         "nacional": "## Escala nacional · 25 departamentos",
         "historial": "## Historial de métricas · origen móvil y dinámica en ventanas",
+        "relevancia": "## Matriz de relevancia (M1)",
     }
     for experimento in indice["experimentos"]:
         assert titulos[experimento] in texto

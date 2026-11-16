@@ -860,9 +860,76 @@ def seccion_historial(r: dict[str, Any]) -> str:
     return "\n\n".join(partes)
 
 
+def seccion_relevancia(r: dict[str, Any]) -> str:
+    """M1 · Matriz de Relevancia (P1): solo cifras de resultados/relevancia.json."""
+    if r.get("estado") == "sin_datos":
+        return f"## Matriz de relevancia (M1)\n\nSin datos: {r.get('motivo')}."
+    filas = [
+        [
+            v["variable_id"],
+            n(v["importancia"]),
+            n(v["importancia_lineal"]),
+            n(v["importancia_no_lineal"]),
+            n(v["estabilidad"]),
+            n(v["p_ajustado"]),
+            "sí" if v["significativa_fdr"] else "no",
+            v["direccion"],
+            "sí" if v["en_top_k"] else "no",
+        ]
+        for v in r["variables"]
+    ]
+    lo, hi = r["prueba"]["ic90"]
+    return "\n\n".join(
+        [
+            "## Matriz de relevancia (M1) · " + r["problema"],
+            f"**Objetivo:** {r['objetivo']}. **Fuentes:** {r['fuentes']['objetivo']}; predictores: "
+            f"{r['fuentes']['predictores']}. **Periodo:** {r['periodo']['desde']} a {r['periodo']['hasta']} "
+            f"(desarrollo {r['desarrollo']}: {n(r['eventos_desarrollo'])} días extremos de {n(r['dias_desarrollo'])}; "
+            f"prueba {r['particion_prueba']}).",
+            tabla(
+                [
+                    "Variable",
+                    "Importancia",
+                    "Lineal (A)",
+                    "No lineal (B)",
+                    "Estabilidad",
+                    "p ajustado (FDR)",
+                    "Significativa",
+                    "Dirección",
+                    "En top-k",
+                ],
+                filas,
+            ),
+            f"Validación cruzada dejando un año fuera (BSS): logística elastic-net {n(r['modelos_validacion']['A'])}, "
+            f"árboles con gradiente {n(r['modelos_validacion']['B'])}. Modelo elegido: {r['modelo_elegido']}, "
+            f"k = {r['k']} (elegido en validación). Los dos modelos "
+            f"{'coinciden' if r['coinciden_lineal_y_no_lineal'] else 'no coinciden'} en el top-k. "
+            f"Estabilidad sobre {n(r['remuestreos_validos'])} remuestreos de años; significancia condicional con "
+            f"{n(r['nulos'])} desplazamientos por variable.",
+            f"**Prueba (una sola vez):** {r['prueba']['metrica']} = {n(r['prueba']['valor'])}, IC90 {n(lo)} a {n(hi)} "
+            f"({n(r['prueba']['eventos'])} eventos en {n(r['prueba']['dias'])} días). "
+            + (
+                "Publicable: supera a la climatología."
+                if r["publicable"]
+                else "No publicable como pronóstico: el IC90 incluye 0."
+            )
+            + (
+                f" Candidatas sin dato medido: {', '.join(r['candidatas_sin_dato'])}."
+                if r["candidatas_sin_dato"]
+                else ""
+            ),
+            r["lectura"],
+        ]
+    )
+
+
 def generar(resultados: Path) -> str:
     indice = json.loads((resultados / "indice.json").read_text(encoding="utf-8"))
-    res = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in sorted(resultados.glob("*.json")) if p.stem != "indice"}
+    res = {
+        p.stem: json.loads(p.read_text(encoding="utf-8"))
+        for p in sorted(resultados.glob("*.json"))
+        if p.stem != "indice"
+    }
     proc = next(iter(res.values()))["procedencia"]
     partes = [
         "# Resultados de los experimentos",
@@ -895,6 +962,7 @@ def generar(resultados: Path) -> str:
     for clave, f in (
         ("lluvia_extrema", lambda r: seccion_lluvia(r, "Lluvia fuerte a 1 día · NASA POWER")),
         ("lluvia_extrema_chirps", lambda r: seccion_lluvia(r, "Lluvia fuerte a 1 día · CHIRPS")),
+        ("relevancia", seccion_relevancia),
         ("sequia", lambda r: seccion_sequia(r, "Sequía (SPI-3) · NASA POWER")),
         ("sequia_chirps", lambda r: seccion_sequia(r, "Sequía (SPI-3) · CHIRPS")),
         ("sismos", seccion_sismos),

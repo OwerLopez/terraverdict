@@ -20,7 +20,7 @@ import numpy as np
 
 from ..config import cargar_yaml
 from ..integridad import exigir_crudos_integros, sellar_resultados
-from . import caos_real, deslizamientos, fuentes, historial, lluvia, nacional, sequia, sismos, volcanes
+from . import caos_real, deslizamientos, fuentes, historial, lluvia, nacional, relevancia, sequia, sismos, volcanes
 
 RAIZ = Path(__file__).resolve().parents[3]
 
@@ -124,6 +124,9 @@ def ejecutar(
     correr("sequia_chirps", lambda: sequia.ejecutar(cfg, raw, fuente="chirps", **opciones))
     correr("lluvia_extrema", lambda: lluvia.ejecutar(cfg, raw, **opciones))
     correr("lluvia_extrema_chirps", lambda: lluvia.ejecutar(cfg, raw, fuente="chirps", **opciones))
+    # M1 · Matriz de Relevancia, P1: solo si IMERG (objetivo) está descargado en este `raw`.
+    if (raw / "imerg" / "manifiesto.json").exists():
+        correr("relevancia", lambda: relevancia.ejecutar(cfg, raw))
     if rs is None and (not solo or "caos" in solo or "historial" in solo):
         rs = sismos.ejecutar(cfg, raw, redes=[], semillas=(0,))
     correr("caos", lambda: caos_real.ejecutar(cfg, raw, rs))
