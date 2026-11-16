@@ -46,8 +46,10 @@ TerraVerdict tiene tres formas de desplegarse. Todas sirven los mismos resultado
 | `TV_DATABASE_URL` | `postgresql+psycopg://…` (opción C; agregar `psycopg[binary]` a `api/requirements.txt`) | SQLite efímero en `/tmp` |
 
 `TV_ENTORNO=produccion` ya viene por defecto en `api/index.py`. Los secretos se cargan en *Settings →
-Environment Variables* del proyecto (por ejemplo, con **Import .env**); nunca en git. Después hay que
-volver a desplegar (*Deployments → Redeploy*) para que la función los lea.
+Environment Variables* del proyecto (por ejemplo, con **Import .env**); nunca en git. Después hace falta
+un **despliegue nuevo** (un `push` a `main`, o *Create Deployment* desde la rama): un *Redeploy* de un
+despliegue anterior hereda las variables que tenía ese despliegue y no ve las recién cargadas
+(comprobado el 15-11: el asistente seguía respondiendo 503 tras un *Redeploy*).
 
 ### Verificación en producción (15-11-2026)
 - Compilación real en Vercel: correcta en 1 min 19 s (2 núcleos), sin instalar el paquete científico.

@@ -135,7 +135,8 @@ def test_historial_se_resume_con_la_lectura_vigente_fuera_de_muestra() -> None:
         },
     }
     c = asistente.contexto_resultado(r)
-    tarea = c["tareas"]["sequia_h1_power"]
+    tarea = c["tareas"][0]
+    assert "sequia_h1_power" not in str(c)  # sin claves internas en el contexto
     assert tarea["lectura_vigente_fuera_de_muestra"] == {"valor": 0.657915}
     assert "anios" not in tarea
 
@@ -290,3 +291,10 @@ def test_api_acepta_idioma_y_rechaza_otros(cliente: TestClient) -> None:
         ).status_code
         == 422
     )
+
+
+def test_el_numero_de_elementos_de_una_lista_publicada_se_respalda() -> None:
+    volcanes = _exp("TV-REC-ABCDEF123456", "Volcanes", {"volcanes": [{"n": 22}, {"n": 5}, {"n": 3}]})
+    c = Conexion(["Se analizan 3 volcanes; el más activo tiene 22 erupciones [TV-REC-ABCDEF123456]."], [])
+    r = asistente.AsistenteGemini(c).responder("¿volcanes?", [volcanes], [])
+    assert r.verificacion.aprobado and r.intentos == 1

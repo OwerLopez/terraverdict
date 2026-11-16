@@ -161,6 +161,8 @@ REGLAS OBLIGATORIAS:
 9. Para "qué tan bien se pronostica" algo, la cifra principal es la del expediente de historial de métricas
    (fuera de muestra, modelo elegido en la validación de cada año, con su lectura "confirmada" o no); las
    comparaciones de modelos por partición son detalle secundario.
+10. No muestres claves internas ni nombres de campos (p. ej., "sequia_h1_power" o "seleccion_validacion"):
+   descríbelos en palabras.
 """
 
 
@@ -256,21 +258,32 @@ def compactar(valor: Any, profundidad: int = 0) -> Any:
     return valor
 
 
+def _longitudes(valor: Any) -> list[int]:
+    """Tamaños de las listas de un resultado (conteos de elementos publicados)."""
+    if isinstance(valor, dict):
+        return [n for v in valor.values() for n in _longitudes(v)]
+    if isinstance(valor, list):
+        return [len(valor), *(n for v in valor for n in _longitudes(v))]
+    return []
+
+
 def _resumen_historial(r: dict[str, Any]) -> dict[str, Any]:
     """Historial: la lectura vigente de cada tarea (fuera de muestra, modelo elegido en la validación de
     cada año) y sus referencias; el detalle año a año se omite del contexto."""
-    tareas = {}
-    for clave, tarea in (r.get("tareas") or {}).items():
+    tareas = []
+    for tarea in (r.get("tareas") or {}).values():
         fuera = (tarea.get("agregado") or {}).get("fuera_de_muestra") or {}
-        tareas[clave] = {
-            "descripcion": tarea.get("descripcion"),
-            "metrica": tarea.get("metrica_principal"),
-            "lectura_vigente_fuera_de_muestra": fuera.get(
-                tarea.get("lectura_principal", "seleccion_validacion")
-            ),
-            "referencias": {k: v for k, v in fuera.items() if k.startswith("ref_")},
-            "regla": "confirmada si IC90 > 0 y p de Diebold-Mariano < 0,10; indicio si solo una; si no, no confirmada",
-        }
+        tareas.append(
+            {
+                "descripcion": tarea.get("descripcion"),
+                "metrica": tarea.get("metrica_principal"),
+                "lectura_vigente_fuera_de_muestra": fuera.get(
+                    tarea.get("lectura_principal", "seleccion_validacion")
+                ),
+                "referencias": {k: v for k, v in fuera.items() if k.startswith("ref_")},
+                "regla": "confirmada si IC90 > 0 y p de Diebold-Mariano < 0,10; indicio si solo una; si no, no confirmada",
+            }
+        )
     return {"tipo": r.get("tipo"), "tareas": tareas, "lectura": r.get("lectura")}
 
 
@@ -327,6 +340,8 @@ class AsistenteGemini:
         disponibles = {e.id: e for e in contexto}
         citados = [i for i in dict.fromkeys(PATRON_ID.findall(texto)) if i in disponibles]
         permitidos = [v for i in citados for v in verificador.valores_numericos(disponibles[i].resultado)]
+        # El número de elementos de una lista publicada (p. ej., 13 volcanes) también es un dato del expediente.
+        permitidos += [float(n) for i in citados for n in _longitudes(disponibles[i].resultado)]
         return citados, verificador.verificar(texto, permitidos, idioma=idioma), len(permitidos)
 
     def responder(

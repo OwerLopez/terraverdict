@@ -41,7 +41,9 @@ class Settings(BaseSettings):
     )
     gemini_modelo: str = Field("gemini-flash-latest", pattern=r"^[a-z0-9.\-]+$")
     gemini_modelos_respaldo: list[str] = ["gemini-flash-lite-latest"]
-    gemini_timeout_s: float = Field(12.0, ge=2, le=50, description="Tiempo máximo por llamada y modelo.")
+    gemini_timeout_s: float = Field(
+        7.0, ge=2, le=50, description="Tiempo máximo por llamada y modelo (luego se usa el de respaldo)."
+    )
     asistente_consultas_por_minuto: int = Field(6, ge=1, le=600, description="Por IP.")
     asistente_consultas_globales_por_minuto: int = Field(
         40, ge=1, le=6000, description="Tope global por instancia (protege la cuota de la clave)."
