@@ -16,7 +16,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -27,15 +27,18 @@ from sqlalchemy.orm import Session
 from app.db.models import (
     Dominio,
     EventoDocumentado,
+    EventoProceso,
     Expediente,
     Fuente,
     InformeVerificacion,
     Problema,
+    Proceso,
     Serie,
     Unidad,
     Variable,
+    ahora,
 )
-from app.domain.vocabulario import EstadoVerificacion
+from app.domain.vocabulario import PARAMETROS_REQUERIDOS, EstadoProceso, EstadoVerificacion, TipoProceso
 from app.schemas.catalogo import EventoDocumentadoSalida
 from app.schemas.expedientes import ExpedienteCrear
 from app.schemas.series import ObservacionesCarga, SerieCrear
@@ -745,6 +748,71 @@ def importar_expedientes_ciencia(sesion: Session, raiz: Path) -> dict[str, int]:
     return {"leidos": len(lista), "nuevos": nuevos}
 
 
+def _fecha_utc(texto: str | None) -> datetime | None:
+    if not texto:
+        return None
+    try:
+        return datetime.fromisoformat(texto.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def importar_ejecuciones(sesion: Session, raiz: Path) -> dict[str, int]:
+    """Ejecuciones reales del pipeline (`tv publicar --exportar` → `ejecuciones.json`) como procesos.
+
+    Son descargas y corridas que ya ocurrieron: se registran completadas (o fallidas) con sus eventos,
+    su trabajador y, para las corridas, el expediente que produjeron. Idempotente: el ID es el SHA-256
+    de la clave de la ejecución. Se valida el tipo y los parámetros requeridos del vocabulario.
+    """
+    ruta = raiz / "resultados" / "contrato" / "ejecuciones.json"
+    if not ruta.exists():
+        return {"leidas": 0, "nuevas": 0}
+    lista: list[dict[str, Any]] = json.loads(ruta.read_text(encoding="utf-8"))
+    por_script: dict[str, str] = {}
+    for e in sesion.scalars(select(Expediente)):
+        script = ((e.procedencia or {}).get("codigo") or {}).get("script")
+        if script:
+            por_script.setdefault(script, e.id)
+    nuevas = 0
+    for crudo in lista:
+        tipo = TipoProceso(crudo["tipo"])
+        estado = EstadoProceso(crudo["estado"])
+        if estado not in (EstadoProceso.completado, EstadoProceso.fallido):
+            raise ValueError(f"Una ejecución importada debe estar terminada: {crudo['clave']}")
+        faltan = PARAMETROS_REQUERIDOS[tipo] - set(crudo["parametros"])
+        if faltan:
+            raise ValueError(f"Faltan parámetros {sorted(faltan)} en {crudo['clave']}")
+        ident = hashlib.sha256(crudo["clave"].encode("utf-8")).hexdigest()[:32]
+        if sesion.get(Proceso, ident) is not None:
+            continue
+        fin = _fecha_utc(crudo.get("finalizado_utc"))
+        segundos = crudo.get("segundos")
+        inicio = fin - timedelta(seconds=float(segundos)) if fin and segundos else fin
+        proceso = Proceso(
+            id=ident,
+            tipo=tipo.value,
+            parametros=crudo["parametros"],
+            estado=estado.value,
+            prioridad=0,
+            solicitado_por="pipeline",
+            trabajador=crudo.get("trabajador"),
+            progreso=1.0 if estado == EstadoProceso.completado else None,
+            expediente_id=por_script.get(crudo.get("script") or ""),
+            error=crudo.get("error"),
+            creado_en=inicio or ahora(),
+            iniciado_en=inicio,
+            finalizado_en=fin,
+        )
+        for ev in crudo.get("eventos", []):
+            proceso.eventos.append(
+                EventoProceso(t=fin or ahora(), nivel=ev["nivel"], mensaje=ev["mensaje"][:2000], datos=ev.get("datos"))
+            )
+        sesion.add(proceso)
+        nuevas += 1
+    sesion.commit()
+    return {"leidas": len(lista), "nuevas": nuevas}
+
+
 def importar_todo(sesion: Session, raiz: Path, incluir_ciencia: bool = True) -> dict[str, Any]:
     resumen: dict[str, Any] = {}
     resumen["fuentes"] = importar_fuentes(sesion, raiz)
@@ -756,6 +824,7 @@ def importar_todo(sesion: Session, raiz: Path, incluir_ciencia: bool = True) -> 
     resumen["analisis_preliminar"] = importar_analisis_preliminar(sesion, raiz)
     if incluir_ciencia:
         resumen["expedientes_ciencia"] = importar_expedientes_ciencia(sesion, raiz)
+        resumen["ejecuciones_pipeline"] = importar_ejecuciones(sesion, raiz)
     resumen["expedientes_total"] = len(sesion.scalars(select(Expediente.id)).all())
     log.info("importacion_completa", extra={"resumen": resumen})
     return resumen

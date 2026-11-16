@@ -807,3 +807,101 @@ def de_tendencia(e: dict[str, Any], alfa: float) -> dict[str, Any]:
 
 def de_expedientes(carpeta: Path, alfa: float) -> list[dict[str, Any]]:
     return [de_tendencia(json.loads(p.read_text(encoding="utf-8")), alfa) for p in sorted(carpeta.glob("TV-*.json"))]
+
+
+# --- Ejecuciones reales del pipeline (procesos de la API) ---------------------------------------
+
+FUENTE_PASO = {
+    "power_diario": "power_diaria",
+    "power_mensual": "power_mensual",
+    "oni": "oni",
+    "ghcn": "ghcn_arequipa",
+    "usgs": "usgs_comcat",
+    "gvp": "gvp_volcanes",
+    "glc": "nasa_glc",
+    "celdas_deslizamientos": "power_diaria",
+    "imerg": "imerg_final_diaria",
+    "chirps": "chirps_v2_diaria",
+    "igp": "igp_sismos_reportados",
+    "modis_lst": "modis_lst_ornl",
+}
+PROCESO_EXPERIMENTO = {
+    "relevancia": ("relevancia", {"problema_id": "P1"}),
+    "lluvia_extrema": ("pronostico", {"unidad_id": "chili_analisis.cabecera_power", "tarea": "lluvia_extrema", "fuente": "POWER"}),
+    "lluvia_extrema_chirps": ("pronostico", {"unidad_id": "chili_analisis.cabecera_power", "tarea": "lluvia_extrema", "fuente": "CHIRPS"}),
+    "sequia": ("pronostico", {"unidad_id": "chili_analisis.cabecera_power", "tarea": "sequia_spi3", "fuente": "POWER"}),
+    "sequia_chirps": ("pronostico", {"unidad_id": "chili_analisis.cabecera_power", "tarea": "sequia_spi3", "fuente": "CHIRPS"}),
+}
+
+
+def _fuente_de_paso(paso: str) -> str | None:
+    return next((f for prefijo, f in FUENTE_PASO.items() if paso.startswith(prefijo)), None)
+
+
+def ejecuciones(raw: Path, resultados: Path) -> list[dict[str, Any]]:
+    """Ejecuciones reales del pipeline como procesos completados (o fallidos) para la API.
+
+    Ingesta: un proceso por paso de `data/raw/registro_descarga.json` (archivo, SHA-256, URL y fecha).
+    Experimentos: las corridas de `resultados/indice.json` que corresponden a un tipo de proceso del
+    dominio (relevancia y pronóstico), con su commit y duración. Nada se inventa: si falta un dato, se omite.
+    """
+    salida: list[dict[str, Any]] = []
+    registro = raw / "registro_descarga.json"
+    if registro.exists():
+        reg = json.loads(registro.read_text(encoding="utf-8"))
+        for paso, info in reg.items():
+            fuente = _fuente_de_paso(paso)
+            if not isinstance(info, dict) or "ok" not in info or fuente is None:
+                continue
+            bruto = info.get("salida")
+            candidatos: list[Any] = bruto if isinstance(bruto, list) else [bruto]
+            archivos: list[dict[str, Any]] = [a for a in candidatos if isinstance(a, dict)]
+            fechas = [str(a["descargado_utc"]) for a in archivos if a.get("descargado_utc")]
+            fin = max(fechas) if fechas else reg.get("fin_utc")
+            salida.append(
+                {
+                    "clave": f"ingesta:{paso}",
+                    "tipo": "ingesta",
+                    "estado": "completado" if info["ok"] else "fallido",
+                    "parametros": {"fuente_id": fuente, "paso": paso},
+                    "trabajador": "tv ingest-fenomenos",
+                    "finalizado_utc": fin,
+                    "error": None if info["ok"] else {"mensaje": str(info.get("error"))[:500]},
+                    "eventos": [
+                        {
+                            "nivel": "info",
+                            "mensaje": f"Descargado {a.get('archivo')} ({a.get('bytes')} bytes)",
+                            "datos": {k: a.get(k) for k in ("archivo", "sha256", "url", "producto") if a.get(k)},
+                        }
+                        for a in archivos[:50]
+                    ],
+                }
+            )
+    indice = resultados / "indice.json"
+    if indice.exists():
+        corridas = json.loads(indice.read_text(encoding="utf-8")).get("corridas", {})
+        for nombre, c in corridas.items():
+            if nombre not in PROCESO_EXPERIMENTO:
+                continue
+            tipo, parametros = PROCESO_EXPERIMENTO[nombre]
+            salida.append(
+                {
+                    "clave": f"experimento:{nombre}:{c['generado_utc']}",
+                    "tipo": tipo,
+                    "estado": "completado",
+                    "parametros": {**parametros, "experimento": nombre, "commit": c["commit"]},
+                    "trabajador": "tv experimentos",
+                    "finalizado_utc": c["generado_utc"],
+                    "segundos": c.get("segundos"),
+                    "script": f"tv experimentos ({nombre})",
+                    "error": None,
+                    "eventos": [
+                        {
+                            "nivel": "info",
+                            "mensaje": f"Corrida completa de {nombre} en {c.get('segundos')} s (commit {c['commit'][:7]})",
+                            "datos": {"commit": c["commit"], "segundos": c.get("segundos")},
+                        }
+                    ],
+                }
+            )
+    return salida

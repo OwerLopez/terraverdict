@@ -215,7 +215,12 @@ def publicar(
     if exportar:
         # Contrato como interfaz: el backend importa este archivo al arrancar (sin depender de este paquete).
         exportar.write_text(json.dumps(lista, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
-        typer.echo(f"{len(lista)} expedientes exportados a {exportar}")
+        # Ejecuciones reales del pipeline (descargas y corridas) para la vista de procesos de la API.
+        corridas = convertir.ejecuciones(Path("data/raw"), resultados)
+        (exportar.parent / "ejecuciones.json").write_text(
+            json.dumps(corridas, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n"
+        )
+        typer.echo(f"{len(lista)} expedientes y {len(corridas)} ejecuciones exportados a {exportar.parent}")
         return
     informe = cliente.publicar(lista, api, cliente.clave_ingesta())
     for i in informe:
