@@ -14,7 +14,7 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 | Parte | Estado | Evidencia | Cómo correrlo |
 |---|---|---|---|
 | Aplicación publicada | ✅ <https://terraverdict.vercel.app> | `docs/despliegue.md` (verificación en producción) | `git push` a `main` |
-| Repositorio | ✅ `OwerLopez/terraverdict` con el historial completo | `docs/mapa-commits.md` | — |
+| Repositorio | ✅ `OwerLopez/terraverdict` con el historial completo | `git log` | — |
 | Preregistro y partición temporal | ✅ Congelados el 15-11 | Prueba que falla ante cualquier cambio | `pytest tests/unit/test_preregistro_congelado.py` |
 | Ingesta de fuentes reales | ✅ Todas refrescadas el 15-11, incluida IMERG Final diaria 1998–2025 completa | `data/raw/*/manifiesto.json`, `data/raw/registro_descarga.json` | `tv ingest-fenomenos` |
 | Cadena de custodia | ✅ Crudos verificados antes de entrenar; resultados sellados; escritura atómica | `tests/integridad/` | `tv verificar-integridad` |
@@ -30,12 +30,12 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 
 ## 2026-11-15 · Cierre: datos al día, M1, asistente Gemini bilingüe, experiencia de usuario y despliegue
 
-**Autor:** Ower Frank. **Repositorio:** `OwerLopez/terraverdict` (traslado con el historial completo; `mapa-commits.md`).
+**Autor:** Ower Frank. **Repositorio:** `OwerLopez/terraverdict` (traslado con el historial completo).
 
 ### Qué se hizo
 - **Traslado del repositorio** a `OwerLopez/terraverdict` con los 52 commits de `main` (autores, fechas y horas
-  originales; sin las líneas de coautoría de IA). La procedencia de los resultados anteriores se sigue con
-  `docs/mapa-commits.md`.
+  originales; sin las líneas de coautoría de IA). Los resultados se regeneraron después del traslado y citan solo
+  commits de este repositorio.
 - **Portabilidad a Windows** (cada defecto con su prueba en `tests/integridad/test_portabilidad.py`):
   `.gitattributes` LF (con CRLF los 11 resultados sellados salían "alterados"), lecturas y escrituras en UTF-8 y
   LF, salida de la CLI en UTF-8 (una corrida se detenía al imprimir "→") y escritura atómica de resultados con
@@ -140,7 +140,7 @@ Lo que falta para terminar está en **[`pendientes.md`](pendientes.md)**.
 - En esta máquina, `npm test` exige `NODE_OPTIONS=--no-experimental-webstorage` porque Node 26 trae su propio `localStorage`. CI usa Node 22 y no lo necesita.
 
 **Pendiente:**
-- Vercel: solo el owner (DiegoNiS), porque MaxsForocca no tiene permisos.
+- Vercel: solo el owner de la cuenta anterior, porque MaxsForocca no tiene permisos (resuelto con el traslado a `OwerLopez/terraverdict`).
 - Terminar IMERG (2002–2025): pasos y prompt en [`traspaso.md`](traspaso.md).
 - Decidir si la Mc debe variar por década (riesgo 1 de la auditoría).
 
@@ -216,7 +216,7 @@ Dinámica: el ONI es no lineal (p ≤ 0,05) en 23 de 48 ventanas; la lluvia en 1
 - `tests/integridad/test_despliegue.py`: `api/requirements.txt` cubre `backend/pyproject.toml` y la función no excluye los datos que importa la API.
 - Paquete científico: 108 pruebas; backend: 67; frontend: 27.
 
-**Pendiente (acción de una persona):** Vercel respondió que falta instalar su integración de GitHub para `DiegoNiS/terraverdict`. Pasos en `docs/despliegue.md` §A.1.
+**Pendiente (acción de una persona):** Vercel respondió que faltaba instalar su integración de GitHub en el repositorio de entonces (resuelto con el traslado a `OwerLopez/terraverdict`). Pasos en `docs/despliegue.md` §A.1.
 
 ---
 

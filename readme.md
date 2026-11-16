@@ -74,7 +74,7 @@ Hoy, 14 de noviembre de 2026, empieza la temporada de lluvias con **El Niño fue
 | **M3 · Gemelo hidrológico y atribución** | ¿El agua cambia por la lluvia, por el calor o por la cuenca? |
 | **M4 · Anticipación** | ¿Cuál es la probabilidad de déficit esta temporada? ¿Viene un evento de turbidez? |
 | **M5 · Cuenca y decisión** | ¿Cuánto almacenamiento se perdió? ¿Dónde invertir el fondo de conservación? |
-| **M6 · Interfaz y acceso** | Mapa 3D, gráficos científicos, grafo del proceso, matriz de calor, chat con IA verificada, API y servidor MCP |
+| **M6 · Interfaz y acceso** | Mapa 3D, gráficos científicos, grafo del proceso, matriz de calor, chat con IA verificada y API REST (MCP: expansión prevista, no implementada) |
 
 ---
 
@@ -167,11 +167,11 @@ flowchart TB
     M2 & M3 & M4 & M5 --> EXP[(Expedientes JSON<br/>resultado + procedencia + versión)]
     subgraph M6["M6 · Interfaz y acceso"]
         UI[Web: mapa 3D · gráficos · grafo del proceso · matriz de calor · chat]
-        API[API REST] & MCP[Servidor MCP]
-        IA[IA verificada<br/>Gemini + verificador numérico]
+        API[API REST · FastAPI]
+        IA[IA verificada · RAG REST<br/>Gemini + verificador numérico determinista]
     end
-    EXP --> UI & API & MCP
-    MCP --> IA --> UI
+    EXP --> UI & API
+    API --> IA --> UI
 ```
 
 **Principios de ingeniería:**
@@ -267,7 +267,7 @@ Responde los cuatro objetivos del reto: **qué** cambia (por variable), **dónde
 - **Traza legible:** se muestran los pasos del proceso y su resultado. Los logs técnicos completos quedan en un panel aparte para auditoría.
 - **Frescura honesta:** cada capa muestra la fecha de su último dato (por ejemplo, "IMERG Final: septiembre de 2025"; "IMERG Early: hoy").
 - **IA verificada (implementada):** Google Gemini (`gemini-flash-latest`, con respaldo `gemini-flash-lite-latest`) responde solo con los expedientes publicados más pertinentes y cita cada uno; un verificador numérico determinista comprueba cada cifra contra los expedientes citados e informa la probabilidad de coincidencia por azar. Si alguna cifra no tiene respaldo, se pide una reescritura y el resultado se muestra tal cual. Diseño original: [sección 7b del diseño técnico](docs/diseno-tecnico.md#7b-ia-generativa-con-garantías).
-- **API REST y servidor MCP** sobre el mismo núcleo.
+- **API REST (FastAPI)** sobre el mismo núcleo. La IA opera como una arquitectura RAG REST desacoplada (`POST /api/v1/asistente/consultas`) con verificación numérica determinista; **no hay servidor MCP implementado**: el protocolo MCP queda como expansión prevista para agentes externos.
 
 ---
 
@@ -392,7 +392,7 @@ Selección por **valor científico**, no por cantidad. Detalle completo, con lic
 | **Andes** | La Paz/El Alto, Quito, Bogotá, Santiago, Mendoza | Igual; se agregan plantillas como "retroceso glaciar" |
 | **Global** | Biblioteca abierta de plantillas (sequía, olas de calor, incendios, ciclones) y atlas de ciudades de montaña | La misma matriz, sello, gemelo y expedientes |
 
-Lo que lo hace escalable: datos globales verificados, plantillas declarativas, ingesta con contratos de datos, expedientes estándar y un servidor MCP para que otras herramientas consuman los resultados.
+Lo que lo hace escalable: datos globales verificados, plantillas declarativas, ingesta con contratos de datos, expedientes estándar y una API REST documentada (OpenAPI) para que otras herramientas consuman los resultados; un servidor MCP es la expansión prevista para agentes externos.
 
 ---
 
@@ -440,7 +440,6 @@ Lo que lo hace escalable: datos globales verificados, plantillas declarativas, i
 | [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) · [`docs/metodologia.md`](docs/metodologia.md) | Auditoría de métricas y pesos · métodos con bibliografía verificable |
 | [`docs/trazabilidad.md`](docs/trazabilidad.md) | Requisito → código → prueba → resultado (R1–R35) |
 | [`docs/arquitectura.md`](docs/arquitectura.md) · [`docs/api/README.md`](docs/api/README.md) | Arquitectura ciencia → API → web · endpoints, autenticación y errores |
-| [`docs/mapa-commits.md`](docs/mapa-commits.md) | Equivalencia de hashes con el repositorio original (procedencia de resultados anteriores) |
 | [`docs/pipeline.md`](docs/pipeline.md) | **Especificación de construcción del pipeline** (para el responsable de datos) |
 | [`docs/verificacion/README.md`](docs/verificacion/README.md) | Verificación de fuentes, licencias, incompatibilidades y vacíos |
 | [`docs/despliegue.md`](docs/despliegue.md) | Despliegue en Vercel (publicado y verificado) y con Docker Compose |
@@ -449,7 +448,7 @@ Lo que lo hace escalable: datos globales verificados, plantillas declarativas, i
 | [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) | Revisión de los 40 enlaces del reto y de la guía: cuáles se usan, cuáles no y por qué |
 | [`docs/variables.md`](docs/variables.md) | Variables, unidades, resoluciones, procesamiento, indicadores y relaciones físicas |
 | [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) | Módulo M1: plantillas, algoritmo, salidas y validación |
-| [`docs/diseno-tecnico.md`](docs/diseno-tecnico.md) | Ecuaciones, decisiones de arquitectura, contratos, API/MCP, IA verificada, pruebas y riesgos |
+| [`docs/diseno-tecnico.md`](docs/diseno-tecnico.md) | Ecuaciones, decisiones de arquitectura, contratos, API (MCP previsto), IA verificada, pruebas y riesgos |
 | [`docs/recursos-guia.md`](docs/recursos-guia.md) | Guía de recursos de la sede |
 
 ```bash
@@ -474,7 +473,7 @@ Sede Arequipa, NASA Space Apps Challenge 2026. Los aportes de cada integrante sa
 |---|---|
 | **Ower Frank** (Ower López, UNSA) | Owner del repositorio actual; planteamiento y propuesta; backend FastAPI; frontend; motor científico (Sello, caos, zoológico de modelos); escala nacional; interfaz bilingüe; cadena de custodia; licencias; M1 (Matriz de Relevancia); asistente con Gemini; despliegue en Vercel |
 | **MaxsForocca** (UNSA) | Arquitectura y estructura del proyecto (`feat/architecture`); corrida completa de experimentos; caos en series reales; integración ciencia → backend; CI; Docker; E2E; documentación (API, arquitectura, metodología, trazabilidad, presentación); ingesta de IMERG |
-| **DiegoNiS** | Propietario del repositorio original (`DiegoNiS/terraverdict`) y de la organización del equipo en GitHub |
+| **DiegoNiS** | Integrante del equipo; organización del equipo en GitHub durante la primera etapa |
 
 ---
 

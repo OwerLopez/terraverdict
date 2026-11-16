@@ -4,6 +4,7 @@ import { Area, CartesianGrid, ComposedChart, Line, ReferenceLine, ResponsiveCont
 import type { Esquemas } from "../api/cliente";
 import { useCatalogoMetricas, useHistorial, useMapasMetricas } from "../api/consultas";
 import { TablaDatos } from "../componentes/fenomenos/TablaDatos";
+import { lecturaHabilidad, lecturaP } from "../lib/lectura";
 import { type CeldaMatriz, type ColumnaMatriz, LeyendaEscala, MatrizCalor } from "../componentes/graficos/MatrizCalor";
 import { Boton, Encabezado, ErrorCarga, EstadoVacio, Esqueleto, Segmentado, Tarjeta } from "../componentes/ui";
 import { RAMPA_AZUL, RAMPA_NARANJA, colorDivergente, colorSecuencial, useColores } from "../lib/colores";
@@ -219,9 +220,15 @@ function HistorialPronostico({ historial, fichas }: { historial: Historial; fich
                     <tr key={`${reg}-${k}`} className={`border-t border-line ${k === principal ? "bg-surface-2" : ""}`}>
                       <td className="px-3 py-1.5 text-ink-2">{REGIMEN[reg]()}</td>
                       <td className={`px-3 py-1.5 text-ink ${k === principal ? "font-semibold" : "font-medium"}`}>{nombreModelo(k)}{k === red ? ` · ${t("red congelada", "frozen network")}` : ""}{k === principal ? ` · ${t("lectura principal", "main reading")}` : ""}</td>
-                      <td className="cifra px-3 py-1.5 text-right">{numero(v.valor, 3)}</td>
+                      <td className="px-3 py-1.5 text-right">
+                        <span className="cifra">{numero(v.valor, 3)}</span>
+                        {lecturaHabilidad(v.valor, tarea.metrica_principal) && <span className="block text-[11px] leading-snug text-ink-3">{lecturaHabilidad(v.valor, tarea.metrica_principal)}</span>}
+                      </td>
                       <td className="cifra px-3 py-1.5 text-right">{numero(v.ic90?.[0], 3)} – {numero(v.ic90?.[1], 3)}</td>
-                      <td className="cifra px-3 py-1.5 text-right">{valorP(v.p_diebold_mariano)}</td>
+                      <td className="px-3 py-1.5 text-right">
+                        <span className="cifra">{valorP(v.p_diebold_mariano)}</span>
+                        {lecturaP(v.p_diebold_mariano) && <span className="block text-[11px] leading-snug text-ink-3">{lecturaP(v.p_diebold_mariano)}</span>}
+                      </td>
                       <td className="cifra px-3 py-1.5 text-right">{v.anios}</td>
                       <td className="px-3 py-1.5"><InsigniaEvidencia lo={v.ic90?.[0]} p={v.p_diebold_mariano} /></td>
                     </tr>

@@ -166,3 +166,10 @@ export function valorMetrica(v: unknown): string {
   if (typeof v === "boolean") return v ? t("sí", "yes") : "no";
   return v === null || v === undefined ? "—" : String(v);
 }
+
+/** Viabilidad de un problema de la matriz (dato del catálogo, en español) en el idioma vigente. */
+export function textoViabilidad(v: string): string {
+  const m: Record<string, [string, string]> = { alta: ["alta", "high"], media: ["media", "medium"], baja: ["baja", "low"], insuficiente: ["insuficiente", "insufficient"] };
+  const par = m[v];
+  return par ? t(par[0], par[1]) : v;
+}

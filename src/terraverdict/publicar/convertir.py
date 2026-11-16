@@ -792,8 +792,13 @@ def de_tendencia(e: dict[str, Any], alfa: float) -> dict[str, Any]:
         veredicto = "robusta" if significativa else "sin_tendencia"
     unidad = "Cel/decada" if e["objeto"]["variable"].startswith("t2m") else "mm/decada"
     claves = ("ventanas", "enso", "sensor", "independencia", "detectabilidad") + (
-        ("palanca",) if (r.get("palanca") or {}).get("evaluada") else ()
+        ("palanca",) if (r.get("palanca") or {}).get("evaluada") or "palanca" in sello["fallan"] else ()
     )
+    # El backend exige que un 'fragil' diga qué prueba falló (si no, responde 422). Toda prueba listada como
+    # fallida o pendiente debe existir en el contrato; si no, se detiene aquí con un mensaje claro.
+    desconocidas = sorted((set(sello["fallan"]) | set(sello["pendientes"])) - set(claves))
+    if desconocidas:
+        raise ValueError(f"Pruebas del Sello sin lugar en el contrato de tendencia: {desconocidas}")
     resultado = {
         "tipo": "tendencia",
         "periodo": {"desde": str(e["periodo"]["desde"]), "hasta": str(e["periodo"]["hasta"])},
@@ -848,6 +853,7 @@ FUENTE_PASO = {
     "power_diario": "power_diaria",
     "power_mensual": "power_mensual",
     "oni": "oni",
+    "nino_mensual": "nino_oisst_cpc",
     "ghcn": "ghcn_arequipa",
     "usgs": "usgs_comcat",
     "gvp": "gvp_volcanes",

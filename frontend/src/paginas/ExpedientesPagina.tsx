@@ -1,4 +1,4 @@
-import { ArrowLeft, Braces, FileCheck2, GitBranch, ShieldCheck, Sparkles } from "lucide-react";
+import { FileText, ArrowLeft, Braces, FileCheck2, GitBranch, ShieldCheck, Sparkles } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import type { Esquemas } from "../api/cliente";
 import { ErrorApi } from "../api/cliente";
@@ -245,6 +245,7 @@ function DetalleExpediente({ id }: { id: string }) {
           <>
             {e.veredicto && <ChipEstado mapa={VEREDICTOS} valor={e.veredicto} />}
             <Boton tamano="sm" icono={Braces} onClick={descargar}>JSON</Boton>
+            <Link to={`/informe/${e.id}?imprimir=1`}><Boton tamano="sm" variante="primario" icono={FileText}>{t("Informe ejecutivo de 2 páginas (PDF)", "2-page executive brief (PDF)")}</Boton></Link>
           </>
         }
       />

@@ -37,7 +37,7 @@ def series(
 
     def pentadas(diaria: pd.Series) -> pd.Series:
         p = np.log1p(diaria).resample("5D").sum(min_count=5)
-        return p - p.groupby(p.index.dayofyear // 5).transform(lambda s: s[s.index <= pd.Timestamp(hasta)].mean())
+        return p - p.groupby(p.index.day_of_year // 5).transform(lambda s: s[s.index <= pd.Timestamp(hasta)].mean())
 
     anom_lluvia = pentadas(df["PRECTOTCORR"])
     t = df["T2M"]

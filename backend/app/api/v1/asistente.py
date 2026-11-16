@@ -7,7 +7,7 @@ from sqlalchemy import select
 
 from app.api.deps import ConfigDep, SesionDep
 from app.core.security import LimitadorVentana, ip_cliente
-from app.db.models import Expediente
+from app.db.models import EventoDocumentado, Expediente
 from app.domain.vocabulario import EstadoExpediente
 from app.schemas.comun import errores
 from app.schemas.otros import (
@@ -71,6 +71,19 @@ def consultar(
     publicados = list(
         sesion.scalars(select(Expediente).where(Expediente.estado != EstadoExpediente.retirado))
     )
+    # Eventos documentados (crónica con fuentes citadas): citables y verificables igual que los expedientes.
+    eventos = [
+        asistente.contexto_evento(
+            ev.id,
+            str(ev.fecha),
+            ev.titulo,
+            ev.descripcion,
+            list(ev.cifras or []),
+            [f.get("url", "") for f in (ev.fuentes or []) if isinstance(f, dict)],
+            ev.titulo_en,
+        )
+        for ev in sesion.scalars(select(EventoDocumentado))
+    ]
     if datos.expediente_ids:
         exigir_existencia(
             sesion, {f"expediente_ids[{i}]": (Expediente, e) for i, e in enumerate(datos.expediente_ids)}
@@ -78,7 +91,7 @@ def consultar(
         pedidos = set(datos.expediente_ids)
         contexto = [_contexto(e) for e in publicados if e.id in pedidos]
     else:
-        contexto = asistente.seleccionar(datos.pregunta, [_contexto(e) for e in publicados])
+        contexto = asistente.seleccionar(datos.pregunta, [_contexto(e) for e in publicados] + eventos)
     elegidos = {c.id for c in contexto}
     catalogo = [f"{e.titulo} [{e.id}]" for e in publicados if e.id not in elegidos]
 

@@ -3,7 +3,7 @@ import { ArrowDown, ArrowUp, Grid3x3, Minus, Waves } from "lucide-react";
 import { useState } from "react";
 import type { Esquemas } from "../../api/cliente";
 import { RAMPA_AZUL } from "../../lib/colores";
-import { numero, valorP } from "../../lib/formato";
+import { numero, textoViabilidad, valorP } from "../../lib/formato";
 import { EstadoVacio } from "../ui";
 import { t } from "../../lib/i18n";
 
@@ -46,7 +46,7 @@ export function MapaCalor({ matriz }: { matriz: Matriz }) {
                 <th scope="row" className="sticky left-0 z-10 bg-surface px-3 py-2 text-left font-normal">
                   <span className="mr-2 font-mono text-[11px] text-ink-3">{p.id}</span>
                   <span className="font-medium text-ink">{p.nombre}</span>
-                  <span className="block text-[11.5px] text-ink-3">{t("Viabilidad", "Feasibility")}: {p.viabilidad}</span>
+                  <span className="block text-[11.5px] text-ink-3">{t("Viabilidad", "Feasibility")}: {textoViabilidad(p.viabilidad)}</span>
                 </th>
                 {matriz.variables.map((v) => {
                   const celda = celdas.get(`${p.id}|${v.id}`);

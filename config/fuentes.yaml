@@ -358,6 +358,14 @@ fuentes:
     periodo: ["1950-01", null]
     uso: [covariable_enso]
 
+  nino_oisst_cpc:
+    url: https://www.cpc.ncep.noaa.gov/data/indices/sstoi.indices
+    acceso: http
+    periodo: ["1982-01", null]
+    resolucion: {temporal: "mensual"}
+    nota: "Anomalías mensuales de Niño 3.4 y Niño 1+2 (OISST v2.1, base 1991–2020). Más recientes que el ONI (media de 3 meses, ERSSTv5); bases distintas: no se comparan cifra a cifra."
+    uso: [indicador_enso_reciente]
+
   roni:
     url: https://www.cpc.ncep.noaa.gov/data/indices/RONI.ascii.txt
     acceso: http

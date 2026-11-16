@@ -2528,6 +2528,28 @@
         }
       }
     },
+    "/api/v1/portada": {
+      "get": {
+        "tags": [
+          "Portada"
+        ],
+        "summary": "Estado actual y tabla maestra de veredictos",
+        "description": "Indicadores calculados desde los crudos (ENSO con ONI y Niño 3.4 / 1+2, SPI-3 actual en la cabecera, frecuencia de sequía según ENSO, gradiente altitudinal y series de prueba) y una fila por fenómeno con su tendencia, su habilidad fuera de muestra y su veredicto, cada una con el expediente de origen.",
+        "operationId": "portada_api_v1_portada_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Portada"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/relevancia/matriz": {
       "get": {
         "tags": [
@@ -3686,6 +3708,111 @@
           "n"
         ],
         "title": "AnioHistorial"
+      },
+      "Anticipacion": {
+        "properties": {
+          "metrica": {
+            "type": "string",
+            "title": "Metrica"
+          },
+          "valor": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valor"
+          },
+          "intervalo": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intervalo"
+          },
+          "p_diebold_mariano": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P Diebold Mariano"
+          },
+          "modelo": {
+            "type": "string",
+            "title": "Modelo"
+          },
+          "familia": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Familia"
+          },
+          "horizonte": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizonte"
+          },
+          "periodo_prueba": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Periodo Prueba"
+          },
+          "evidencia": {
+            "type": "string",
+            "enum": [
+              "confirmada",
+              "indicio",
+              "sin_evidencia"
+            ],
+            "title": "Evidencia"
+          },
+          "expediente_id": {
+            "type": "string",
+            "title": "Expediente Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "metrica",
+          "valor",
+          "modelo",
+          "evidencia",
+          "expediente_id"
+        ],
+        "title": "Anticipacion",
+        "description": "Habilidad fuera de muestra del modelo elegido en la validación (nunca el mejor en la prueba)."
       },
       "Body_iniciar_sesion_api_v1_auth_token_post": {
         "properties": {
@@ -6298,6 +6425,76 @@
         ],
         "title": "FichaMetrica"
       },
+      "FilaVeredicto": {
+        "properties": {
+          "fenomeno": {
+            "type": "string",
+            "enum": [
+              "lluvia_extrema",
+              "sequia",
+              "sismos",
+              "volcanes",
+              "deslizamientos"
+            ],
+            "title": "Fenomeno"
+          },
+          "fuentes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fuentes"
+          },
+          "tendencia": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Tendencia"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "anticipacion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Anticipacion"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "abstencion": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Abstencion",
+            "description": "Motivos de abstención publicados."
+          },
+          "veredicto": {
+            "type": "string",
+            "enum": [
+              "habilidad_confirmada",
+              "habilidad_con_indicio",
+              "sin_habilidad",
+              "descriptivo",
+              "recurrencia_historica",
+              "abstencion"
+            ],
+            "title": "Veredicto"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "fenomeno",
+          "fuentes",
+          "veredicto"
+        ],
+        "title": "FilaVeredicto"
+      },
       "Frecuencia": {
         "type": "string",
         "enum": [
@@ -7772,6 +7969,55 @@
           "hasta"
         ],
         "title": "Periodo"
+      },
+      "Portada": {
+        "properties": {
+          "indicadores": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Indicadores",
+            "description": "Contenido de resultados/contrato/indicadores.json (ENSO, SPI-3 actual, sequía según ENSO, altitud), generado por `tv publicar` desde los crudos con su SHA-256. Null si no existe."
+          },
+          "filas": {
+            "items": {
+              "$ref": "#/components/schemas/FilaVeredicto"
+            },
+            "type": "array",
+            "title": "Filas"
+          },
+          "lluvia_eventos_documentados": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Lluvia Eventos Documentados",
+            "description": "Desempeño del modelo de lluvia en los meses de eventos documentados."
+          },
+          "regla_evidencia": {
+            "type": "string",
+            "title": "Regla Evidencia"
+          },
+          "aviso": {
+            "type": "string",
+            "title": "Aviso"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "filas",
+          "regla_evidencia",
+          "aviso"
+        ],
+        "title": "Portada"
       },
       "PrecisionFecha": {
         "type": "string",
@@ -10243,6 +10489,110 @@
           "mejor_validacion"
         ],
         "title": "TareaMapa"
+      },
+      "Tendencia": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "pendiente",
+              "valor_b",
+              "probabilidad_anual",
+              "eventos"
+            ],
+            "title": "Tipo"
+          },
+          "variable": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variable",
+            "description": "Qué se mide (p. ej. 'lluvia dic–mar', 'Misti')."
+          },
+          "valor": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valor"
+          },
+          "intervalo": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intervalo",
+            "description": "IC90 [lo, hi] cuando existe."
+          },
+          "unidad": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unidad"
+          },
+          "veredicto": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Veredicto",
+            "description": "Veredicto del expediente (p. ej. 'preliminar', 'sin_tendencia')."
+          },
+          "periodo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Periodo"
+          },
+          "expediente_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expediente Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "tipo"
+        ],
+        "title": "Tendencia",
+        "description": "Lectura histórica del fenómeno, tal como la publica su expediente."
       },
       "TendenciaRegional": {
         "properties": {

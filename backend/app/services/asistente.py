@@ -18,6 +18,7 @@ El asistente no calcula resultados científicos: solo los explica.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import unicodedata
@@ -179,6 +180,36 @@ class ExpedienteContexto:
     titulo: str
     resumen: str
     resultado: dict[str, Any]
+
+
+def id_evento(evento_id: str) -> str:
+    """ID citable de un evento documentado (mismo formato que los expedientes: TV-EV-<12 hex>)."""
+    return "TV-EV-" + hashlib.sha256(evento_id.encode("utf-8")).hexdigest()[:12].upper()
+
+
+def contexto_evento(
+    evento_id: str,
+    fecha: str,
+    titulo: str,
+    descripcion: str,
+    cifras: list[dict[str, Any]],
+    fuentes: list[str],
+    titulo_en: str | None = None,
+) -> ExpedienteContexto:
+    """Evento de la crónica (noticia u oficio citado) como contexto citable: sus cifras pasan por el
+    mismo verificador numérico que las de los expedientes."""
+    return ExpedienteContexto(
+        id=id_evento(evento_id),
+        tipo="evento_documentado",
+        titulo=f"{titulo} ({titulo_en})" if titulo_en else titulo,
+        resumen=descripcion,
+        resultado={
+            "fecha": fecha,
+            "cifras": [{k: c.get(k) for k in ("valor", "unidad", "descripcion")} for c in cifras],
+            "fuentes": fuentes,
+            "naturaleza": "evento documentado por una fuente citada (no es un resultado calculado por TerraVerdict)",
+        },
+    )
 
 
 @dataclass(frozen=True)

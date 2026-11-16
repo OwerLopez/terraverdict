@@ -1,4 +1,5 @@
 import type { ExpressionSpecification } from "maplibre-gl";
+import { TarjetaAltitud } from "../componentes/portada/Altitud";
 import { CloudRain, Droplets, MapPinned, Mountain, Ruler, Thermometer, Waves } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
@@ -373,6 +374,7 @@ export function NacionalPagina() {
           <ContrasteDeslizamientos />
         </>
       )}
+      <TarjetaAltitud />
     </div>
   );
 }

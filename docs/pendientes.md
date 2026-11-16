@@ -10,7 +10,7 @@
 | Parte | Estado y evidencia |
 |---|---|
 | Aplicación publicada | ✅ <https://terraverdict.vercel.app> (Vercel, cuenta de Ower Frank; despliegue por `push` a `main`). API, SPA, CSP y cabeceras verificadas en producción |
-| Repositorio | ✅ [`OwerLopez/terraverdict`](https://github.com/OwerLopez/terraverdict), historial completo con autores y fechas originales ([`mapa-commits.md`](mapa-commits.md)) |
+| Repositorio | ✅ [`OwerLopez/terraverdict`](https://github.com/OwerLopez/terraverdict), historial completo con autores y fechas originales |
 | Datos reales | ✅ Refrescados el 15-11: NASA POWER (Arequipa, celdas y 25 departamentos), **IMERG Final diaria 1998–2025-09 completa**, NASA GLC, NASA GIBS (mapa), USGS ComCat (hasta el 15-11-2026), Smithsonian GVP, NOAA ONI y GHCN, CHIRPS, IGP y MODIS LST. Todo con SHA-256 en `data/raw/*/manifiesto.json` |
 | Modelos | ✅ 10 redes + clásicos, referencias y dos ensambles; IC90 por bootstrap de bloques, Diebold-Mariano, calibración, conformal y abstención. Protocolo auditado (`auditoria-metricas.md`) |
 | M1 · Matriz de Relevancia | ✅ P1 (lluvia extrema en la cabecera, objetivo IMERG): dos modelos, permutación por bloques, estabilidad, significancia condicional con FDR y evaluación única en 2021–2025 (`resultados/relevancia.json`, vista `/relevancia`) |
@@ -44,6 +44,6 @@
 
 - [x] Mc sísmica: se mantiene 4,5 como limitación declarada (`auditoria-metricas.md` §12).
 - [x] Sustitutos del caos en ventanas: 39, lectura descriptiva (§12).
-- [x] Traslado a `OwerLopez/terraverdict` con el historial completo (`mapa-commits.md`).
+- [x] Traslado a `OwerLopez/terraverdict` con el historial completo.
 - [x] Congelar `preregistro.yaml` y la partición temporal (2026-11-15).
 - [ ] ¿Retirar `web/`? Está superado por `frontend/` (ADR-016). Por ahora se conserva.

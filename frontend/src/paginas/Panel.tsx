@@ -25,10 +25,15 @@ import {
   useExpedientes,
   useFuentes,
   useObservaciones,
+  usePortada,
   useResumen,
   useSeries,
   useVerificacion,
 } from "../api/consultas";
+import { Semaforo, SimuladorEnso, TablaVeredictos } from "../componentes/portada/Estado";
+import { BannerMapa, GuiaJurado, MuroMisiones } from "../componentes/portada/Guia";
+import { ModoHistoria } from "../componentes/portada/Historia";
+import { comoIndicadores } from "../lib/indicadores";
 import { BarraEstados, LineaTiempo } from "../componentes/graficos/Evidencia";
 import { GraficoSerie } from "../componentes/graficos/GraficoSerie";
 import {
@@ -371,6 +376,9 @@ export function Panel() {
   const verificadas = r?.fuentes_por_estado.find((c) => c.clave === "verificado")?.total ?? 0;
   const clima = eventos.data?.find((e) => e.categoria === "clima");
   const oni = clima?.cifras[0];
+  const portada = usePortada();
+  const ind = comoIndicadores(portada.data?.indicadores);
+  const sequia = portada.data?.filas.find((f) => f.fenomeno === "sequia")?.anticipacion;
 
   return (
     <div className="space-y-6">
@@ -387,6 +395,20 @@ export function Panel() {
         }
       />
 
+      <GuiaJurado habilidadSequia={sequia ? { valor: sequia.valor ?? null, modelo: sequia.modelo, horizonte: sequia.horizonte ?? null } : null} />
+
+      <Semaforo ind={ind} cargando={portada.isLoading} />
+
+      <div className="grid gap-4 lg:grid-cols-[1fr_1.4fr]">
+        <ModoHistoria lluvia={ind?.predicciones?.lluvia_eventos_documentados ?? []} />
+        <BannerMapa />
+      </div>
+
+      <TablaVeredictos portada={portada.data} />
+
+      <SimuladorEnso ind={ind} />
+
+      <h2 className="pt-2 text-[18px] font-semibold tracking-tight text-ink">{t("Las tres crisis documentadas", "The three documented crises")}</h2>
       <Crisis />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -433,6 +455,8 @@ export function Panel() {
         </Tarjeta>
         <Modulos />
       </div>
+
+      <MuroMisiones />
     </div>
   );
 }

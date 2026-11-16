@@ -36,7 +36,7 @@
 - O4b. Monitor de colmatación de Aguada Blanca y mapa relativo de susceptibilidad a la erosión.
 - O5. Priorización de bofedales con restricción de presupuesto.
 - O6. Escenarios interactivos en el navegador.
-- O7. Acceso por web 3D, API REST y servidor MCP, desde el mismo núcleo.
+- O7. Acceso por web 3D y API REST desde el mismo núcleo (servidor MCP: expansión prevista, no implementada).
 
 **No objetivos (explícitos)**
 
@@ -83,7 +83,7 @@ Todo resultado publicable es un **Expediente** inmutable, identificado por un ha
 | **ADR-2** | **Precalcular y servir estático**; solo los escenarios corren en vivo | Backend con cómputo bajo demanda | Costo cero, latencia mínima, sin estado en el servidor; el modelo tarda microsegundos por corrida |
 | **ADR-3** | Implementación de referencia en **Python** y port en **TypeScript** con **pruebas de paridad** | Solo API para los escenarios | Interactividad instantánea y funcionamiento sin conexión; la paridad evita que las dos versiones diverjan |
 | **ADR-4** | Extracción con los **recursos oficiales del reto**: Giovanni, Hydrology Time Series, AppEEARS, Earthdata/PO.DAAC (IMERG, SWOT, ICESat-2, HLS), Climate Data Online, KNMI Climate Explorer y CSA, más POWER y EarthExplorer de la guía. Google Earth Engine queda como acelerador opcional | Todo en Google Earth Engine | Alineación con el reto y con la regla de usar los recursos provistos; cada extractor tiene una interfaz común, así que cambiar de fuente no afecta al núcleo |
-| **ADR-5** | **LLM solo en la interfaz**, vía MCP | Agente que calcula | Reproducibilidad y cero alucinación numérica: el LLM solo cita expedientes |
+| **ADR-5** | **LLM solo en la interfaz**, vía API REST (RAG con verificador; MCP previsto) | Agente que calcula | Reproducibilidad y cero alucinación numérica: el LLM solo cita expedientes |
 | **ADR-6** | **No publicar** un pronóstico sin habilidad (CRPSS ≤ 0) | Publicar siempre con una advertencia | Una advertencia no compensa una mala decisión; "no sabemos" es una salida válida |
 | **ADR-7** | **NASADEM** para terreno y drenaje | Copernicus DEM | Datos NASA en el núcleo; resolución equivalente para la cuenca |
 | **ADR-8** | **Preregistro** de parámetros y umbrales con hash | Ajustar después de ver los resultados | Evita ajustar el análisis para obtener la respuesta deseada; es auditable |
@@ -301,11 +301,18 @@ Salida: la distribución del volumen mensual frente a la línea base. El escenar
 }
 ```
 
-Se valida con un esquema JSON versionado (`schema_version`). La web, la API y el servidor MCP usan el mismo esquema.
+Se valida con un esquema JSON versionado (`schema_version`). La web y la API usan el mismo esquema (y lo usaría un futuro servidor MCP).
 
 ---
 
 ## 7. API y servidor MCP
+
+> **Estado real (16-11-2026):** está implementada la **API REST** (FastAPI, `backend/app/api/v1`, contrato en
+> `docs/api/openapi.json`). La IA funciona como **RAG REST desacoplado** (`POST /api/v1/asistente/consultas`,
+> `backend/app/services/asistente.py`): recupera expedientes publicados, Gemini redacta y un **verificador numérico
+> determinista** comprueba cada cifra. **No existe un servidor MCP**: la tabla siguiente es el diseño de la
+> expansión prevista para agentes externos, no una funcionalidad disponible. Los endpoints de represas, MERESE y
+> turbidez dependen de M3–M5, que tampoco están implementados (ver `docs/pendientes.md`).
 
 | Endpoint REST | Herramienta MCP | Fuente |
 |---|---|---|
@@ -319,7 +326,7 @@ Se valida con un esquema JSON versionado (`schema_version`). La web, la API y el
 | `POST /verificar` | `verificar_afirmacion` | Precalculado |
 | `GET /expedientes/{id}` | `expediente` | Estático |
 
-- **Implementación:** FastAPI y el SDK oficial de MCP para Python, sobre el mismo paquete `terraverdict`. Las dos son capas finas sin lógica propia.
+- **Implementación prevista:** FastAPI (hecho) y el SDK oficial de MCP para Python (pendiente), sobre el mismo paquete `terraverdict`. Las dos son capas finas sin lógica propia.
 - **Entradas validadas** con modelos tipados y rangos (`ΔT ∈ [−1, 4]`, `ΔP ∈ [−0.5, 0.5]`, presupuesto ≥ 0).
 - **Respuestas:** siempre incluyen `expediente_id` y la frase de incertidumbre lista para mostrar.
 - **Recursos MCP:** `cuenca://chili_regulado/config`, `expediente://{id}`, `glosario://{termino}`.

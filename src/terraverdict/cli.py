@@ -39,6 +39,13 @@ def ingest_oni(raw: Path = Path("data/raw")) -> None:
     typer.echo(noaa.descargar_oni(raw))
 
 
+@app.command("ingest-nino")
+def ingest_nino(raw: Path = Path("data/raw")) -> None:
+    """Anomalías mensuales de Niño 3.4 y Niño 1+2 (NOAA CPC, OISST v2.1), con manifiesto SHA-256."""
+    entrada = noaa.descargar_nino_mensual(raw / "noaa")
+    typer.echo(f"OK nino_mensual {entrada['filas']} meses sha256={entrada['sha256'][:12]}")
+
+
 def _series(series_json: Path | None, raw: Path, cfg: dict):
     """Devuelve {nombre: (anios, valores, unidad)} desde un JSON de series o desde data/raw (offline)."""
     if series_json:
@@ -278,7 +285,14 @@ def publicar(
         corridas = convertir.ejecuciones(Path("data/raw"), resultados)
         texto = json.dumps(corridas, ensure_ascii=False, indent=1)
         (exportar.parent / "ejecuciones.json").write_text(texto, encoding="utf-8", newline="\n")
-        typer.echo(f"{len(lista)} expedientes y {len(corridas)} ejecuciones exportados a {exportar.parent}")
+        # Indicadores de estado actual para la portada (ENSO, SPI-3 actual, sequía según ENSO, altitud y
+        # series de prueba), calculados desde los crudos y los resultados sellados.
+        from .publicar import indicadores
+
+        ind = indicadores.generar(Path("data/raw"), resultados, cargar_yaml(config)["particion_temporal"])
+        texto = json.dumps(ind, ensure_ascii=False, indent=1, default=str)
+        (exportar.parent / "indicadores.json").write_text(texto, encoding="utf-8", newline="\n")
+        typer.echo(f"{len(lista)} expedientes, {len(corridas)} ejecuciones e indicadores exportados a {exportar.parent}")
         return
     informe = cliente.publicar(lista, api, cliente.clave_ingesta())
     for i in informe:

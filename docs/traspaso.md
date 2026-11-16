@@ -17,7 +17,6 @@ Reglas del proyecto que no cambian:
 | Qué | Dónde |
 |---|---|
 | Repositorio (owner: Ower Frank) | <https://github.com/OwerLopez/terraverdict> · rama `main` |
-| Repositorio original (solo lectura; la cuenta del owner dejó de estar disponible) | <https://github.com/DiegoNiS/terraverdict> · equivalencia de hashes en [`mapa-commits.md`](mapa-commits.md) |
 | Aplicación publicada | <https://terraverdict.vercel.app> (proyecto `terraverdict` en la cuenta de Vercel de Ower Frank; cada `push` a `main` despliega) |
 | Cifras vigentes | [`experimentos.md`](experimentos.md) (generado por `tv informe`) |
 | Qué falta | [`pendientes.md`](pendientes.md) |
@@ -25,7 +24,8 @@ Reglas del proyecto que no cambian:
 
 **Traslado del repositorio (15-11).** El historial de `main` se copió completo a `OwerLopez/terraverdict`
 con sus autores, fechas y horas originales; solo se quitaron las líneas `Co-Authored-By` de herramientas de
-IA de los mensajes (por eso cambian los hashes, ver `mapa-commits.md`). Los commits posteriores no llevan
+IA de los mensajes (por eso cambian los hashes). Todos los resultados y expedientes vigentes se regeneraron después
+del traslado y citan solo commits de este repositorio. Los commits posteriores no llevan
 firma de IA, por decisión del equipo.
 
 ## 2. Estado verificado al cerrar
@@ -107,8 +107,7 @@ cd frontend && npm run api:tipos
 
 ## Contexto
 - Repositorio: OwerLopez/terraverdict (owner Ower Frank); se trabaja en `main`. Publicado en
-  https://terraverdict.vercel.app (cada push a main despliega). El repositorio original
-  DiegoNiS/terraverdict es solo de lectura; equivalencia de hashes en docs/mapa-commits.md.
+  https://terraverdict.vercel.app (cada push a main despliega). Es el único repositorio del proyecto.
 - Equipo: Ower Frank, MaxsForocca y DiegoNiS.
 - Reglas: solo datos reales y trazables (NASA, NOAA, USGS, Smithsonian); toda cifra sale de
   resultados/*.json; nada se elige mirando la prueba; nada se declara terminado sin evidencia ejecutada;

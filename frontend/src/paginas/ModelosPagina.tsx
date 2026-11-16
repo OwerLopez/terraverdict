@@ -2,10 +2,13 @@ import { BrainCircuit, CheckCircle2, ShieldAlert } from "lucide-react";
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import type { Esquemas } from "../api/cliente";
-import { useExpedienteVigente, useExpedientes } from "../api/consultas";
+import { useExpedienteVigente, useExpedientes, usePortada } from "../api/consultas";
+import { PrediccionRealidad } from "../componentes/graficos/PrediccionRealidad";
+import { comoIndicadores } from "../lib/indicadores";
 import { TablaDatos } from "../componentes/fenomenos/TablaDatos";
 import { Dato, Encabezado, ErrorCarga, EstadoVacio, Esqueleto, Insignia, Tarjeta } from "../componentes/ui";
 import { numero, valorP } from "../lib/formato";
+import { lecturaEce } from "../lib/lectura";
 import { t } from "../lib/i18n";
 import { UMBRAL_P_DM, evidencia as reglaEvidencia } from "../lib/modelos";
 import { traducirTitulo } from "../lib/titulos";
@@ -128,6 +131,10 @@ export function ModelosPagina() {
   const r = detalle.data?.resultado.tipo === "comparacion_modelos" ? (detalle.data.resultado as Comparacion) : undefined;
   const mejor = r?.modelos.find((m) => m.nombre === r.mejor_validacion);
   const evidencia = mejor ? nivelEvidencia(mejor) : "no_confirmada";
+  const ind = comoIndicadores(usePortada().data?.indicadores);
+  // La serie de prueba exportada es la de NASA POWER (resultados/sequia.json); la réplica CHIRPS no tiene serie.
+  const clave = r?.fenomeno === "sequia" && !detalle.data?.titulo.includes("CHIRPS") ? (r.horizonte.startsWith("1 ") ? "h1" : r.horizonte.startsWith("3 ") ? "h3" : null) : null;
+  const seriePrueba = clave ? ind?.predicciones?.sequia[clave] : undefined;
 
   return (
     <>
@@ -168,6 +175,15 @@ export function ModelosPagina() {
               tono={r.abstencion.publicar ? "good" : "warning"}
             />
           </div>
+          {seriePrueba && seriePrueba.fechas.length > 0 && (
+            <Tarjeta
+              className="mb-5"
+              titulo={t("Predicción frente a realidad (prueba fuera de muestra)", "Prediction vs reality (out-of-sample test)")}
+              subtitulo={t(`${seriePrueba.objetivo}: observado en negro, pronóstico en azul y cono conformal del 90 %.`, `${seriePrueba.objetivo}: observed in black, forecast in blue and the 90 % conformal cone.`)}
+            >
+              <PrediccionRealidad serie={seriePrueba} particion={ind?.particion_temporal ?? null} />
+            </Tarjeta>
+          )}
           <div className="grid gap-5 xl:grid-cols-[1.5fr_1fr]">
             <Tarjeta
               titulo={METRICAS[r.metrica_principal] ? t(...(METRICAS[r.metrica_principal] as [string, string])) : r.metrica_principal}
@@ -197,7 +213,7 @@ export function ModelosPagina() {
             </Tarjeta>
             <div className="space-y-5">
               {r.confiabilidad && r.confiabilidad.length > 0 && (
-                <Tarjeta titulo={t("Confiabilidad (prueba)", "Reliability (test)")} subtitulo={t(`Sobre la diagonal, las probabilidades significan lo que dicen. ECE = ${numero(r.ece, 3)}.`, `On the diagonal, probabilities mean what they say. ECE = ${numero(r.ece, 3)}.`)}>
+                <Tarjeta titulo={t("Confiabilidad (prueba)", "Reliability (test)")} subtitulo={t(`Sobre la diagonal, las probabilidades significan lo que dicen. ECE = ${numero(r.ece, 3)}.`, `On the diagonal, probabilities mean what they say. ECE = ${numero(r.ece, 3)}.`) + (lecturaEce(r.ece) ? ` ${lecturaEce(r.ece)}.` : "")}>
                   <Confiabilidad puntos={r.confiabilidad} ece={r.ece} />
                   <TablaDatos titulo={t("Curva de confiabilidad", "Reliability curve")} columnas={[t("Pronosticada", "Forecast"), t("Observada", "Observed"), "n"]} filas={r.confiabilidad.map((p) => [numero(p.pronosticada, 3), numero(p.observada, 3), p.n])} />
                 </Tarjeta>

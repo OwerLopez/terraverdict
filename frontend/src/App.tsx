@@ -21,6 +21,7 @@ const FenomenosPagina = lazy(() => import("./paginas/FenomenosPagina").then((m) 
 const CaosPagina = lazy(() => import("./paginas/CaosPagina").then((m) => ({ default: m.CaosPagina })));
 const NacionalPagina = lazy(() => import("./paginas/NacionalPagina").then((m) => ({ default: m.NacionalPagina })));
 const MetricasPagina = lazy(() => import("./paginas/MetricasPagina").then((m) => ({ default: m.MetricasPagina })));
+const InformePagina = lazy(() => import("./paginas/InformePagina").then((m) => ({ default: m.InformePagina })));
 const ModelosPagina = lazy(() => import("./paginas/ModelosPagina").then((m) => ({ default: m.ModelosPagina })));
 
 function NoEncontrada() {
@@ -53,6 +54,7 @@ export function App() {
           <Route path="/fuentes" element={<FuentesPagina />} />
           <Route path="/eventos" element={<EventosPagina />} />
           <Route path="/asistente" element={<AsistentePagina />} />
+          <Route path="/informe/:id" element={<InformePagina />} />
           <Route path="*" element={<NoEncontrada />} />
         </Routes>
       </Suspense>

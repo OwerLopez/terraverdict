@@ -1,0 +1,1184 @@
+{
+ "titulo": "Time-lapse HLS 30 m de la represa Aguada Blanca",
+ "generado_utc": "2026-11-16T03:39:41+00:00",
+ "fuente": "NASA GIBS · HLS S30 (Sentinel-2, ESA/Copernicus armonizado por NASA) y HLS L30 (Landsat 8/9, NASA/USGS)",
+ "caja_embalse": {
+  "lat_min": -16.2481438,
+  "lat_max": -16.2200408,
+  "lon_min": -71.3478139,
+  "lon_max": -71.3306054,
+  "origen": "OpenStreetMap way 23815221"
+ },
+ "tesela": {
+  "z": 12,
+  "x": 1236,
+  "y": 2235,
+  "ventana_px": [
+   56,
+   16,
+   107,
+   102
+  ]
+ },
+ "criterio": {
+  "min_cobertura": 0.98,
+  "max_nubosidad": 0.1,
+  "nubosidad": "fracción de píxeles con min(R,G,B) > 170 y saturación < 40 dentro del embalse"
+ },
+ "meses": [
+  {
+   "mes": "2020-01",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2020-01-15",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0002,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2020-01-15/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "ab5f57741a651cf6d7151824d60788a9c0036058268b25dc168c0fd67991ee8f"
+   }
+  },
+  {
+   "mes": "2020-02",
+   "imagenes_probadas": 6,
+   "imagenes_completas": 6,
+   "elegida": {
+    "fecha": "2020-02-19",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0002,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-02-19/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "0805e901b69de026b28a7d429a272b0bae06edfe1473cb2cb62f8758387cdcaf"
+   }
+  },
+  {
+   "mes": "2020-03",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2020-03-03",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2020-03-03/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "372bc11590e08e9c1ceb3e4d6a92d88a26597ac385b834dacd7390b3e95f2727"
+   }
+  },
+  {
+   "mes": "2020-04",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2020-04-09",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-04-09/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "aa8c69c237c1a8952a10098ba976b17f85669697c60ad03d86b2252f58500533"
+   }
+  },
+  {
+   "mes": "2020-05",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2020-05-24",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-05-24/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "f83cef305440023b1300820b1fc0d52dbde665b1f54423acb4420ff372274998"
+   }
+  },
+  {
+   "mes": "2020-06",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2020-06-03",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-06-03/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "3d13aed75d3a94b8c4dfd390796e02fcdc83b226f8a6a4327b06672142ccabce"
+   }
+  },
+  {
+   "mes": "2020-07",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2020-07-08",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-07-08/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "49e45821561ff4bb98af6fe0fae1057556bae3d7fe8d818d9afd19ddca1b37ec"
+   }
+  },
+  {
+   "mes": "2020-08",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2020-08-17",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-08-17/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "6a3bb8ef6830a3df8d1f86e77b6fc2b0861d7bfc0ae49c2de0d03d39608297a8"
+   }
+  },
+  {
+   "mes": "2020-09",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2020-09-11",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-09-11/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "33a1df8765c57ac04aba460a027b07fdabd9424b05286fee27e9b1fd9293b58a"
+   }
+  },
+  {
+   "mes": "2020-10",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2020-10-01",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-10-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "31eff1ed88bf23f45463c8c46a130b79dd7369c4e932327fbcc623dec73358cc"
+   }
+  },
+  {
+   "mes": "2020-11",
+   "imagenes_probadas": 7,
+   "imagenes_completas": 7,
+   "elegida": {
+    "fecha": "2020-11-05",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0002,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-11-05/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "c02b1451e30e8550c32dc6883b4dd191c7a97eafe5475e175525095f1e4f4fcf"
+   }
+  },
+  {
+   "mes": "2020-12",
+   "imagenes_probadas": 6,
+   "imagenes_completas": 6,
+   "elegida": {
+    "fecha": "2020-12-05",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2020-12-05/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "ac877a947a7d5b849cd50301df50f03a22f7a08b4628062439d6a9aa244dc615"
+   }
+  },
+  {
+   "mes": "2021-01",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2021-01-09",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0005,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2021-01-09/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "921a9e2e66232ba1f72b3140e9085a866396847a3badc9958b306406583a9c26"
+   }
+  },
+  {
+   "mes": "2021-02",
+   "imagenes_probadas": 7,
+   "imagenes_completas": 7,
+   "elegida": {
+    "fecha": "2021-02-13",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2021-02-13/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "e76612421c638bb88d5cab0d9a761d9f8f088e935e740e410db3eae32bca2841"
+   }
+  },
+  {
+   "mes": "2021-03",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2021-03-06",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2021-03-06/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "41a2b4cbdfc40eeab01d696c714fb471282f98092467f77658ea2ad5b96fe350"
+   }
+  },
+  {
+   "mes": "2021-04",
+   "imagenes_probadas": 6,
+   "imagenes_completas": 6,
+   "elegida": {
+    "fecha": "2021-04-07",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2021-04-07/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "64928c21c66d1b00260ee7b6a8c04feb04bbe5700dca0b4580360dc4fb86528a"
+   }
+  },
+  {
+   "mes": "2021-05",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2021-05-04",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2021-05-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "e810438f32a62d8b115a1e5fbf96387670b91bf97b5ef9c70da394835a3f3759"
+   }
+  },
+  {
+   "mes": "2021-06",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2021-06-18",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2021-06-18/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "6f20d7e559da31fee627e6575f0b1804b9e26d7a0a0549e2e1e79cadcf56a68d"
+   }
+  },
+  {
+   "mes": "2021-07",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2021-07-08",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2021-07-08/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "2b9566ad30e7939cf58cbf224525824dd17b706b8d4446e8262b713eb1a64d1c"
+   }
+  },
+  {
+   "mes": "2021-08",
+   "imagenes_probadas": 3,
+   "imagenes_completas": 3,
+   "elegida": {
+    "fecha": "2021-08-02",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2021-08-02/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "01877c4ea7f2ffd201e633f06d917bc334c2143e0ba86feb9710ee728d51e7d6"
+   }
+  },
+  {
+   "mes": "2021-09",
+   "imagenes_probadas": 4,
+   "imagenes_completas": 4,
+   "elegida": {
+    "fecha": "2021-09-01",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2021-09-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "d5c062c63375fcd31eeb5a1e38ee8b19dd9fd12f3d4bcaa58f0ab28620aa27a0"
+   }
+  },
+  {
+   "mes": "2021-10",
+   "imagenes_probadas": 2,
+   "imagenes_completas": 2,
+   "elegida": {
+    "fecha": "2021-10-16",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2021-10-16/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "0f2cecffa516018af547e28f078c53bdb325e59b03264c945e65cb3632714263"
+   }
+  },
+  {
+   "mes": "2021-11",
+   "imagenes_probadas": 5,
+   "imagenes_completas": 5,
+   "elegida": {
+    "fecha": "2021-11-01",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2021-11-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "b46730957911b125a5f2f81007c5bafd664336e5bc8fe8ebe62383a8525e0b09"
+   }
+  },
+  {
+   "mes": "2021-12",
+   "imagenes_probadas": 5,
+   "imagenes_completas": 5,
+   "elegida": {
+    "fecha": "2021-12-15",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0002,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2021-12-15/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "a454864bf66662a2033469c66ede340f91fb62af1205bfc0347e840cacf8d844"
+   }
+  },
+  {
+   "mes": "2022-01",
+   "imagenes_probadas": 5,
+   "imagenes_completas": 5,
+   "elegida": {
+    "fecha": "2022-01-28",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.01,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2022-01-28/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "aa86948d8865b568b7883f570bfe04a77555ba0fe37bb7712621c979f99fa614"
+   }
+  },
+  {
+   "mes": "2022-02",
+   "imagenes_probadas": 3,
+   "imagenes_completas": 3,
+   "elegida": null
+  },
+  {
+   "mes": "2022-03",
+   "imagenes_probadas": 1,
+   "imagenes_completas": 1,
+   "elegida": {
+    "fecha": "2022-03-01",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.08,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2022-03-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "d03349991a65593ca1f6804d6a40be30323372c94efda5048b2e4a811e2b4bcb"
+   }
+  },
+  {
+   "mes": "2022-04",
+   "imagenes_probadas": 2,
+   "imagenes_completas": 2,
+   "elegida": {
+    "fecha": "2022-04-18",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2022-04-18/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "387a00136215eb531bf496c65baf024291c333fc5dc9a8f0c084e253ef0023ba"
+   }
+  },
+  {
+   "mes": "2022-05",
+   "imagenes_probadas": 2,
+   "imagenes_completas": 2,
+   "elegida": {
+    "fecha": "2022-05-04",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2022-05-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "3a27feeedb8a866ff1e563df9b040cc105985f0928942ac79e0a92a88118d2fe"
+   }
+  },
+  {
+   "mes": "2022-06",
+   "imagenes_probadas": 4,
+   "imagenes_completas": 4,
+   "elegida": {
+    "fecha": "2022-06-21",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2022-06-21/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "ae460602ef614775bfe10ae8ef17da864a61663a0c381fba47d40b79be95f899"
+   }
+  },
+  {
+   "mes": "2022-07",
+   "imagenes_probadas": 4,
+   "imagenes_completas": 4,
+   "elegida": {
+    "fecha": "2022-07-07",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2022-07-07/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "23f046a0344114804717efa0bdd63aa2767665d9a25a12a136d4170155a11a13"
+   }
+  },
+  {
+   "mes": "2022-08",
+   "imagenes_probadas": 4,
+   "imagenes_completas": 4,
+   "elegida": {
+    "fecha": "2022-08-27",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2022-08-27/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "21f7631c312de05c3b43fa7c33beb2756341fd0b2867be7819bd72038b9f2d6e"
+   }
+  },
+  {
+   "mes": "2022-09",
+   "imagenes_probadas": 3,
+   "imagenes_completas": 3,
+   "elegida": {
+    "fecha": "2022-09-09",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2022-09-09/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "f05df68bdc042e839ac0bb1e4111691a813ffa4e31578bc96f38fdcbfa90493b"
+   }
+  },
+  {
+   "mes": "2022-10",
+   "imagenes_probadas": 4,
+   "imagenes_completas": 4,
+   "elegida": {
+    "fecha": "2022-10-03",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2022-10-03/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "e5bc9a29e86f4f0c25c0ae1c2cc3523649335050580e8525cf3f9474fdbe0c16"
+   }
+  },
+  {
+   "mes": "2022-11",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2022-11-12",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2022-11-12/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "a51843de93333af592fed0cfb8aa90ea9e6c081e918c740db176eee25a4c470f"
+   }
+  },
+  {
+   "mes": "2022-12",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2022-12-05",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0002,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2022-12-05/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "f303e50d8d38c127e2d5ed256705e9fa7911dea8ec9ac013eff4866e5857cc66"
+   }
+  },
+  {
+   "mes": "2023-01",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2023-01-04",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2023-01-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "2d9fd4862aa0b7abe34f5e8da84494a5a8a218f07ac2955ded3e7ccad82b3f3d"
+   }
+  },
+  {
+   "mes": "2023-02",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2023-02-08",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2023-02-08/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "01f2a748b76306c5c715e4c42df4d3244890d0878ba7e3df2f401b64e3acd5ce"
+   }
+  },
+  {
+   "mes": "2023-03",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2023-03-04",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0002,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2023-03-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "040e52adf825b8711b40431825459235caa20c622c107ccdf53e47218933bc8e"
+   }
+  },
+  {
+   "mes": "2023-04",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2023-04-13",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2023-04-13/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "d4c28e286f228ebcf0d353b650ed1e8deba415e983118d7349c303f3caa824af"
+   }
+  },
+  {
+   "mes": "2023-05",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2023-05-07",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2023-05-07/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "661489d0d45ec4fed53e2ae675e97e3f58e00c2fe0c4468e3b49f2f4dd853f11"
+   }
+  },
+  {
+   "mes": "2023-06",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2023-06-08",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2023-06-08/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "f39ed7e86184dd9fb707199528ceb4e5a16878ddfda490d3e8b5d9e0550b7fd4"
+   }
+  },
+  {
+   "mes": "2023-07",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2023-07-02",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2023-07-02/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "43dcdf7447677f8053a338f32730985023c0a3e17f168ba0fdc4187fdd55a48f"
+   }
+  },
+  {
+   "mes": "2023-08",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2023-08-02",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2023-08-02/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "76a01d1ab175a19f3624fb2aa5120e95d61abc28ac53a3fdcba57ea465c57c68"
+   }
+  },
+  {
+   "mes": "2023-09",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2023-09-01",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2023-09-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "96deadfeaa82a41f9f8523dae7b6755786e8715dea7fa5cab1a24e1157677914"
+   }
+  },
+  {
+   "mes": "2023-10",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2023-10-01",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2023-10-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "d618301d0887ed458fe8a76ad2c3f0770df92bb37f56d71a44a6bbd7923142b5"
+   }
+  },
+  {
+   "mes": "2023-11",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2023-11-05",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0002,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2023-11-05/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "54f65339d788d5935cbbd9f7c2d0b5c8f94254462ddc6bfd461bdb4cd4ccdf40"
+   }
+  },
+  {
+   "mes": "2023-12",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2023-12-01",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2023-12-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "6ec2ba4825ec145efe25cdddd6e7778441fa920d694cb2a534a20fe723c40900"
+   }
+  },
+  {
+   "mes": "2024-01",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2024-01-10",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2024-01-10/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "1bd102cc826480e1e090cef091489502fde3290d789551d3728c257da1ecf722"
+   }
+  },
+  {
+   "mes": "2024-02",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2024-02-03",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 0.9989,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2024-02-03/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "e344929de692f70b8af85ef5e506a2bbc7313e9b58bc8c2ef9e83f80ae360a35"
+   }
+  },
+  {
+   "mes": "2024-03",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2024-03-19",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2024-03-19/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "16e162e1f429ab069f0467073bac291f58fec2a86a29becfac2ed2387561dcd0"
+   }
+  },
+  {
+   "mes": "2024-04",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2024-04-03",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2024-04-03/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "74eced44baa2fa68bb2828867743cbb026fa3698ae0cc9fdaf0c894b84f1dc26"
+   }
+  },
+  {
+   "mes": "2024-05",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2024-05-01",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2024-05-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "dedc49b8eccd00b92ec787721dbeb5f7641d6b8c89963c1990ac96845cbe0b87"
+   }
+  },
+  {
+   "mes": "2024-06",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2024-06-10",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2024-06-10/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "3c077865fd108968547f17b985edf93c61e9fe7016e9f1f8712d89a878dce5f3"
+   }
+  },
+  {
+   "mes": "2024-07",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2024-07-02",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2024-07-02/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "1927e36da5d0a8abc124aa100ceb30a5186da9c7487db709291b73c1367976a8"
+   }
+  },
+  {
+   "mes": "2024-08",
+   "imagenes_probadas": 11,
+   "imagenes_completas": 11,
+   "elegida": {
+    "fecha": "2024-08-05",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2024-08-05/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "a92adbea4ceffcf3f106f6b3659b2bd40cf5b28cdca6e22b7106b8d3ccd5931a"
+   }
+  },
+  {
+   "mes": "2024-09",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2024-09-14",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2024-09-14/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "fe2c75a6ab41c19a115f53dd0af670887d8fccb6bb20e2b8049fa0e3365cd1bf"
+   }
+  },
+  {
+   "mes": "2024-10",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2024-10-05",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2024-10-05/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "3ce7d955e7939267a1c5f7e861626d54ac2a5dc7811b5cd072f8a79a718992ba"
+   }
+  },
+  {
+   "mes": "2024-11",
+   "imagenes_probadas": 8,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2024-11-04",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0002,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2024-11-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "1906cd1d5813f0fe33354c3499c11c74b1c7d25eced839b3407d9fe52ea7b5d1"
+   }
+  },
+  {
+   "mes": "2024-12",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2024-12-03",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2024-12-03/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "9f2c94ae71b9682a7d697b2d05dcd4c2f44681c77ad7860e61b809c7224062fd"
+   }
+  },
+  {
+   "mes": "2025-01",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2025-01-08",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0018,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2025-01-08/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "2d6c5387a9531c0db28ef4e3c09bc5ee3ac404e6424a8ed0f4366de18a44eb74"
+   }
+  },
+  {
+   "mes": "2025-02",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 9,
+   "elegida": {
+    "fecha": "2025-02-12",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2025-02-12/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "4ebe82154f9d1bf00a46959d542f2c35ccf69aabe2f5e9a341aa3df7e89b29fb"
+   }
+  },
+  {
+   "mes": "2025-03",
+   "imagenes_probadas": 12,
+   "imagenes_completas": 12,
+   "elegida": {
+    "fecha": "2025-03-01",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2025-03-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "dce3dad76b5bd19039e3b52dd3d8ec6648d8583d56b6b618001da373f939e82a"
+   }
+  },
+  {
+   "mes": "2025-04",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 13,
+   "elegida": {
+    "fecha": "2025-04-10",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2025-04-10/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "397b4f9abd30b08344dd43e07515d2917496c198e5384df7fbf3e520621c6213"
+   }
+  },
+  {
+   "mes": "2025-05",
+   "imagenes_probadas": 12,
+   "imagenes_completas": 12,
+   "elegida": {
+    "fecha": "2025-05-08",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2025-05-08/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "8e8652f6af5f9a5b9819bdc2a333ba22691f1cb5d325cae59a08bf9d4990a1bd"
+   }
+  },
+  {
+   "mes": "2025-06",
+   "imagenes_probadas": 10,
+   "imagenes_completas": 10,
+   "elegida": {
+    "fecha": "2025-06-04",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2025-06-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "5f3f029bc36dfe3235adcbb51bb93dc497573c00cac93191d1309fcdd59c1eb4"
+   }
+  },
+  {
+   "mes": "2025-07",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 13,
+   "elegida": {
+    "fecha": "2025-07-27",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0018,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2025-07-27/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "a37810fa2272798853d8e244642c077d784df1998d9fdd6e45b725dc948ba58e"
+   }
+  },
+  {
+   "mes": "2025-08",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 13,
+   "elegida": {
+    "fecha": "2025-08-23",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2025-08-23/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "272e1aee4729dfad4783531d52e56d6866cb1f468cf1dff91409fe3b11d1421d"
+   }
+  },
+  {
+   "mes": "2025-09",
+   "imagenes_probadas": 12,
+   "imagenes_completas": 12,
+   "elegida": {
+    "fecha": "2025-09-30",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0002,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2025-09-30/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "4c8cb2423933b730a9078fff5a8d238dd77e41947752ac2db8bf118cba56ac39"
+   }
+  },
+  {
+   "mes": "2025-10",
+   "imagenes_probadas": 12,
+   "imagenes_completas": 12,
+   "elegida": {
+    "fecha": "2025-10-03",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0007,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2025-10-03/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "60b5d6b8590fc2c25bd78811ac197586cae091a9c3d42fb20d4cd21da7ca0047"
+   }
+  },
+  {
+   "mes": "2025-11",
+   "imagenes_probadas": 11,
+   "imagenes_completas": 11,
+   "elegida": {
+    "fecha": "2025-11-04",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2025-11-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "8b8a361782d008b7c61e1cf6f6dadff7e3d7db286108a2574aa13f38d18aabb3"
+   }
+  },
+  {
+   "mes": "2025-12",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 13,
+   "elegida": {
+    "fecha": "2025-12-19",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2025-12-19/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "6de4d09c6a2a80e01e431e1b042b9f4f406aed7f2ca981cb8671c20d4d3a7e2b"
+   }
+  },
+  {
+   "mes": "2026-01",
+   "imagenes_probadas": 11,
+   "imagenes_completas": 11,
+   "elegida": {
+    "fecha": "2026-01-07",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2026-01-07/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "b95a3c148b1584e9abd798858fd952b4a968330d543ff24adeae28d5a5fd1139"
+   }
+  },
+  {
+   "mes": "2026-02",
+   "imagenes_probadas": 9,
+   "imagenes_completas": 8,
+   "elegida": {
+    "fecha": "2026-02-02",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2026-02-02/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "c5ed3019988f5ed2575027601a2c3bbfb3ae806bfe35f0097ff157b00e0bdec9"
+   }
+  },
+  {
+   "mes": "2026-03",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 12,
+   "elegida": {
+    "fecha": "2026-03-04",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.003,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2026-03-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "0473d46132ab212c8a469520711ba2ac4880084988f8d94be577f0fb37d7593d"
+   }
+  },
+  {
+   "mes": "2026-04",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 12,
+   "elegida": {
+    "fecha": "2026-04-10",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2026-04-10/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "0bd0457775c7dc47b6f4588e3554f7578a748723681359a1eadfc1d13d81ae5d"
+   }
+  },
+  {
+   "mes": "2026-05",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 13,
+   "elegida": {
+    "fecha": "2026-05-03",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2026-05-03/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "7961c3eb58ff6553debfae1a8a9144c4ae0ddb05e3f2b0ca8d6bdc7e568ece43"
+   }
+  },
+  {
+   "mes": "2026-06",
+   "imagenes_probadas": 12,
+   "imagenes_completas": 12,
+   "elegida": {
+    "fecha": "2026-06-02",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2026-06-02/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "a2017c50213ff8174a3f49dd64f2f2842ebe0e0a887b86fd552ee41b1ef41baa"
+   }
+  },
+  {
+   "mes": "2026-07",
+   "imagenes_probadas": 12,
+   "imagenes_completas": 12,
+   "elegida": {
+    "fecha": "2026-07-07",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2026-07-07/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "a715351734d2683944bbcdac735ec0890496e962147dfbceee6a0986107b7145"
+   }
+  },
+  {
+   "mes": "2026-08",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 13,
+   "elegida": {
+    "fecha": "2026-08-01",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2026-08-01/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "39606a0ca3b1cf16f35880cdda300cf8b35b88034436fbf12498a449cb9d9bc8"
+   }
+  },
+  {
+   "mes": "2026-09",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 13,
+   "elegida": {
+    "fecha": "2026-09-04",
+    "capa": "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Landsat 8/9 (HLS L30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_L30_Nadir_BRDF_Adjusted_Reflectance/default/2026-09-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "a486630f63c0b0f3534b28cc36e4088b08b2191587d3bd764235c94d9c914671"
+   }
+  },
+  {
+   "mes": "2026-10",
+   "imagenes_probadas": 13,
+   "imagenes_completas": 13,
+   "elegida": {
+    "fecha": "2026-10-05",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2026-10-05/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "325d64630325eb99783ba5100663586c2f9107337f47a62618e7b0d4d799f3f7"
+   }
+  },
+  {
+   "mes": "2026-11",
+   "imagenes_probadas": 2,
+   "imagenes_completas": 2,
+   "elegida": {
+    "fecha": "2026-11-04",
+    "capa": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+    "sensor": "Sentinel-2 (HLS S30)",
+    "cobertura": 1.0,
+    "nubosidad": 0.0,
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/HLS_S30_Nadir_BRDF_Adjusted_Reflectance/default/2026-11-04/GoogleMapsCompatible_Level12/12/2235/1236.png",
+    "sha256": "43c39543cc03a33797735b7cfddd58401024d07658d7497d8acd97de6dce1d59"
+   }
+  }
+ ]
+}

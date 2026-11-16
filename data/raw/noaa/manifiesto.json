@@ -7,5 +7,16 @@
   "producto": "NOAA_CPC_ONI",
   "version": null,
   "descargado_utc": "2026-11-15T23:24:06+00:00"
+ },
+ {
+  "archivo": "sstoi.indices",
+  "sha256": "c7993d1e051d182d1f55f7f937e5b74b3bbd20e08da5cbfc74bc5351a050a6c0",
+  "bytes": 39345,
+  "url": "https://www.cpc.ncep.noaa.gov/data/indices/sstoi.indices",
+  "producto": "NOAA_CPC_OISST_NINO",
+  "version": "v2.1",
+  "descargado_utc": "2026-11-16T04:19:56+00:00",
+  "filas": 538,
+  "base_anomalias": "1991-2020"
  }
 ]

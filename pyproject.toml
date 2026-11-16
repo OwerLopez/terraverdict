@@ -13,7 +13,7 @@ geo = ["xarray", "rioxarray", "geopandas", "rasterio", "regionmask", "earthacces
 # PyTorch CPU: pip install torch --index-url https://download.pytorch.org/whl/cpu
 ml = ["scikit-learn>=1.5", "pandas>=2.2", "ruptures>=1.1", "PyWavelets>=1.6", "torch>=2.4"]
 hydro = ["numba", "pysheds"]
-api = ["fastapi", "uvicorn", "mcp"]
+api = ["fastapi", "uvicorn"]  # MCP: expansión prevista, sin servidor implementado
 dev = ["pytest", "hypothesis", "ruff", "mypy", "types-requests", "types-PyYAML", "scipy-stubs"]
 [project.scripts]
 tv = "terraverdict.cli:app"

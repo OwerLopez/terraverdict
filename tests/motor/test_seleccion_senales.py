@@ -92,7 +92,7 @@ def test_spi_no_usa_datos_posteriores_al_entrenamiento() -> None:
 
 def test_climatologia_armonica_sin_fuga() -> None:
     idx = pd.date_range("2000-01-01", "2010-12-31", freq="D")
-    base = 10 + 5 * np.sin(2 * np.pi * idx.dayofyear / 365.25)
+    base = 10 + 5 * np.sin(2 * np.pi * idx.day_of_year / 365.25)
     s = pd.Series(base, index=idx)
     alterada = s.copy()
     alterada[alterada.index > "2008-12-31"] += 100

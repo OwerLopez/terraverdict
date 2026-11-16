@@ -59,6 +59,7 @@ def descargar_todo(cfg: dict[str, Any], raw: str | Path = "data/raw") -> dict[st
         ),
     )
     _paso(reg, "oni", lambda: noaa.descargar_oni(raw / "noaa"))
+    _paso(reg, "nino_mensual", lambda: noaa.descargar_nino_mensual(raw / "noaa"))
     _paso(reg, "ghcn", lambda: ghcn.descargar(d["ghcn_estacion"], raw / "ghcn"))
     c = cfg["puntos"]["ciudad"]
     s = d["sismos"]

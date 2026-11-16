@@ -103,6 +103,10 @@ fenomenos:
          justificacion: "Memoria hidrológica más larga (almacenamiento)."}
       - {id: indice_oni, nombre: "Índice ONI", unidad: "°C", rol: predictor, relevancia: alta, fuente: NOAA_CPC_ONI,
          justificacion: "Predictor de gran escala con persistencia de meses."}
+      - {id: nino34_mensual, nombre: "Anomalía mensual Niño 3.4 y Niño 1+2", unidad: "°C", rol: indicador, relevancia: alta,
+         fuente: NOAA_CPC_OISST_NINO, frecuencia: mensual, cobertura: "1982–presente",
+         justificacion: "Estado ENSO más reciente que el ONI (que es una media de 3 meses y llega con 1–2 meses de retraso); Niño 1+2 es la región costera que más afecta al Perú.",
+         limitaciones: "Base OISST 1991–2020, distinta de la del ONI: se informa junto al ONI, no se mezcla con él ni entra en los modelos congelados."}
       - {id: temperatura_aire_2m, nombre: "Temperatura media mensual", unidad: "°C", rol: predictor, relevancia: media,
          fuente: NASA_POWER_MERRA2, justificacion: "Demanda evaporativa."}
       - {id: humedad_especifica, nombre: "Humedad específica mensual", unidad: "g/kg", rol: predictor, relevancia: media,

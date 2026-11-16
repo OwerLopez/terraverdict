@@ -24,7 +24,7 @@ def climatologia_diaria(serie: pd.Series, armonicos: int = 3, hasta: str | None 
     ajuste = s[s.index <= pd.Timestamp(hasta)] if hasta else s
 
     def diseno(idx: pd.DatetimeIndex) -> np.ndarray:
-        w = 2 * np.pi * idx.dayofyear.to_numpy() / 365.25
+        w = 2 * np.pi * idx.day_of_year.to_numpy() / 365.25
         cols = [np.ones(len(idx))]
         for k in range(1, armonicos + 1):
             cols += [np.cos(k * w), np.sin(k * w)]

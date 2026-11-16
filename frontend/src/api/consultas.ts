@@ -177,3 +177,7 @@ export const useMapasMetricas = () =>
 
 export const useHistorial = () =>
   useQuery({ queryKey: ["historial"], queryFn: () => pedir(api.GET("/api/v1/historial")), staleTime: 5 * MINUTO });
+
+/** Portada: indicadores actuales (desde los crudos) y tabla maestra de veredictos con su expediente. */
+export const usePortada = () =>
+  useQuery({ queryKey: ["portada"], queryFn: () => pedir(api.GET("/api/v1/portada")), staleTime: 5 * MINUTO });

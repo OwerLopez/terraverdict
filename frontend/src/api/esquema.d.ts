@@ -688,6 +688,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/portada": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Estado actual y tabla maestra de veredictos
+         * @description Indicadores calculados desde los crudos (ENSO con ONI y Niño 3.4 / 1+2, SPI-3 actual en la cabecera, frecuencia de sequía según ENSO, gradiente altitudinal y series de prueba) y una fila por fenómeno con su tendencia, su habilidad fuera de muestra y su veredicto, cada una con el expediente de origen.
+         */
+        get: operations["portada_api_v1_portada_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/relevancia/matriz": {
         parameters: {
             query?: never;
@@ -928,6 +948,35 @@ export interface components {
             modelos?: {
                 [key: string]: components["schemas"]["MetricaModeloAnio"];
             };
+        };
+        /**
+         * Anticipacion
+         * @description Habilidad fuera de muestra del modelo elegido en la validación (nunca el mejor en la prueba).
+         */
+        Anticipacion: {
+            /** Metrica */
+            metrica: string;
+            /** Valor */
+            valor: number | null;
+            /** Intervalo */
+            intervalo?: number[] | null;
+            /** P Diebold Mariano */
+            p_diebold_mariano?: number | null;
+            /** Modelo */
+            modelo: string;
+            /** Familia */
+            familia?: string | null;
+            /** Horizonte */
+            horizonte?: string | null;
+            /** Periodo Prueba */
+            periodo_prueba?: string | null;
+            /**
+             * Evidencia
+             * @enum {string}
+             */
+            evidencia: "confirmada" | "indicio" | "sin_evidencia";
+            /** Expediente Id */
+            expediente_id: string;
         };
         /** Body_iniciar_sesion_api_v1_auth_token_post */
         Body_iniciar_sesion_api_v1_auth_token_post: {
@@ -1812,6 +1861,28 @@ export interface components {
             /** Cita */
             cita: string;
         };
+        /** FilaVeredicto */
+        FilaVeredicto: {
+            /**
+             * Fenomeno
+             * @enum {string}
+             */
+            fenomeno: "lluvia_extrema" | "sequia" | "sismos" | "volcanes" | "deslizamientos";
+            /** Fuentes */
+            fuentes: string[];
+            tendencia?: components["schemas"]["Tendencia"] | null;
+            anticipacion?: components["schemas"]["Anticipacion"] | null;
+            /**
+             * Abstencion
+             * @description Motivos de abstención publicados.
+             */
+            abstencion?: string[];
+            /**
+             * Veredicto
+             * @enum {string}
+             */
+            veredicto: "habilidad_confirmada" | "habilidad_con_indicio" | "sin_habilidad" | "descriptivo" | "recurrencia_historica" | "abstencion";
+        };
         /**
          * Frecuencia
          * @description Duraciones ISO 8601 admitidas para las series.
@@ -2318,6 +2389,29 @@ export interface components {
             desde: string;
             /** Hasta */
             hasta: string;
+        };
+        /** Portada */
+        Portada: {
+            /**
+             * Indicadores
+             * @description Contenido de resultados/contrato/indicadores.json (ENSO, SPI-3 actual, sequía según ENSO, altitud), generado por `tv publicar` desde los crudos con su SHA-256. Null si no existe.
+             */
+            indicadores?: {
+                [key: string]: unknown;
+            } | null;
+            /** Filas */
+            filas: components["schemas"]["FilaVeredicto"][];
+            /**
+             * Lluvia Eventos Documentados
+             * @description Desempeño del modelo de lluvia en los meses de eventos documentados.
+             */
+            lluvia_eventos_documentados?: {
+                [key: string]: unknown;
+            }[];
+            /** Regla Evidencia */
+            regla_evidencia: string;
+            /** Aviso */
+            aviso: string;
         };
         /**
          * PrecisionFecha
@@ -3217,6 +3311,40 @@ export interface components {
             metrica_principal: string;
             /** Mejor Validacion */
             mejor_validacion: string;
+        };
+        /**
+         * Tendencia
+         * @description Lectura histórica del fenómeno, tal como la publica su expediente.
+         */
+        Tendencia: {
+            /**
+             * Tipo
+             * @enum {string}
+             */
+            tipo: "pendiente" | "valor_b" | "probabilidad_anual" | "eventos";
+            /**
+             * Variable
+             * @description Qué se mide (p. ej. 'lluvia dic–mar', 'Misti').
+             */
+            variable?: string | null;
+            /** Valor */
+            valor?: number | null;
+            /**
+             * Intervalo
+             * @description IC90 [lo, hi] cuando existe.
+             */
+            intervalo?: number[] | null;
+            /** Unidad */
+            unidad?: string | null;
+            /**
+             * Veredicto
+             * @description Veredicto del expediente (p. ej. 'preliminar', 'sin_tendencia').
+             */
+            veredicto?: string | null;
+            /** Periodo */
+            periodo?: string | null;
+            /** Expediente Id */
+            expediente_id?: string | null;
         };
         /**
          * TendenciaRegional
@@ -5284,6 +5412,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HistorialMetricas"];
+                };
+            };
+        };
+    };
+    portada_api_v1_portada_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Portada"];
                 };
             };
         };

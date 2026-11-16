@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { TarjetaAltitud } from "../componentes/portada/Altitud";
 import { Download, FileCheck2, LineChart } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -152,6 +153,7 @@ export function SeriesPagina() {
           )}
         </div>
       </div>
+      <TarjetaAltitud />
     </div>
   );
 }

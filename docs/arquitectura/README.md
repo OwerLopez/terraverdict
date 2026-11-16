@@ -30,7 +30,7 @@ flowchart LR
     TR --> SEL[Sello determinista] --> EXP[(expedientes/*.json)]
     EXP --> REP[tv report → .md]
     EXP --> WEB[web React estático]
-    EXP -.fase 2.-> API[FastAPI / MCP] -.-> LLM[Chat + verificador numérico]
+    EXP -.fase 2.-> API[FastAPI REST · MCP previsto] -.-> LLM[Chat + verificador numérico]
 ```
 
 ## Capas y dependencias (regla: solo hacia abajo)

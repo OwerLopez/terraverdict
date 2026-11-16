@@ -149,7 +149,7 @@ def _temperatura(cfg: dict[str, Any], raw: Path) -> dict[str, Any]:
     salida: dict[str, Any] = {"estacion_frente_a_power": {}, "modis_frente_a_power": {}, "tendencias_media_anual": []}
 
     def anomalia(s: pd.Series) -> pd.Series:
-        return s - s.groupby(s.index.dayofyear).transform("mean")
+        return s - s.groupby(s.index.day_of_year).transform("mean")
 
     for e, p in (("TMAX", "T2M_MAX"), ("TMIN", "T2M_MIN")):
         comun = pd.concat([est[e], ciudad[p]], axis=1, keys=["e", "p"]).dropna()
@@ -171,8 +171,8 @@ def _temperatura(cfg: dict[str, Any], raw: Path) -> dict[str, Any]:
             # media de POWER en la misma ventana de 8 días que el compuesto MODIS
             p8 = pd.Series([power_df[var].loc[t : t + pd.Timedelta(days=7)].mean() for t in s.index], index=s.index)
             comun = pd.concat([s, p8], axis=1, keys=["m", "p"]).dropna()
-            a_m = comun["m"] - comun["m"].groupby(comun.index.dayofyear).transform("mean")
-            a_p = comun["p"] - comun["p"].groupby(comun.index.dayofyear).transform("mean")
+            a_m = comun["m"] - comun["m"].groupby(comun.index.day_of_year).transform("mean")
+            a_p = comun["p"] - comun["p"].groupby(comun.index.day_of_year).transform("mean")
             bloque[banda] = {
                 "frente_a": var,
                 "compuestos": len(comun),

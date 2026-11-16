@@ -1,12 +1,13 @@
 import { clsx } from "clsx";
-import { Activity, Crosshair, Layers, Mountain, MapPin, Satellite, SplitSquareHorizontal, Waves } from "lucide-react";
+import { Activity, Crosshair, Layers, Mountain, MapPin, Pause, Play, Satellite, SplitSquareHorizontal, Waves } from "lucide-react";
 import maplibregl, { type GeoJSONSource, type Map as MapaML, type StyleSpecification } from "maplibre-gl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Esquemas } from "../../api/cliente";
 import { useCapaSismos, useCapaVolcanes } from "../../api/consultas";
 import { numero } from "../../lib/formato";
 import { t } from "../../lib/i18n";
-import { Insignia } from "../ui";
+import { CENTRO_AGUADA_BLANCA, LAPSO } from "../../lib/timelapse";
+import { Insignia, Segmentado } from "../ui";
 
 const GIBS = "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best";
 
@@ -36,7 +37,17 @@ export const CAPAS = [
     nivel: 12,
     ext: "png",
     periodo: "diaria" as Periodo,
-    significado: ["Detalle de 30 m (pasada cada 2–5 días): represas, bofedales y zonas urbanas.", "30 m detail (revisit every 2–5 days): reservoirs, wetlands and urban areas."],
+    significado: ["Detalle de 30 m (pasada cada 2–5 días): represas, bofedales y zonas urbanas. Imágenes Sentinel-2 (ESA/Copernicus) armonizadas por NASA.", "30 m detail (revisit every 2–5 days): reservoirs, wetlands and urban areas. Sentinel-2 imagery (ESA/Copernicus) harmonized by NASA."],
+  },
+  {
+    id: "HLS_L30_Nadir_BRDF_Adjusted_Reflectance",
+    grupo: "imagen",
+    nombre: ["Landsat 8/9 HLS · 30 m", "Landsat 8/9 HLS · 30 m"],
+    resolucion: "30 m",
+    nivel: 12,
+    ext: "png",
+    periodo: "diaria" as Periodo,
+    significado: ["Detalle de 30 m de Landsat 8/9 (NASA/USGS) armonizado con Sentinel-2.", "30 m Landsat 8/9 detail (NASA/USGS) harmonized with Sentinel-2."],
   },
   {
     id: "MODIS_Terra_L3_NDVI_Monthly",
@@ -93,10 +104,36 @@ function haceDias(n: number): string {
 }
 
 /** Comparaciones con fechas de la crónica de eventos documentados (datos/eventos/arequipa.json). */
-const COMPARACIONES: { a: string; b: string; texto: [string, string]; capa: CapaId }[] = [
-  { a: "2023-11-07", b: "2025-02-15", capa: "MODIS_Terra_L3_NDVI_Monthly", texto: ["Represas al 39 % (nov 2023) frente a crecida y turbidez (feb 2025)", "Reservoirs at 39 % (Nov 2023) vs flood and turbidity (Feb 2025)"] },
+type Comparacion = { a: string; b: string; texto: [string, string]; capa: CapaId; capaB?: CapaId; centro?: [number, number] };
+
+const COMPARACIONES: Comparacion[] = [
+  ...comparacionHls(),
+  { a: "2023-11-07", b: "2025-02-15", capa: "MODIS_Terra_L3_NDVI_Monthly", texto: ["Verdor: represas al 39 % (nov 2023) frente a crecida y turbidez (feb 2025)", "Greenness: reservoirs at 39 % (Nov 2023) vs flood and turbidity (Feb 2025)"] },
   { a: "2024-09-15", b: "2025-02-15", capa: "SMAP_L4_Analyzed_Root_Zone_Soil_Moisture", texto: ["Estiaje (sep 2024) frente a lluvias (feb 2025)", "Dry season (Sep 2024) vs rainy season (Feb 2025)"] },
 ];
+
+/**
+ * Comparación de Aguada Blanca a 30 m con las fechas válidas más cercanas a los eventos documentados
+ * (almacenamiento bajo de nov-2023; turbidez de feb-2025), tomadas del manifiesto del time-lapse. Si febrero
+ * de 2025 no tiene imagen sin nubes (temporada de lluvias), se usa el mes válido más cercano y se dice cuál.
+ */
+function comparacionHls(): Comparacion[] {
+  const masCercana = (mes: string) => {
+    const objetivo = Date.parse(`${mes}-15`);
+    return LAPSO.meses
+      .filter((m) => m.elegida)
+      .sort((x, y) => Math.abs(Date.parse(`${x.mes}-15`) - objetivo) - Math.abs(Date.parse(`${y.mes}-15`) - objetivo))[0]?.elegida ?? null;
+  };
+  const a = masCercana("2023-11");
+  const b = masCercana("2025-02");
+  if (!a || !b) return [];
+  return [{ a: a.fecha, b: b.fecha, capa: a.capa, capaB: b.capa, centro: CENTRO_AGUADA_BLANCA, texto: [`Aguada Blanca a 30 m: ${a.fecha} (almacenamiento bajo) frente a ${b.fecha} (episodio de turbidez)`, `Aguada Blanca at 30 m: ${a.fecha} (low storage) vs ${b.fecha} (turbidity episode)`] }];
+}
+
+/** Margen para que el panel de controles (izquierda, ≥ 768 px) no tape el punto al que se vuela. */
+function margenPanel(): { left: number; top: number; right: number; bottom: number } {
+  return { left: typeof window !== "undefined" && window.innerWidth >= 768 ? 340 : 0, top: 0, right: 0, bottom: 0 };
+}
 
 /** Color por profundidad (km): someros (más destructivos) en cálido, profundos en frío. */
 const COLOR_PROFUNDIDAD: maplibregl.ExpressionSpecification = [
@@ -135,7 +172,16 @@ export function MapaSatelital({
   const [fecha, setFecha] = useState(haceDias(35));
   const [comparar, setComparar] = useState(false);
   const [fechaB, setFechaB] = useState(haceDias(35));
+  const [capaB, setCapaB] = useState<CapaId | null>(null);
   const [mezcla, setMezcla] = useState(50);
+  // Cortina (swipe): la fecha B se dibuja en un segundo mapa sincronizado y recortado a la derecha del corte.
+  const [modoComparacion, setModoComparacion] = useState<"cortina" | "mezcla">("cortina");
+  const [corte, setCorte] = useState(50);
+  const contenedorB = useRef<HTMLDivElement>(null);
+  const mapaB = useRef<MapaML | null>(null);
+  // Time-lapse mensual de Aguada Blanca (imágenes HLS elegidas por scripts/timelapse_hls.py).
+  const [lapso, setLapso] = useState<number | null>(null);
+  const [reproduciendo, setReproduciendo] = useState(false);
   // 2D por defecto: en 3D el relieve (2–6 km de altura) tapa los sismos y volcanes dibujados a nivel del mar.
   const [tresD, setTresD] = useState(false);
   const [exageracion, setExageracion] = useState(1.6);
@@ -146,6 +192,10 @@ export function MapaSatelital({
   const volcanes = useCapaVolcanes();
 
   const def = CAPAS.find((c) => c.id === capa) ?? CAPAS[0];
+  const defB = CAPAS.find((c) => c.id === (capaB ?? capa)) ?? def;
+  const cortina = comparar && modoComparacion === "cortina";
+  const mesLapso = lapso === null ? null : LAPSO.meses[lapso] ?? null;
+  const sinImagen = mesLapso !== null && !mesLapso.elegida;
   const bbox = dominio?.bbox;
   const conGeometria = useMemo(() => unidades.filter((u) => u.geometry?.type === "Point"), [unidades]);
   const pendientes = useMemo(() => unidades.filter((u) => !u.geometry), [unidades]);
@@ -255,12 +305,16 @@ export function MapaSatelital({
         m.on("mouseleave", capaId, () => (m.getCanvas().style.cursor = ""));
       }
       mapa.current = m;
+      // Solo en desarrollo: acceso desde la consola para depurar la cámara.
+      if (import.meta.env.DEV) (window as unknown as { __mapaTV?: MapaML }).__mapaTV = m;
     } catch {
       setError(t("No se pudo iniciar el mapa (WebGL no disponible).", "The map could not start (WebGL unavailable)."));
     }
     return () => {
       mapa.current?.remove();
       mapa.current = null;
+      // Un mapa nuevo no está listo hasta su propio evento "load" (p. ej. tras recarga en caliente).
+      setListo(false);
     };
     // El mapa se crea una sola vez; los cambios se aplican en los efectos siguientes.
      
@@ -276,13 +330,97 @@ export function MapaSatelital({
     }
     m.addSource("capa-a", { type: "raster", tiles: [urlCapa(def.id, fecha)], tileSize: 256, maxzoom: def.nivel });
     m.addLayer({ id: "capa-a", type: "raster", source: "capa-a", paint: { "raster-fade-duration": 200 } }, "sombras");
-    if (comparar) {
-      m.addSource("capa-b", { type: "raster", tiles: [urlCapa(def.id, fechaB)], tileSize: 256, maxzoom: def.nivel });
+    if (comparar && !cortina) {
+      m.addSource("capa-b", { type: "raster", tiles: [urlCapa(defB.id, fechaB)], tileSize: 256, maxzoom: defB.nivel });
       m.addLayer({ id: "capa-b", type: "raster", source: "capa-b", paint: { "raster-opacity": mezcla / 100, "raster-fade-duration": 0 } }, "sombras");
     }
+    // Mes sin imagen válida en el time-lapse: no se deja la imagen anterior a la vista.
+    m.setPaintProperty("capa-a", "raster-opacity", sinImagen ? 0 : 1);
     // La mezcla se ajusta en su propio efecto (sin recrear fuentes).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [def.id, def.nivel, fecha, fechaB, comparar, listo]);
+  }, [def.id, def.nivel, defB.id, defB.nivel, fecha, fechaB, comparar, cortina, sinImagen, listo]);
+
+  // Segundo mapa de la cortina: mismo fondo, la capa B y la misma cámara que el principal en todo momento.
+  useEffect(() => {
+    const m = mapa.current;
+    if (!cortina || !m || !listo || !contenedorB.current) return;
+    const b = new maplibregl.Map({
+      container: contenedorB.current,
+      style: {
+        version: 8,
+        sources: {
+          fondo: { type: "raster", tiles: [`${GIBS}/BlueMarble_ShadedRelief_Bathymetry/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpeg`], tileSize: 256, maxzoom: 8 },
+          capa: { type: "raster", tiles: [urlCapa(defB.id, fechaB)], tileSize: 256, maxzoom: defB.nivel },
+          referencias: { type: "raster", tiles: [REFERENCIAS], tileSize: 256, maxzoom: 13 },
+          relieve: { type: "raster-dem", tiles: ["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"], encoding: "terrarium", tileSize: 256, maxzoom: 13 },
+        },
+        layers: [
+          { id: "fondo", type: "raster", source: "fondo" },
+          { id: "capa", type: "raster", source: "capa" },
+          { id: "referencias", type: "raster", source: "referencias", paint: { "raster-opacity": 0.85 }, layout: { visibility: verReferencias ? "visible" : "none" } },
+        ],
+        ...(tresD ? { terrain: { source: "relieve", exaggeration: exageracion } } : {}),
+      },
+      center: m.getCenter(),
+      zoom: m.getZoom(),
+      bearing: m.getBearing(),
+      pitch: m.getPitch(),
+      interactive: false,
+      attributionControl: false,
+    });
+    const sincronizar = () => b.jumpTo({ center: m.getCenter(), zoom: m.getZoom(), bearing: m.getBearing(), pitch: m.getPitch() });
+    m.on("move", sincronizar);
+    mapaB.current = b;
+    return () => {
+      m.off("move", sincronizar);
+      b.remove();
+      mapaB.current = null;
+    };
+  }, [cortina, listo, defB.id, defB.nivel, fechaB, tresD, exageracion, verReferencias]);
+
+  // Reproductor del time-lapse: avanza un mes cada 1,4 s y vuelve a empezar.
+  useEffect(() => {
+    if (!reproduciendo) return;
+    const id = window.setInterval(() => setLapso((i) => (i === null ? 0 : (i + 1) % LAPSO.meses.length)), 2000);
+    return () => window.clearInterval(id);
+  }, [reproduciendo]);
+
+  useEffect(() => {
+    const img = mesLapso?.elegida;
+    if (!img) return;
+    setCapa(img.capa);
+    setFecha(img.fecha);
+    // Precarga en la caché del navegador las teselas visibles de los dos meses siguientes: al avanzar,
+    // MapLibre las toma de la caché y el embalse no parpadea con el fondo mientras cargan.
+    const m = mapa.current;
+    if (!m || lapso === null) return;
+    const b = m.getBounds();
+    const z = 12;
+    const n = 2 ** z;
+    const tx = (lon: number) => Math.floor(((lon + 180) / 360) * n);
+    const ty = (lat: number) => Math.floor(((1 - Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) / 2) * n);
+    const [x0, x1, y0, y1] = [tx(b.getWest()), tx(b.getEast()), ty(b.getNorth()), ty(b.getSouth())];
+    if ((x1 - x0 + 1) * (y1 - y0 + 1) > 48) return;
+    for (const k of [1, 2]) {
+      const sig = LAPSO.meses[(lapso + k) % LAPSO.meses.length]?.elegida;
+      if (!sig) continue;
+      const plantilla = urlCapa(sig.capa, sig.fecha);
+      for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) {
+        // Petición CORS, igual que la de MapLibre, para que ambas compartan la entrada de caché.
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = plantilla.replace("{z}", String(z)).replace("{x}", String(x)).replace("{y}", String(y));
+      }
+    }
+  }, [mesLapso, lapso]);
+
+  const iniciarLapso = () => {
+    setComparar(false);
+    setTresD(false);
+    if (lapso === null) setLapso(0);
+    setReproduciendo((r) => !r);
+    mapa.current?.flyTo({ center: CENTRO_AGUADA_BLANCA, zoom: 12.3, pitch: 0, bearing: 0, duration: 1400, padding: margenPanel() });
+  };
 
   useEffect(() => {
     const m = mapa.current;
@@ -344,12 +482,17 @@ export function MapaSatelital({
     mapa.current.fitBounds([[x1, y1], [x2, y2]], { padding: 60, pitch: tresD ? 50 : 0, bearing: -18, duration: 1200 });
   };
 
-  const usarComparacion = (c: (typeof COMPARACIONES)[number]) => {
+  const usarComparacion = (c: Comparacion) => {
+    setReproduciendo(false);
+    setLapso(null);
     setCapa(c.capa);
+    setCapaB(c.capaB ?? null);
     setFecha(c.a);
     setFechaB(c.b);
     setMezcla(50);
+    setCorte(50);
     setComparar(true);
+    if (c.centro) mapa.current?.flyTo({ center: c.centro, zoom: 12.3, pitch: 0, bearing: 0, duration: 1400, padding: margenPanel() });
   };
 
   const botonCapa = (c: Capa) => (
@@ -358,7 +501,12 @@ export function MapaSatelital({
       type="button"
       role="radio"
       aria-checked={capa === c.id}
-      onClick={() => setCapa(c.id)}
+      onClick={() => {
+        setCapa(c.id);
+        setCapaB(null);
+        setReproduciendo(false);
+        setLapso(null);
+      }}
       className={clsx(
         "flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-[12.5px] transition-colors",
         capa === c.id ? "bg-accent-soft font-medium text-accent-ink" : "text-ink-2 hover:bg-surface-2",
@@ -373,8 +521,58 @@ export function MapaSatelital({
   );
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#0d0d0d]">
+    <div data-mapa-raiz className="relative h-full w-full overflow-hidden bg-[#0d0d0d]">
       <div ref={contenedor} className="absolute inset-0" aria-label={t("Mapa satelital de la cuenca del Chili", "Satellite map of the Chili basin")} role="region" />
+      {cortina && (
+        <>
+          <div ref={contenedorB} className="pointer-events-none absolute inset-0" style={{ clipPath: `inset(0 0 0 ${corte}%)` }} aria-hidden />
+          <div className="absolute inset-y-0 z-10 w-0" style={{ left: `${corte}%` }}>
+            <div className="absolute inset-y-0 -left-px w-0.5 bg-white shadow-[0_0_0_1px_rgba(0,0,0,.35)]" />
+            <button
+              type="button"
+              aria-label={t("Arrastre para mover la cortina entre la fecha A y la fecha B", "Drag to move the curtain between date A and date B")}
+              className="absolute top-1/2 -ml-4 grid h-8 w-8 -translate-y-1/2 cursor-ew-resize place-items-center rounded-full border-2 border-white bg-[#0d366b] text-white shadow-flotante"
+              onPointerDown={(e) => {
+                const raiz = e.currentTarget.closest("[data-mapa-raiz]") as HTMLElement | null;
+                if (!raiz) return;
+                e.currentTarget.setPointerCapture(e.pointerId);
+                const mover = (ev: PointerEvent) => {
+                  const r = raiz.getBoundingClientRect();
+                  setCorte(Math.min(98, Math.max(2, ((ev.clientX - r.left) / r.width) * 100)));
+                };
+                const soltar = () => {
+                  window.removeEventListener("pointermove", mover);
+                  window.removeEventListener("pointerup", soltar);
+                };
+                window.addEventListener("pointermove", mover);
+                window.addEventListener("pointerup", soltar);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowLeft") setCorte((c) => Math.max(2, c - 4));
+                if (e.key === "ArrowRight") setCorte((c) => Math.min(98, c + 4));
+              }}
+            >
+              <SplitSquareHorizontal className="h-4 w-4" aria-hidden />
+            </button>
+          </div>
+          <p className="pointer-events-none absolute top-3 z-10 rounded-md bg-black/65 px-2 py-1 text-[11.5px] font-medium text-white" style={{ right: `calc(${100 - corte}% + 10px)` }}>
+            A · {fechaCapa(def, fecha)} · {t(def.nombre[0], def.nombre[1])}
+          </p>
+          <p className="pointer-events-none absolute top-3 z-10 rounded-md bg-black/65 px-2 py-1 text-[11.5px] font-medium text-white" style={{ left: `calc(${corte}% + 10px)` }}>
+            B · {fechaCapa(defB, fechaB)} · {t(defB.nombre[0], defB.nombre[1])}
+          </p>
+        </>
+      )}
+      {mesLapso && (
+        <div className="pointer-events-none absolute left-1/2 top-3 z-10 -translate-x-1/2 rounded-xl bg-black/70 px-3 py-2 text-center text-white shadow-flotante">
+          <p className="cifra text-[18px] font-semibold leading-none">{mesLapso.mes}</p>
+          <p className="mt-1 text-[11.5px] text-white/85">
+            {mesLapso.elegida
+              ? `${mesLapso.elegida.sensor} · ${mesLapso.elegida.fecha} · ${t("nubes", "clouds")} ${numero(mesLapso.elegida.nubosidad * 100, 0)} %`
+              : t(`Sin observación válida (${mesLapso.imagenes_probadas} pasadas, todas con nubes o incompletas)`, `No valid observation (${mesLapso.imagenes_probadas} passes, all cloudy or incomplete)`)}
+          </p>
+        </div>
+      )}
       {error && <div className="absolute inset-0 grid place-items-center p-6 text-center text-sm text-white/80">{error}</div>}
 
       <div className="vidrio absolute left-3 top-3 max-h-[calc(100%-1.5rem)] w-[min(92vw,310px)] overflow-y-auto rounded-2xl border border-line p-4 shadow-flotante md:left-5 md:top-5">
@@ -401,19 +599,58 @@ export function MapaSatelital({
               {t("Fecha B (encima)", "Date B (on top)")}
               <input type="date" value={fechaB} max={haceDias(0)} min="2000-02-24" onChange={(e) => e.target.value && setFechaB(e.target.value)} className="mt-1 h-9 w-full rounded-lg border border-line bg-surface px-2.5 text-[13px] text-ink" />
             </label>
+            <Segmentado<"cortina" | "mezcla">
+              etiqueta={t("Modo de comparación", "Comparison mode")}
+              valor={modoComparacion}
+              alCambiar={setModoComparacion}
+              opciones={[
+                { valor: "cortina", texto: t("Cortina", "Swipe") },
+                { valor: "mezcla", texto: t("Transparencia", "Blend") },
+              ]}
+            />
             <label className="block text-[11.5px] text-ink-3">
-              <span className="flex justify-between"><span>A · {fechaCapa(def, fecha)}</span><span>B · {fechaCapa(def, fechaB)}</span></span>
-              <input type="range" min={0} max={100} value={mezcla} onChange={(e) => setMezcla(Number(e.target.value))} aria-label={t("Mezcla entre la fecha A y la fecha B", "Blend between date A and date B")} className="mt-1 w-full accent-[var(--accent)]" />
+              <span className="flex justify-between"><span>A · {fechaCapa(def, fecha)}</span><span>B · {fechaCapa(defB, fechaB)}</span></span>
+              {modoComparacion === "cortina" ? (
+                <input type="range" min={2} max={98} value={corte} onChange={(e) => setCorte(Number(e.target.value))} aria-label={t("Posición de la cortina", "Curtain position")} className="mt-1 w-full accent-[var(--accent)]" />
+              ) : (
+                <input type="range" min={0} max={100} value={mezcla} onChange={(e) => setMezcla(Number(e.target.value))} aria-label={t("Mezcla entre la fecha A y la fecha B", "Blend between date A and date B")} className="mt-1 w-full accent-[var(--accent)]" />
+              )}
             </label>
           </div>
         )}
         <div className="mt-2 space-y-1">
           <p className="text-[11px] text-ink-3">{t("Comparaciones con eventos documentados:", "Comparisons with documented events:")}</p>
+          <p className="text-[11px] leading-snug text-ink-3">
+            {t(
+              "Observación: en feb-2025 el embalse se ve pardo claro (compatible con agua cargada de sedimentos) y en nov-2023 verde azulado. Es color de superficie en reflectancia, no una medición de turbidez ni de volumen.",
+              "Observation: in Feb 2025 the reservoir looks light brown (consistent with sediment-laden water) and in Nov 2023 blue-green. This is surface colour in reflectance, not a turbidity or volume measurement.",
+            )}
+          </p>
           {COMPARACIONES.map((c) => (
             <button key={c.a + c.capa} type="button" onClick={() => usarComparacion(c)} className="block w-full rounded-lg border border-line px-2.5 py-1.5 text-left text-[11.5px] text-ink-2 hover:bg-surface-2 hover:text-ink">
               {t(...c.texto)}
             </button>
           ))}
+        </div>
+
+        <div className="mt-3 rounded-xl border border-line p-2.5">
+          <p className="etiqueta mb-1.5">{t("Evolución del agua · Aguada Blanca", "Water evolution · Aguada Blanca")}</p>
+          <button type="button" onClick={iniciarLapso} className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-3 py-2 text-[13px] font-semibold text-white hover:brightness-110">
+            {reproduciendo ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+            {reproduciendo ? t("Pausar time-lapse", "Pause time-lapse") : t(`Reproducir time-lapse ${LAPSO.meses[0]?.mes.slice(0, 4)}–${LAPSO.meses.at(-1)?.mes.slice(0, 4)}`, `Play time-lapse ${LAPSO.meses[0]?.mes.slice(0, 4)}–${LAPSO.meses.at(-1)?.mes.slice(0, 4)}`)}
+          </button>
+          {lapso !== null && (
+            <label className="mt-2 block text-[11.5px] text-ink-3">
+              {t("Mes", "Month")}: <span className="cifra font-medium text-ink-2">{mesLapso?.mes}</span>
+              <input type="range" min={0} max={LAPSO.meses.length - 1} value={lapso} onChange={(e) => { setReproduciendo(false); setLapso(Number(e.target.value)); }} aria-label={t("Mes del time-lapse", "Time-lapse month")} className="mt-1 w-full accent-[var(--accent)]" />
+            </label>
+          )}
+          <p className="mt-1.5 text-[11px] leading-snug text-ink-3">
+            {t(
+              `HLS 30 m (Sentinel-2 y Landsat 8/9). ${LAPSO.meses.filter((m) => m.elegida).length} de ${LAPSO.meses.length} meses con imagen sin nubes sobre el embalse; los demás se muestran vacíos, sin interpolar.`,
+              `HLS 30 m (Sentinel-2 and Landsat 8/9). ${LAPSO.meses.filter((m) => m.elegida).length} of ${LAPSO.meses.length} months have a cloud-free image over the reservoir; the rest are shown empty, never interpolated.`,
+            )}
+          </p>
         </div>
 
         <p className="etiqueta mb-1.5 mt-3">{t("Capas superpuestas", "Overlays")}</p>
@@ -453,7 +690,7 @@ export function MapaSatelital({
           <img src={`https://gibs.earthdata.nasa.gov/legends/${def.leyenda}`} alt={t("Escala de colores de la capa (NASA GIBS)", "Layer color scale (NASA GIBS)")} className="mt-2 w-full rounded bg-white/90 p-1" loading="lazy" />
         )}
         <p className="mt-2 text-[11px] text-ink-3">
-          NASA GIBS · {def.resolucion} · {def.periodo === "mensual" ? t("compuesto mensual", "monthly composite") : def.periodo === "8dias" ? t("compuesto de 8 días", "8-day composite") : t("diaria", "daily")} · {comparar ? `${fechaCapa(def, fecha)} → ${fechaCapa(def, fechaB)}` : fechaCapa(def, fecha)}
+          NASA GIBS · {def.resolucion} · {def.periodo === "mensual" ? t("compuesto mensual", "monthly composite") : def.periodo === "8dias" ? t("compuesto de 8 días", "8-day composite") : t("diaria", "daily")} · {comparar ? `${fechaCapa(def, fecha)} → ${fechaCapa(defB, fechaB)}` : fechaCapa(def, fecha)}
         </p>
         {(verSismos || verVolcanes) && (
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-line pt-2 text-[11px] text-ink-2">

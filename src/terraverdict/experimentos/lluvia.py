@@ -75,7 +75,7 @@ def preparar(raw: Path, fuente: str = "power") -> tuple[pd.DataFrame, pd.Series,
     else:
         lluvia = df["PRECTOTCORR"]
     oni = D.oni_disponible_diario(D.oni_mensual(raw), df.index)
-    doy = 2 * np.pi * df.index.dayofyear / 365.25
+    doy = 2 * np.pi * df.index.day_of_year / 365.25
     X = pd.DataFrame(
         {
             "lluvia_log": np.log1p(lluvia),
@@ -110,7 +110,7 @@ def tarea(cfg: dict[str, Any], raw: Path, fuente: str = "power") -> tuple[Tarea,
     def referencias(hasta: str):
         # Climatología por día del año (±15 días) y persistencia de Markov, ajustadas con datos ≤ hasta
         ent = evento.index <= pd.Timestamp(hasta)
-        doy = evento.index.dayofyear
+        doy = evento.index.day_of_year
         clim_doy = {d: float(evento[ent & (np.abs(((doy - d + 182) % 365) - 182) <= 15)].mean()) for d in range(1, 367)}
         hoy, manana = evento[ent].to_numpy()[:-1], evento[ent].to_numpy()[1:]
         p1, p0 = float(manana[hoy == 1].mean()), float(manana[hoy == 0].mean())
@@ -120,7 +120,7 @@ def tarea(cfg: dict[str, Any], raw: Path, fuente: str = "power") -> tuple[Tarea,
             for parte in ("validacion", "prueba"):
                 f = d.fechas[parte]
                 salida[parte] = {
-                    "climatologia": np.array([clim_doy[(x + pd.Timedelta(days=1)).dayofyear] for x in f]),
+                    "climatologia": np.array([clim_doy[(x + pd.Timedelta(days=1)).day_of_year] for x in f]),
                     "persistencia": np.where(evento.reindex(f).to_numpy() == 1, p1, p0),
                 }
             return salida

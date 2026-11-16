@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { Activity, BookOpenText, BrainCircuit, ChevronDown, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, ShieldCheck, Sun, Workflow, X, type LucideIcon } from "lucide-react";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ErrorApi } from "../api/cliente";
 import { useResumen, useSalud } from "../api/consultas";
@@ -33,10 +33,15 @@ const NAVEGACION: GrupoNav[] = [
     items: [
       { a: "/sismos", texto: ["Sismos", "Earthquakes"], icono: Activity },
       { a: "/volcanes", texto: ["Volcanes", "Volcanoes"], icono: Mountain },
-      { a: "/caos", texto: ["Dinámica y caos", "Dynamics & chaos"], icono: Orbit },
       { a: "/modelos", texto: ["Modelos", "Models"], icono: BrainCircuit },
       { a: "/fenomenos", texto: ["Catálogo de fenómenos", "Hazard catalog"], icono: Layers3 },
     ],
+  },
+  {
+    // Análisis no lineal (Takens, D₂, Lyapunov): valioso para especialistas, secundario para el resto.
+    grupo: ["Dinámica avanzada", "Advanced dynamics"],
+    plegable: true,
+    items: [{ a: "/caos", texto: ["Caos determinista", "Deterministic chaos"], icono: Orbit }],
   },
   {
     grupo: ["Explorar datos", "Explore data"],
@@ -89,6 +94,43 @@ function EstadoApi() {
       </span>
       <span className="font-mono text-ink-3">v{resumen.data?.version_api ?? "—"}</span>
     </div>
+  );
+}
+
+/**
+ * Aviso de arranque en frío. Aparece solo mientras la primera respuesta de la API no ha llegado y ya pasó
+ * más de 1,2 s (en Vercel, una instancia nueva migra la base e importa el contrato antes de responder).
+ * El texto describe lo que de verdad ocurre en el servidor; con error, lo dice y no promete nada.
+ */
+export function AvisoArranque() {
+  const salud = useSalud();
+  const [segundos, setSegundos] = useState(0);
+  const esperando = salud.isLoading || (salud.isFetching && !salud.data);
+  useEffect(() => {
+    if (!esperando) return;
+    const inicio = Date.now();
+    const id = window.setInterval(() => setSegundos(Math.floor((Date.now() - inicio) / 1000)), 400);
+    return () => window.clearInterval(id);
+  }, [esperando]);
+  if (salud.isError && !salud.data) {
+    return (
+      <p role="alert" className="flex items-center justify-center gap-2 border-b border-line bg-surface-2 px-4 py-1.5 text-center text-[12.5px] text-ink-2">
+        <span className="h-2 w-2 rounded-full" style={{ background: "var(--critical)" }} />
+        {t("La API no respondió. La función serverless puede estar reiniciándose: se reintentará automáticamente.", "The API did not respond. The serverless function may be restarting: it will retry automatically.")}
+      </p>
+    );
+  }
+  if (!esperando || segundos < 1) return null;
+  return (
+    <p role="status" aria-live="polite" className="flex items-center justify-center gap-2 border-b border-line bg-accent-soft px-4 py-1.5 text-center text-[12.5px] font-medium text-accent-ink">
+      <span className="h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
+      {segundos < 12
+        ? t(
+            `Iniciando la API serverless: migrando la base e importando los expedientes verificados (arranque en frío, ${segundos} s)…`,
+            `Starting the serverless API: migrating the database and loading the verified case files (cold start, ${segundos} s)…`,
+          )
+        : t(`La API tarda más de lo normal (${segundos} s). Seguimos esperando su primera respuesta…`, `The API is taking longer than usual (${segundos} s). Still waiting for its first response…`)}
+    </p>
   );
 }
 
@@ -287,6 +329,7 @@ export function Marco({ children }: { children: ReactNode }) {
 
       <div className="flex min-w-0 flex-col">
         <AvisoNoOficial />
+        <AvisoArranque />
         <main className={clsx(esMapa ? "h-[calc(100vh-57px-36px)] lg:h-[calc(100vh-36px)]" : "mx-auto w-full max-w-[1280px] px-4 pb-28 pt-6 md:px-8 md:pb-28 md:pt-10")}>
           {children}
         </main>

@@ -20,6 +20,12 @@ type Respuesta = Esquemas["RespuestaAsistenteSalida"];
 type Mensaje = { rol: "persona" | "bot"; texto: string; error?: boolean; respuesta?: Respuesta };
 
 const CLAVE = "tv-chat";
+const EVENTO_ABRIR = "terra:abrir";
+
+/** Abre el asistente desde cualquier parte de la interfaz; con `pregunta`, la deja escrita lista para enviar. */
+export function abrirTerra(pregunta?: string): void {
+  window.dispatchEvent(new CustomEvent<string | undefined>(EVENTO_ABRIR, { detail: pregunta }));
+}
 const PATRON_EXPEDIENTE = /^\/expedientes\/(TV-[A-Z]{2,4}-[0-9A-F]{12})/;
 
 /** Avatar de "Terra", el detective del proyecto: un satélite-detective con órbita y antena. */
@@ -50,14 +56,19 @@ function sugerencias(ruta: string): [string, string][] {
     "/metricas": [["¿Qué tan bien se pronostica la sequía a 1 y 3 meses?", "How well is drought forecast at 1 and 3 months?"]],
     "/modelos": [["¿Qué modelo pronostica mejor la sequía?", "Which model forecasts drought best?"]],
   };
-  const base: [string, string][] = [
-    ["¿Qué tan bien se pronostica la sequía a 1 y 3 meses?", "How well is drought forecast at 1 and 3 months?"],
-    ["¿Qué variables importan para la lluvia extrema?", "Which variables matter for extreme rain?"],
-    ["¿Hubo más sismos cerca de Arequipa con los años?", "Have earthquakes near Arequipa increased over the years?"],
-  ];
-  const propias = Object.entries(tema).find(([r]) => ruta.startsWith(r))?.[1] ?? [];
-  return [...propias, ...base.filter((b) => !propias.some((p) => p[0] === b[0]))].slice(0, 3);
+  return [...(Object.entries(tema).find(([r]) => ruta.startsWith(r))?.[1] ?? []), ...PREGUNTAS_RAPIDAS].slice(0, 4);
 }
+
+/**
+ * Preguntas rápidas para quien evalúa: cada premisa está documentada (Aguada Blanca 43 → 22 hm³ en la
+ * crónica de eventos; ONI ASO 2026 = +2,46 de NOAA CPC). Al hacer clic se envía la consulta real.
+ */
+export const PREGUNTAS_RAPIDAS: [string, string][] = [
+  ["¿Por qué la represa Aguada Blanca perdió cerca de la mitad de su capacidad?", "Why has Aguada Blanca reservoir lost about half of its storage capacity?"],
+  ["¿Puede el ML predecir la lluvia extrema de mañana en los Andes?", "Can ML predict tomorrow's extreme rainfall in the Andes?"],
+  ["¿Cómo afecta El Niño (ONI +2,46) al riesgo de sequía esta temporada?", "How does El Niño (ONI +2.46) affect drought risk this season?"],
+  ["Muéstrame el intervalo de confianza del 90 % del modelo SPI-3.", "Show me the 90% confidence interval of the SPI-3 model."],
+];
 
 function leer(): Mensaje[] {
   try {
@@ -125,6 +136,16 @@ export function ChatFlotante() {
     }
     fin.current?.scrollIntoView({ block: "end" });
   }, [mensajes, abierto]);
+
+  useEffect(() => {
+    const abrir = (e: Event) => {
+      const pregunta = (e as CustomEvent<string | undefined>).detail;
+      setAbierto(true);
+      if (pregunta) setTexto(pregunta);
+    };
+    window.addEventListener(EVENTO_ABRIR, abrir);
+    return () => window.removeEventListener(EVENTO_ABRIR, abrir);
+  }, []);
 
   useEffect(() => {
     if (abierto) entrada.current?.focus();
