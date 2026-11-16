@@ -1,273 +1,346 @@
 <div align="center">
 
-# 🛰️ TerraVerdict
+# TerraVerdict
 
-### Auditable Earth-system verdicts for mountain cities that run out of water — from too little *and* from too much
+**Auditable Earth-system verdicts for mountain cities that lose water to drought and to floods**
 
-**NASA Space Apps Challenge 2026 · Challenge: [Be An Earth System Trend Detective!](https://www.spaceappschallenge.org/2026/challenges/earth-system-trend-detective/) · Team TerraVerdict · Arequipa, Peru**
+NASA Space Apps Challenge 2026 · Challenge: [Be An Earth System Trend Detective!](https://www.spaceappschallenge.org/2026/challenges/earth-system-trend-detective/) · Team TerraVerdict · Arequipa, Peru
 
-[![Live app](https://img.shields.io/badge/live-terraverdict.vercel.app-0B3D91)](https://terraverdict.vercel.app)
-[![API docs](https://img.shields.io/badge/API-OpenAPI%20%C2%B7%2047%20paths-2E7D32)](https://terraverdict.vercel.app/api/docs)
-[![NASA data](https://img.shields.io/badge/data-GPM%20IMERG%20%C2%B7%20POWER%20%C2%B7%20HLS%20%C2%B7%20MODIS%20%C2%B7%20SMAP%20%C2%B7%20GIBS-0B3D91)](#-nasa-and-partner-data)
-[![Chain of custody](https://img.shields.io/badge/raw%20files-143%20SHA--256%20verified-2E7D32)](docs/trazabilidad.md)
+[![Live application](https://img.shields.io/badge/live-terraverdict.vercel.app-0B3D91)](https://terraverdict.vercel.app)
+[![API](https://img.shields.io/badge/API-OpenAPI%203%20%C2%B7%2047%20paths-2E7D32)](https://terraverdict.vercel.app/api/docs)
+[![Chain of custody](https://img.shields.io/badge/raw%20inputs-143%20files%2C%20SHA--256-2E7D32)](docs/trazabilidad.md)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
-**🌐 <https://terraverdict.vercel.app>** · 🇪🇸 [Leer en español](readme.es.md)
+[Live application](https://terraverdict.vercel.app) · [API reference](https://terraverdict.vercel.app/api/docs) · [Versión en español](readme.es.md)
 
-<img src="docs/capturas/readme/semaforo.jpg" alt="TerraVerdict dashboard: 3-minute guide for judges and the water-status traffic light" width="900">
+<img src="docs/capturas/readme/semaforo.jpg" alt="TerraVerdict dashboard: guided evaluation and current water-status indicators" width="900">
 
 </div>
 
-> Results are experimental. They are **not official warnings** (SENAMHI, IGP, INGEMMET, INDECI, ENFEN).
+> **Disclaimer.** TerraVerdict publishes experimental research results. They are not official warnings and do not replace SENAMHI, IGP, INGEMMET, INDECI or ENFEN.
 
 ---
 
-## Table of contents
+## Contents
 
-1. [The problem](#-the-problem)
-2. [What TerraVerdict does](#-what-terraverdict-does)
-3. [Product tour](#-product-tour)
-4. [Key results](#-key-results-out-of-sample)
-5. [NASA and partner data](#-nasa-and-partner-data)
-6. [Architecture](#-architecture)
-7. [Scientific integrity](#-scientific-integrity)
-8. [Run it locally](#-run-it-locally)
-9. [Repository layout](#-repository-layout)
-10. [Quality and testing](#-quality-and-testing)
-11. [Deployment and security](#-deployment-and-security)
-12. [Limitations and roadmap](#-limitations-and-roadmap)
-13. [Team](#-team)
-14. [Documentation index](#-documentation-index)
+1. [Summary](#1-summary)
+2. [Problem statement](#2-problem-statement)
+3. [System overview](#3-system-overview)
+4. [Data](#4-data)
+5. [Methodology](#5-methodology)
+6. [Results](#6-results)
+7. [Architecture and engineering](#7-architecture-and-engineering)
+8. [Reproducibility](#8-reproducibility)
+9. [Quality assurance](#9-quality-assurance)
+10. [Deployment, security and operations](#10-deployment-security-and-operations)
+11. [Threats to validity and limitations](#11-threats-to-validity-and-limitations)
+12. [Roadmap](#12-roadmap)
+13. [Team](#13-team)
+14. [Documentation map](#14-documentation-map)
 
 ---
 
-## 💧 The problem
+## 1. Summary
 
-Arequipa, Peru's second city, depends on one regulated basin — the Chili system of seven high-Andean reservoirs — and it fails in both directions:
+TerraVerdict is a geospatial data-science system that answers four questions for a regulated mountain basin: **what is changing, why, with how much confidence, and where to act**. The pilot case is the Chili regulated system, which supplies the city of Arequipa (Peru), and the same engine runs for Peru's 25 departments.
 
-| When | What happened | Figure | Source |
+Its central design choice is that **every number shown to a user is a published, immutable case file**. Each case file (`TV-…`) carries the estimate, its 90 % uncertainty interval and verdict, the sources, the SHA-256 hashes of its raw inputs, the preregistration hash and the git commit that produced it. The web application, the REST API, the executive PDF briefs and the AI assistant all read from these case files. None of them computes or types figures of its own.
+
+The system is deployed at <https://terraverdict.vercel.app>.
+
+## 2. Problem statement
+
+The Chili basin fails in both directions, often within the same El Niño–Southern Oscillation (ENSO) cycle:
+
+| Date | Event | Figure | Cited source |
 |---|---|---|---|
-| Nov 2023 | Drought: reservoirs nearly empty | **159 of 409 hm³ (39 %)** | La República |
-| Mar 2024 | Sediment: Aguada Blanca lost about half its capacity | **43 → 22 hm³** | El Búho |
-| Feb 2025 | Flood: turbidity stopped the drinking-water plants | **5,000 NTU, > 70 % of the city without water** | El Búho, Andina |
-| Oct 2026 | A strong El Niño is under way | **ONI +2.46 °C** (Aug–Oct 2026) | NOAA CPC |
+| Nov 2023 | Drought: storage in the seven reservoirs | 159 of 409 hm³ usable (39 %) | La República |
+| Mar 2024 | Sedimentation of Aguada Blanca reservoir | Design capacity 43 hm³, estimated 22 hm³ | El Búho |
+| Feb 2025 | Flood-driven turbidity at the city intake | 5,000 NTU; supply cut to more than 70 % of the population | El Búho, Andina |
+| Aug–Oct 2026 | ENSO state | ONI +2.46 °C (El Niño episode by NOAA criterion) | NOAA CPC |
 
-Every figure is cited in the app's event chronicle (`datos/eventos/arequipa.json`). Ground stations cannot answer the obvious questions: the only GHCN station in Arequipa has 14 complete years of rainfall and none since 2010. Satellites cover the basin, but someone has to decide **which variables matter, which trends to believe, and how confident to be**. That is exactly the challenge.
+The scientific gap is observational. Arequipa's only GHCN-Daily station has 14 complete years of rainfall and none since 2010. Satellite and reanalysis products cover the basin, but they disagree, they change sensors over time, and they are confounded by ENSO. The task is therefore not to produce more trends. It is to decide **which variables carry signal, which trends survive adversarial testing, and when the honest answer is "not enough evidence"**.
 
-## 🎯 What TerraVerdict does
+## 3. System overview
 
-TerraVerdict turns NASA open data into **case files** (`TV-…`). Each case file is a sealed, versioned result with its figure, a 90 % interval, a verdict, its sources, the SHA-256 of its inputs and the code commit that produced it. A web app, a REST API and a verified AI assistant are built on top of those case files. Nothing on screen is typed by hand.
-
-| Question a water manager asks | Where TerraVerdict answers it |
-|---|---|
-| *How are we today?* | Water-status traffic light: reservoirs (with the real date of the latest public figure), ENSO (ONI + monthly Niño 3.4 / 1+2), drought (SPI-3 in the headwaters) |
-| *What is really changing?* | Trend detective with a five-test **Confidence Seal** (windows, ENSO, sensor change, independent sources, detectability) plus a leverage test |
-| *Can we see it coming?* | Model zoo evaluated **once** out of sample (2021–2026), with conformal intervals and abstention |
-| *What does space show?* | 3D map with NASA GIBS layers, a 30 m HLS date swipe and a 2020–2026 monthly time-lapse of Aguada Blanca |
-| *What should we tell the mayor?* | Two-page executive PDF brief per case file, and Terra, an AI assistant that cites case files and verifies every number |
-
-## 🧭 Product tour
+| Need | Capability | Where |
+|---|---|---|
+| Situational awareness | Water-status indicators: latest reservoir figure with its real date, ONI and monthly Niño 3.4 / 1+2, headwater SPI-3, historical drought frequency conditional on ENSO | Dashboard `/` |
+| Trend detection | Theil–Sen slopes with conservative Mann–Kendall inference and a six-test Confidence Seal | `/series`, `/peru`, case files |
+| Predictability | Model zoo evaluated once out of sample, with conformal intervals and an explicit abstention rule | `/metricas`, `/modelos` |
+| Variable relevance | Relevance matrix (M1): block-permutation importance, resampling stability, conditional significance with FDR control | `/relevancia` |
+| Earth observation | 3D map on NASA GIBS, HLS 30 m date swipe and a 2020–2026 monthly time-lapse of Aguada Blanca | `/mapa` |
+| Decision support | Executive two-page PDF brief per case file; ENSO stress scenario; documented case study of February 2025 | `/informe/:id`, dashboard |
+| Explanation | Terra, an assistant that answers only from case files and cited events, with deterministic numeric verification | All pages |
+| Auditability | Pipeline runs, input hashes and source verification | `/procesos`, `/fuentes` |
 
 | | |
 |---|---|
-| <img src="docs/capturas/readme/mapa.jpg" alt="3D satellite map with HLS 30 m imagery of Aguada Blanca reservoir" width="440"><br>**3D satellite map** (`/mapa`): NASA GIBS (MODIS, SMAP), HLS 30 m (Landsat 8/9 + Sentinel-2), 3D terrain, USGS earthquakes, GVP volcanoes, **date swipe** and a **monthly time-lapse** of Aguada Blanca (82 of 83 months cloud-free; empty months stay empty). | <img src="docs/capturas/readme/chat.jpg" alt="Terra AI assistant answering with citations and a verification seal" width="440"><br>**Terra, verified AI** (floating on every page): Google Gemini answers **only** from published case files and cited events, links each citation, and a deterministic numeric verifier checks every figure. English and Spanish. |
-| <img src="docs/capturas/readme/tabla2.jpg" alt="Master verdict table for five hazards" width="440"><br>**Master verdict table** (`/`): five hazards with their historical trend, out-of-sample skill and verdict. Each row links to its case file. | <img src="docs/capturas/readme/prediccion.jpg" alt="Prediction vs reality chart with 90 % conformal cone" width="440"><br>**Prediction vs reality** (`/modelos`): observed SPI-3, the forecast of the model chosen on validation and the 90 % conformal cone, with training, validation and test periods marked. |
+| <img src="docs/capturas/readme/mapa.jpg" alt="Satellite map with HLS 30 m imagery of Aguada Blanca" width="440"><br>3D satellite map: HLS 30 m time-lapse of Aguada Blanca, NASA GIBS layers, USGS earthquakes and GVP volcanoes. | <img src="docs/capturas/readme/chat.jpg" alt="Terra assistant answering with citations and a verification seal" width="440"><br>Terra: answers grounded in case files, inline citations and a per-figure verification report. |
+| <img src="docs/capturas/readme/tabla2.jpg" alt="Master verdict table" width="440"><br>Master verdict table: trend, out-of-sample skill and verdict per hazard, each linked to its case file. | <img src="docs/capturas/readme/prediccion.jpg" alt="Prediction versus observation with 90 % conformal band" width="440"><br>Prediction versus observation on the test period, with the 90 % split-conformal band (54 of 60 months covered). |
 
-**Seen from space: the same reservoir in both crises.** NASA HLS S30 at 30 m, tiles selected automatically and checked pixel by pixel (`scripts/timelapse_hls.py`):
+## 4. Data
 
-| 5 Nov 2023 · drought, reservoirs at 39 % | 12 Feb 2025 · sediment, 5,000 NTU outage |
+### 4.1 Sources
+
+| Product | Provider | Coverage used | Role |
+|---|---|---|---|
+| GPM IMERG Final daily, V07 (0.1°) | NASA GES DISC | Jan 1998 – Sep 2025, complete | Target of the relevance matrix; independent rainfall family |
+| POWER (MERRA-2 meteorology; CERES/SRB radiation) | NASA LaRC | Daily Jan 1981 – Oct 2026; 25 departmental cells | Trends, SPI, extreme-rain and drought models, national scale |
+| Harmonized Landsat Sentinel-2, S30/L30 (30 m) | NASA/USGS; Sentinel-2 by ESA/Copernicus | 2020–2026, one image per month | Reservoir time-lapse, date comparison, case study |
+| MODIS Terra true colour, NDVI, LST | NASA via GIBS and ORNL DAAC | 2000 – present | Map layers; land surface temperature contrast |
+| SMAP L4 root-zone soil moisture (9 km) | NASA via GIBS | 2015 – present | Context layer (not used in models) |
+| Global Landslide Catalog | NASA | Southern Peru | Landslide inventory |
+| Oceanic Niño Index; Niño 3.4 and 1+2 (OISST v2.1) | NOAA CPC | 1950 – Oct 2026 | ENSO covariate and current state |
+| GHCN-Daily, station PE000084752 | NOAA NCEI | Station record | Point validation, lapse-rate reference |
+| ComCat | USGS | 1973 – Nov 2026 | Seismicity |
+| Volcanoes of the World | Smithsonian GVP | Since 1550 | Volcanic recurrence |
+| CHIRPS v2.0 | UCSB Climate Hazards Center | 1981 – 2026 | Independent rainfall family for the Seal |
+| SRTM via Mapzen Terrain Tiles | NASA/NGA, USGS, NOAA | — | 3D terrain |
+
+All sources were checked against their official catalogues with live queries: 37 of 40 checks passed, and the three that did not respond are marked as unverified ([`docs/verificacion/README.md`](docs/verificacion/README.md)). Attributions and licences are listed in [`docs/licencias-y-atribuciones.md`](docs/licencias-y-atribuciones.md). TerraVerdict is not endorsed by NASA, ESA or USGS.
+
+### 4.2 Data governance
+
+- Every download is stored with a manifest entry (URL, product, version, byte count, SHA-256, timestamp). `tv verificar-integridad` verifies all 143 raw files before and after each run.
+- Results are sealed: `resultados/indice.json` stores the SHA-256 of each of the 12 result files, so any edit is detected.
+- Satellite imagery is selected, not curated by hand. `scripts/timelapse_hls.py` evaluates every HLS acquisition over the reservoir footprint (OpenStreetMap way 23815221). It keeps the scene with full coverage and the lowest bright-pixel fraction, provided that fraction is at most 10 %. It records the tile URL and its hash. Months without a valid scene stay empty and are never interpolated.
+
+## 5. Methodology
+
+### 5.1 Evaluation protocol
+
+- **Frozen temporal split.** Training 1981–2015, validation 2016–2020, test 2021–2026. The split is part of a preregistration whose hash is embedded in every result; a dedicated test fails if the preregistration is edited.
+- **Selection on validation only.** Hyperparameters, input windows, calibration, ensemble weights and the reported model are all chosen on validation. The test set is evaluated once and only reported.
+- **Rolling origin.** A year-by-year history (2016–2026) re-fits the frozen design, with training up to Y−2, validation on Y−1 and test on Y. Years up to 2020 are flagged as optimistic because they informed the design.
+- **Model zoo.** Persistence and climatology references; linear, regularised and gradient-boosted models; ten neural architectures (GRU, LSTM, TCN, MLP, DLinear, N-BEATS, N-HiTS, PatchTST, iTransformer and a selective state-space model); and two ensembles. Neural models are run with several seeds, and the seed dispersion is reported.
+
+### 5.2 Skill, uncertainty and significance
+
+| Quantity | Definition |
+|---|---|
+| Brier skill score | BSS = 1 − BS(model) / BS(climatology), for daily heavy-rain probability |
+| MSE skill | 1 − MSE(model) / MSE(climatology), for SPI-3 regression |
+| Information gain | Log-likelihood gain over a constant-rate Poisson process, in bits per month, for earthquake counts |
+| Confidence intervals | Moving-block bootstrap of the test loss differential (90 %) |
+| Significance | Diebold–Mariano test with HAC variance and the Harvey–Leybourne–Newbold correction, against climatology |
+| Predictive intervals | Split-conformal, calibrated on validation (nominal 90 %) |
+| Calibration | Reliability diagram and expected calibration error (equal-frequency bins) |
+
+**Evidence rule.** Skill is *confirmed* when the lower bound of the 90 % CI is above zero **and** the Diebold–Mariano p-value is below 0.10, the preregistered threshold. Meeting only one of the two is an *indication*. A model that does not beat climatology on validation is not published as a forecast: the system abstains and states why.
+
+### 5.3 Trend detection and the Confidence Seal
+
+Slopes are Theil–Sen estimates. Inference uses the most conservative of the original, Hamed–Rao and pre-whitened Mann–Kendall p-values. A significant trend is labelled *robust* only if it passes every test of the Confidence Seal:
+
+1. **Windows.** The sign is stable across sliding sub-periods.
+2. **ENSO.** The slope remains after regressing out the ONI, with HAC inference.
+3. **Sensor.** There is no sign change or large relative change across known sensor or product transitions.
+4. **Independence.** The sign agrees across independent data families (POWER, CHIRPS, IMERG).
+5. **Detectability.** Enough years exist to detect the effect at the observed noise level.
+6. **Leverage.** The trend survives the removal of its most influential years.
+
+A failed test yields *fragile*; untested conditions yield *preliminary*. The contract layer rejects any *fragile* verdict that does not name the failed test.
+
+### 5.4 Relevance matrix (M1)
+
+For problem P1, extreme rain in the headwaters with an IMERG target, the matrix combines:
+- permutation importance computed on validation blocks;
+- stability across 200 resamples;
+- a shuffled null with conditional significance under Benjamini–Hochberg FDR;
+- a single evaluation on 2021–2025.
+
+The procedure was validated on synthetic data with known relevant variables. Problems P2–P4 (wetland degradation, reservoir deficit, turbidity) are declared and shown as awaiting data rather than filled in.
+
+### 5.5 Current-state indicators
+
+`tv publicar` computes `indicadores.json` from raw files:
+
+- **ENSO episode status.** NOAA criterion: five consecutive overlapping seasons with ONI ≥ +0.5 °C.
+- **Headwater SPI-3.** Gamma fit with a zero-precipitation probability, parameters estimated on the training period only. A month is flagged unreliable when its climatological three-month total is below 10 mm (dry season).
+- **ENSO-conditional drought frequency.** February SPI-3 ≤ −1 by DJF ONI category, with Wilson 90 % intervals and a one-sided Fisher exact test. This is a descriptive frequency, not a forecast.
+- **Observed lapse rate.** GHCN station at 2,520 m against the POWER headwater cell at 4,232 m, compared with the 6.5 °C/km standard-atmosphere reference. The reference is never used as a correction.
+
+## 6. Results
+
+All figures below are read from `resultados/contrato/*.json`, produced on commit `a59002d` with data downloaded on 15 Nov 2026. Complete tables are in [`docs/experimentos.md`](docs/experimentos.md).
+
+### 6.1 Verdicts by hazard
+
+| Hazard | Historical signal | Out-of-sample predictability (test 2021–2026) | Verdict |
+|---|---|---|---|
+| Drought (SPI-3, headwaters) | Mean temperature +0.22 °C/decade (90 % CI 0.15–0.29; 1981–2025); preliminary | 1-month horizon, Ridge: MSE skill 0.68 (90 % CI 0.54–0.78), DM p = 0.022, conformal coverage 0.90 | Skill confirmed |
+| Extreme rain (next day ≥ training p90) | Dec–Mar rainfall +19.15 mm/decade (90 % CI 4.38–31.88; 1982–2025); fragile, fails the leverage test | Weighted ensemble: BSS 0.092 (90 % CI 0.02–0.17), DM p = 0.097, ECE 0.035 | Skill confirmed at the preregistered threshold; operationally, monitoring only |
+| Earthquakes (350 km of Arequipa) | Gutenberg–Richter b = 1.00 (90 % CI 0.96–1.03), Mc 4.5 | Monthly counts: 0.26 bits/month over Poisson, DM p = 0.073 | Statistical description, not a forecast |
+| Volcanoes | El Misti annual eruption probability 0.8 % (90 % CI 0.3–1.9 %, Garwood) | Not attempted without continuous monitoring data | Historical recurrence |
+| Rain-triggered landslides | 28 events in the domain (NASA GLC) | Threshold requires at least 30 events | Abstention |
+
+At three months, drought skill falls to 0.14 (iTransformer, POWER) and to 0.08 (DLinear, CHIRPS). The one-month skill comes mainly from the persistence of SPI-1 and SPI-3, with the ONI contributing at the longer horizon.
+
+### 6.2 Current state (computed from raw data)
+
+| Indicator | Value | Reference period |
+|---|---|---|
+| ONI | +2.46 °C; El Niño episode (5 consecutive seasons ≥ +0.5) | Aug–Oct 2026 |
+| Niño 3.4 / Niño 1+2 monthly anomaly | +3.25 °C / +5.25 °C (OISST, 1991–2020 base; not comparable figure-by-figure with the ONI) | Oct 2026 |
+| Headwater SPI-3 | +1.67, very wet (35 mm vs a 14 mm climatological mean) | Aug–Oct 2026 |
+| Drought frequency in strong-El Niño seasons | 2 of 5 (Wilson 90 % CI 14–73 %), versus 1 of 30 in other seasons; Fisher p = 0.10 | 1982–2026 |
+| Latest public reservoir figure | 60 % of 404 hm³ usable | Feb 2025 (shown as stale) |
+
+### 6.3 Earth-observation evidence
+
+| 5 Nov 2023, drought | 12 Feb 2025, turbidity episode |
 |---|---|
 | <img src="docs/capturas/readme/hls_antes.jpg" width="320" alt="Aguada Blanca blue-green in November 2023"> | <img src="docs/capturas/readme/hls_despues.jpg" width="320" alt="Aguada Blanca light brown in February 2025"> |
 
-This shows surface colour in reflectance, not a turbidity or volume measurement, and the app says so.
+HLS S30 at 30 m over Aguada Blanca. The reservoir surface is blue-green during the 2023 drought and light brown during the February 2025 outage, which is consistent with sediment-laden water. This is surface reflectance colour, not a turbidity or volume retrieval, and the application states this.
 
-Other views: Peru at national scale with 25 departments and the same engine (`/peru`); relevance matrix M1 (`/relevancia`); earthquakes and volcanoes; El Niño stress simulator; February 2025 case study in three acts; pipeline runs with SHA-256 evidence (`/procesos`); advanced dynamics (Takens, D₂, Lyapunov) in a secondary menu.
+During February 2025 the headwater cell recorded 9 heavy-rain days. On those days the extreme-rain model assigned a mean probability of 0.50, against 0.15 for climatology and 0.25 on the remaining days of the month.
 
-## 📊 Key results (out of sample)
-
-All figures come from `resultados/contrato/*.json`, the contract generated by `tv publicar` on commit `a59002d`. The test period was used once; models were chosen on validation, never on the test.
-
-| Hazard | Historical trend | Can it be anticipated? | Verdict |
-|---|---|---|---|
-| **Drought (SPI-3)** | Temperature +0.22 °C/decade (90 % CI 0.15–0.29; 1981–2025), *preliminary* | **1 month ahead:** Ridge, MSE skill **0.68** vs climatology (90 % CI 0.54–0.78; Diebold-Mariano p = 0.022) | Skill confirmed |
-| **Extreme rain** | Dec–Mar rain +19.15 mm/decade (90 % CI 4.38–31.88; 1982–2025), *fragile* (fails the leverage test) | 1 day ahead: weighted ensemble, BSS **0.09** (90 % CI 0.02–0.17; p = 0.097) | Monitoring, not alerts |
-| **Earthquakes** | Gutenberg-Richter b = **1.00** (90 % CI 0.96–1.03; 1973–2026, USGS) | Monthly counts: 0.26 bits over Poisson | Statistical description |
-| **Volcanoes** | El Misti **0.8 %** per year (90 % CI 0.3–1.9 %; GVP since 1550) | Not without continuous monitoring | Historical recurrence |
-| **Landslides** | 28 rain-triggered events (NASA GLC) | Abstains: ≥ 30 events needed for a threshold | Needs more data |
-
-**Today (as computed from raw files):** ONI +2.46 °C for Aug–Oct 2026, with 5 consecutive seasons ≥ +0.5 (an El Niño episode by NOAA's criterion). Monthly Niño 3.4 is +3.25 °C and Niño 1+2 is +5.25 °C (Oct 2026, OISST 1991–2020 base). Headwater SPI-3 for Aug–Oct 2026 is **+1.67, very wet**. Historically, strong-El Niño seasons brought drought in **2 of 5** cases (Wilson 90 % CI 14–73 %), versus 1 of 30 otherwise (Fisher p = 0.10). That is a historical frequency, not a forecast. Full numbers are in [`docs/experimentos.md`](docs/experimentos.md).
-
-## 🛰️ NASA and partner data
-
-| Product | Provider | Coverage used | Role in TerraVerdict |
-|---|---|---|---|
-| **GPM IMERG Final daily V07** (0.1°) | NASA GES DISC | 1998 – Sep 2025, complete | Target of the relevance matrix (M1) |
-| **POWER** (MERRA-2 meteorology, CERES/SRB radiation) | NASA LaRC | Daily 1981 – Oct 2026; 25 departments | Trends, drought (SPI), extreme rain, national scale, altitude reference |
-| **HLS S30 / L30** (30 m) | NASA/USGS; Sentinel-2 by ESA/Copernicus | 2020–2026, monthly best image | Date swipe, time-lapse, case study |
-| **MODIS Terra** (true colour 250 m, NDVI 1 km, LST 1 km) | NASA (GIBS, ORNL DAAC) | 2000 – today | Map layers, land surface temperature |
-| **SMAP L4** root-zone soil moisture (9 km) | NASA (GIBS) | 2015 – today | Context layer (not yet in models) |
-| **Global Landslide Catalog** | NASA | Southern Peru | Landslide inventory and abstention rule |
-| **GIBS** WMTS | NASA ESDIS | — | All satellite tiles in the browser |
-| SRTM (via Mapzen Terrain Tiles) | NASA/NGA + USGS, NOAA | — | 3D terrain |
-| ONI, Niño 3.4 / 1+2, GHCN-Daily | NOAA CPC / NCEI | 1950 – Oct 2026 | ENSO covariate, station validation |
-| ComCat | USGS | 1973 – Nov 2026 | Earthquakes |
-| Volcanoes of the World | Smithsonian GVP | Since 1550 | Volcanic recurrence |
-| CHIRPS v2 | UCSB CHC | 1981 – 2026 | Independent rainfall for the Seal |
-
-Sources were checked against their official catalogues with real queries: 37 of 40 passed ([`docs/verificacion/README.md`](docs/verificacion/README.md)). Attribution and licences are listed in [`docs/licencias-y-atribuciones.md`](docs/licencias-y-atribuciones.md). TerraVerdict is not endorsed by NASA, ESA or USGS.
-
-## 🏗️ Architecture
+## 7. Architecture and engineering
 
 ```mermaid
 flowchart LR
-    subgraph Ingest["Ingest · tv ingest-*"]
-        RAW[(data/raw<br/>143 files + SHA-256 manifests)]
-    end
+    SRC[NASA Earthdata · POWER · GIBS<br/>NOAA · USGS · GVP · CHC] --> ING
     subgraph Science["Science package · src/terraverdict"]
-        EXP[tv experimentos<br/>12 sealed experiments]
-        TR[tv trends<br/>Confidence Seal]
-        PUB[tv publicar<br/>contract + indicators]
+        ING[Ingest<br/>manifests + SHA-256] --> EXP[Experiments<br/>12 sealed results]
+        ING --> TR[Trends<br/>Confidence Seal]
+        EXP & TR --> PUB[Publish<br/>contract + indicators]
     end
-    subgraph Contract["resultados/contrato"]
-        C1[expedientes.json<br/>16 case files]
-        C2[indicadores.json<br/>ENSO · SPI-3 · altitude]
-        C3[ejecuciones.json<br/>pipeline runs]
+    PUB --> K[(resultados/contrato<br/>expedientes · indicadores · ejecuciones)]
+    subgraph Service["FastAPI · backend/app"]
+        K --> API[REST /api/v1<br/>Pydantic contract validation]
+        API --> AST[Assistant<br/>retrieval + Gemini + numeric verifier]
     end
-    subgraph API["FastAPI · backend/app"]
-        R[REST /api/v1<br/>47 paths, OpenAPI]
-        AI[Terra · RAG REST<br/>Gemini + numeric verifier]
+    subgraph Client["React · frontend"]
+        UI[Dashboard · map · models · briefs<br/>English / Spanish]
     end
-    subgraph Web["React · frontend"]
-        UI[Dashboard · 3D map · models<br/>PDF briefs · EN/ES]
-    end
-    NASA[NASA Earthdata · POWER · GIBS<br/>NOAA · USGS · GVP] --> RAW --> EXP & TR --> PUB --> C1 & C2 & C3 --> R --> UI
-    R --> AI --> UI
+    API --> UI
+    AST --> UI
     GIBS[NASA GIBS WMTS] --> UI
 ```
 
-- **Contract as interface.** The backend imports only `resultados/contrato/` at start-up and never depends on the science package. Each case file is validated by Pydantic rules; for example, a *fragile* trend must name the failed test.
-- **AI architecture.** Terra is a decoupled **RAG over REST** (`POST /api/v1/asistente/consultas`). It retrieves case files and documented events, asks Gemini to answer only from them, and then a deterministic verifier checks every figure. Unsupported answers are rewritten or flagged. An MCP server for external agents is **planned, not implemented**.
-- **Stack.** Python 3.12 · NumPy/SciPy/pandas/PyTorch · FastAPI · SQLAlchemy/Alembic · React 18 + TypeScript + TanStack Query + Recharts + MapLibre GL · Vercel (static SPA + Python function).
+**Design decisions**
 
-## 🔬 Scientific integrity
+- **Contract as the interface.** The API imports only `resultados/contrato/` at start-up and has no dependency on the scientific stack (NumPy, PyTorch). The serverless function therefore stays small, and the science can be re-run without redeploying code.
+- **Scientific rules in the schema.** Pydantic validators encode domain rules: a robust trend needs every Seal test approved, a fragile one must name its failure, and a published model must beat climatology on validation. Invalid science is rejected with HTTP 422 instead of being displayed.
+- **Idempotent publication.** Case files are content-addressed. Republishing identical content returns 200 without creating a duplicate.
+- **Grounded generation.** The assistant is retrieval-augmented over case files and cited events, using REST. Generated text is parsed for numbers and each one is matched against the cited sources. Unsupported answers trigger a rewrite or are flagged. An MCP server for external agents is designed but **not implemented**.
+- **Front-end data flow.** All data come from the typed OpenAPI client, generated with `openapi-typescript`, and are cached with TanStack Query. Charts use Recharts and the map uses MapLibre GL with Terrarium DEM tiles. Interface strings are written bilingually inline and checked by a test; data texts are translated through a glossary that preserves every digit.
 
-| Rule | How it is enforced |
-|---|---|
-| Real data only | Every raw file has a manifest with URL, product, version and SHA-256. `tv verificar-integridad` checks all 143 before and after each run |
-| No choices made on the test | Frozen temporal split: train 1981–2015, validation 2016–2020, test 2021–2026. Preregistration hash in every result |
-| Honest uncertainty | Block-bootstrap 90 % CIs, Diebold-Mariano with HAC, split-conformal intervals, calibration (ECE), Wilson intervals |
-| Abstention | Rules publish "no" when skill is not shown (landslides < 30 events; volcanoes without monitoring) |
-| Robust trends | Theil-Sen + conservative Mann-Kendall + Confidence Seal; a trend that fails a test is labelled *fragile*, not hidden |
-| Old data shown as old | The traffic light prints the date of every figure; Feb 2025 reservoir data is never presented as today's |
-| Satellite imagery is real | Time-lapse months are chosen by measured coverage and cloudiness over the reservoir; tile URL and SHA-256 are stored |
+**Stack.** Python 3.12, pandas, SciPy, scikit-learn, PyTorch, ruptures, PyWavelets · FastAPI, SQLAlchemy 2, Alembic, Pydantic 2 · React 18, TypeScript, Vite, TanStack Query, Recharts, MapLibre GL 4, Tailwind CSS · Playwright · Vercel.
 
-Details: [`docs/metodologia.md`](docs/metodologia.md) · [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) · [`docs/trazabilidad.md`](docs/trazabilidad.md).
+**Repository layout**
 
-## 💻 Run it locally
+```
+src/terraverdict/    ingest, signal processing, trends and Seal, models, experiments, publication
+backend/app/         API routers, schemas, services (assistant, verifier), persistence, migrations
+frontend/src/        pages, map, charts, dashboard components, typed API client, i18n
+config/              frozen configuration: phenomena, sources, metrics, partitions
+datos/               cited documented events; transcribed AUTODEMA report
+resultados/          sealed results and the API contract
+scripts/             HLS time-lapse selection, glossary, source and link verification
+tests/               science tests: unit, statistical, integration, integrity, portability
+docs/                methodology, audits, API guide, deployment, logbook, handover
+```
+
+## 8. Reproducibility
 
 ```bash
-python -m venv .venv && . .venv/bin/activate        # Windows: .venv\Scripts\activate
+python -m venv .venv && . .venv/bin/activate              # Windows: .venv\Scripts\activate
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -e ".[dev,ml]" && pip install -e "backend[dev]"
 ```
 
-Reproduce the science, from raw data to contract. IMERG needs `EARTHDATA_TOKEN`.
+End-to-end regeneration, from raw downloads to the API contract (IMERG requires `EARTHDATA_TOKEN`):
+
 ```bash
 tv ingest-fenomenos && tv ingest-nino && tv verificar-integridad
 tv experimentos && tv trends && tv informe
 tv publicar --exportar resultados/contrato/expedientes.json   # also writes ejecuciones.json and indicadores.json
+tv verificar-integridad
 ```
 
-Run the app (API on :8000, web on :5173):
+Commit before running `tv experimentos`: every result records the `HEAD` commit that produced it.
+
+Run the application locally:
+
 ```bash
 cd backend && python -m app.cli migrar && python -m app.cli importar && uvicorn app.main:app --port 8000
 ```
 ```bash
-cd frontend && npm ci && npm run dev
+cd frontend && npm ci && npm run dev                      # http://localhost:5173
 ```
 ```bash
-docker compose up --build    # API on :8000 and web on :8080
+docker compose up --build                                 # API on :8000, web on :8080
 ```
 
-Secrets live only in `.env` or in Vercel: `EARTHDATA_TOKEN`, `TV_GEMINI_API_KEY`, `TV_JWT_SECRETO` (see [`.env.example`](.env.example)). On Windows set `git config core.autocrlf false`, because SHA-256 seals require LF line endings.
+Secrets are read only from `.env` or the hosting platform: `EARTHDATA_TOKEN`, `TV_GEMINI_API_KEY` and `TV_JWT_SECRETO` (see [`.env.example`](.env.example)). On Windows, set `git config core.autocrlf false`, because the SHA-256 seals assume LF line endings.
 
-## 🗂️ Repository layout
+## 9. Quality assurance
 
-```
-src/terraverdict/      science package: ingest, signals, trends (Seal), models, experiments, publish
-backend/app/           FastAPI API: routers, schemas, services (assistant, verifier), Alembic
-frontend/src/          React app: pages, map (MapLibre), charts, portada (home), i18n EN/ES
-config/                frozen configuration: phenomena, sources, metrics, partition, preregistration
-datos/                 cited documented events and the transcribed AUTODEMA report
-resultados/            sealed results + contrato/ (what the API imports)
-scripts/               reproducible helpers: HLS time-lapse selection, glossary, source verification
-tests/                 science tests (unit, integration, statistical, integrity)
-docs/                  methodology, audits, API, deployment, logbook, handover
-```
+| Suite | Scope | Command | Latest result |
+|---|---|---|---|
+| Science package | Unit, statistical properties, synthetic recovery, integration with the API contract, integrity, portability | `pytest` | 168 passed, 2 skipped (16 Nov 2026) |
+| Backend | Endpoints, scientific validators, assistant and verifier, security, migrations | `cd backend && pytest` | 109 passed |
+| Frontend | Components, formatting, i18n completeness, dashboard logic | `cd frontend && npm test` | 48 passed |
+| End-to-end | Main user journey against a live API | `cd frontend && npm run e2e` | CI |
+| Static analysis | Types and lint | `npm run typecheck && npm run lint`, `ruff`, `mypy` | Clean |
 
-## ✅ Quality and testing
+GitHub Actions runs every suite on each push (`.github/workflows/ci.yml`). The OpenAPI document is regenerated from code and checked for drift.
 
-| Suite | Command | Last run |
-|---|---|---|
-| Science package (unit, statistical, integration, integrity) | `pytest` | see [`docs/bitacora.md`](docs/bitacora.md) |
-| Backend API | `cd backend && pytest` | see logbook |
-| Frontend (unit + i18n) | `cd frontend && npm test` | see logbook |
-| End-to-end (Playwright) | `cd frontend && npm run e2e` | CI |
-| Types and lint | `npm run typecheck && npm run lint` · `ruff` · `mypy` | CI |
+## 10. Deployment, security and operations
 
-The CI pipeline (`.github/workflows/ci.yml`) runs the science package, backend, frontend and E2E tests on every push. A dedicated test fails if anyone edits the frozen preregistration.
+- **Hosting.** Vercel serves the static React build and `api/index.py` as a Python function, and every push to `main` deploys. On a cold start the function applies migrations to SQLite in `/tmp` and imports the contract in 2–4 s, while the client shows a real status banner. Scientific results are immutable and rebuilt identically on each instance. User accounts persist only when `TV_DATABASE_URL` points to PostgreSQL; the public demo is read-only.
+- **Security.** The deployment sets a strict Content Security Policy, HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy` and `Permissions-Policy`. Without `TV_JWT_SECRETO` the API runs read-only. The assistant has per-IP and global rate limits, and the model provider key is held on the server only.
+- **Operations.** The release procedure, secret management and the data-refresh runbook are in [`docs/traspaso.md`](docs/traspaso.md) and [`docs/despliegue.md`](docs/despliegue.md).
 
-## 🚀 Deployment and security
+## 11. Threats to validity and limitations
 
-- **Vercel:** the static React build plus `api/index.py` as a Python function. Every push to `main` deploys. On a cold start the function migrates SQLite in `/tmp` and imports the contract (2–4 s). The UI shows a real "starting the serverless API" banner meanwhile.
-- **Persistence:** results are immutable and rebuilt from the contract on each instance. User accounts need `TV_DATABASE_URL` (PostgreSQL), which is optional for the public demo.
-- **Security headers:** strict CSP, HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`. Without `TV_JWT_SECRETO` the app runs read-only. Per-IP and global rate limits protect the assistant. The Gemini key lives on the server only.
+- **Small samples in the test period.** Annual and monthly test sets are short (for example, 60 months for SPI-3). Intervals are wide and are reported as such, and individual years are not interpreted on their own.
+- **Reanalysis resolution.** POWER cells are 0.5° × 0.625°. The "city" cell averages terrain at about 3,330 m, while the airport station is at 2,520 m. Point-scale extremes are therefore smoothed.
+- **Single data family at the national scale.** With only POWER available nationally, the independence test stays pending, so national trends can reach at most *preliminary* or *fragile*.
+- **Reservoir state.** AUTODEMA publishes no open time series. Storage figures are isolated, cited reports, which blocks the reservoir twin (M3) and problem P3.
+- **Event catalogues.** The Global Landslide Catalog is news-based and under-records rural events. The landslide module abstains below 30 events.
+- **Seismic completeness.** Mc = 4.5 was declared before analysis and is kept as a stated limitation, rather than tuned after the counts were seen.
+- **Colour is not concentration.** The HLS reservoir comparison documents surface colour, not turbidity.
 
-Details: [`docs/despliegue.md`](docs/despliegue.md).
+## 12. Roadmap
 
-## 🧱 Limitations and roadmap
+1. **M3 · Reservoir digital twin.** A GR2M rainfall–runoff model coupled with a reservoir balance, calibrated against SWOT and HLS water extent.
+2. **M5 · Basin decisions.** RUSLE erosion to rank gullies for the US$ 1.5 M MERESE conservation agreement.
+3. **M4 · Seasonal outlook.** Ensemble streamflow prediction conditioned on ENSO, plus a turbidity early-warning signal.
+4. **Data partnerships.** Daily series from SENAMHI, AUTODEMA and ANA, which would unlock P2–P4 and the independence test at the national scale.
+5. **Interoperability.** An MCP server exposing case files to external agents, and persistent storage for multi-user operation.
 
-**Known limitations**
-- Reservoir volumes: AUTODEMA publishes no open series, so the latest cited figure is Feb 2025.
-- POWER cells are 0.5°: the "city" cell averages terrain at ~3,300 m, while the airport station is at 2,520 m. The app explains the lapse rate.
-- Only one data family is available nationally, so national trends can reach at most *fragile*.
-- Relevance matrix problems P2–P4 (wetlands, reservoir deficit, turbidity) await local data agreements.
-
-**Roadmap**
-1. **M3 · Reservoir twin:** GR2M + reservoir balance calibrated with SWOT and HLS water extent.
-2. **M5 · Basin decisions:** RUSLE erosion to prioritise the US$ 1.5 M MERESE conservation fund by gully.
-3. **M4 · Seasonal outlook:** ESP conditioned on ENSO, plus a turbidity alert.
-4. **Scale:** the same declarative templates for any mountain basin, and an MCP server for external agents.
-
-## 👥 Team
+## 13. Team
 
 **Team TerraVerdict** · NASA Space Apps Challenge 2026 · Arequipa, Peru
 
-| Member | Contributions (from `git shortlog`) |
+| Member | Contributions |
 |---|---|
-| **Ower Frank** (Ower López, UNSA) | Repository owner; problem framing; FastAPI backend; React frontend; science engine (Seal, chaos, model zoo); national scale; bilingual UI; chain of custody; M1 relevance matrix; Gemini assistant; Vercel deployment |
-| **MaxsForocca** (UNSA) | Architecture; full experiment runs; chaos on real series; science → backend integration; CI; Docker; E2E; documentation; IMERG ingestion |
-| **DiegoNiS** | Team member; team GitHub organisation during the first stage |
+| Ower Frank (Ower López, UNSA) | Repository owner; problem framing and proposal; FastAPI backend; React frontend; science engine (Confidence Seal, chaos analysis, model zoo); national scale; chain of custody; relevance matrix; AI assistant; deployment |
+| MaxsForocca (UNSA) | Architecture; full experiment runs; chaos analysis on observed series; science-to-API integration; CI; Docker; end-to-end tests; documentation; IMERG ingestion |
+| DiegoNiS | Team member; team GitHub organisation during the first stage |
 
-## 📚 Documentation index
+Per-commit contributions can be listed with `git shortlog -sn`. A detailed record is kept in [`docs/bitacora.md`](docs/bitacora.md).
 
-| Document | Content |
+## 14. Documentation map
+
+| Document | Purpose |
 |---|---|
-| [`docs/experimentos.md`](docs/experimentos.md) | Current figures, generated by `tv informe` |
-| [`docs/metodologia.md`](docs/metodologia.md) · [`docs/diseno-tecnico.md`](docs/diseno-tecnico.md) | Methods, equations, architecture decisions |
-| [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) | M1 relevance matrix |
-| [`docs/api/`](docs/api/) | API guide and `openapi.json` |
-| [`docs/trazabilidad.md`](docs/trazabilidad.md) | Chain of custody requirements R1–R35 |
-| [`docs/bitacora.md`](docs/bitacora.md) · [`docs/pendientes.md`](docs/pendientes.md) | Logbook (what was done and how it was verified) and open items |
-| [`docs/traspaso.md`](docs/traspaso.md) | Operations handover: secrets, data refresh, release steps |
-| [`readme.es.md`](readme.es.md) | Full Spanish proposal (problem statement, hypotheses, modules, references) |
+| [`docs/experimentos.md`](docs/experimentos.md) | Current results, generated from the sealed JSON files |
+| [`docs/metodologia.md`](docs/metodologia.md) | Statistical methods and their references |
+| [`docs/diseno-tecnico.md`](docs/diseno-tecnico.md) | Technical design, equations and architecture decision records |
+| [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) | Audit of the evaluation protocol (19 findings and their resolution) |
+| [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) | Relevance matrix (M1) |
+| [`docs/trazabilidad.md`](docs/trazabilidad.md) | Chain-of-custody requirements R1–R35 |
+| [`docs/api/README.md`](docs/api/README.md) | API guide, error model and `openapi.json` |
+| [`docs/despliegue.md`](docs/despliegue.md) | Deployment options and production verification |
+| [`docs/traspaso.md`](docs/traspaso.md) | Operations handover and data-refresh runbook |
+| [`docs/bitacora.md`](docs/bitacora.md) · [`docs/pendientes.md`](docs/pendientes.md) | Engineering logbook and open items |
+| [`readme.es.md`](readme.es.md) | Original Spanish proposal: hypotheses, modules and references |
 
 ---
 
-<div align="center">
-
-**Know what is changing. Know how sure we are. Act in time.**
-
-MIT License · TerraVerdict uses open data from NASA, NOAA, USGS, ESA/Copernicus, the Smithsonian and cited Peruvian sources.
-
-</div>
+MIT License. TerraVerdict uses open data from NASA, NOAA, USGS, ESA/Copernicus, the Smithsonian Institution, UCSB CHC and cited Peruvian sources.

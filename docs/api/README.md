@@ -50,7 +50,8 @@ Con el servidor en marcha, la documentación interactiva está en `/api/docs` (S
 | | `GET, POST /ejecuciones` | Manifiestos de ejecución del pipeline | público / `ingesta` |
 | Procesos | `GET, POST /procesos`, `GET, PATCH /procesos/{id}` | Cola de procesos científicos | público / analista / `trabajador` |
 | | `POST /procesos/reclamar`, `GET, POST /procesos/{id}/eventos` | Protocolo del trabajador y bitácora | `trabajador` |
-| Asistente | `POST /asistente/consultas` | Pregunta a Google Gemini anclada en expedientes publicados: devuelve el texto, los IDs citados, los expedientes de contexto, el modelo, la latencia y la verificación numérica de cada cifra. Límite: 6/min por IP y 40/min por instancia (429) | público |
+| Portada | `GET /portada` | Estado actual y tabla maestra: `indicadores` (de `resultados/contrato/indicadores.json`: ONI y episodio NOAA, Niño 3.4 y 1+2 mensuales, SPI-3 actual de la cabecera, sequía según ENSO, gradiente altitudinal y series de prueba) y una fila por fenómeno con tendencia, habilidad fuera de muestra del modelo elegido en validación, veredicto y `expediente_id` | público |
+| Asistente | `POST /asistente/consultas` | Pregunta a Google Gemini anclada en expedientes publicados y en los eventos documentados (citados como `TV-EV-…`, con sus cifras en el verificador): devuelve el texto, los IDs citados, los expedientes de contexto, el modelo, la latencia y la verificación numérica de cada cifra. Límite: 6/min por IP y 40/min por instancia (429) | público |
 | | `POST /asistente/verificar` | Marca cada cifra de un texto sin respaldo en expedientes | público |
 
 ### Tipos de expediente

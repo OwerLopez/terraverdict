@@ -65,6 +65,14 @@ curl -s https://terraverdict.vercel.app/api/v1/salud/lista
 cd frontend && E2E_BASE_URL=https://terraverdict.vercel.app npm run e2e -- --trace off
 ```
 
+### Verificación en producción (16-11-2026)
+- Despliegue de `5ac7615` (y anteriores `1f40faf`, `0d2843a`): `/`, `/api/v1/salud/lista`, `/api/v1/portada` y
+  `/api/v1/procesos` → 200.
+- `/api/v1/portada` devuelve los indicadores (ONI +2,46, Niño 3.4 +3,25, SPI-3 +1,67) y las cinco filas de la tabla
+  maestra; `/api/v1/procesos` lista las ejecuciones reales del pipeline (`ejecuciones.json` versionado).
+- Los 16 expedientes citan `OwerLopez/terraverdict` y el commit `a59002d`.
+- Predicción frente a realidad en `/modelos`: 54 de 60 meses dentro del intervalo conformal del 90 %.
+
 ### Límites de la opción A
 - La base vive en `/tmp` de cada instancia. Los usuarios, las claves de API y los expedientes creados por la API **no persisten** entre instancias ni entre despliegues. Para eso está la opción C.
 - El límite de intentos de inicio de sesión se cuenta por instancia.

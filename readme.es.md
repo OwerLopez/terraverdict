@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛰️ TerraVerdict
+# TerraVerdict
 
 ### Ciencia de datos geoespaciales para saber **qué cambia** en una cuenca de montaña, **por qué**, **con cuánta confianza** y **dónde actuar**
 
@@ -11,7 +11,7 @@
 [![Estado](https://img.shields.io/badge/estado-publicado%20y%20verificado-2E7D32)](#0-estado-real-del-proyecto)
 [![Demo](https://img.shields.io/badge/demo-terraverdict.vercel.app-0B3D91)](https://terraverdict.vercel.app)
 
-**🌐 Aplicación publicada: <https://terraverdict.vercel.app>** · API: [`/api/docs`](https://terraverdict.vercel.app/api/docs)
+**Aplicación publicada: <https://terraverdict.vercel.app>** · API: [`/api/docs`](https://terraverdict.vercel.app/api/docs)
 
 </div>
 
@@ -23,16 +23,16 @@ Esta propuesta separa con claridad lo hecho de lo prometido. Estado al **15-11-2
 
 | Categoría | Qué incluye | Evidencia |
 |---|---|---|
-| 🌐 **Publicado y verificado** | Aplicación completa en <https://terraverdict.vercel.app>: web React bilingüe y API FastAPI como función Python. Verificado en producción: API, rutas de la SPA, mapa satelital con la CSP estricta y sin errores de consola, cabeceras de seguridad | [`docs/despliegue.md`](docs/despliegue.md) |
-| ✅ **Datos reales al día** | Refrescados el 15-11: NASA POWER (Arequipa, celdas y 25 departamentos), **NASA GPM IMERG Final diaria 1998–2025 completa**, NASA GLC, NASA GIBS, USGS ComCat (hasta el 15-11-2026), Smithsonian GVP, NOAA ONI y GHCN, CHIRPS, IGP y MODIS LST. Cada crudo con SHA-256; `tv verificar-integridad` sin alteraciones | `data/raw/*/manifiesto.json` · [`docs/traspaso.md`](docs/traspaso.md) |
-| 📊 **Ciencia de datos validada** | 10 redes neuronales + clásicos + dos ensambles; IC90 por bootstrap de bloques, Diebold-Mariano, calibración, conformal y abstención; ninguna elección con la prueba (auditoría de 19 hallazgos). Historial fuera de muestra 2016–2026 con el modelo elegido en la validación de cada año | [`docs/experimentos.md`](docs/experimentos.md) · [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) |
-| 🔥 **M1 · Matriz de Relevancia** | Implementada para P1 (lluvia extrema en la cabecera, objetivo IMERG): dos modelos, permutación por bloques, estabilidad con 200 remuestreos, significancia condicional con FDR y evaluación única en 2021–2025. Validada con datos sintéticos (recuperación, FDR y dirección) | [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) · vista `/relevancia` |
-| 🤖 **IA verificada (Google Gemini)** | **Terra**, asistente flotante en todas las páginas, en **español e inglés**: responde **solo** con expedientes publicados, cita cada uno y pasa cada cifra por el verificador numérico (formato de cada idioma; reescritura si alguna no tiene respaldo). Explicación en lenguaje claro por expediente. Cadena de cuatro modelos ante alta demanda; clave solo en el servidor; límites por IP y global | botón abajo a la derecha · [`backend/app/services/asistente.py`](backend/app/services/asistente.py) |
-| 🗺️ **Cinco fenómenos, escala nacional** | Lluvia extrema, sequía, sismos, volcanes y deslizamientos con datos reales; Sello de Confianza, SPI y sismicidad en los **25 departamentos del Perú**; caos validado (global y en ventanas) | [`config/fenomenos.yaml`](config/fenomenos.yaml) · vistas `/peru`, `/caos`, `/metricas` |
-| 🔐 **Seguridad y trazabilidad** | Cadena de custodia SHA-256 de crudos a web; CSP estricta, HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`; modo solo lectura sin secreto JWT; procesos con las ejecuciones reales del pipeline | [`docs/trazabilidad.md`](docs/trazabilidad.md) (R1–R35) |
-| ✅ **Verificación de fuentes y enlaces** | 40 fuentes contra catálogos oficiales (37 correctas); 40 enlaces del reto revisados con consultas reales | [`docs/verificacion/README.md`](docs/verificacion/README.md) · [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) |
-| 🌎 **Bilingüe y fácil de leer** | Interfaz completa en español e inglés; los textos de datos se traducen con un glosario validado (cada traducción conserva todos sus dígitos). Cada vista muestra una frase y el método completo en un panel lateral "Cómo leer esta vista" | [`scripts/glosario_en.py`](scripts/glosario_en.py) |
-| 🧪 **Calidad** | Pruebas de ciencia, backend, frontend y E2E (Playwright), CI en GitHub Actions y portabilidad Windows/Linux. Cifras de la última corrida en la bitácora | [`docs/bitacora.md`](docs/bitacora.md) |
+| **Publicado y verificado** | Aplicación completa en <https://terraverdict.vercel.app>: web React bilingüe y API FastAPI como función Python. Verificado en producción: API, rutas de la SPA, mapa satelital con la CSP estricta y sin errores de consola, cabeceras de seguridad | [`docs/despliegue.md`](docs/despliegue.md) |
+| **Datos reales al día** | Refrescados el 15-11: NASA POWER (Arequipa, celdas y 25 departamentos), **NASA GPM IMERG Final diaria 1998–2025 completa**, NASA GLC, NASA GIBS, USGS ComCat (hasta el 15-11-2026), Smithsonian GVP, NOAA ONI y GHCN, CHIRPS, IGP y MODIS LST. Cada crudo con SHA-256; `tv verificar-integridad` sin alteraciones | `data/raw/*/manifiesto.json` · [`docs/traspaso.md`](docs/traspaso.md) |
+| **Ciencia de datos validada** | 10 redes neuronales + clásicos + dos ensambles; IC90 por bootstrap de bloques, Diebold-Mariano, calibración, conformal y abstención; ninguna elección con la prueba (auditoría de 19 hallazgos). Historial fuera de muestra 2016–2026 con el modelo elegido en la validación de cada año | [`docs/experimentos.md`](docs/experimentos.md) · [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) |
+| **M1 · Matriz de Relevancia** | Implementada para P1 (lluvia extrema en la cabecera, objetivo IMERG): dos modelos, permutación por bloques, estabilidad con 200 remuestreos, significancia condicional con FDR y evaluación única en 2021–2025. Validada con datos sintéticos (recuperación, FDR y dirección) | [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) · vista `/relevancia` |
+| **IA verificada (Google Gemini)** | **Terra**, asistente flotante en todas las páginas, en **español e inglés**: responde **solo** con expedientes publicados, cita cada uno y pasa cada cifra por el verificador numérico (formato de cada idioma; reescritura si alguna no tiene respaldo). Explicación en lenguaje claro por expediente. Cadena de cuatro modelos ante alta demanda; clave solo en el servidor; límites por IP y global | botón abajo a la derecha · [`backend/app/services/asistente.py`](backend/app/services/asistente.py) |
+| **Cinco fenómenos, escala nacional** | Lluvia extrema, sequía, sismos, volcanes y deslizamientos con datos reales; Sello de Confianza, SPI y sismicidad en los **25 departamentos del Perú**; caos validado (global y en ventanas) | [`config/fenomenos.yaml`](config/fenomenos.yaml) · vistas `/peru`, `/caos`, `/metricas` |
+| **Seguridad y trazabilidad** | Cadena de custodia SHA-256 de crudos a web; CSP estricta, HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`; modo solo lectura sin secreto JWT; procesos con las ejecuciones reales del pipeline | [`docs/trazabilidad.md`](docs/trazabilidad.md) (R1–R35) |
+| **Verificación de fuentes y enlaces** | 40 fuentes contra catálogos oficiales (37 correctas); 40 enlaces del reto revisados con consultas reales | [`docs/verificacion/README.md`](docs/verificacion/README.md) · [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) |
+| **Bilingüe y fácil de leer** | Interfaz completa en español e inglés; los textos de datos se traducen con un glosario validado (cada traducción conserva todos sus dígitos). Cada vista muestra una frase y el método completo en un panel lateral "Cómo leer esta vista" | [`scripts/glosario_en.py`](scripts/glosario_en.py) |
+| **Calidad** | Pruebas de ciencia, backend, frontend y E2E (Playwright), CI en GitHub Actions y portabilidad Windows/Linux. Cifras de la última corrida en la bitácora | [`docs/bitacora.md`](docs/bitacora.md) |
 | ⏳ **Lo que falta** | Fuentes nacionales por convenio (SENAMHI, IGP, INGEMMET, ANA); M1 para P2–P4 (requieren NDVI, volumen de represas y más eventos de turbidez); base persistente para usuarios en Vercel (opcional) | [`docs/pendientes.md`](docs/pendientes.md) |
 
 **Cifras vigentes** (historial fuera de muestra, modelo elegido en la validación de cada año): ver [`docs/experimentos.md`](docs/experimentos.md). Resultados experimentales: **no son alertas oficiales** (SENAMHI, IGP, INGEMMET, INDECI).
@@ -80,7 +80,7 @@ Hoy, 14 de noviembre de 2026, empieza la temporada de lluvias con **El Niño fue
 
 ## 2. Primer resultado con datos reales
 
-> ⚠️ **Preliminar:** un solo producto (POWER/MERRA-2) en una celda de 0,5° cuya elevación media es 4232 m, sin la prueba de independencia. Por las reglas del propio proyecto, ninguna de estas tendencias puede calificar todavía como "robusta". Datos y código: [`analisis_preliminar.json`](docs/verificacion/analisis_preliminar.json).
+> **Preliminar:** un solo producto (POWER/MERRA-2) en una celda de 0,5° cuya elevación media es 4232 m, sin la prueba de independencia. Por las reglas del propio proyecto, ninguna de estas tendencias puede calificar todavía como "robusta". Datos y código: [`analisis_preliminar.json`](docs/verificacion/analisis_preliminar.json).
 
 | Variable (cabecera, lon −71,25, lat −15,95) | Tendencia de Sen (IC 90 %) | p (Mann-Kendall, el mayor de las dos variantes) | Sin El Niño | Ventanas ≥ 20 años con el mismo signo | Años necesarios / disponibles | Lectura preliminar |
 |---|---|---|---|---|---|---|
@@ -213,13 +213,13 @@ Responde los cuatro objetivos del reto: **qué** cambia (por variable), **dónde
 
 | Prueba | Método | Ya ejecutada en el primer análisis |
 |---|---|---|
-| Ventanas | Todas las ventanas de 20 años o más | ✅ |
-| ENSO | Regresión con ONI/RONI y desfases de 0 a 3 meses | ✅ (desfase 0) |
+| Ventanas | Todas las ventanas de 20 años o más | |
+| ENSO | Regresión con ONI/RONI y desfases de 0 a 3 meses | (desfase 0) |
 | Sensor | Escalón en TRMM→GPM (2014-06), en las transiciones de Landsat y en la deriva de Terra (2020) + prueba de Pettitt | ⏳ |
 | Independencia | Al menos dos familias del grafo de procedencia coinciden en el signo | ⏳ |
-| Detectabilidad | Weatherhead et al. (1998) + bootstrap por bloques | ✅ (analítica) |
+| Detectabilidad | Weatherhead et al. (1998) + bootstrap por bloques | (analítica) |
 
-**Regla conservadora:** de las variantes de Mann-Kendall (clásica y Hamed-Rao) se usa el p más alto. Los mapas aplican la corrección FDR de Benjamini-Hochberg (Wilks, 2016). Los veredictos son 🟢 robusta, 🟡 frágil (con la prueba que falla), ⚪ no decidible (con años para decidir) o 🔵 sin tendencia detectable.
+**Regla conservadora:** de las variantes de Mann-Kendall (clásica y Hamed-Rao) se usa el p más alto. Los mapas aplican la corrección FDR de Benjamini-Hochberg (Wilks, 2016). Los veredictos son robusta, frágil (con la prueba que falla), no decidible (con años para decidir) o sin tendencia detectable.
 
 **El caso del reto "un mismo proceso, tendencias opuestas":** El Niño reduce la lluvia en los Andes del sur y la aumenta en la costa norte del Perú. M2 lo muestra en un mapa de correlación por celda con el ONI, con FDR.
 
@@ -247,16 +247,16 @@ Responde los cuatro objetivos del reto: **qué** cambia (por variable), **dónde
 
 ```
 ┌──────────────────────────────────────────────┬───────────────────────────┐
-│ 🌍 MAPA 3D (NASADEM + GIBS del día)           │ 💬 DETECTIVE (chat)        │
+│ MAPA 3D (NASADEM + GIBS del día)           │ DETECTIVE (chat)        │
 │ · variable elegida · veredictos por celda    │ respuestas con cifras      │
 │ · represas, bofedales y ríos                 │ clicables y expediente     │
 │ · etiqueta de frescura por capa              │                           │
 │ ⏯ 1984 ─────────●───────── hoy              │                           │
-├──────────────────────────────────────────────┤ 🔥 MATRIZ DE RELEVANCIA   │
-│ 📈 Serie · anomalías · Sen · bandas de El     │ problema × variable        │
+├──────────────────────────────────────────────┤ MATRIZ DE RELEVANCIA   │
+│ Serie · anomalías · Sen · bandas de El     │ problema × variable        │
 │ Niño · triángulo de ventanas                 │ (intensidad = confianza)   │
 ├──────────────────────────────────────────────┴───────────────────────────┤
-│ 🔎 CÓMO LLEGUÉ A ESTO: grafo del proceso que se enciende paso a paso      │
+│ CÓMO LLEGUÉ A ESTO: grafo del proceso que se enciende paso a paso      │
 │ [IMERG Final: N meses] → [QC: meses descartados] → [Anomalías] → [MK] →   │
 │ [ENSO] → [Años para decidir] → [Veredicto]   (valores reales al ejecutar) │
 │ cada nodo es clicable: entrada, salida y fuente            [logs ▸]      │
@@ -279,7 +279,7 @@ Selección por **valor científico**, no por cantidad. Detalle completo, con lic
 |---|---|---|---|
 | Lluvia (tendencias) | IMERG V07 Final, 1998-01 → 2025-09 | CHIRPS v3 (satélite + pluviómetros); MERRA-2 | Tres familias con insumos distintos |
 | Lluvia (anticipación) | IMERG Early/Late, vigente al día | — | Latencia de horas |
-| Temperatura | MERRA-2 / POWER, 1980 → | MODIS y VIIRS LST (corroboración física); ERA5 ⚠️ | Serie larga y corregible por altitud |
+| Temperatura | MERRA-2 / POWER, 1980 → | MODIS y VIIRS LST (corroboración física); ERA5 | Serie larga y corregible por altitud |
 | Vegetación y bofedales | HLS 30 m (2013 →); MOD13Q1 (2000 →) | VIIRS VNP13A1 (continuidad tras MODIS) | Escala de bofedal y continuidad de misiones |
 | Evapotranspiración | MOD16A2GF | GLDAS 2.1, FLDAS | Única observación con base satelital |
 | Nieve | MOD10A1F; VNP10A1F | — | Indicador térmico de los volcanes |
@@ -342,8 +342,8 @@ Selección por **valor científico**, no por cantidad. Detalle completo, con lic
 
 | ID | Experimento | Datos | Métrica y criterio | Estado |
 |---|---|---|---|---|
-| E0 | Verificación de fuentes | Catálogos oficiales | Existencia, periodo y cobertura | ✅ 37/40 |
-| E1 | Tendencia de T y de lluvia en la cabecera | POWER + ONI | Sen, MK, ENSO, ventanas, n* | ✅ preliminar (una familia) |
+| E0 | Verificación de fuentes | Catálogos oficiales | Existencia, periodo y cobertura | 37/40 |
+| E1 | Tendencia de T y de lluvia en la cabecera | POWER + ONI | Sen, MK, ENSO, ventanas, n* | preliminar (una familia) |
 | E2 | Independencia de la tendencia térmica | MERRA-2 frente a MODIS/VIIRS LST y ERA5 | Coincidencia de signo en ≥ 2 familias | ⏳ |
 | E3 | Lluvia: IMERG frente a CHIRPS v3, MERRA-2 y AUTODEMA | Series por subcuenca | Sesgo, correlación, coincidencia de tendencias | ⏳ |
 | E4 | Calibración del sello (falsos positivos) | Monte Carlo AR(1) + forzamiento tipo ENSO | Tasa de "robusta" falsa ≤ α | ⏳ |
