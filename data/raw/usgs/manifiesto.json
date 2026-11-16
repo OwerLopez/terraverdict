@@ -6,7 +6,7 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:09+00:00",
+  "descargado_utc": "2026-11-15T23:24:09+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
@@ -17,7 +17,7 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:09+00:00",
+  "descargado_utc": "2026-11-15T23:24:10+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
@@ -28,7 +28,7 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:10+00:00",
+  "descargado_utc": "2026-11-15T23:24:10+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
@@ -39,7 +39,7 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:10+00:00",
+  "descargado_utc": "2026-11-15T23:24:10+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
@@ -50,7 +50,7 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:10+00:00",
+  "descargado_utc": "2026-11-15T23:24:11+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
@@ -61,7 +61,7 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:11+00:00",
+  "descargado_utc": "2026-11-15T23:24:12+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
@@ -72,7 +72,7 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:11+00:00",
+  "descargado_utc": "2026-11-15T23:24:12+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
@@ -83,7 +83,7 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:12+00:00",
+  "descargado_utc": "2026-11-15T23:24:13+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
@@ -94,7 +94,7 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:13+00:00",
+  "descargado_utc": "2026-11-15T23:24:13+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
@@ -105,18 +105,18 @@
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:13+00:00",
+  "descargado_utc": "2026-11-15T23:24:14+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  },
  {
   "archivo": "usgs_2023_2026.csv",
-  "sha256": "dbe080e268a56779c5d3d14a658202be8a11f5ac16fdc8b9718b3a1ad4317231",
-  "bytes": 92243,
+  "sha256": "dcf48e81ab1a11eb437795d83c9dccb616d03f45e1b5d2afe095e150102c0bd2",
+  "bytes": 92429,
   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
   "producto": "USGS_COMCAT",
   "version": null,
-  "descargado_utc": "2026-11-15T10:32:14+00:00",
+  "descargado_utc": "2026-11-15T23:24:15+00:00",
   "radio_km": 350,
   "mag_min": 4.0
  }

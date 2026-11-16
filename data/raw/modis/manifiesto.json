@@ -6,7 +6,7 @@
   "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Day_1km",
   "producto": "MOD11A2",
   "version": "061",
-  "descargado_utc": "2026-11-15T19:40:31+00:00",
+  "descargado_utc": "2026-11-15T23:47:07+00:00",
   "fechas": 1225
  },
  {
@@ -16,7 +16,7 @@
   "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Night_1km",
   "producto": "MOD11A2",
   "version": "061",
-  "descargado_utc": "2026-11-15T19:48:37+00:00",
+  "descargado_utc": "2026-11-15T23:55:16+00:00",
   "fechas": 1225
  },
  {
@@ -26,7 +26,7 @@
   "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Day_1km",
   "producto": "MOD11A2",
   "version": "061",
-  "descargado_utc": "2026-11-15T19:53:42+00:00",
+  "descargado_utc": "2026-11-16T00:03:37+00:00",
   "fechas": 1225
  },
  {
@@ -36,7 +36,7 @@
   "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Night_1km",
   "producto": "MOD11A2",
   "version": "061",
-  "descargado_utc": "2026-11-15T19:56:58+00:00",
+  "descargado_utc": "2026-11-16T00:10:49+00:00",
   "fechas": 1225
  }
 ]

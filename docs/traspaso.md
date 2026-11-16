@@ -35,8 +35,9 @@ firma de IA, por decisión del equipo.
   (1998–2001 coinciden bit a bit con la descarga de MaxsForocca).
 - **Experimentos regenerados** con una sola corrida y un solo commit (`resultados/indice.json`).
 - **M1 · Matriz de Relevancia implementada** para P1 (lluvia extrema en la cabecera, objetivo IMERG).
-- **Asistente con Google Gemini** anclado en expedientes y verificado cifra por cifra; botón
-  "Explicación en lenguaje claro" en cada expediente.
+- **Asistente "Terra" con Google Gemini**, flotante en todas las páginas y en español e inglés, anclado en
+  expedientes y verificado cifra por cifra; "Explicación en lenguaje claro" en cada expediente.
+- **Web bilingüe**: interfaz y textos de datos (glosario validado de `scripts/glosario_en.py`).
 - **Procesos**: la API muestra las ejecuciones reales del pipeline (descargas y corridas).
 - **Despliegue** en Vercel verificado en producción (API, SPA, cabeceras de seguridad y CSP).
 - Pruebas, integridad y CI: ver la entrada de cierre de [`bitacora.md`](bitacora.md).
@@ -76,6 +77,8 @@ tv experimentos                           # ≈ 20 min con 20 núcleos
 tv informe
 tv publicar --exportar resultados/contrato/expedientes.json   # también escribe ejecuciones.json
 pytest
+# Con la API local corriendo sobre el contrato nuevo: traducir al inglés los textos nuevos de los datos
+python scripts/glosario_en.py --api http://127.0.0.1:8000
 ```
 Haz commit **antes** de `tv experimentos`: cada resultado registra el commit `HEAD` que lo produjo.
 

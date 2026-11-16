@@ -1,48 +1,48 @@
 {
- "inicio_utc": "2026-11-15T05:05:39+00:00",
+ "inicio_utc": "2026-11-15T23:23:59+00:00",
  "power_diario_ciudad": {
   "ok": true,
   "salida": {
    "archivo": "power_diario_ciudad.json",
-   "sha256": "dffe19e526277b9a478a56f9f3cd5ca88ec13d9eeaa9c5a84e24e8d9ac13d9b9",
+   "sha256": "37fc00b2b37323987cbd4594a0210defd16407699d1e0f35a85c4cbcb746f6eb",
    "bytes": 2469272,
    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.535&latitude=-16.4&start=19810101&end=20261031&format=JSON",
    "producto": "NASA_POWER_MERRA2",
    "version": null,
-   "descargado_utc": "2026-11-15T05:05:42+00:00",
+   "descargado_utc": "2026-11-15T23:24:02+00:00",
    "parametros": "PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,QV2M,WS2M,PS,ALLSKY_SFC_SW_DWN",
    "punto": "ciudad"
   },
-  "segundos": 3.4
+  "segundos": 2.8
  },
  "power_diario_cabecera": {
   "ok": true,
   "salida": {
    "archivo": "power_diario_cabecera.json",
-   "sha256": "5f2d72eb0a4dde1585081aefa694908a4a9a9f8bb4546aaf7fcecf69fcbfaff6",
-   "bytes": 2467406,
+   "sha256": "4bf1e7430ff526a0d581ce7d0d3edf0016fa7b1f8ba2ddf39c05c979ca6a5c8a",
+   "bytes": 2467407,
    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.25&latitude=-15.95&start=19810101&end=20261031&format=JSON",
    "producto": "NASA_POWER_MERRA2",
    "version": null,
-   "descargado_utc": "2026-11-15T05:05:45+00:00",
+   "descargado_utc": "2026-11-15T23:24:04+00:00",
    "parametros": "PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,QV2M,WS2M,PS,ALLSKY_SFC_SW_DWN",
    "punto": "cabecera"
   },
-  "segundos": 2.9
+  "segundos": 2.7
  },
  "power_mensual_cabecera": {
   "ok": true,
   "salida": {
    "archivo": "power_-71.25_-15.95_1981_2025.json",
-   "sha256": "7fae526361348299f42bbf814b8cd4a6fbd2e88e23919d119cd9b170f1000c7b",
+   "sha256": "d5a120d27c7db204d3c27d9d4aa507fee8910f43c40030603d3a468352f62126",
    "bytes": 51392,
    "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M&community=AG&longitude=-71.25&latitude=-15.95&start=1981&end=2025&format=JSON",
    "producto": "NASA_POWER_MERRA2",
    "version": null,
-   "descargado_utc": "2026-11-15T05:05:46+00:00",
+   "descargado_utc": "2026-11-15T23:24:06+00:00",
    "parametros": "PRECTOTCORR,T2M,T2M_MAX,T2M_MIN,RH2M,QV2M"
   },
-  "segundos": 1.2
+  "segundos": 1.3
  },
  "oni": {
   "ok": true,
@@ -53,9 +53,9 @@
    "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
    "producto": "NOAA_CPC_ONI",
    "version": null,
-   "descargado_utc": "2026-11-15T05:05:47+00:00"
+   "descargado_utc": "2026-11-15T23:24:06+00:00"
   },
-  "segundos": 1.0
+  "segundos": 0.8
  },
  "ghcn": {
   "ok": true,
@@ -66,9 +66,9 @@
    "url": "https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/PE000084752.csv",
    "producto": "NOAA_GHCN_DAILY",
    "version": null,
-   "descargado_utc": "2026-11-15T05:05:50+00:00"
+   "descargado_utc": "2026-11-15T23:24:08+00:00"
   },
-  "segundos": 2.4
+  "segundos": 1.4
  },
  "usgs": {
   "ok": true,
@@ -80,7 +80,7 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:50+00:00",
+    "descargado_utc": "2026-11-15T23:24:09+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
@@ -91,7 +91,7 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:51+00:00",
+    "descargado_utc": "2026-11-15T23:24:10+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
@@ -102,7 +102,7 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:51+00:00",
+    "descargado_utc": "2026-11-15T23:24:10+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
@@ -113,7 +113,7 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:52+00:00",
+    "descargado_utc": "2026-11-15T23:24:10+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
@@ -124,7 +124,7 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:53+00:00",
+    "descargado_utc": "2026-11-15T23:24:11+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
@@ -135,7 +135,7 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:53+00:00",
+    "descargado_utc": "2026-11-15T23:24:12+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
@@ -146,7 +146,7 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:54+00:00",
+    "descargado_utc": "2026-11-15T23:24:12+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
@@ -157,7 +157,7 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:54+00:00",
+    "descargado_utc": "2026-11-15T23:24:13+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
@@ -168,7 +168,7 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:55+00:00",
+    "descargado_utc": "2026-11-15T23:24:13+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
@@ -179,46 +179,46 @@
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:55+00:00",
+    "descargado_utc": "2026-11-15T23:24:14+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    },
    {
     "archivo": "usgs_2023_2026.csv",
-    "sha256": "dbe080e268a56779c5d3d14a658202be8a11f5ac16fdc8b9718b3a1ad4317231",
-    "bytes": 92243,
+    "sha256": "dcf48e81ab1a11eb437795d83c9dccb616d03f45e1b5d2afe095e150102c0bd2",
+    "bytes": 92429,
     "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
     "producto": "USGS_COMCAT",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:56+00:00",
+    "descargado_utc": "2026-11-15T23:24:15+00:00",
     "radio_km": 350,
     "mag_min": 4.0
    }
   ],
-  "segundos": 6.4
+  "segundos": 6.9
  },
  "gvp": {
   "ok": true,
   "salida": [
    {
     "archivo": "gvp_volcanes.geojson",
-    "sha256": "ca537d1fc0619b06f11ae62d16df0b75162a17706d75bf8541e290eb3b8c8778",
-    "bytes": 26491,
+    "sha256": "7f7028d89d6e4426305d192ddb7008c3291b417b0109b3ede5b4a20dd1b793b5",
+    "bytes": 26478,
     "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Volcanoes&outputFormat=application%2Fjson&CQL_FILTER=Country%3D%27Peru%27",
     "producto": "SMITHSONIAN_GVP_VOTW",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:57+00:00",
+    "descargado_utc": "2026-11-15T23:24:16+00:00",
     "capa": "GVP-VOTW:Smithsonian_VOTW_Holocene_Volcanoes",
     "pais": "Peru"
    },
    {
     "archivo": "gvp_erupciones.geojson",
-    "sha256": "7af6c4421fe0086a9ce13fac2b9c4007d0b27f80be50b0461bb3a2113b45f16b",
-    "bytes": 64113,
+    "sha256": "c2d24b70c2b46d750d72b249e6802931706b0510167cf580ef8086b48cdef5ba",
+    "bytes": 64033,
     "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Eruptions&outputFormat=application%2Fjson&CQL_FILTER=Volcano_Number+IN+%28354000%2C354001%2C354003%2C354004%2C354005%2C354006%2C354010%2C354020%2C354031%2C354030%2C354040%2C354050%2C354060%29",
     "producto": "SMITHSONIAN_GVP_VOTW",
     "version": null,
-    "descargado_utc": "2026-11-15T05:05:57+00:00",
+    "descargado_utc": "2026-11-15T23:24:16+00:00",
     "capa": "GVP-VOTW:Smithsonian_VOTW_Holocene_Eruptions",
     "volcanes": [
      354000,
@@ -237,7 +237,7 @@
     ]
    }
   ],
-  "segundos": 1.4
+  "segundos": 1.3
  },
  "glc": {
   "ok": true,
@@ -248,302 +248,835 @@
    "url": "https://data.nasa.gov/docs/legacy/Global_Landslide_Catalog_Export/Global_Landslide_Catalog_Export_rows.csv",
    "producto": "NASA_GLC",
    "version": null,
-   "descargado_utc": "2026-11-15T05:07:20+00:00"
+   "descargado_utc": "2026-11-15T23:24:18+00:00"
   },
-  "segundos": 82.6
+  "segundos": 2.1
  },
- "fin_utc": "2026-11-15T05:07:20+00:00",
+ "fin_utc": "2026-11-16T00:10:49+00:00",
  "celdas_deslizamientos": {
   "celda_-75.0_-13.0": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-75.0_-13.0.json",
-    "sha256": "322bbe04fe70a904ffc0d742b69931757cdd67b2dd3773c321c176a7af361faf",
+    "sha256": "902eeef1dd2a0bb64310ba2e3459824cce6d95a9c50965ecc9ec1e8b80c11a36",
     "bytes": 259655,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-13.0&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:22+00:00",
+    "descargado_utc": "2026-11-16T00:10:51+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-75.0_-13.0"
    },
-   "segundos": 1.4
+   "segundos": 1.7
   },
   "celda_-75.0_-12.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-75.0_-12.5.json",
-    "sha256": "99b0c98aa3417bf5d4f9bb22cbd8edec605c50208d574e57b942bedefc220aa8",
-    "bytes": 260418,
+    "sha256": "d7a1879419da2545745a5448d7c83611edb868a5d7eaed2e0307e689017883bc",
+    "bytes": 260416,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-12.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:23+00:00",
+    "descargado_utc": "2026-11-16T00:10:52+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-75.0_-12.5"
    },
-   "segundos": 1.3
+   "segundos": 1.0
   },
   "celda_-74.375_-13.0": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-74.375_-13.0.json",
-    "sha256": "44b74ecc4fd8e7019d1aa9581e92a71d5b22c25de47427d56a23b2741487f520",
+    "sha256": "845c5e72360d23e1ddc84af8fd8163e1b754576ebde4cf2662316cd48fa63bb1",
     "bytes": 260673,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-74.375&latitude=-13.0&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:24+00:00",
+    "descargado_utc": "2026-11-16T00:10:52+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-74.375_-13.0"
    },
-   "segundos": 1.2
+   "segundos": 0.7
   },
   "celda_-73.75_-15.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-73.75_-15.5.json",
-    "sha256": "1d2321997236bd79568f9e869fe63fadd76782a3ecded9c8dd974bb353b7e811",
+    "sha256": "fbd75c0366b87aaea59cb1156b2127033e5ff06c8c5ce91a130822d67fae12d5",
     "bytes": 259051,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-15.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:25+00:00",
+    "descargado_utc": "2026-11-16T00:10:53+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-73.75_-15.5"
    },
-   "segundos": 0.8
+   "segundos": 1.0
   },
   "celda_-73.75_-13.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-73.75_-13.5.json",
-    "sha256": "7e7d94666113ff111099180fbc63f95eb6c869f067d46ff1b0a799eb91f02c9f",
+    "sha256": "0df094fb779d540d0e92207139bf3e504f2d151af34a0812df9e3d8298464dc5",
     "bytes": 260384,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-13.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:26+00:00",
+    "descargado_utc": "2026-11-16T00:10:55+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-73.75_-13.5"
    },
-   "segundos": 1.0
+   "segundos": 1.3
   },
   "celda_-73.125_-15.0": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-73.125_-15.0.json",
-    "sha256": "a97a02c807ce2509e729487331ee8af4e4b7199dd15f459a75dbd58ddc8ec8e1",
+    "sha256": "d7d0203370da9081963d6f4dc2f5da930b0557abdc0f0d3af065fcd3fec6f9f7",
     "bytes": 260474,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-15.0&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:27+00:00",
+    "descargado_utc": "2026-11-16T00:10:56+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-73.125_-15.0"
    },
-   "segundos": 1.2
+   "segundos": 1.3
   },
   "celda_-73.125_-14.0": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-73.125_-14.0.json",
-    "sha256": "9edff17a055c10d9ea33aac8a8998624327a0e50f1358b28c970baca4d27b364",
+    "sha256": "84d753211b51c93b9353d68e3198849110f7c2f413d96618b6cee7e019d621c7",
     "bytes": 260847,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-14.0&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:28+00:00",
+    "descargado_utc": "2026-11-16T00:10:57+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-73.125_-14.0"
    },
-   "segundos": 1.2
+   "segundos": 1.3
   },
   "celda_-73.125_-13.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-73.125_-13.5.json",
-    "sha256": "0be7429291c02b5ae67edfc27fa91b9f936e1fba3ed97ca511507affb2353458",
+    "sha256": "52a2668ffc842ea0ac7bd16f2d1b8c25e1eafd6ebf05860920526adca6e10d78",
     "bytes": 260997,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-13.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:30+00:00",
+    "descargado_utc": "2026-11-16T00:10:59+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-73.125_-13.5"
    },
-   "segundos": 1.2
+   "segundos": 1.3
   },
   "celda_-73.125_-12.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-73.125_-12.5.json",
-    "sha256": "b221a7338a406cfd2eb61223264fa97d57a6324d19bda7e3109b71c55980fbd9",
+    "sha256": "4fbbccf478d94a4b1f894d74493f69c89bf7e08ab775b4bd6863601232c7fc0d",
     "bytes": 262562,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-12.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:31+00:00",
+    "descargado_utc": "2026-11-16T00:11:00+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-73.125_-12.5"
    },
-   "segundos": 1.2
+   "segundos": 1.1
   },
   "celda_-72.5_-13.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-72.5_-13.5.json",
-    "sha256": "f9a34899fac7006226becbefc9bcefd74c48c6f07dedbce1cde00982a6c5b686",
+    "sha256": "15e1d0fc329ed04231f7f1bce7196a925e7ef5a27b85641c2d6a5f0a810921f5",
     "bytes": 261644,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:32+00:00",
+    "descargado_utc": "2026-11-16T00:11:01+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-72.5_-13.5"
    },
-   "segundos": 1.3
+   "segundos": 0.7
   },
   "celda_-72.5_-13.0": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-72.5_-13.0.json",
-    "sha256": "e082dcdbf281ceab46581ca6c920d3d4fc91de8552171026692ce8694ce72a0b",
+    "sha256": "3a274f3ef8cfacc935b4f230658f8badce77a6b37c8352862155ad2779c764cd",
     "bytes": 262281,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.0&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:33+00:00",
+    "descargado_utc": "2026-11-16T00:11:02+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-72.5_-13.0"
    },
-   "segundos": 1.0
+   "segundos": 1.3
   },
   "celda_-71.875_-15.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-71.875_-15.5.json",
-    "sha256": "42276470c44bf17d43b286b01cd0c81a4143e44e7f4ed5b2e2ca3645d7e49720",
-    "bytes": 260171,
+    "sha256": "52754712c12613388578bfa3f0922eed7509887bda1e87da02632e0bbed1c13a",
+    "bytes": 260173,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-15.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:34+00:00",
+    "descargado_utc": "2026-11-16T00:11:02+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-71.875_-15.5"
    },
-   "segundos": 1.2
+   "segundos": 0.5
   },
   "celda_-71.875_-13.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-71.875_-13.5.json",
-    "sha256": "3d51535b58de0d18011f34fc90ae869f8c5c1021fba073e73fdb7dd492b3d104",
-    "bytes": 263023,
+    "sha256": "6a02806f3e377f52c43187da36f53e8e77eed76351003c387670b506770cd4e7",
+    "bytes": 263024,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:36+00:00",
+    "descargado_utc": "2026-11-16T00:11:03+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-71.875_-13.5"
    },
-   "segundos": 1.2
+   "segundos": 0.6
   },
   "celda_-71.875_-13.0": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-71.875_-13.0.json",
-    "sha256": "d696d1700825490c0c88d0ebbc88c789452746b9f7e13127b59ce1cbacd44bb4",
+    "sha256": "4066276b2685e875d26fd83720812ee2483e67536f499968275e04bb394b1375",
     "bytes": 263585,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.0&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:37+00:00",
+    "descargado_utc": "2026-11-16T00:11:04+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-71.875_-13.0"
    },
-   "segundos": 1.2
+   "segundos": 1.1
   },
   "celda_-71.25_-16.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-71.25_-16.5.json",
-    "sha256": "4ff33962125f4d28be1d0ff8ed82de851f1b9f230f80cf1298efce4ee521a050",
-    "bytes": 258978,
+    "sha256": "7209e6ab2d2a8f9a9e1474c9005aea3c6f696a10fb0504790549cc1afcd62bc0",
+    "bytes": 258979,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-16.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:38+00:00",
+    "descargado_utc": "2026-11-16T00:11:05+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-71.25_-16.5"
    },
-   "segundos": 1.3
+   "segundos": 1.4
   },
   "celda_-71.25_-15.5": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-71.25_-15.5.json",
-    "sha256": "1cf6f453dd8cf278a6ecf6bc062fa552978afaad1bb5f0d6ce805e2bbd70d97c",
+    "sha256": "64b4f461fba82b2b115763e6accb943ba936ed3aebca2b03d66dd319238baa1e",
     "bytes": 260810,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-15.5&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:39+00:00",
+    "descargado_utc": "2026-11-16T00:11:07+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-71.25_-15.5"
    },
-   "segundos": 1.2
+   "segundos": 1.3
   },
   "celda_-71.25_-13.0": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-71.25_-13.0.json",
-    "sha256": "0fdf339d7546d96b84cefc4c40703b3c8f7545eca59fecd699176d05079eba83",
+    "sha256": "42a0746235258be20be6136d6703e2d31c6b4e596b737fe5b426763eded17238",
     "bytes": 264575,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-13.0&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:40+00:00",
+    "descargado_utc": "2026-11-16T00:11:08+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-71.25_-13.0"
    },
-   "segundos": 1.2
+   "segundos": 1.4
   },
   "celda_-70.625_-14.0": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-70.625_-14.0.json",
-    "sha256": "f87ec1b30d7595da48124688febb7c2ea064538f6f800a6a23481a27030221d5",
+    "sha256": "b9bd44fe7c2facab70702132c6dd82230e882cc0794b57306a7b2b0032b57661",
     "bytes": 264795,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.625&latitude=-14.0&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:41+00:00",
+    "descargado_utc": "2026-11-16T00:11:09+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-70.625_-14.0"
    },
-   "segundos": 0.7
+   "segundos": 1.3
   },
   "celda_-70.0_-14.0": {
    "ok": true,
    "salida": {
     "archivo": "power_diario_celda_-70.0_-14.0.json",
-    "sha256": "bc6609e74667948ad4c7f0ab6f6c784337c6a2edcde03db2b77bc8786516f251",
+    "sha256": "3439a970266c8b376369a209137ef3520a05c09c8c96a4cc69d60ece56f450b9",
     "bytes": 264618,
     "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.0&latitude=-14.0&start=19810101&end=20261031&format=JSON",
     "producto": "NASA_POWER_MERRA2",
     "version": null,
-    "descargado_utc": "2026-11-15T05:07:42+00:00",
+    "descargado_utc": "2026-11-16T00:11:11+00:00",
     "parametros": "PRECTOTCORR",
     "punto": "celda_-70.0_-14.0"
    },
-   "segundos": 0.8
+   "segundos": 1.4
   }
  },
  "imerg": {
-  "ok": false,
-  "error": "ConnectionError: HTTPSConnectionPool(host='gpm1.gesdisc.eosdis.nasa.gov', port=443): Max retries exceeded with url: /opendap/GPM_L3/GPM_3IMERGDF.07/2000/07/3B-DAY.MS.MRG.3IMERG.20000710-S000000-E235959.V07B.nc4.ascii?precipitation.precipitation%5B0:0%5D%5B1084:1087%5D%5B736:740%5D (Caused by NameRes",
-  "segundos": 5149.6
+  "ok": true,
+  "salida": [
+   {
+    "archivo": "imerg_diaria_1998.txt",
+    "sha256": "edf074a962a197f184412ebed810d323c9b573e331361cf18413f24851c81582",
+    "bytes": 112378,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:06:23+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_1999.txt",
+    "sha256": "6ec614985770952c76ab065ed97889c599e0bde88fe4083f6ad9cd88336fee6e",
+    "bytes": 114215,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:09:25+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2000.txt",
+    "sha256": "ed3cf1425daf034603e1165364c927b08f510ab437e4a67dbc285b22f7b23e0f",
+    "bytes": 116284,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:12:51+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 366,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2001.txt",
+    "sha256": "4eb669eae17614e566efcda623e0942bf22c34dcc041e6ea4bdab0a44f7808aa",
+    "bytes": 115710,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:15:56+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2002.txt",
+    "sha256": "7e1176aa844889a9685337c84e6604420b0da4f2f38e88a91e312ac0b4e6501a",
+    "bytes": 116895,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:19:10+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2003.txt",
+    "sha256": "1243fd3869d43609df0abc23804d0385f5215599a0fe939456db41e050afe6d2",
+    "bytes": 113338,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:26:41+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2004.txt",
+    "sha256": "0340d8c28d80761587b25f889a1a35de9cfed4f0fc00479ac0104d288d0ba7ea",
+    "bytes": 114733,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:29:55+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 366,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2005.txt",
+    "sha256": "43763af75ebf10b91ad4c15da39a6e32307e87a7eaf0e5a32b9aa4f8f32a1b1f",
+    "bytes": 112501,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:33:43+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2006.txt",
+    "sha256": "7a590b01bcb3a892cc68e985c2dc88e9aa7499262c11d82d74284ce1aa822b2d",
+    "bytes": 113363,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:37:35+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2007.txt",
+    "sha256": "7e31e07ae9ceaaed5cc51c902af6677fb20ca57a6ee530a1c6e54863817b8307",
+    "bytes": 112815,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:41:31+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2008.txt",
+    "sha256": "b6e6ad24d65a98f3150cb7387d553b1f0c50aee0629311090a9a4687cdd318ba",
+    "bytes": 112150,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:46:10+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 366,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2009.txt",
+    "sha256": "f1914cebde7f4903e70e569fe0a3d828f0e5507a5fce403deec7a4b569cc9797",
+    "bytes": 113274,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:50:34+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2010.txt",
+    "sha256": "8a14b46cb7f16c35517e91d9c1694c5b2132e5379c0ae64ae273ba5948cccfac",
+    "bytes": 111875,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:54:43+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2011.txt",
+    "sha256": "08a7ec0f640dea36e8c6b18f8c87e645cf290f9db478299eab39c2674ec8a943",
+    "bytes": 114066,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-15T23:58:55+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2012.txt",
+    "sha256": "216e5d4cba1316a26936ca6436d9739918b39b8ba5c8cfa0bbe15f99e40dadbc",
+    "bytes": 114074,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T00:03:47+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 366,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2013.txt",
+    "sha256": "f200d6834538ec6e616a5a041a23aa9491641364329cdff6e52e9db7a45f7111",
+    "bytes": 113348,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T00:09:36+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2014.txt",
+    "sha256": "27afc9878451fb64fd53ec67d6cc7bedceffff34cff9ac4e36e3acb38329c52d",
+    "bytes": 111703,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T00:15:54+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2015.txt",
+    "sha256": "7cc2e1691cd4c1dcabcef8390653e0531ffd9ee9aa68510710e772c1fa045d40",
+    "bytes": 112886,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T00:22:06+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2016.txt",
+    "sha256": "3b9dc5d16b01f8dfb3a05ea2f77cbc3aa13a1948cfbdc8a7e5513c239c0248fb",
+    "bytes": 111605,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T00:28:57+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 366,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2017.txt",
+    "sha256": "b5e784a9c09a6bbf1697ac2c3f9759ae34442b05a58de767b21f2820592b853d",
+    "bytes": 111621,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T00:38:56+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2018.txt",
+    "sha256": "01294e19dcbe6d49e0059015f9a14ce423bed1a3b8d7d5feca6bfa9d86b064d9",
+    "bytes": 111634,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T00:48:22+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2019.txt",
+    "sha256": "b1a329435d6a8610339653d4a88bfca2c92cf1c04c3b1c3e6e66e38da696781e",
+    "bytes": 112023,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T01:08:21+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2020.txt",
+    "sha256": "278e4c154e39a32eb98f0afee18a278eae1a8f440bb2605818e296a1c33d5fef",
+    "bytes": 112838,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T01:31:13+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 366,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2021.txt",
+    "sha256": "f244efe044485be26545a4c1c8d5d14bfa7eb7074eba3f45965b36018e419d9e",
+    "bytes": 112611,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T01:49:30+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2022.txt",
+    "sha256": "7153c0ccb57a17159a796b5339642d6de10e49ade9689b2c50f0e39eee9db5b7",
+    "bytes": 109790,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T02:06:09+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2023.txt",
+    "sha256": "6551757e36ee98d51b657f90c99952d3e8c111a22bf265a1086ceb12cf5a386a",
+    "bytes": 111570,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T02:30:31+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 365,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2024.txt",
+    "sha256": "fec71411ed6f297814b4cb1ffd197ae7a206e400362cefda5777e62ded63377e",
+    "bytes": 112328,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T02:53:59+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 366,
+    "dias_faltantes": []
+   },
+   {
+    "archivo": "imerg_diaria_2025.txt",
+    "sha256": "354b46e8d472ff80c9136ef91abca254f342338d18666711ad7a7af8a0611dab",
+    "bytes": 84264,
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+    "producto": "GPM_3IMERGDF_V07",
+    "version": "V07B",
+    "descargado_utc": "2026-11-16T03:15:33+00:00",
+    "indices_lon": [
+     1084,
+     1087
+    ],
+    "indices_lat": [
+     736,
+     740
+    ],
+    "dias": 273,
+    "dias_faltantes": []
+   }
+  ],
+  "segundos": 13892.4
  },
  "chirps_ciudad_local": {
   "ok": true,
@@ -704,6 +1237,191 @@
     "producto": "CHIRPS_DIARIO_CLIMATESERV",
     "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
     "descargado_utc": "2026-11-15T05:35:07+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.585,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.45
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_local_1981_1990.json",
+    "sha256": "ce514dbb89d1ee1bb57a48a9da5566a8b1a838aa82f8f03c0b781903fc7ddc87",
+    "bytes": 609552,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:24:56+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.585,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.45
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_local_1991_2000.json",
+    "sha256": "615b9bb71b0ad6ba14983808b1639df22fd3b71d704376f22c20124dbcf6b2ab",
+    "bytes": 610939,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:25:27+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.585,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.45
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_local_2001_2010.json",
+    "sha256": "66ad56fc4250a04623ec557a3972ce0e5902678f454846dee45303b0c3c0e62d",
+    "bytes": 615810,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:25:58+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.585,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.45
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_local_2011_2020.json",
+    "sha256": "8c27d0625e5a2f9b75a51e3de48b30d82df1b8f604c40b4c188ac8ddbe3ef93f",
+    "bytes": 619102,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:26:30+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.585,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.45
+       ],
+       [
+        -71.485,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.349999999999998
+       ],
+       [
+        -71.585,
+        -16.45
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_local_2021_2026.json",
+    "sha256": "d5038ff8ebb0925023f7560ee4d316628de98d023976b8e90434d2704cabbc43",
+    "bytes": 357135,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:26:55+00:00",
     "geometria": {
      "type": "Polygon",
      "coordinates": [
@@ -923,6 +1641,191 @@
      ]
     },
     "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_celda_power_1981_1990.json",
+    "sha256": "7ad225dfe7c2d4a2eb9c6a5dd35aeb20322e09a1a4ba60499c6ae48872790e26",
+    "bytes": 638525,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:27:27+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.75
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_celda_power_1991_2000.json",
+    "sha256": "6a7ad0b37d91408c20a374464abd0111f72b6ba21b517c1e0667576351b5c62e",
+    "bytes": 640624,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:27:58+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.75
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_celda_power_2001_2010.json",
+    "sha256": "fad2f616ba470ec037c20660acb1f97d6e97ba52e2d58413cb7f97c984ac08e7",
+    "bytes": 644305,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:28:30+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.75
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_celda_power_2011_2020.json",
+    "sha256": "112a6f4ed091d412456e75c5e701d4ec06218acc32ff4805d471c53eb927f737",
+    "bytes": 650957,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:29:01+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.75
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_ciudad_celda_power_2021_2026.json",
+    "sha256": "810d7a9310f7a60b902339c23fdb46c159bece507ff672f131bc8a274fb38e8f",
+    "bytes": 377246,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:29:20+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.75
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -71.5625,
+        -16.75
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
    }
   ],
   "nota": "Tomado del manifiesto de una corrida anterior."
@@ -1086,6 +1989,191 @@
     "producto": "CHIRPS_DIARIO_CLIMATESERV",
     "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
     "descargado_utc": "2026-11-15T05:40:56+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.3,
+        -16.0
+       ],
+       [
+        -71.2,
+        -16.0
+       ],
+       [
+        -71.2,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -16.0
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_local_1981_1990.json",
+    "sha256": "2bbb959955680336862307812632c5e991dff30e2eb08a695f9bf692221259e3",
+    "bytes": 623887,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:29:59+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.3,
+        -16.0
+       ],
+       [
+        -71.2,
+        -16.0
+       ],
+       [
+        -71.2,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -16.0
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_local_1991_2000.json",
+    "sha256": "cef9cffff77f6a6f50c9415b36f742a7ab13375309b6199949460d16161b3eff",
+    "bytes": 624330,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:30:30+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.3,
+        -16.0
+       ],
+       [
+        -71.2,
+        -16.0
+       ],
+       [
+        -71.2,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -16.0
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_local_2001_2010.json",
+    "sha256": "6cc0efe05d2f4fed3a8a23b042196b45dc23858da977abd4608eb8f791b34483",
+    "bytes": 631563,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:31:01+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.3,
+        -16.0
+       ],
+       [
+        -71.2,
+        -16.0
+       ],
+       [
+        -71.2,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -16.0
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_local_2011_2020.json",
+    "sha256": "7f3f295b217d887aec0a7e7969c30d51a985c8f69232a3f5ac1c6d9b3593f034",
+    "bytes": 633025,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:31:32+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.3,
+        -16.0
+       ],
+       [
+        -71.2,
+        -16.0
+       ],
+       [
+        -71.2,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -15.899999999999999
+       ],
+       [
+        -71.3,
+        -16.0
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_local_2021_2026.json",
+    "sha256": "c08bda673698b62a00d413688e8807bd4331ea3d6d258d42d1bdf5b6d6c04297",
+    "bytes": 365694,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:31:50+00:00",
     "geometria": {
      "type": "Polygon",
      "coordinates": [
@@ -1305,6 +2393,191 @@
      ]
     },
     "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_celda_power_1981_1990.json",
+    "sha256": "ed5559076277fd0b4a46ef427d09ae826cb30e75b62b9a126ccc9bd63471c2e5",
+    "bytes": 642749,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:32:22+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -16.25
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_celda_power_1991_2000.json",
+    "sha256": "7823311287723cfb6d2e441dd6bcc88adb4e495811a262d7a21f824cd679bff9",
+    "bytes": 644296,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:33:00+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -16.25
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_celda_power_2001_2010.json",
+    "sha256": "05dcfa66b0ffc042143ca5bfe7542f8ad35eb2c667c344d38e2b2cadcfddddd1",
+    "bytes": 651819,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:33:36+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -16.25
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_celda_power_2011_2020.json",
+    "sha256": "3c5565d4cb35154ee834f80f6126e6f14c14e9a9c6f4c5961147f5885fc664a7",
+    "bytes": 654405,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:34:07+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -16.25
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
+   },
+   {
+    "archivo": "chirps_cabecera_celda_power_2021_2026.json",
+    "sha256": "e202755428e29fc6fb975389cdc0b1f762f65f28cbf8587855173dfa57ecc8b0",
+    "bytes": 377946,
+    "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
+    "producto": "CHIRPS_DIARIO_CLIMATESERV",
+    "version": "CHIRPS v2.0 (datatype 0 de ClimateSERV)",
+    "descargado_utc": "2026-11-15T23:34:26+00:00",
+    "geometria": {
+     "type": "Polygon",
+     "coordinates": [
+      [
+       [
+        -71.5625,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -16.25
+       ],
+       [
+        -70.9375,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -15.75
+       ],
+       [
+        -71.5625,
+        -16.25
+       ]
+      ]
+     ]
+    },
+    "operacion": "promedio areal"
    }
   ],
   "nota": "Tomado del manifiesto de una corrida anterior."
@@ -1446,60 +2719,195 @@
     "producto": "IGP_SISMOS_REPORTADOS",
     "version": null,
     "descargado_utc": "2026-11-15T05:44:07+00:00"
+   },
+   {
+    "archivo": "igp_2012.json",
+    "sha256": "5a56bd7dff31e85c043710310d4c4789be228f958dcbe8bf36f9523a647ce0a6",
+    "bytes": 123870,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2012",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:26+00:00"
+   },
+   {
+    "archivo": "igp_2013.json",
+    "sha256": "78dd9a9e47171ab143c8bbdeab46c2a6e6d98a78bd3b510c4dd393f3347553f9",
+    "bytes": 121879,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2013",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:26+00:00"
+   },
+   {
+    "archivo": "igp_2014.json",
+    "sha256": "cd80fe325c376fa7f3c7d69fef7ce7285e8d5e112aa9124237264a81c22ff72a",
+    "bytes": 135418,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2014",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:27+00:00"
+   },
+   {
+    "archivo": "igp_2015.json",
+    "sha256": "770f27dbbb4fda2f29451274a610edb574f2f5b0fe34f50108b97b6e8768c915",
+    "bytes": 158525,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2015",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:27+00:00"
+   },
+   {
+    "archivo": "igp_2016.json",
+    "sha256": "7af111ea2ef569b2fd0bb384683c3dcbc566140a1b2b63bb9443c601e8404229",
+    "bytes": 238886,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2016",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:27+00:00"
+   },
+   {
+    "archivo": "igp_2017.json",
+    "sha256": "528e8bbfb1cc03553a7985a83319266ac20007e719688119919292aa933f44de",
+    "bytes": 205372,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2017",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:28+00:00"
+   },
+   {
+    "archivo": "igp_2018.json",
+    "sha256": "fe13c341f4f201b84e6439b801b5a62189ef8092cbedb9733c439652760911a9",
+    "bytes": 345087,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2018",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:28+00:00"
+   },
+   {
+    "archivo": "igp_2019.json",
+    "sha256": "10d25d977ff5a0ac05fbfec9780e1d386fc057c0dfed94e7d9db9ec15f87dd41",
+    "bytes": 376206,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2019",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:29+00:00"
+   },
+   {
+    "archivo": "igp_2020.json",
+    "sha256": "b620ea2d19d389a3c7a2928ffa73a4b797d6b9b3fd9d76a3e706fbb8827d6ffa",
+    "bytes": 572355,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2020",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:30+00:00"
+   },
+   {
+    "archivo": "igp_2021.json",
+    "sha256": "3221703053ba50e3531c94583cdf09332d0321c49b09928308f6d90e585a73f0",
+    "bytes": 584556,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2021",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:30+00:00"
+   },
+   {
+    "archivo": "igp_2022.json",
+    "sha256": "0512ee920b19ca14edd62256827d9ea0e05de4faed497f2521bdffb5ad8f9707",
+    "bytes": 526480,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2022",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:31+00:00"
+   },
+   {
+    "archivo": "igp_2023.json",
+    "sha256": "6a1ad500373b9370b9e0d5070de07d0545dc1ecbe4359316a9995b8e486f1882",
+    "bytes": 494701,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2023",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:32+00:00"
+   },
+   {
+    "archivo": "igp_2024.json",
+    "sha256": "ebe59cb0a0ee472e630961374a6878edb4603cff71b52fdd9c63d41abfc6a0d8",
+    "bytes": 528876,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2024",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:32+00:00"
+   },
+   {
+    "archivo": "igp_2025.json",
+    "sha256": "cf1564646eefcfb999caefe38706ef19cb1f5892dc988452decddbaf97af2716",
+    "bytes": 583166,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2025",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:33+00:00"
+   },
+   {
+    "archivo": "igp_2026.json",
+    "sha256": "e5db78ce734b777e698233b178e4794f458902da2cb9cf9040aaf8e9cfdd0df2",
+    "bytes": 553663,
+    "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2026",
+    "producto": "IGP_SISMOS_REPORTADOS",
+    "version": null,
+    "descargado_utc": "2026-11-15T23:34:33+00:00"
    }
   ],
   "nota": "Tomado del manifiesto de una corrida anterior."
  },
  "modis_lst_ciudad": {
   "ok": true,
-  "salida": [
-   {
+  "salida": {
+   "LST_Day_1km": {
     "archivo": "modis_ciudad_LST_Day_1km.json",
     "sha256": "1e2efa50e5752b045b2a2c668b2083c3ae8dfc4194ec051aad9e3cf589c30fbb",
     "bytes": 180126,
     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Day_1km",
     "producto": "MOD11A2",
     "version": "061",
-    "descargado_utc": "2026-11-15T19:40:31+00:00",
+    "descargado_utc": "2026-11-15T23:47:07+00:00",
     "fechas": 1225
    },
-   {
+   "LST_Night_1km": {
     "archivo": "modis_ciudad_LST_Night_1km.json",
     "sha256": "1ca923f5231fa2740281517298fb8cc120489cdf9a6f401903e41783c324aba8",
     "bytes": 182358,
     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Night_1km",
     "producto": "MOD11A2",
     "version": "061",
-    "descargado_utc": "2026-11-15T19:48:37+00:00",
+    "descargado_utc": "2026-11-15T23:55:16+00:00",
     "fechas": 1225
    }
-  ],
-  "nota": "Tomado del manifiesto (todas las bandas)."
+  },
+  "segundos": 1243.0
  },
  "modis_lst_cabecera": {
   "ok": true,
-  "salida": [
-   {
+  "salida": {
+   "LST_Day_1km": {
     "archivo": "modis_cabecera_LST_Day_1km.json",
     "sha256": "64370a990e76babf08b6b3ac62917d8acbd389f0e107d1292c645b0b22985287",
     "bytes": 180082,
     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Day_1km",
     "producto": "MOD11A2",
     "version": "061",
-    "descargado_utc": "2026-11-15T19:53:42+00:00",
+    "descargado_utc": "2026-11-16T00:03:37+00:00",
     "fechas": 1225
    },
-   {
+   "LST_Night_1km": {
     "archivo": "modis_cabecera_LST_Night_1km.json",
     "sha256": "eb29fb908214681c9e1de707a590e6e4d4ed48b283d0150c511a1ab1e2f93b1f",
     "bytes": 182442,
     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Night_1km",
     "producto": "MOD11A2",
     "version": "061",
-    "descargado_utc": "2026-11-15T19:56:58+00:00",
+    "descargado_utc": "2026-11-16T00:10:49+00:00",
     "fechas": 1225
    }
-  ],
-  "nota": "Tomado del manifiesto (todas las bandas)."
+  },
+  "segundos": 932.5
  }
 }

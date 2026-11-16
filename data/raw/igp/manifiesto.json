@@ -6,7 +6,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2012",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:43:58+00:00"
+  "descargado_utc": "2026-11-15T23:34:26+00:00"
  },
  {
   "archivo": "igp_2013.json",
@@ -15,7 +15,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2013",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:43:59+00:00"
+  "descargado_utc": "2026-11-15T23:34:26+00:00"
  },
  {
   "archivo": "igp_2014.json",
@@ -24,7 +24,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2014",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:43:59+00:00"
+  "descargado_utc": "2026-11-15T23:34:27+00:00"
  },
  {
   "archivo": "igp_2015.json",
@@ -33,7 +33,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2015",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:43:59+00:00"
+  "descargado_utc": "2026-11-15T23:34:27+00:00"
  },
  {
   "archivo": "igp_2016.json",
@@ -42,7 +42,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2016",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:00+00:00"
+  "descargado_utc": "2026-11-15T23:34:27+00:00"
  },
  {
   "archivo": "igp_2017.json",
@@ -51,7 +51,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2017",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:00+00:00"
+  "descargado_utc": "2026-11-15T23:34:28+00:00"
  },
  {
   "archivo": "igp_2018.json",
@@ -60,7 +60,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2018",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:01+00:00"
+  "descargado_utc": "2026-11-15T23:34:28+00:00"
  },
  {
   "archivo": "igp_2019.json",
@@ -69,7 +69,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2019",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:02+00:00"
+  "descargado_utc": "2026-11-15T23:34:29+00:00"
  },
  {
   "archivo": "igp_2020.json",
@@ -78,7 +78,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2020",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:03+00:00"
+  "descargado_utc": "2026-11-15T23:34:30+00:00"
  },
  {
   "archivo": "igp_2021.json",
@@ -87,7 +87,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2021",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:03+00:00"
+  "descargado_utc": "2026-11-15T23:34:30+00:00"
  },
  {
   "archivo": "igp_2022.json",
@@ -96,7 +96,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2022",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:04+00:00"
+  "descargado_utc": "2026-11-15T23:34:31+00:00"
  },
  {
   "archivo": "igp_2023.json",
@@ -105,7 +105,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2023",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:05+00:00"
+  "descargado_utc": "2026-11-15T23:34:32+00:00"
  },
  {
   "archivo": "igp_2024.json",
@@ -114,7 +114,7 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2024",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:06+00:00"
+  "descargado_utc": "2026-11-15T23:34:32+00:00"
  },
  {
   "archivo": "igp_2025.json",
@@ -123,15 +123,15 @@
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2025",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:06+00:00"
+  "descargado_utc": "2026-11-15T23:34:33+00:00"
  },
  {
   "archivo": "igp_2026.json",
-  "sha256": "6c1d7c0195999e70887c86ffabc9c3723771853774e02ccafb3bebdcfc9f1bea",
-  "bytes": 550892,
+  "sha256": "e5db78ce734b777e698233b178e4794f458902da2cb9cf9040aaf8e9cfdd0df2",
+  "bytes": 553663,
   "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2026",
   "producto": "IGP_SISMOS_REPORTADOS",
   "version": null,
-  "descargado_utc": "2026-11-15T05:44:07+00:00"
+  "descargado_utc": "2026-11-15T23:34:33+00:00"
  }
 ]
