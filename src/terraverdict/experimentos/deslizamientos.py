@@ -96,7 +96,7 @@ def contraste_ingemmet(eventos_glc: list[dict[str, Any]], raw: Path, caja: list[
             "fraccion_menor_10km": float((distancias < 10).mean()) if len(distancias) else None,
         },
         "linea_base_azar": {
-            "puntos": int(len(d_azar)),
+            "puntos": len(d_azar),
             "mediana_km": float(np.median(d_azar)) if len(d_azar) else None,
             "fraccion_menor_5km": p0,
             "p_valor_binomial_5km": p_valor,

@@ -18,9 +18,8 @@ def test_intermedio_alterado_se_rechaza(tmp_path: Path):
     texto = ingemmet.INTERMEDIO.read_text(encoding="utf-8").splitlines()
     texto[5] = texto[5][:-4] + "AAAA"
     falso.write_text("\n".join(texto), encoding="utf-8", newline="\n")
-    with pytest.raises(ValueError, match="huella"):
-        with ingemmet.almacen_con_intermedio(falso):
-            pass
+    with pytest.raises(ValueError, match="huella"), ingemmet.almacen_con_intermedio(falso):
+        pass
 
 
 def test_el_codigo_no_desactiva_la_verificacion_tls():

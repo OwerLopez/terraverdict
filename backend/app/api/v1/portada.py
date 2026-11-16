@@ -79,7 +79,7 @@ def _anticipacion(e: Expediente | None) -> Anticipacion | None:
         familia=m.get("familia"),
         horizonte=r.get("horizonte"),
         periodo_prueba=f"{periodo.get('desde')} – {periodo.get('hasta')}" if periodo else None,
-        evidencia=evidencia(lo, m.get("p_diebold_mariano")),  # type: ignore[arg-type]
+        evidencia=evidencia(lo, m.get("p_diebold_mariano")),
         expediente_id=e.id,
     )
 
@@ -131,7 +131,7 @@ def filas(sesion: Session) -> list[FilaVeredicto]:
             fuentes=["NASA POWER (MERRA-2)", "CHIRPS", "NASA GPM IMERG (M1)"],
             tendencia=_tendencia(tendencias, ("lluvia",), "lluvia"),
             anticipacion=lluvia,
-            veredicto=_veredicto_habilidad(lluvia),  # type: ignore[arg-type]
+            veredicto=_veredicto_habilidad(lluvia),
         )
     )
 
@@ -142,7 +142,7 @@ def filas(sesion: Session) -> list[FilaVeredicto]:
             fuentes=["NASA POWER (MERRA-2)", "NOAA CPC (ONI)", "CHIRPS"],
             tendencia=_tendencia(tendencias, ("temperatura", "t2m"), "temperatura"),
             anticipacion=sequia,
-            veredicto=_veredicto_habilidad(sequia),  # type: ignore[arg-type]
+            veredicto=_veredicto_habilidad(sequia),
         )
     )
 

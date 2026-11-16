@@ -207,7 +207,8 @@ def verificar_fuentes_nacionales(
     for nombre, url in fuentes.items():
         try:
             ca = (ca_por_fuente or {}).get(nombre)
-            r = s.get(url, timeout=timeout, allow_redirects=True, **({"verify": ca} if ca else {}))
+            # verify=True (almacén de certifi) salvo que la fuente necesite un almacén ampliado; nunca False.
+            r = s.get(url, timeout=timeout, allow_redirects=True, verify=ca or True)
             if ca:
                 salida.setdefault("_almacen_tls", {})[nombre] = "certifi + config/certificados (intermedio con huella fijada)"
             salida[nombre] = {"url": url, "http": r.status_code, "url_final": r.url, "bytes": len(r.content)}

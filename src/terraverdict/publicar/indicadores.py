@@ -252,7 +252,8 @@ def sequia_por_enso(mensual: pd.Series, oni: list[dict]) -> dict:
 
 
 def ghcn_media(archivo: Path) -> dict:
-    filas = list(csv.DictReader(Path(archivo).open(encoding="utf-8")))
+    with Path(archivo).open(encoding="utf-8") as fh:
+        filas = list(csv.DictReader(fh))
     a, b = PERIODO_NORMAL
     v = [float(f["TAVG"]) / 10 for f in filas if f.get("TAVG", "").strip() and a <= f["DATE"] <= b]
     dias = (pd.Timestamp(b) - pd.Timestamp(a)).days + 1

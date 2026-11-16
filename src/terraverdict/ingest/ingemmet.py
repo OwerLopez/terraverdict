@@ -55,10 +55,9 @@ def almacen_con_intermedio(intermedio: Path = INTERMEDIO) -> Generator[str]:
     pem = intermedio.read_text(encoding="utf-8")
     if huella_pem(pem) != HUELLA_INTERMEDIO:
         raise ValueError(f"El intermedio {intermedio.name} no coincide con la huella registrada")
-    f = tempfile.NamedTemporaryFile("w", suffix=".pem", delete=False, encoding="utf-8", newline="\n")
-    try:
+    with tempfile.NamedTemporaryFile("w", suffix=".pem", delete=False, encoding="utf-8", newline="\n") as f:
         f.write(Path(certifi.where()).read_text(encoding="utf-8") + "\n" + pem)
-        f.close()
+    try:
         yield f.name
     finally:
         os.unlink(f.name)
