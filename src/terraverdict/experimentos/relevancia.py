@@ -221,7 +221,11 @@ def relevancia(
     # Estabilidad: remuestreo de años con reemplazo; importancia fuera de bolsa con el modelo A.
     rng = np.random.default_rng(semilla + 1)
     unicos = np.unique(ad)
+    # Con k = número de variables el top-k las contendría a todas (estabilidad trivial de 1): la
+    # frecuencia se mide en el top-k_e con k_e ≤ n − 1.
+    k_estabilidad = max(1, min(k, len(nombres) - 1))
     en_top = np.zeros(len(nombres))
+    aporta = np.zeros(len(nombres))
     validos = 0
     for r in range(p.remuestreos):
         bolsa = rng.choice(unicos, size=len(unicos), replace=True)
@@ -239,9 +243,11 @@ def relevancia(
             Xo = Xd[oob].copy()
             Xo[:, j] = _permutar_bloque(Xo[:, j], rng, p.desplazamiento_minimo)
             aum.append(brier(yd[oob], _predecir(m, Xo)) - base)
-        en_top[np.argsort(-np.asarray(aum))[:k]] += 1
+        en_top[np.argsort(-np.asarray(aum))[:k_estabilidad]] += 1
+        aporta += np.asarray(aum) > 0
         validos += 1
     estabilidad = en_top / max(validos, 1)
+    frecuencia_aporte = aporta / max(validos, 1)
 
     # Significancia condicional por variable: se desplaza circularmente SOLO esa variable (≥ 365 días),
     # se reentrena A en la misma validación cruzada y se compara la pérdida. Si la variable no aporta
@@ -273,6 +279,7 @@ def relevancia(
             "importancia_lineal": round(float(imp["A"][j]), 6),
             "importancia_no_lineal": round(float(imp["B"][j]), 6),
             "estabilidad": round(float(estabilidad[j]), 6),
+            "frecuencia_aporte_fuera_de_bolsa": round(float(frecuencia_aporte[j]), 6),
             "p_valor": round(float(p_valor[j]), 6),
             "p_ajustado": round(float(p_aj[j]), 6) if p_aj[j] is not None else None,
             "significativa_fdr": bool(p_aj[j] is not None and p_aj[j] <= p.alfa_fdr),
@@ -290,6 +297,7 @@ def relevancia(
         "modelo_elegido": {"A": "logistica_elastic_net", "B": "gradient_boosting"}[elegido],
         "coinciden_lineal_y_no_lineal": bool(coinciden),
         "remuestreos_validos": validos,
+        "k_estabilidad": k_estabilidad,
         "nulos": p.nulos,
         "prueba": {
             "metrica": "BSS frente a la climatología",

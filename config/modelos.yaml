@@ -121,7 +121,9 @@ relevancia:
   # 30 días (rompe su relación con el objetivo y conserva su autocorrelación).
   desplazamiento_minimo_dias: 30
   # Estabilidad (Meinshausen y Bühlmann, 2010, doi:10.1111/j.1467-9868.2010.00740.x): remuestreos de
-  # años con reemplazo; frecuencia con que cada variable queda en el top-k fuera de bolsa.
+  # años con reemplazo; frecuencia con que cada variable queda en el top-k fuera de bolsa (con
+  # k ≤ n − 1: si k abarcara todas las variables, la estabilidad sería trivialmente 1). Se informa
+  # además la fracción de remuestreos en que la variable mejora la predicción fuera de bolsa.
   remuestreos_estabilidad: 200
   # Significancia condicional por variable: se desplaza circularmente SOLO esa variable una cantidad
   # aleatoria de días ≥ 365 (rompe su alineación con el objetivo y conserva su autocorrelación), se
