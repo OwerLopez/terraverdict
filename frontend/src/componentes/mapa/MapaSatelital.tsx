@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Activity, Crosshair, Layers, Mountain, MapPin, Pause, Play, Satellite, SplitSquareHorizontal, Waves } from "lucide-react";
+import { Activity, ChevronDown, Crosshair, Layers, Mountain, MapPin, Pause, Play, Satellite, SplitSquareHorizontal, Waves } from "lucide-react";
 import maplibregl, { type GeoJSONSource, type Map as MapaML, type StyleSpecification } from "maplibre-gl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Esquemas } from "../../api/cliente";
@@ -368,7 +368,10 @@ export function MapaSatelital({
       interactive: false,
       attributionControl: false,
     });
-    const sincronizar = () => b.jumpTo({ center: m.getCenter(), zoom: m.getZoom(), bearing: m.getBearing(), pitch: m.getPitch() });
+    // Misma cámara, incluido el padding: el mapa principal reserva espacio para el panel de controles y,
+    // sin copiarlo, el centro de B caía ~170 px a la izquierda del de A (las dos fechas no coincidían).
+    const sincronizar = () => b.jumpTo({ center: m.getCenter(), zoom: m.getZoom(), bearing: m.getBearing(), pitch: m.getPitch(), padding: m.getPadding() });
+    sincronizar();
     m.on("move", sincronizar);
     mapaB.current = b;
     return () => {
@@ -492,7 +495,16 @@ export function MapaSatelital({
     setMezcla(50);
     setCorte(50);
     setComparar(true);
-    if (c.centro) mapa.current?.flyTo({ center: c.centro, zoom: 12.3, pitch: 0, bearing: 0, duration: 1400, padding: margenPanel() });
+    const m = mapa.current;
+    if (c.centro && m) {
+      const centro = c.centro;
+      m.flyTo({ center: centro, zoom: 13.4, pitch: 0, bearing: 0, duration: 1400, padding: margenPanel() });
+      // La cortina queda justo sobre el embalse: mitad fecha A, mitad fecha B.
+      m.once("moveend", () => {
+        const x = m.project(centro).x / m.getContainer().clientWidth;
+        setCorte(Math.min(90, Math.max(10, Math.round(x * 100))));
+      });
+    }
   };
 
   const botonCapa = (c: Capa) => (
@@ -608,6 +620,11 @@ export function MapaSatelital({
                 { valor: "mezcla", texto: t("Transparencia", "Blend") },
               ]}
             />
+            <p className="rounded-lg bg-accent-soft px-2.5 py-1.5 text-[11.5px] leading-snug text-accent-ink">
+              {modoComparacion === "cortina"
+                ? t("Arrastre el círculo blanco del mapa (o esta barra): a la izquierda se ve la fecha A y a la derecha la fecha B, sobre el mismo lugar.", "Drag the white round handle on the map (or this slider): the left side shows date A and the right side date B, over the same place.")
+                : t("Mueva la barra: 0 muestra solo la fecha A y 100 solo la fecha B; en medio se superponen.", "Move the slider: 0 shows only date A and 100 only date B; in between they overlap.")}
+            </p>
             <label className="block text-[11.5px] text-ink-3">
               <span className="flex justify-between"><span>A · {fechaCapa(def, fecha)}</span><span>B · {fechaCapa(defB, fechaB)}</span></span>
               {modoComparacion === "cortina" ? (
@@ -707,8 +724,12 @@ export function MapaSatelital({
         )}
       </div>
 
-      <div className="vidrio absolute bottom-10 left-3 hidden w-[300px] rounded-2xl border border-line p-4 shadow-flotante xl:block xl:left-[340px]">
-        <p className="etiqueta mb-2 flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> {t("Unidades de análisis", "Analysis units")}</p>
+      <details className="vidrio group absolute bottom-10 left-3 hidden w-[300px] rounded-2xl border border-line shadow-flotante xl:block xl:left-[340px]">
+        <summary className="etiqueta flex cursor-pointer list-none items-center justify-between gap-1.5 px-4 py-3 hover:text-ink">
+          <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> {t(`Unidades de análisis (${conGeometria.length + pendientes.length})`, `Analysis units (${conGeometria.length + pendientes.length})`)}</span>
+          <ChevronDown aria-hidden className="h-3.5 w-3.5 transition-transform group-open:rotate-180" />
+        </summary>
+        <div className="px-4 pb-4">
         <ul className="space-y-1.5 text-[12.5px]">
           {conGeometria.map((u) => (
             <li key={u.id}>
@@ -736,7 +757,8 @@ export function MapaSatelital({
             </div>
           </div>
         )}
-      </div>
+        </div>
+      </details>
     </div>
   );
 }

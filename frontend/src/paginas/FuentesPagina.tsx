@@ -35,7 +35,7 @@ export function FuentesPagina() {
       <Encabezado
         eyebrow={t("Evidencia", "Evidence")}
         titulo={t("Fuentes verificadas", "Verified sources")}
-        descripcion={t("Cada fuente se comprobó con consultas reales a su catálogo oficial: que exista, su periodo publicado y que tenga datos sobre la cuenca. La verificación es reproducible con scripts/verificar_fuentes.py.", "Each source was checked with real queries to its official catalog: that it exists, its published period, and that it has data over the basin. The check is reproducible with scripts/verificar_fuentes.py.")}
+        descripcion={t("Cada fuente se comprobó con consultas reales a su catálogo oficial: que exista, su periodo publicado y que tenga datos sobre la cuenca. Cualquiera puede repetir la verificación con el script público del repositorio.", "Each source was checked with real queries to its official catalog: that it exists, its published period, and that it has data over the basin. Anyone can repeat the check with the public script in the repository.")}
       />
       <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
         <Tarjeta

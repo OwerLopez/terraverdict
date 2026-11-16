@@ -843,8 +843,23 @@ def de_tendencia(e: dict[str, Any], alfa: float) -> dict[str, Any]:
     )
 
 
+# Serie publicada a la que pertenece cada tendencia (la web la grafica junto a su expediente). Solo se
+# enlaza cuando la serie mide exactamente la misma variable: la lluvia de dic–mar no es la anual.
+SERIE_DE_TENDENCIA = {
+    "t2m_media_anual": ("chili_analisis.cabecera_power", "temperatura_aire_2m", "chili_analisis.cabecera_power:temperatura_aire_2m:power_mensual:p1y"),
+}
+
+
 def de_expedientes(carpeta: Path, alfa: float) -> list[dict[str, Any]]:
-    return [de_tendencia(json.loads(p.read_text(encoding="utf-8")), alfa) for p in sorted(carpeta.glob("TV-*.json"))]
+    salida = []
+    for p in sorted(carpeta.glob("TV-*.json")):
+        e = json.loads(p.read_text(encoding="utf-8"))
+        exp = de_tendencia(e, alfa)
+        enlace = SERIE_DE_TENDENCIA.get(e["objeto"]["variable"])
+        if enlace:
+            exp["unidad_id"], exp["variable_id"], exp["serie_id"] = enlace
+        salida.append(exp)
+    return salida
 
 
 # --- Ejecuciones reales del pipeline (procesos de la API) ---------------------------------------

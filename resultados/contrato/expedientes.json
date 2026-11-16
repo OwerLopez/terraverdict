@@ -178243,6 +178243,9 @@
     }
    ],
    "generado_utc": "2026-11-16T04:02:24+00:00"
-  }
+  },
+  "unidad_id": "chili_analisis.cabecera_power",
+  "variable_id": "temperatura_aire_2m",
+  "serie_id": "chili_analisis.cabecera_power:temperatura_aire_2m:power_mensual:p1y"
  }
 ]

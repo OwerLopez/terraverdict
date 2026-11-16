@@ -50,6 +50,7 @@ import {
 import { CATEGORIAS_EVENTO } from "../lib/colores";
 import { textoCota, cifraCitada, conUnidad, fecha, numero, valorP } from "../lib/formato";
 import { t } from "../lib/i18n";
+import { urlCodigo } from "../lib/repositorio";
 import { bilingueDato } from "../lib/titulos";
 
 const SERIE_T = "chili_analisis.cabecera_power:temperatura_aire_2m:power_mensual:p1y";
@@ -156,7 +157,12 @@ function PrimerResultado() {
       subtitulo={subtitulo}
       acciones={id && <Link to={`/expedientes/${id}`}><Boton tamano="sm" icono={FileCheck2}>{t("Expediente", "Case file")}</Boton></Link>}
       pie={
-        <>{t("Fuente: NASA POWER (MERRA-2) y NOAA CPC (ONI) · cálculo reproducible en", "Source: NASA POWER (MERRA-2) and NOAA CPC (ONI) · reproducible computation in")} <code className="font-mono">scripts/analisis_preliminar.py</code></>
+        <>
+          {t("Fuentes: NASA POWER (MERRA-2) y NOAA CPC (ONI) · cálculo reproducible", "Sources: NASA POWER (MERRA-2) and NOAA CPC (ONI) · reproducible computation")}{" "}
+          <a href={urlCodigo("scripts/analisis_preliminar.py")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-medium text-accent-ink hover:underline">
+            {t("ver el código", "view the code")} <ExternalLink aria-hidden className="h-3 w-3" />
+          </a>
+        </>
       }
     >
       <div className="grid gap-6 lg:grid-cols-[1fr_280px]">

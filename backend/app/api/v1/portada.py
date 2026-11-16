@@ -30,7 +30,7 @@ router = APIRouter(tags=["Portada"])
 
 AVISO = "Resultados experimentales. No son alertas oficiales (SENAMHI, IGP, INGEMMET, INDECI, ENFEN)."
 UMBRAL_P = 0.10
-REGLA = "IC90 inferior > 0 y p de Diebold-Mariano < 0,10 = confirmada; solo una de las dos = indicio (config/metricas.yaml)."
+REGLA = "Regla de evidencia: IC90 inferior > 0 y p de Diebold-Mariano < 0,10 = confirmada; solo una de las dos = indicio."  # definida en config/metricas.yaml
 
 
 @lru_cache(maxsize=4)
