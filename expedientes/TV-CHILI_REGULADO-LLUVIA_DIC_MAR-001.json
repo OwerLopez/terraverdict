@@ -8,81 +8,125 @@
  },
  "periodo": {
   "desde": 1982,
-  "hasta": 2024,
-  "n": 43
+  "hasta": 2025,
+  "n": 44
  },
  "resultado": {
-  "n": 43,
+  "n": 44,
   "periodo": [
    1982,
-   2024
+   2025
   ],
   "sen": {
-   "sen_por_decada": 16.314285714285717,
+   "sen_por_decada": 19.15141625615764,
    "ic_por_decada": [
-    1.6600000000000108,
-    30.406896551724138
+    4.3759999999999994,
+    31.884615384615387
    ],
-   "pendiente": 1.6314285714285717,
-   "ordenada": -3135.701428571429
+   "pendiente": 1.9151416256157638,
+   "ordenada": -3696.771246921183
   },
   "mk": {
    "p_variantes": {
-    "original": 0.05681822931485225,
-    "hamed_rao": 0.00022344840789378928,
-    "prewhitening": 0.10872868488501819
+    "original": 0.026758455445257123,
+    "hamed_rao": 0.000027229950453566687,
+    "prewhitening": 0.0515865223479568
    },
    "p_invalidas": [],
-   "p_conservador": 0.10872868488501819,
+   "p_conservador": 0.0515865223479568,
    "variante_limitante": "prewhitening"
   },
   "ventanas": {
-   "n_ventanas": 300,
-   "pct_mismo_signo": 92.0,
-   "pct_significativas": 22.666666666666668
+   "n_ventanas": 325,
+   "pct_mismo_signo": 92.61538461538461,
+   "pct_significativas": 25.53846153846154
   },
-  "enso": null,
+  "enso": {
+   "evaluada": true,
+   "n": 44,
+   "r_pearson_con_oni": -0.3512973578674822,
+   "p_pearson": 0.01937530396565936,
+   "pendiente_sin_enso_por_decada": 18.435169472167296,
+   "p_pendiente_sin_enso_hac": 0.007180200901364251,
+   "coef_oni": -21.49965602214027,
+   "p_coef_oni_hac": 0.009820856317484365
+  },
   "sensor": {
    "quiebres": {},
    "pettitt": {
     "indice_quiebre": 28,
-    "p": 0.06826862387195246
+    "p": 0.03662875504906625
    },
    "quiebres_declarados": {}
   },
   "palanca": {
    "evaluada": true,
    "quitados": 2,
-   "sen_por_decada": 18.282608695652172,
-   "p_conservador": 0.10042517436963738,
+   "sen_por_decada": 14.76451612903226,
+   "p_conservador": 0.1603211528324091,
    "sobrevive": false
   },
   "detectabilidad": {
-   "sigma_ruido": 63.12752894130836,
-   "phi_ar1": 0.13173165537095852,
-   "anios_disponibles": 43,
-   "anios_necesarios": 27.699564586203238
+   "sigma_ruido": 63.09442618791218,
+   "phi_ar1": 0.13708238172692988,
+   "anios_disponibles": 44,
+   "anios_necesarios": 24.97335500606327
   },
-  "independencia": null,
+  "independencia": {
+   "familias_evaluadas": [
+    "chirps_ir_pluviometros",
+    "imerg_pmw_gpcc",
+    "reanalisis_merra2"
+   ],
+   "familias_mismo_signo": [
+    "chirps_ir_pluviometros",
+    "reanalisis_merra2"
+   ],
+   "n_familias_mismo_signo": 2,
+   "detalle": [
+    {
+     "producto": "CHIRPS_V2",
+     "sen": 2.1564063548585004,
+     "sen_por_decada": 21.564063548585004,
+     "periodo": [
+      1982,
+      2025
+     ],
+     "n": 44
+    },
+    {
+     "producto": "IMERG_FINAL",
+     "sen": -1.3690000000000018,
+     "sen_por_decada": -13.690000000000017,
+     "periodo": [
+      1999,
+      2025
+     ],
+     "n": 27
+    }
+   ]
+  },
   "sello": {
-   "codigo": "sin_tendencia",
-   "emoji": "🔵",
-   "fallan": [],
+   "codigo": "fragil",
+   "emoji": "🟡",
+   "fallan": [
+    "palanca"
+   ],
    "pendientes": [],
-   "nota": "p conservador > alpha y hay años suficientes (marginal: p ≤ 2·alpha, revisar con otra familia)"
+   "nota": ""
   }
  },
- "veredicto": "sin_tendencia",
+ "veredicto": "fragil",
  "serie": {
   "1982": 121.25,
   "1983": 5.21,
   "1984": 245.18,
   "1985": 121.59,
   "1986": 187.42,
-  "1987": 125.74,
+  "1987": 125.74000000000001,
   "1988": 112.43,
   "1989": 148.38,
-  "1990": 65.52,
+  "1990": 65.52000000000001,
   "1991": 51.56,
   "1992": 28.62,
   "1993": 86.25,
@@ -90,46 +134,51 @@
   "1995": 171.25,
   "1996": 104.44,
   "1997": 209.92,
-  "1998": 90.27,
+  "1998": 90.27000000000001,
   "1999": 180.58,
   "2000": 237.31,
-  "2001": 278.22,
+  "2001": 278.21999999999997,
   "2002": 177.42,
-  "2003": 124.26,
-  "2004": 122.03,
+  "2003": 124.25999999999999,
+  "2004": 122.02999999999999,
   "2005": 95.73,
   "2006": 108.46,
-  "2007": 35.05,
-  "2008": 160.0,
-  "2009": 106.51,
+  "2007": 35.050000000000004,
+  "2008": 160.00000000000003,
+  "2009": 106.50999999999999,
   "2010": 78.15,
   "2011": 176.99,
   "2012": 267.29,
-  "2013": 208.64,
+  "2013": 208.64000000000001,
   "2014": 131.46,
-  "2015": 180.57,
+  "2015": 180.57000000000002,
   "2016": 165.86,
   "2017": 233.19,
   "2018": 172.7,
   "2019": 153.7,
   "2020": 299.31,
   "2021": 132.05,
-  "2022": 150.36,
+  "2022": 150.35999999999999,
   "2023": 107.94,
-  "2024": 200.8
+  "2024": 200.8,
+  "2025": 248.25
  },
- "advertencias": [
-  "Una sola familia de datos: la prueba de independencia no se evaluó."
- ],
+ "advertencias": [],
  "procedencia": {
   "productos": [
    {
     "id": "NASA_POWER_MERRA2"
+   },
+   {
+    "id": "CHIRPS_V2"
+   },
+   {
+    "id": "IMERG_FINAL"
    }
   ],
   "preregistro_sha256": "c40676fd76ab55434bb8f0a89fe6c1bcf8845551dd884b41444682f3bd00d596",
-  "codigo_commit": "ccd1e69",
-  "entradas_sha256": "05a493cc43cabf48357633160f6c383354ba2b87d5e756b4c1ecb0ea9b41354d",
-  "generado_utc": "2026-11-15T05:04:29+00:00"
+  "codigo_commit": "a59002d",
+  "entradas_sha256": "7a45629d3bc7377973459c1cf65402441fc7447d32acf534a468c070e304240c",
+  "generado_utc": "2026-11-16T04:02:25+00:00"
  }
 }

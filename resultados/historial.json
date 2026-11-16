@@ -151,7 +151,7 @@
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.095099,
+       "validacion": 0.0951,
        "prueba": 0.116501,
        "ic90": [
         -0.041374,
@@ -272,7 +272,7 @@
         -0.018397,
         0.284065
        ],
-       "p_diebold_mariano": 0.256922,
+       "p_diebold_mariano": 0.256923,
        "secundarias": {
         "brier": 0.11453,
         "bss_climatologia": 0.140421,
@@ -287,13 +287,13 @@
        "prueba": 0.150037,
        "ic90": [
         -0.016671,
-        0.307043
+        0.307042
        ],
-       "p_diebold_mariano": 0.223738,
+       "p_diebold_mariano": 0.223739,
        "secundarias": {
         "brier": 0.113249,
         "bss_climatologia": 0.150037,
-        "auc": 0.785131,
+        "auc": 0.785598,
         "ece": 0.062871,
         "bss_persistencia": 0.037307
        }
@@ -387,7 +387,7 @@
         -0.144061,
         0.143862
        ],
-       "p_diebold_mariano": 0.811888,
+       "p_diebold_mariano": 0.811889,
        "secundarias": {
         "brier": 0.106808,
         "bss_climatologia": 0.020048,
@@ -550,10 +550,10 @@
        "validacion": -0.043109,
        "prueba": -0.009511,
        "ic90": [
-        -0.154959,
-        0.112702
+        -0.15496,
+        0.112701
        ],
-       "p_diebold_mariano": 0.90757,
+       "p_diebold_mariano": 0.907568,
        "secundarias": {
         "brier": 0.081039,
         "bss_climatologia": -0.009511,
@@ -648,7 +648,7 @@
        "validacion": -0.014161,
        "prueba": 0.270683,
        "ic90": [
-        0.126484,
+        0.126483,
         0.38644
        ],
        "p_diebold_mariano": 0.01362,
@@ -679,7 +679,7 @@
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": -0.094385,
+       "validacion": -0.094384,
        "prueba": 0.240366,
        "ic90": [
         0.115875,
@@ -689,7 +689,7 @@
        "secundarias": {
         "brier": 0.110817,
         "bss_climatologia": 0.240366,
-        "auc": 0.874822,
+        "auc": 0.874619,
         "ece": 0.082448,
         "bss_persistencia": 0.214215
        }
@@ -821,8 +821,8 @@
        "secundarias": {
         "brier": 0.078282,
         "bss_climatologia": -0.214451,
-        "auc": 0.704389,
-        "ece": 0.081123,
+        "auc": 0.706607,
+        "ece": 0.084044,
         "bss_persistencia": -0.159093
        }
       }
@@ -1087,7 +1087,7 @@
         "bss_climatologia": 0.067077,
         "auc": 0.715373,
         "ece": 0.04422,
-        "bss_persistencia": 0.022195
+        "bss_persistencia": 0.022194
        }
       }
      }
@@ -1211,13 +1211,13 @@
        "prueba": 0.05148,
        "ic90": [
         -0.13297,
-        0.165752
+        0.165751
        ],
-       "p_diebold_mariano": 0.574815,
+       "p_diebold_mariano": 0.574816,
        "secundarias": {
         "brier": 0.086943,
         "bss_climatologia": 0.05148,
-        "auc": 0.710042,
+        "auc": 0.711979,
         "ece": 0.04044,
         "bss_persistencia": 0.003677
        }
@@ -1328,7 +1328,7 @@
         -0.070594,
         0.303605
        ],
-       "p_diebold_mariano": 0.215534,
+       "p_diebold_mariano": 0.215533,
        "secundarias": {
         "brier": 0.122262,
         "bss_climatologia": 0.149943,
@@ -1481,7 +1481,7 @@
        "secundarias": {
         "brier": 0.114561,
         "bss_climatologia": 0.232988,
-        "auc": 0.870462,
+        "auc": 0.874496,
         "ece": 0.050199,
         "bss_persistencia": 0.164767
        }
@@ -1810,7 +1810,7 @@
         "habilidad_climatologia": 0.524984,
         "habilidad_persistencia": -0.107034,
         "cobertura_90": 0.916667,
-        "ancho_intervalo_90": 1.627018
+        "ancho_intervalo_90": 1.627017
        }
       },
       "ensamble_top3": {
@@ -1953,7 +1953,7 @@
         "rmse": 0.904439,
         "r": 0.432491,
         "habilidad_climatologia": 0.619104,
-        "habilidad_persistencia": 0.228367,
+        "habilidad_persistencia": 0.228368,
         "cobertura_90": 1.0,
         "ancho_intervalo_90": 3.89074
        }
@@ -1991,7 +1991,7 @@
         "rmse": 0.904439,
         "r": 0.432491,
         "habilidad_climatologia": 0.619104,
-        "habilidad_persistencia": 0.228367,
+        "habilidad_persistencia": 0.228368,
         "cobertura_90": 1.0,
         "ancho_intervalo_90": 3.903693
        }
@@ -2278,7 +2278,7 @@
        "p_diebold_mariano": 0.172145,
        "secundarias": {
         "mae": 0.642193,
-        "rmse": 0.774103,
+        "rmse": 0.774104,
         "r": 0.702649,
         "habilidad_climatologia": 0.752682,
         "habilidad_persistencia": 0.810852,
@@ -2376,59 +2376,59 @@
       },
       "tcn": {
        "familia": "red_neuronal",
-       "validacion": 0.759319,
-       "prueba": 0.47506,
+       "validacion": 0.758241,
+       "prueba": 0.473847,
        "ic90": [
-        0.036616,
-        0.745621
+        0.033693,
+        0.744609
        ],
-       "p_diebold_mariano": 0.110368,
+       "p_diebold_mariano": 0.111699,
        "secundarias": {
-        "mae": 0.854615,
-        "rmse": 0.997484,
-        "r": 0.681952,
-        "habilidad_climatologia": 0.47506,
-        "habilidad_persistencia": 0.086562,
+        "mae": 0.853857,
+        "rmse": 0.998635,
+        "r": 0.681028,
+        "habilidad_climatologia": 0.473847,
+        "habilidad_persistencia": 0.084452,
         "cobertura_90": 0.916667,
-        "ancho_intervalo_90": 3.287829
+        "ancho_intervalo_90": 3.300565
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": 0.803191,
-       "prueba": 0.531202,
+       "validacion": 0.802868,
+       "prueba": 0.530666,
        "ic90": [
-        0.091361,
-        0.833444
+        0.090244,
+        0.832991
        ],
-       "p_diebold_mariano": 0.10345,
+       "p_diebold_mariano": 0.103882,
        "secundarias": {
-        "mae": 0.762369,
-        "rmse": 0.942635,
-        "r": 0.725009,
-        "habilidad_climatologia": 0.531202,
-        "habilidad_persistencia": 0.184254,
+        "mae": 0.762881,
+        "rmse": 0.943174,
+        "r": 0.72468,
+        "habilidad_climatologia": 0.530666,
+        "habilidad_persistencia": 0.183322,
         "cobertura_90": 0.916667,
-        "ancho_intervalo_90": 2.723116
+        "ancho_intervalo_90": 2.726999
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.7066,
-       "prueba": 0.528353,
+       "validacion": 0.708307,
+       "prueba": 0.527597,
        "ic90": [
-        0.092924,
-        0.839339
+        0.092123,
+        0.839503
        ],
-       "p_diebold_mariano": 0.109133,
+       "p_diebold_mariano": 0.110082,
        "secundarias": {
-        "mae": 0.76644,
-        "rmse": 0.945496,
-        "r": 0.723065,
-        "habilidad_climatologia": 0.528353,
-        "habilidad_persistencia": 0.179296,
+        "mae": 0.767172,
+        "rmse": 0.946253,
+        "r": 0.722584,
+        "habilidad_climatologia": 0.527597,
+        "habilidad_persistencia": 0.177981,
         "cobertura_90": 1.0,
-        "ancho_intervalo_90": 3.473198
+        "ancho_intervalo_90": 3.471727
        }
       }
      }
@@ -2524,7 +2524,7 @@
        "validacion": 0.480923,
        "prueba": 0.602981,
        "ic90": [
-        0.112061,
+        0.11206,
         0.623046
        ],
        "p_diebold_mariano": 0.232547,
@@ -2676,7 +2676,7 @@
        "secundarias": {
         "mae": 0.671323,
         "rmse": 0.834456,
-        "r": 0.566649,
+        "r": 0.56665,
         "habilidad_climatologia": 0.25969,
         "habilidad_persistencia": 0.643789,
         "cobertura_90": 1.0,
@@ -2686,7 +2686,7 @@
       "ensamble_top3": {
        "familia": "ensamble",
        "validacion": 0.778976,
-       "prueba": 0.377691,
+       "prueba": 0.377692,
        "ic90": [
         0.205454,
         0.731788
@@ -2696,7 +2696,7 @@
         "mae": 0.566016,
         "rmse": 0.765067,
         "r": 0.645371,
-        "habilidad_climatologia": 0.377691,
+        "habilidad_climatologia": 0.377692,
         "habilidad_persistencia": 0.700567,
         "cobertura_90": 0.916667,
         "ancho_intervalo_90": 2.939034
@@ -2811,45 +2811,45 @@
       },
       "tcn": {
        "familia": "red_neuronal",
-       "validacion": 0.237811,
-       "prueba": 0.643089,
+       "validacion": 0.237837,
+       "prueba": 0.643268,
        "ic90": [
-        0.311856,
-        0.654429
+        0.312179,
+        0.654649
        ],
-       "p_diebold_mariano": 0.117926,
+       "p_diebold_mariano": 0.117953,
        "secundarias": {
-        "mae": 1.047789,
-        "rmse": 1.545435,
-        "r": 0.770572,
-        "habilidad_climatologia": 0.643089,
-        "habilidad_persistencia": 0.456767,
+        "mae": 1.047817,
+        "rmse": 1.545047,
+        "r": 0.770649,
+        "habilidad_climatologia": 0.643268,
+        "habilidad_persistencia": 0.457039,
         "cobertura_90": 0.666667,
-        "ancho_intervalo_90": 3.065524
+        "ancho_intervalo_90": 3.068952
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": 0.419419,
-       "prueba": 0.65632,
+       "validacion": 0.419452,
+       "prueba": 0.656392,
        "ic90": [
-        0.304678,
-        0.660781
+        0.304786,
+        0.660859
        ],
-       "p_diebold_mariano": 0.11634,
+       "p_diebold_mariano": 0.116342,
        "secundarias": {
-        "mae": 1.06523,
-        "rmse": 1.516518,
-        "r": 0.833002,
-        "habilidad_climatologia": 0.65632,
-        "habilidad_persistencia": 0.476906,
+        "mae": 1.065091,
+        "rmse": 1.516361,
+        "r": 0.833034,
+        "habilidad_climatologia": 0.656392,
+        "habilidad_persistencia": 0.477014,
         "cobertura_90": 0.75,
-        "ancho_intervalo_90": 3.333415
+        "ancho_intervalo_90": 3.332996
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.346141,
+       "validacion": 0.34603,
        "prueba": 0.636071,
        "ic90": [
         0.323422,
@@ -3153,7 +3153,7 @@
         "habilidad_climatologia": 0.783751,
         "habilidad_persistencia": 0.161798,
         "cobertura_90": 0.666667,
-        "ancho_intervalo_90": 1.767858
+        "ancho_intervalo_90": 1.767857
        }
       }
      }
@@ -3206,45 +3206,45 @@
       "bloque_bootstrap": 6
      },
      "tcn": {
-      "valor": 0.604506,
+      "valor": 0.604326,
       "ic90": [
-       0.528739,
-       0.703714
+       0.528438,
+       0.703438
       ],
-      "p_diebold_mariano": 0.000681,
+      "p_diebold_mariano": 0.000684,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
      },
      "ensamble_top3": {
-      "valor": 0.635203,
+      "valor": 0.635124,
       "ic90": [
-       0.562009,
-       0.7573
+       0.561923,
+       0.757105
       ],
-      "p_diebold_mariano": 0.000397,
+      "p_diebold_mariano": 0.000398,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
      },
      "ensamble_ponderado": {
-      "valor": 0.579043,
+      "valor": 0.578931,
       "ic90": [
-       0.488928,
-       0.733372
+       0.488949,
+       0.733396
       ],
-      "p_diebold_mariano": 0.00031,
+      "p_diebold_mariano": 0.000311,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
      },
      "seleccion_validacion": {
-      "valor": 0.585119,
+      "valor": 0.58504,
       "ic90": [
-       0.494459,
-       0.746864
+       0.49436,
+       0.746861
       ],
-      "p_diebold_mariano": 0.000199,
+      "p_diebold_mariano": 0.0002,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6,
@@ -3303,21 +3303,21 @@
       "bloque_bootstrap": 6
      },
      "tcn": {
-      "valor": 0.667452,
+      "valor": 0.667521,
       "ic90": [
-       0.546996,
-       0.745018
+       0.547098,
+       0.745042
       ],
-      "p_diebold_mariano": 0.019402,
+      "p_diebold_mariano": 0.019404,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
      },
      "ensamble_top3": {
-      "valor": 0.710131,
+      "valor": 0.710159,
       "ic90": [
-       0.594788,
-       0.786372
+       0.594836,
+       0.786376
       ],
       "p_diebold_mariano": 0.015537,
       "n": 60,
@@ -3468,7 +3468,7 @@
        "validacion": 0.251989,
        "prueba": 0.293725,
        "ic90": [
-        0.268654,
+        0.268655,
         0.384322
        ],
        "p_diebold_mariano": 0.100591,
@@ -3504,7 +3504,7 @@
       "ensamble_ponderado": {
        "familia": "ensamble",
        "validacion": 0.095966,
-       "prueba": 0.286716,
+       "prueba": 0.286717,
        "ic90": [
         0.25952,
         0.385174
@@ -3512,12 +3512,12 @@
        "p_diebold_mariano": 0.095337,
        "secundarias": {
         "mae": 0.758653,
-        "rmse": 0.988792,
+        "rmse": 0.988791,
         "r": -0.458349,
-        "habilidad_climatologia": 0.286716,
+        "habilidad_climatologia": 0.286717,
         "habilidad_persistencia": 0.353998,
         "cobertura_90": 1.0,
-        "ancho_intervalo_90": 4.530457
+        "ancho_intervalo_90": 4.530456
        }
       }
      }
@@ -3769,7 +3769,7 @@
         "habilidad_climatologia": 0.314599,
         "habilidad_persistencia": 0.138944,
         "cobertura_90": 0.75,
-        "ancho_intervalo_90": 3.679567
+        "ancho_intervalo_90": 3.679568
        }
       },
       "ensamble_top3": {
@@ -3925,7 +3925,7 @@
         0.00058,
         0.238315
        ],
-       "p_diebold_mariano": 0.260269,
+       "p_diebold_mariano": 0.26027,
        "secundarias": {
         "mae": 1.030777,
         "rmse": 1.410039,
@@ -4049,13 +4049,13 @@
        "prueba": -0.054539,
        "ic90": [
         -0.706464,
-        0.187318
+        0.187319
        ],
        "p_diebold_mariano": 0.893171,
        "secundarias": {
         "mae": 1.305882,
         "rmse": 1.413782,
-        "r": -0.073275,
+        "r": -0.073274,
         "habilidad_climatologia": -0.054539,
         "habilidad_persistencia": 0.381614,
         "cobertura_90": 1.0,
@@ -4065,7 +4065,7 @@
       "ensamble_top3": {
        "familia": "ensamble",
        "validacion": 0.158822,
-       "prueba": -0.098198,
+       "prueba": -0.098197,
        "ic90": [
         -1.121189,
         0.327058
@@ -4074,11 +4074,11 @@
        "secundarias": {
         "mae": 1.244385,
         "rmse": 1.442751,
-        "r": 0.047472,
-        "habilidad_climatologia": -0.098198,
+        "r": 0.047473,
+        "habilidad_climatologia": -0.098197,
         "habilidad_persistencia": 0.356013,
         "cobertura_90": 1.0,
-        "ancho_intervalo_90": 6.918791
+        "ancho_intervalo_90": 6.918792
        }
       },
       "ensamble_ponderado": {
@@ -4086,7 +4086,7 @@
        "validacion": 0.259586,
        "prueba": -0.274532,
        "ic90": [
-        -1.48321,
+        -1.483211,
         0.214883
        ],
        "p_diebold_mariano": 0.691118,
@@ -4095,9 +4095,9 @@
         "rmse": 1.55427,
         "r": -0.179186,
         "habilidad_climatologia": -0.274532,
-        "habilidad_persistencia": 0.25261,
+        "habilidad_persistencia": 0.252609,
         "cobertura_90": 1.0,
-        "ancho_intervalo_90": 6.338424
+        "ancho_intervalo_90": 6.338425
        }
       }
      }
@@ -4200,7 +4200,7 @@
        "secundarias": {
         "mae": 0.960931,
         "rmse": 1.339164,
-        "r": -0.193022,
+        "r": -0.193021,
         "habilidad_climatologia": 0.153546,
         "habilidad_persistencia": 0.20065,
         "cobertura_90": 0.75,
@@ -4238,11 +4238,11 @@
        "secundarias": {
         "mae": 0.960931,
         "rmse": 1.339164,
-        "r": -0.193022,
+        "r": -0.193021,
         "habilidad_climatologia": 0.153546,
         "habilidad_persistencia": 0.20065,
         "cobertura_90": 1.0,
-        "ancho_intervalo_90": 5.532186
+        "ancho_intervalo_90": 5.532187
        }
       }
      }
@@ -4362,7 +4362,7 @@
        ],
        "p_diebold_mariano": 0.55233,
        "secundarias": {
-        "mae": 0.865388,
+        "mae": 0.865389,
         "rmse": 1.078673,
         "r": 0.675038,
         "habilidad_climatologia": -0.237048,
@@ -4387,7 +4387,7 @@
         "habilidad_climatologia": -0.309923,
         "habilidad_persistencia": 0.656309,
         "cobertura_90": 1.0,
-        "ancho_intervalo_90": 5.469705
+        "ancho_intervalo_90": 5.469704
        }
       }
      }
@@ -4490,7 +4490,7 @@
        "secundarias": {
         "mae": 1.742669,
         "rmse": 2.465652,
-        "r": -0.007977,
+        "r": -0.007976,
         "habilidad_climatologia": 0.091505,
         "habilidad_persistencia": 0.3362,
         "cobertura_90": 0.75,
@@ -4629,17 +4629,17 @@
        "prueba": 0.411197,
        "ic90": [
         0.145251,
-        0.672651
+        0.672652
        ],
        "p_diebold_mariano": 0.227075,
        "secundarias": {
-        "mae": 0.466569,
+        "mae": 0.466568,
         "rmse": 0.665175,
         "r": -0.629425,
         "habilidad_climatologia": 0.411197,
         "habilidad_persistencia": 0.682332,
         "cobertura_90": 1.0,
-        "ancho_intervalo_90": 9.452046
+        "ancho_intervalo_90": 9.452045
        }
       },
       "ensamble_top3": {
@@ -4902,7 +4902,7 @@
        0.105465,
        0.469661
       ],
-      "p_diebold_mariano": 0.069776,
+      "p_diebold_mariano": 0.069777,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
@@ -5086,81 +5086,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": -0.791754,
-       "prueba": 0.088518,
+       "validacion": -0.791818,
+       "prueba": 0.089861,
        "ic90": [
-        -0.733048,
-        0.166481
+        -0.7288,
+        0.162235
        ],
-       "p_diebold_mariano": 0.858947,
+       "p_diebold_mariano": 0.85624,
        "secundarias": {
-        "log_verosimilitud": -2.458626,
-        "ganancia_informacion_bits": 0.088518,
-        "mae": 2.056887,
+        "log_verosimilitud": -2.457696,
+        "ganancia_informacion_bits": 0.089861,
+        "mae": 2.05525,
         "mae_climatologia": 2.269511
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.322515,
-       "prueba": -0.091396,
+       "validacion": -0.425771,
+       "prueba": -0.00674,
        "ic90": [
-        -0.699866,
-        0.126728
+        -0.605354,
+        0.026268
        ],
-       "p_diebold_mariano": 0.838547,
+       "p_diebold_mariano": 0.987498,
        "secundarias": {
-        "log_verosimilitud": -2.583333,
-        "ganancia_informacion_bits": -0.091396,
-        "mae": 2.53755,
+        "log_verosimilitud": -2.524654,
+        "ganancia_informacion_bits": -0.00674,
+        "mae": 2.504468,
         "mae_climatologia": 2.269511
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": 0.451012,
-       "prueba": 0.302183,
+       "validacion": 0.451835,
+       "prueba": 0.302342,
        "ic90": [
-        -0.035613,
-        0.435781
+        -0.036241,
+        0.436197
        ],
-       "p_diebold_mariano": 0.337975,
+       "p_diebold_mariano": 0.338912,
        "secundarias": {
-        "log_verosimilitud": -2.310525,
-        "ganancia_informacion_bits": 0.302183,
-        "mae": 2.079934,
+        "log_verosimilitud": -2.310415,
+        "ganancia_informacion_bits": 0.302342,
+        "mae": 2.079459,
         "mae_climatologia": 2.269511
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": 0.032473,
-       "prueba": 0.216796,
+       "validacion": 0.003898,
+       "prueba": 0.240315,
        "ic90": [
-        -0.351716,
-        0.371696
+        -0.314563,
+        0.336353
        ],
-       "p_diebold_mariano": 0.594229,
+       "p_diebold_mariano": 0.542704,
        "secundarias": {
-        "log_verosimilitud": -2.369711,
-        "ganancia_informacion_bits": 0.216796,
-        "mae": 2.180056,
+        "log_verosimilitud": -2.353409,
+        "ganancia_informacion_bits": 0.240315,
+        "mae": 2.168766,
         "mae_climatologia": 2.269511
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.416069,
-       "prueba": 0.302183,
+       "validacion": 0.417313,
+       "prueba": 0.302342,
        "ic90": [
-        -0.035613,
-        0.435781
+        -0.036241,
+        0.436197
        ],
-       "p_diebold_mariano": 0.337975,
+       "p_diebold_mariano": 0.338912,
        "secundarias": {
-        "log_verosimilitud": -2.310525,
-        "ganancia_informacion_bits": 0.302183,
-        "mae": 2.079934,
+        "log_verosimilitud": -2.310415,
+        "ganancia_informacion_bits": 0.302342,
+        "mae": 2.079459,
         "mae_climatologia": 2.269511
        }
       }
@@ -5211,81 +5211,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": 0.104739,
-       "prueba": 0.277355,
+       "validacion": 0.10643,
+       "prueba": 0.273448,
        "ic90": [
-        -0.204529,
-        0.886333
+        -0.206798,
+        0.882983
        ],
-       "p_diebold_mariano": 0.551561,
+       "p_diebold_mariano": 0.556651,
        "secundarias": {
-        "log_verosimilitud": -2.131988,
-        "ganancia_informacion_bits": 0.277355,
-        "mae": 1.569523,
+        "log_verosimilitud": -2.134696,
+        "ganancia_informacion_bits": 0.273448,
+        "mae": 1.570088,
         "mae_climatologia": 1.731266
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.131908,
-       "prueba": -0.205802,
+       "validacion": -0.083708,
+       "prueba": -0.12305,
        "ic90": [
-        -0.699745,
-        -0.020726
+        -0.519748,
+        -0.027675
        ],
-       "p_diebold_mariano": 0.432166,
+       "p_diebold_mariano": 0.598532,
        "secundarias": {
-        "log_verosimilitud": -2.466887,
-        "ganancia_informacion_bits": -0.205802,
-        "mae": 1.605918,
+        "log_verosimilitud": -2.409528,
+        "ganancia_informacion_bits": -0.12305,
+        "mae": 1.640176,
         "mae_climatologia": 1.731266
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": 0.295798,
-       "prueba": 0.491758,
+       "validacion": 0.295602,
+       "prueba": 0.49183,
        "ic90": [
-        0.279879,
-        0.657664
+        0.279781,
+        0.657845
        ],
-       "p_diebold_mariano": 0.065539,
+       "p_diebold_mariano": 0.065666,
        "secundarias": {
-        "log_verosimilitud": -1.983375,
-        "ganancia_informacion_bits": 0.491758,
-        "mae": 1.193352,
+        "log_verosimilitud": -1.983325,
+        "ganancia_informacion_bits": 0.49183,
+        "mae": 1.193404,
         "mae_climatologia": 1.731266
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": 0.215293,
-       "prueba": 0.386141,
+       "validacion": 0.2327,
+       "prueba": 0.397377,
        "ic90": [
-        0.118095,
-        0.585835
+        0.116873,
+        0.601205
        ],
-       "p_diebold_mariano": 0.16496,
+       "p_diebold_mariano": 0.164941,
        "secundarias": {
-        "log_verosimilitud": -2.056583,
-        "ganancia_informacion_bits": 0.386141,
-        "mae": 1.322852,
+        "log_verosimilitud": -2.048796,
+        "ganancia_informacion_bits": 0.397377,
+        "mae": 1.343329,
         "mae_climatologia": 1.731266
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.296675,
-       "prueba": 0.549012,
+       "validacion": 0.297568,
+       "prueba": 0.548427,
        "ic90": [
-        0.2616,
-        0.812504
+        0.260816,
+        0.812461
        ],
-       "p_diebold_mariano": 0.087687,
+       "p_diebold_mariano": 0.088038,
        "secundarias": {
-        "log_verosimilitud": -1.94369,
-        "ganancia_informacion_bits": 0.549012,
-        "mae": 1.180838,
+        "log_verosimilitud": -1.944095,
+        "ganancia_informacion_bits": 0.548427,
+        "mae": 1.18158,
         "mae_climatologia": 1.731266
        }
       }
@@ -5336,81 +5336,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": 0.250625,
-       "prueba": -0.045276,
+       "validacion": 0.246862,
+       "prueba": -0.041668,
        "ic90": [
-        -0.49925,
-        0.047122
+        -0.495789,
+        0.050287
        ],
-       "p_diebold_mariano": 0.894611,
+       "p_diebold_mariano": 0.902695,
        "secundarias": {
-        "log_verosimilitud": -2.832218,
-        "ganancia_informacion_bits": -0.045276,
-        "mae": 2.268258,
+        "log_verosimilitud": -2.829717,
+        "ganancia_informacion_bits": -0.041668,
+        "mae": 2.262238,
         "mae_climatologia": 2.100379
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.319793,
-       "prueba": -0.252338,
+       "validacion": -0.310009,
+       "prueba": -0.382844,
        "ic90": [
-        -0.500632,
-        0.115768
+        -0.450993,
+        -0.0553
        ],
-       "p_diebold_mariano": 0.397129,
+       "p_diebold_mariano": 0.060476,
        "secundarias": {
-        "log_verosimilitud": -2.975742,
-        "ganancia_informacion_bits": -0.252338,
-        "mae": 2.540159,
+        "log_verosimilitud": -3.066202,
+        "ganancia_informacion_bits": -0.382844,
+        "mae": 2.616461,
         "mae_climatologia": 2.100379
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": 0.399755,
-       "prueba": 0.22014,
+       "validacion": 0.399977,
+       "prueba": 0.220268,
        "ic90": [
-        -0.206014,
-        0.307213
+        -0.206265,
+        0.30751
        ],
-       "p_diebold_mariano": 0.610556,
+       "p_diebold_mariano": 0.61073,
        "secundarias": {
-        "log_verosimilitud": -2.648246,
-        "ganancia_informacion_bits": 0.22014,
-        "mae": 2.128062,
+        "log_verosimilitud": -2.648157,
+        "ganancia_informacion_bits": 0.220268,
+        "mae": 2.128102,
         "mae_climatologia": 2.100379
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": 0.328245,
-       "prueba": 0.102892,
+       "validacion": 0.333799,
+       "prueba": 0.066189,
        "ic90": [
-        -0.218419,
-        0.236708
+        -0.252098,
+        0.184759
        ],
-       "p_diebold_mariano": 0.753569,
+       "p_diebold_mariano": 0.821229,
        "secundarias": {
-        "log_verosimilitud": -2.729516,
-        "ganancia_informacion_bits": 0.102892,
-        "mae": 2.157789,
+        "log_verosimilitud": -2.754956,
+        "ganancia_informacion_bits": 0.066189,
+        "mae": 2.183283,
         "mae_climatologia": 2.100379
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.315625,
-       "prueba": 0.198567,
+       "validacion": 0.316085,
+       "prueba": 0.200534,
        "ic90": [
-        -0.249114,
-        0.287504
+        -0.247543,
+        0.289458
        ],
-       "p_diebold_mariano": 0.623698,
+       "p_diebold_mariano": 0.620939,
        "secundarias": {
-        "log_verosimilitud": -2.663199,
-        "ganancia_informacion_bits": 0.198567,
-        "mae": 2.049311,
+        "log_verosimilitud": -2.661835,
+        "ganancia_informacion_bits": 0.200534,
+        "mae": 2.047483,
         "mae_climatologia": 2.100379
        }
       }
@@ -5461,81 +5461,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": -0.061342,
-       "prueba": -0.751665,
+       "validacion": -0.058382,
+       "prueba": -0.75234,
        "ic90": [
-        -1.076117,
-        -0.085025
+        -1.076358,
+        -0.097153
        ],
-       "p_diebold_mariano": 0.282778,
+       "p_diebold_mariano": 0.280814,
        "secundarias": {
-        "log_verosimilitud": -2.984411,
-        "ganancia_informacion_bits": -0.751665,
-        "mae": 2.652811,
+        "log_verosimilitud": -2.984879,
+        "ganancia_informacion_bits": -0.75234,
+        "mae": 2.654425,
         "mae_climatologia": 2.008333
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.077371,
-       "prueba": -0.351665,
+       "validacion": -0.095908,
+       "prueba": -0.371381,
        "ic90": [
-        -0.883534,
-        -0.123688
+        -0.667956,
+        -0.178474
        ],
-       "p_diebold_mariano": 0.202211,
+       "p_diebold_mariano": 0.050916,
        "secundarias": {
-        "log_verosimilitud": -2.707152,
-        "ganancia_informacion_bits": -0.351665,
-        "mae": 2.341477,
+        "log_verosimilitud": -2.720818,
+        "ganancia_informacion_bits": -0.371381,
+        "mae": 2.443929,
         "mae_climatologia": 2.008333
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": 0.187587,
-       "prueba": 0.237155,
+       "validacion": 0.187583,
+       "prueba": 0.237206,
        "ic90": [
-        0.000343,
-        0.350507
+        0.00029,
+        0.350615
        ],
-       "p_diebold_mariano": 0.131715,
+       "p_diebold_mariano": 0.131732,
        "secundarias": {
-        "log_verosimilitud": -2.299014,
-        "ganancia_informacion_bits": 0.237155,
-        "mae": 1.924749,
+        "log_verosimilitud": -2.298978,
+        "ganancia_informacion_bits": 0.237206,
+        "mae": 1.924733,
         "mae_climatologia": 2.008333
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": 0.149999,
-       "prueba": 0.009985,
+       "validacion": 0.145787,
+       "prueba": 0.008236,
        "ic90": [
-        -0.238322,
-        0.058479
+        -0.236655,
+        0.077984
        ],
-       "p_diebold_mariano": 0.955902,
+       "p_diebold_mariano": 0.963383,
        "secundarias": {
-        "log_verosimilitud": -2.456475,
-        "ganancia_informacion_bits": 0.009985,
-        "mae": 2.162337,
+        "log_verosimilitud": -2.457688,
+        "ganancia_informacion_bits": 0.008236,
+        "mae": 2.197775,
         "mae_climatologia": 2.008333
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.069787,
-       "prueba": 0.2011,
+       "validacion": 0.0922,
+       "prueba": 0.198571,
        "ic90": [
-        -0.070905,
-        0.344922
+        -0.074591,
+        0.342912
        ],
-       "p_diebold_mariano": 0.269225,
+       "p_diebold_mariano": 0.277971,
        "secundarias": {
-        "log_verosimilitud": -2.324004,
-        "ganancia_informacion_bits": 0.2011,
-        "mae": 1.956707,
+        "log_verosimilitud": -2.325757,
+        "ganancia_informacion_bits": 0.198571,
+        "mae": 1.958584,
         "mae_climatologia": 2.008333
        }
       }
@@ -5586,81 +5586,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": -0.743858,
-       "prueba": -1.119485,
+       "validacion": -0.743983,
+       "prueba": -1.127071,
        "ic90": [
-        -1.451059,
-        -0.881093
+        -1.461415,
+        -0.889868
        ],
-       "p_diebold_mariano": 0.000335,
+       "p_diebold_mariano": 0.000321,
        "secundarias": {
-        "log_verosimilitud": -2.997439,
-        "ganancia_informacion_bits": -1.119485,
-        "mae": 2.825967,
+        "log_verosimilitud": -3.002697,
+        "ganancia_informacion_bits": -1.127071,
+        "mae": 2.832051,
         "mae_climatologia": 1.583333
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.297652,
-       "prueba": -0.560098,
+       "validacion": -0.471958,
+       "prueba": -0.413322,
        "ic90": [
-        -0.711848,
-        -0.190793
+        -0.607239,
+        -0.20948
        ],
-       "p_diebold_mariano": 0.009764,
+       "p_diebold_mariano": 0.022162,
        "secundarias": {
-        "log_verosimilitud": -2.609701,
-        "ganancia_informacion_bits": -0.560098,
-        "mae": 2.386237,
+        "log_verosimilitud": -2.507964,
+        "ganancia_informacion_bits": -0.413322,
+        "mae": 2.295767,
         "mae_climatologia": 1.583333
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": 0.243195,
-       "prueba": 0.129399,
+       "validacion": 0.243336,
+       "prueba": 0.129372,
        "ic90": [
-        -0.001744,
-        0.29729
+        -0.001914,
+        0.297418
        ],
-       "p_diebold_mariano": 0.455801,
+       "p_diebold_mariano": 0.456349,
        "secundarias": {
-        "log_verosimilitud": -2.131779,
-        "ganancia_informacion_bits": 0.129399,
-        "mae": 1.793972,
+        "log_verosimilitud": -2.131798,
+        "ganancia_informacion_bits": 0.129372,
+        "mae": 1.794342,
         "mae_climatologia": 1.583333
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": 0.032422,
-       "prueba": -0.349299,
+       "validacion": -0.029979,
+       "prueba": -0.318057,
        "ic90": [
-        -0.454337,
-        -0.221288
+        -0.432173,
+        -0.208518
        ],
-       "p_diebold_mariano": 0.001245,
+       "p_diebold_mariano": 0.001613,
        "secundarias": {
-        "log_verosimilitud": -2.463586,
-        "ganancia_informacion_bits": -0.349299,
-        "mae": 2.288182,
+        "log_verosimilitud": -2.441931,
+        "ganancia_informacion_bits": -0.318057,
+        "mae": 2.258045,
         "mae_climatologia": 1.583333
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.229306,
-       "prueba": 0.129399,
+       "validacion": 0.243336,
+       "prueba": 0.129372,
        "ic90": [
-        -0.001744,
-        0.29729
+        -0.001914,
+        0.297418
        ],
-       "p_diebold_mariano": 0.455801,
+       "p_diebold_mariano": 0.456349,
        "secundarias": {
-        "log_verosimilitud": -2.131779,
-        "ganancia_informacion_bits": 0.129399,
-        "mae": 1.793972,
+        "log_verosimilitud": -2.131798,
+        "ganancia_informacion_bits": 0.129372,
+        "mae": 1.794342,
         "mae_climatologia": 1.583333
        }
       }
@@ -5711,81 +5711,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": -1.072165,
-       "prueba": -0.097047,
+       "validacion": -1.079789,
+       "prueba": -0.098055,
        "ic90": [
-        -0.097047,
-        0.4846
+        -0.098055,
+        0.480878
        ],
-       "p_diebold_mariano": 0.767431,
+       "p_diebold_mariano": 0.764372,
        "secundarias": {
-        "log_verosimilitud": -2.85344,
-        "ganancia_informacion_bits": -0.097047,
-        "mae": 2.615146,
+        "log_verosimilitud": -2.854139,
+        "ganancia_informacion_bits": -0.098055,
+        "mae": 2.612095,
         "mae_climatologia": 2.328605
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.53474,
-       "prueba": 0.656745,
+       "validacion": -0.664228,
+       "prueba": 0.623849,
        "ic90": [
-        0.410319,
-        1.518711
+        0.337897,
+        1.436352
        ],
-       "p_diebold_mariano": 0.160204,
+       "p_diebold_mariano": 0.180486,
        "secundarias": {
-        "log_verosimilitud": -2.330951,
-        "ganancia_informacion_bits": 0.656745,
-        "mae": 2.05181,
+        "log_verosimilitud": -2.353752,
+        "ganancia_informacion_bits": 0.623849,
+        "mae": 1.979264,
         "mae_climatologia": 2.328605
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": 0.060765,
-       "prueba": 0.739056,
+       "validacion": 0.060612,
+       "prueba": 0.739316,
        "ic90": [
-        0.739056,
-        1.562154
+        0.739316,
+        1.5631
        ],
-       "p_diebold_mariano": 0.083553,
+       "p_diebold_mariano": 0.083668,
        "secundarias": {
-        "log_verosimilitud": -2.273897,
-        "ganancia_informacion_bits": 0.739056,
-        "mae": 2.050115,
+        "log_verosimilitud": -2.273717,
+        "ganancia_informacion_bits": 0.739316,
+        "mae": 2.049871,
         "mae_climatologia": 2.328605
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": -0.309476,
-       "prueba": 0.615104,
+       "validacion": -0.338391,
+       "prueba": 0.598004,
        "ic90": [
-        0.590476,
-        1.432562
+        0.56175,
+        1.386626
        ],
-       "p_diebold_mariano": 0.143419,
+       "p_diebold_mariano": 0.145492,
        "secundarias": {
-        "log_verosimilitud": -2.359815,
-        "ganancia_informacion_bits": 0.615104,
-        "mae": 1.924473,
+        "log_verosimilitud": -2.371667,
+        "ganancia_informacion_bits": 0.598004,
+        "mae": 1.905403,
         "mae_climatologia": 2.328605
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.025689,
-       "prueba": 0.739056,
+       "validacion": 0.028622,
+       "prueba": 0.739316,
        "ic90": [
-        0.739056,
-        1.562154
+        0.739316,
+        1.5631
        ],
-       "p_diebold_mariano": 0.083553,
+       "p_diebold_mariano": 0.083668,
        "secundarias": {
-        "log_verosimilitud": -2.273897,
-        "ganancia_informacion_bits": 0.739056,
-        "mae": 2.050115,
+        "log_verosimilitud": -2.273717,
+        "ganancia_informacion_bits": 0.739316,
+        "mae": 2.049871,
         "mae_climatologia": 2.328605
        }
       }
@@ -5836,81 +5836,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": -0.044925,
-       "prueba": 0.103347,
+       "validacion": -0.045721,
+       "prueba": 0.106316,
        "ic90": [
-        0.103347,
-        0.889007
+        0.106316,
+        0.890566
        ],
-       "p_diebold_mariano": 0.841353,
+       "p_diebold_mariano": 0.83638,
        "secundarias": {
-        "log_verosimilitud": -2.308792,
-        "ganancia_informacion_bits": 0.103347,
-        "mae": 1.93567,
+        "log_verosimilitud": -2.306734,
+        "ganancia_informacion_bits": 0.106316,
+        "mae": 1.933293,
         "mae_climatologia": 1.976562
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": 0.477299,
-       "prueba": -0.151921,
+       "validacion": 0.531644,
+       "prueba": -0.398141,
        "ic90": [
-        -0.563871,
-        0.04028
+        -0.914618,
+        -0.192519
        ],
-       "p_diebold_mariano": 0.584485,
+       "p_diebold_mariano": 0.263008,
        "secundarias": {
-        "log_verosimilitud": -2.485731,
-        "ganancia_informacion_bits": -0.151921,
-        "mae": 1.787439,
+        "log_verosimilitud": -2.656397,
+        "ganancia_informacion_bits": -0.398141,
+        "mae": 2.04354,
         "mae_climatologia": 1.976562
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": 0.558306,
-       "prueba": 0.442147,
+       "validacion": 0.559125,
+       "prueba": 0.442551,
        "ic90": [
-        0.442147,
-        0.690736
+        0.442551,
+        0.691417
        ],
-       "p_diebold_mariano": 0.067698,
+       "p_diebold_mariano": 0.067793,
        "secundarias": {
-        "log_verosimilitud": -2.073954,
-        "ganancia_informacion_bits": 0.442147,
-        "mae": 1.55996,
+        "log_verosimilitud": -2.073674,
+        "ganancia_informacion_bits": 0.442551,
+        "mae": 1.559106,
         "mae_climatologia": 1.976562
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": 0.629443,
-       "prueba": 0.364333,
+       "validacion": 0.64843,
+       "prueba": 0.300355,
        "ic90": [
-        0.364333,
-        0.749033
+        0.300355,
+        0.705555
        ],
-       "p_diebold_mariano": 0.236725,
+       "p_diebold_mariano": 0.306773,
        "secundarias": {
-        "log_verosimilitud": -2.12789,
-        "ganancia_informacion_bits": 0.364333,
-        "mae": 1.757282,
+        "log_verosimilitud": -2.172237,
+        "ganancia_informacion_bits": 0.300355,
+        "mae": 1.841667,
         "mae_climatologia": 1.976562
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.721082,
-       "prueba": 0.344907,
+       "validacion": 0.719753,
+       "prueba": 0.262204,
        "ic90": [
-        0.306074,
-        0.489002
+        0.217905,
+        0.4126
        ],
-       "p_diebold_mariano": 0.059078,
+       "p_diebold_mariano": 0.098172,
        "secundarias": {
-        "log_verosimilitud": -2.141356,
-        "ganancia_informacion_bits": 0.344907,
-        "mae": 1.651126,
+        "log_verosimilitud": -2.198681,
+        "ganancia_informacion_bits": 0.262204,
+        "mae": 1.761335,
         "mae_climatologia": 1.976562
        }
       }
@@ -5961,81 +5961,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": 0.12467,
-       "prueba": -1.272011,
+       "validacion": 0.127477,
+       "prueba": -1.273459,
        "ic90": [
-        -1.754649,
-        -1.095485
+        -1.752208,
+        -1.097546
        ],
-       "p_diebold_mariano": 0.003788,
+       "p_diebold_mariano": 0.003691,
        "secundarias": {
-        "log_verosimilitud": -3.279335,
-        "ganancia_informacion_bits": -1.272011,
-        "mae": 3.257724,
+        "log_verosimilitud": -3.280339,
+        "ganancia_informacion_bits": -1.273459,
+        "mae": 3.2602,
         "mae_climatologia": 1.931122
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.030418,
-       "prueba": -0.490202,
+       "validacion": 0.004644,
+       "prueba": -0.525347,
        "ic90": [
-        -0.774986,
-        0.561082
+        -0.856979,
+        0.457133
        ],
-       "p_diebold_mariano": 0.440394,
+       "p_diebold_mariano": 0.39745,
        "secundarias": {
-        "log_verosimilitud": -2.737427,
-        "ganancia_informacion_bits": -0.490202,
-        "mae": 2.526737,
+        "log_verosimilitud": -2.761787,
+        "ganancia_informacion_bits": -0.525347,
+        "mae": 2.539006,
         "mae_climatologia": 1.931122
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": 0.449461,
-       "prueba": 0.007454,
+       "validacion": 0.44954,
+       "prueba": 0.007383,
        "ic90": [
-        -0.245271,
-        0.322001
+        -0.245408,
+        0.32199
        ],
-       "p_diebold_mariano": 0.969354,
+       "p_diebold_mariano": 0.969652,
        "secundarias": {
-        "log_verosimilitud": -2.392478,
-        "ganancia_informacion_bits": 0.007454,
-        "mae": 2.226218,
+        "log_verosimilitud": -2.392527,
+        "ganancia_informacion_bits": 0.007383,
+        "mae": 2.226355,
         "mae_climatologia": 1.931122
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": 0.353963,
-       "prueba": -0.434784,
+       "validacion": 0.365011,
+       "prueba": -0.453334,
        "ic90": [
-        -0.684952,
-        0.004465
+        -0.705454,
+        -0.039207
        ],
-       "p_diebold_mariano": 0.187597,
+       "p_diebold_mariano": 0.163189,
        "secundarias": {
-        "log_verosimilitud": -2.699013,
-        "ganancia_informacion_bits": -0.434784,
-        "mae": 2.567546,
+        "log_verosimilitud": -2.711872,
+        "ganancia_informacion_bits": -0.453334,
+        "mae": 2.57041,
         "mae_climatologia": 1.931122
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.348073,
-       "prueba": -0.138171,
+       "validacion": 0.371667,
+       "prueba": -0.139608,
        "ic90": [
-        -0.417105,
-        0.118639
+        -0.418266,
+        0.116574
        ],
-       "p_diebold_mariano": 0.426632,
+       "p_diebold_mariano": 0.420918,
        "secundarias": {
-        "log_verosimilitud": -2.493417,
-        "ganancia_informacion_bits": -0.138171,
-        "mae": 2.37499,
+        "log_verosimilitud": -2.494413,
+        "ganancia_informacion_bits": -0.139608,
+        "mae": 2.37682,
         "mae_climatologia": 1.931122
        }
       }
@@ -6086,81 +6086,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": -1.264437,
-       "prueba": -0.379296,
+       "validacion": -1.266942,
+       "prueba": -0.380654,
        "ic90": [
-        -0.986092,
-        0.142998
+        -0.989294,
+        0.147072
        ],
-       "p_diebold_mariano": 0.471737,
+       "p_diebold_mariano": 0.472846,
        "secundarias": {
-        "log_verosimilitud": -2.694388,
-        "ganancia_informacion_bits": -0.379296,
-        "mae": 2.279618,
+        "log_verosimilitud": -2.695328,
+        "ganancia_informacion_bits": -0.380654,
+        "mae": 2.282684,
         "mae_climatologia": 2.063611
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.498533,
-       "prueba": -0.391623,
+       "validacion": -0.514314,
+       "prueba": -0.316755,
        "ic90": [
-        -0.523926,
-        -0.17777
+        -0.501698,
+        -0.134432
        ],
-       "p_diebold_mariano": 0.107657,
+       "p_diebold_mariano": 0.106523,
        "secundarias": {
-        "log_verosimilitud": -2.702932,
-        "ganancia_informacion_bits": -0.391623,
-        "mae": 2.514549,
+        "log_verosimilitud": -2.651037,
+        "ganancia_informacion_bits": -0.316755,
+        "mae": 2.389044,
         "mae_climatologia": 2.063611
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": -0.029974,
-       "prueba": 0.183949,
+       "validacion": -0.030268,
+       "prueba": 0.183883,
        "ic90": [
-        -0.200279,
-        0.797994
+        -0.201067,
+        0.798988
        ],
-       "p_diebold_mariano": 0.633866,
+       "p_diebold_mariano": 0.634571,
        "secundarias": {
-        "log_verosimilitud": -2.303975,
-        "ganancia_informacion_bits": 0.183949,
-        "mae": 2.023309,
+        "log_verosimilitud": -2.304022,
+        "ganancia_informacion_bits": 0.183883,
+        "mae": 2.024092,
         "mae_climatologia": 2.063611
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": -0.447345,
-       "prueba": -0.069804,
+       "validacion": -0.441762,
+       "prueba": -0.048729,
        "ic90": [
-        -0.259735,
-        0.14724
+        -0.249608,
+        0.160001
        ],
-       "p_diebold_mariano": 0.76425,
+       "p_diebold_mariano": 0.824319,
        "secundarias": {
-        "log_verosimilitud": -2.479864,
-        "ganancia_informacion_bits": -0.069804,
-        "mae": 2.096627,
+        "log_verosimilitud": -2.465256,
+        "ganancia_informacion_bits": -0.048729,
+        "mae": 2.063295,
         "mae_climatologia": 2.063611
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": -0.408664,
-       "prueba": 0.183949,
+       "validacion": -0.472839,
+       "prueba": 0.183883,
        "ic90": [
-        -0.200279,
-        0.797994
+        -0.201067,
+        0.798988
        ],
-       "p_diebold_mariano": 0.633866,
+       "p_diebold_mariano": 0.634571,
        "secundarias": {
-        "log_verosimilitud": -2.303975,
-        "ganancia_informacion_bits": 0.183949,
-        "mae": 2.023309,
+        "log_verosimilitud": -2.304022,
+        "ganancia_informacion_bits": 0.183883,
+        "mae": 2.024092,
         "mae_climatologia": 2.063611
        }
       }
@@ -6211,81 +6211,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": -0.356472,
-       "prueba": 0.052173,
+       "validacion": -0.357805,
+       "prueba": 0.053588,
        "ic90": [
-        -0.292339,
-        0.313467
+        -0.289307,
+        0.313839
        ],
-       "p_diebold_mariano": 0.758351,
+       "p_diebold_mariano": 0.751705,
        "secundarias": {
-        "log_verosimilitud": -2.098907,
-        "ganancia_informacion_bits": 0.052173,
-        "mae": 1.741433,
+        "log_verosimilitud": -2.097927,
+        "ganancia_informacion_bits": 0.053588,
+        "mae": 1.741212,
         "mae_climatologia": 1.543573
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.236104,
-       "prueba": -0.472569,
+       "validacion": -0.283751,
+       "prueba": -0.621086,
        "ic90": [
-        -0.800174,
-        0.147363
+        -1.164349,
+        0.109719
        ],
-       "p_diebold_mariano": 0.200472,
+       "p_diebold_mariano": 0.181699,
        "secundarias": {
-        "log_verosimilitud": -2.462631,
-        "ganancia_informacion_bits": -0.472569,
-        "mae": 2.068116,
+        "log_verosimilitud": -2.565575,
+        "ganancia_informacion_bits": -0.621086,
+        "mae": 2.157937,
         "mae_climatologia": 1.543573
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": 0.167645,
-       "prueba": -0.02679,
+       "validacion": 0.167623,
+       "prueba": -0.026764,
        "ic90": [
-        -0.314095,
-        0.010334
+        -0.313993,
+        0.010312
        ],
-       "p_diebold_mariano": 0.904454,
+       "p_diebold_mariano": 0.904517,
        "secundarias": {
-        "log_verosimilitud": -2.15364,
-        "ganancia_informacion_bits": -0.02679,
-        "mae": 1.778663,
+        "log_verosimilitud": -2.153622,
+        "ganancia_informacion_bits": -0.026764,
+        "mae": 1.778581,
         "mae_climatologia": 1.543573
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": -0.029368,
-       "prueba": -0.004129,
+       "validacion": -0.043819,
+       "prueba": -0.029912,
        "ic90": [
-        -0.144905,
-        0.129081
+        -0.187808,
+        0.119199
        ],
-       "p_diebold_mariano": 0.979532,
+       "p_diebold_mariano": 0.846316,
        "secundarias": {
-        "log_verosimilitud": -2.137933,
-        "ganancia_informacion_bits": -0.004129,
-        "mae": 1.723128,
+        "log_verosimilitud": -2.155805,
+        "ganancia_informacion_bits": -0.029912,
+        "mae": 1.741406,
         "mae_climatologia": 1.543573
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": -0.572993,
-       "prueba": -0.02679,
+       "validacion": -0.585493,
+       "prueba": -0.026764,
        "ic90": [
-        -0.314095,
-        0.010334
+        -0.313993,
+        0.010312
        ],
-       "p_diebold_mariano": 0.904454,
+       "p_diebold_mariano": 0.904517,
        "secundarias": {
-        "log_verosimilitud": -2.15364,
-        "ganancia_informacion_bits": -0.02679,
-        "mae": 1.778663,
+        "log_verosimilitud": -2.153622,
+        "ganancia_informacion_bits": -0.026764,
+        "mae": 1.778581,
         "mae_climatologia": 1.543573
        }
       }
@@ -6300,7 +6300,7 @@
       "prueba": 10
      },
      "eventos_prueba": null,
-     "elegido_en_validacion": "ensamble_ponderado",
+     "elegido_en_validacion": "poisson_glm",
      "modelos": {
       "ref_climatologia": {
        "familia": "referencia",
@@ -6336,81 +6336,81 @@
       },
       "poisson_glm": {
        "familia": "clasico",
-       "validacion": 0.03654,
-       "prueba": -0.803209,
+       "validacion": 0.037909,
+       "prueba": -0.799266,
        "ic90": [
-        -0.841678,
-        -0.51629
+        -0.832196,
+        -0.509202
        ],
-       "p_diebold_mariano": 0.001258,
+       "p_diebold_mariano": 0.001323,
        "secundarias": {
-        "log_verosimilitud": -2.564089,
-        "ganancia_informacion_bits": -0.803209,
-        "mae": 2.353241,
+        "log_verosimilitud": -2.561355,
+        "ganancia_informacion_bits": -0.799266,
+        "mae": 2.352811,
         "mae_climatologia": 1.629808
        }
       },
       "gbm": {
        "familia": "clasico",
-       "validacion": -0.549984,
-       "prueba": -0.822676,
+       "validacion": -0.536036,
+       "prueba": -0.807692,
        "ic90": [
-        -1.46711,
-        -0.197264
+        -1.381914,
+        -0.319895
        ],
-       "p_diebold_mariano": 0.103063,
+       "p_diebold_mariano": 0.077902,
        "secundarias": {
-        "log_verosimilitud": -2.577582,
-        "ganancia_informacion_bits": -0.822676,
-        "mae": 2.254468,
+        "log_verosimilitud": -2.567196,
+        "ganancia_informacion_bits": -0.807692,
+        "mae": 2.265491,
         "mae_climatologia": 1.629808
        }
       },
       "lstm": {
        "familia": "red_neuronal",
-       "validacion": -0.015897,
-       "prueba": -0.120335,
+       "validacion": -0.015748,
+       "prueba": -0.119914,
        "ic90": [
-        -0.121553,
-        -0.056788
+        -0.121234,
+        -0.056615
        ],
-       "p_diebold_mariano": 0.016857,
+       "p_diebold_mariano": 0.01681,
        "secundarias": {
-        "log_verosimilitud": -2.090756,
-        "ganancia_informacion_bits": -0.120335,
-        "mae": 1.759073,
+        "log_verosimilitud": -2.090465,
+        "ganancia_informacion_bits": -0.119914,
+        "mae": 1.758819,
         "mae_climatologia": 1.629808
        }
       },
       "ensamble_top3": {
        "familia": "ensamble",
-       "validacion": -0.046252,
-       "prueba": -0.452588,
+       "validacion": -0.025343,
+       "prueba": -0.445794,
        "ic90": [
-        -0.686408,
-        -0.170899
+        -0.644472,
+        -0.215443
        ],
-       "p_diebold_mariano": 0.024885,
+       "p_diebold_mariano": 0.014568,
        "secundarias": {
-        "log_verosimilitud": -2.321057,
-        "ganancia_informacion_bits": -0.452588,
-        "mae": 2.090134,
+        "log_verosimilitud": -2.316347,
+        "ganancia_informacion_bits": -0.445794,
+        "mae": 2.095944,
         "mae_climatologia": 1.629808
        }
       },
       "ensamble_ponderado": {
        "familia": "ensamble",
-       "validacion": 0.049608,
-       "prueba": -0.453995,
+       "validacion": 0.033851,
+       "prueba": -0.452857,
        "ic90": [
-        -0.461135,
-        -0.256775
+        -0.457651,
+        -0.253665
        ],
-       "p_diebold_mariano": 0.001771,
+       "p_diebold_mariano": 0.001867,
        "secundarias": {
-        "log_verosimilitud": -2.322032,
-        "ganancia_informacion_bits": -0.453995,
-        "mae": 2.062895,
+        "log_verosimilitud": -2.321243,
+        "ganancia_informacion_bits": -0.452857,
+        "mae": 2.061676,
         "mae_climatologia": 1.629808
        }
       }
@@ -6442,67 +6442,67 @@
       "bloque_bootstrap": 6
      },
      "poisson_glm": {
-      "valor": -0.310111,
+      "valor": -0.311554,
       "ic90": [
-       -0.698378,
-       -0.018257
+       -0.700802,
+       -0.021471
       ],
-      "p_diebold_mariano": 0.174656,
+      "p_diebold_mariano": 0.172212,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
      },
      "gbm": {
-      "valor": -0.29226,
+      "valor": -0.259467,
       "ic90": [
-       -0.524901,
-       -0.141728
+       -0.442775,
+       -0.176433
       ],
-      "p_diebold_mariano": 0.031077,
+      "p_diebold_mariano": 0.017155,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
      },
      "lstm": {
-      "valor": 0.276127,
+      "valor": 0.276203,
       "ic90": [
-       0.07156,
-       0.44872
+       0.071328,
+       0.448914
       ],
-      "p_diebold_mariano": 0.025483,
+      "p_diebold_mariano": 0.025612,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
      },
      "ensamble_top3": {
-      "valor": 0.073303,
+      "valor": 0.078812,
       "ic90": [
-       -0.148707,
-       0.247117
+       -0.138631,
+       0.236059
       ],
-      "p_diebold_mariano": 0.572462,
+      "p_diebold_mariano": 0.528334,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
      },
      "ensamble_ponderado": {
-      "valor": 0.276052,
+      "valor": 0.275849,
       "ic90": [
-       0.067743,
-       0.439286
+       0.06746,
+       0.439818
       ],
-      "p_diebold_mariano": 0.028093,
+      "p_diebold_mariano": 0.028475,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6
      },
      "seleccion_validacion": {
-      "valor": 0.287578,
+      "valor": 0.287523,
       "ic90": [
-       0.070922,
-       0.460791
+       0.070798,
+       0.460702
       ],
-      "p_diebold_mariano": 0.024179,
+      "p_diebold_mariano": 0.024303,
       "n": 60,
       "anios": 5,
       "bloque_bootstrap": 6,
@@ -6539,67 +6539,67 @@
       "bloque_bootstrap": 6
      },
      "poisson_glm": {
-      "valor": -0.387802,
+      "valor": -0.38714,
       "ic90": [
-       -0.647755,
-       -0.081435
+       -0.647866,
+       -0.080716
       ],
-      "p_diebold_mariano": 0.040748,
+      "p_diebold_mariano": 0.04114,
       "n": 70,
       "anios": 6,
       "bloque_bootstrap": 6
      },
      "gbm": {
-      "valor": -0.263166,
+      "valor": -0.327524,
       "ic90": [
-       -0.603984,
-       0.002678
+       -0.68156,
+       -0.04838
       ],
-      "p_diebold_mariano": 0.180062,
+      "p_diebold_mariano": 0.104921,
       "n": 70,
       "anios": 6,
       "bloque_bootstrap": 6
      },
      "lstm": {
-      "valor": 0.213521,
+      "valor": 0.213676,
       "ic90": [
-       0.036551,
-       0.438463
+       0.036517,
+       0.438766
       ],
-      "p_diebold_mariano": 0.104689,
+      "p_diebold_mariano": 0.10467,
       "n": 70,
       "anios": 6,
       "bloque_bootstrap": 6
      },
      "ensamble_top3": {
-      "valor": 0.016039,
+      "valor": -0.000876,
       "ic90": [
-       -0.202105,
-       0.242356
+       -0.208739,
+       0.219383
       ],
-      "p_diebold_mariano": 0.910358,
+      "p_diebold_mariano": 0.994937,
       "n": 70,
       "anios": 6,
       "bloque_bootstrap": 6
      },
      "ensamble_ponderado": {
-      "valor": 0.124221,
+      "valor": 0.109997,
       "ic90": [
-       -0.05293,
-       0.377975
+       -0.06432,
+       0.363943
       ],
-      "p_diebold_mariano": 0.374499,
+      "p_diebold_mariano": 0.427535,
       "n": 70,
       "anios": 6,
       "bloque_bootstrap": 6
      },
      "seleccion_validacion": {
-      "valor": 0.149185,
+      "valor": 0.085709,
       "ic90": [
-       -0.029499,
-       0.394945
+       -0.107195,
+       0.366445
       ],
-      "p_diebold_mariano": 0.280562,
+      "p_diebold_mariano": 0.574534,
       "n": 70,
       "anios": 6,
       "bloque_bootstrap": 6,
@@ -6609,7 +6609,7 @@
        "lstm",
        "lstm",
        "lstm",
-       "ensamble_ponderado"
+       "poisson_glm"
       ]
      }
     }
@@ -6629,7 +6629,7 @@
      "entropia_permutacion": 0.980251,
      "orden_permutacion": 5,
      "entropia_muestral": 0.504677,
-     "lyapunov": 0.155221,
+     "lyapunov": 0.155123,
      "determinismo": 0.931429,
      "k_01": 0.998236,
      "p_no_linealidad": 0.425,
@@ -6705,7 +6705,7 @@
      "entropia_permutacion": 0.979717,
      "orden_permutacion": 5,
      "entropia_muestral": 0.485095,
-     "lyapunov": 0.156475,
+     "lyapunov": 0.157667,
      "determinismo": 0.944752,
      "k_01": 0.997931,
      "p_no_linealidad": 0.55,
@@ -6724,8 +6724,8 @@
      "entropia_permutacion": 0.979811,
      "orden_permutacion": 5,
      "entropia_muestral": 0.49458,
-     "lyapunov": 0.155045,
-     "determinismo": 0.940344,
+     "lyapunov": 0.154881,
+     "determinismo": 0.94034,
      "k_01": 0.998209,
      "p_no_linealidad": 0.75,
      "embedding": {
@@ -6743,7 +6743,7 @@
      "entropia_permutacion": 0.979917,
      "orden_permutacion": 5,
      "entropia_muestral": 0.507767,
-     "lyapunov": 0.162696,
+     "lyapunov": 0.162569,
      "determinismo": 0.536029,
      "k_01": 0.998978,
      "p_no_linealidad": 0.2,
@@ -6800,7 +6800,7 @@
      "entropia_permutacion": 0.980436,
      "orden_permutacion": 5,
      "entropia_muestral": 0.521768,
-     "lyapunov": 0.163981,
+     "lyapunov": 0.163975,
      "determinismo": 0.570528,
      "k_01": 0.998133,
      "p_no_linealidad": 0.275,
@@ -6838,8 +6838,8 @@
      "entropia_permutacion": 0.980538,
      "orden_permutacion": 5,
      "entropia_muestral": 0.493806,
-     "lyapunov": 0.138148,
-     "determinismo": 0.948086,
+     "lyapunov": 0.136447,
+     "determinismo": 0.948055,
      "k_01": 0.997817,
      "p_no_linealidad": 0.15,
      "embedding": {
@@ -6857,7 +6857,7 @@
      "entropia_permutacion": 0.979878,
      "orden_permutacion": 5,
      "entropia_muestral": 0.462837,
-     "lyapunov": 0.139085,
+     "lyapunov": 0.138169,
      "determinismo": 0.951318,
      "k_01": 0.998238,
      "p_no_linealidad": 0.125,
@@ -6876,7 +6876,7 @@
      "entropia_permutacion": 0.982151,
      "orden_permutacion": 5,
      "entropia_muestral": 0.426273,
-     "lyapunov": 0.165034,
+     "lyapunov": 0.164571,
      "determinismo": 0.660454,
      "k_01": 0.997852,
      "p_no_linealidad": 0.025,
@@ -6895,7 +6895,7 @@
      "entropia_permutacion": 0.979396,
      "orden_permutacion": 5,
      "entropia_muestral": 0.42299,
-     "lyapunov": 0.166225,
+     "lyapunov": 0.166423,
      "determinismo": 0.663886,
      "k_01": 0.997075,
      "p_no_linealidad": 0.05,
@@ -6914,7 +6914,7 @@
      "entropia_permutacion": 0.979306,
      "orden_permutacion": 5,
      "entropia_muestral": 0.443253,
-     "lyapunov": 0.162781,
+     "lyapunov": 0.162628,
      "determinismo": 0.651101,
      "k_01": 0.997792,
      "p_no_linealidad": 0.6,
@@ -6952,7 +6952,7 @@
      "entropia_permutacion": 0.97986,
      "orden_permutacion": 5,
      "entropia_muestral": 0.416087,
-     "lyapunov": 0.16426,
+     "lyapunov": 0.164523,
      "determinismo": 0.643441,
      "k_01": 0.998776,
      "p_no_linealidad": 0.025,
@@ -6971,7 +6971,7 @@
      "entropia_permutacion": 0.978982,
      "orden_permutacion": 5,
      "entropia_muestral": 0.434564,
-     "lyapunov": 0.164141,
+     "lyapunov": 0.163608,
      "determinismo": 0.672344,
      "k_01": 0.997964,
      "p_no_linealidad": 0.025,
@@ -6990,7 +6990,7 @@
      "entropia_permutacion": 0.978553,
      "orden_permutacion": 5,
      "entropia_muestral": 0.449423,
-     "lyapunov": 0.162797,
+     "lyapunov": 0.161583,
      "determinismo": 0.655003,
      "k_01": 0.998548,
      "p_no_linealidad": 0.025,
@@ -7009,7 +7009,7 @@
      "entropia_permutacion": 0.980142,
      "orden_permutacion": 5,
      "entropia_muestral": 0.433915,
-     "lyapunov": 0.168855,
+     "lyapunov": 0.169011,
      "determinismo": 0.668788,
      "k_01": 0.998813,
      "p_no_linealidad": 0.025,
@@ -7047,7 +7047,7 @@
      "entropia_permutacion": 0.980156,
      "orden_permutacion": 5,
      "entropia_muestral": 0.392069,
-     "lyapunov": 0.121736,
+     "lyapunov": 0.121502,
      "determinismo": 0.913508,
      "k_01": 0.997532,
      "p_no_linealidad": 0.025,
@@ -7066,7 +7066,7 @@
      "entropia_permutacion": 0.977677,
      "orden_permutacion": 5,
      "entropia_muestral": 0.393225,
-     "lyapunov": 0.132064,
+     "lyapunov": 0.132045,
      "determinismo": 0.907123,
      "k_01": 0.997336,
      "p_no_linealidad": 0.05,
@@ -7085,7 +7085,7 @@
      "entropia_permutacion": 0.975469,
      "orden_permutacion": 5,
      "entropia_muestral": 0.388695,
-     "lyapunov": 0.124454,
+     "lyapunov": 0.124458,
      "determinismo": 0.910531,
      "k_01": 0.99765,
      "p_no_linealidad": 0.05,
@@ -7104,7 +7104,7 @@
      "entropia_permutacion": 0.973862,
      "orden_permutacion": 5,
      "entropia_muestral": 0.377358,
-     "lyapunov": 0.088545,
+     "lyapunov": 0.089983,
      "determinismo": 0.89133,
      "k_01": 0.997196,
      "p_no_linealidad": 0.475,
@@ -7180,7 +7180,7 @@
      "entropia_permutacion": 0.972328,
      "orden_permutacion": 5,
      "entropia_muestral": 0.442913,
-     "lyapunov": 0.097762,
+     "lyapunov": 0.096526,
      "determinismo": 0.895561,
      "k_01": 0.998233,
      "p_no_linealidad": 0.375,
@@ -7199,7 +7199,7 @@
      "entropia_permutacion": 0.974643,
      "orden_permutacion": 5,
      "entropia_muestral": 0.452588,
-     "lyapunov": 0.091268,
+     "lyapunov": 0.090934,
      "determinismo": 0.896762,
      "k_01": 0.998317,
      "p_no_linealidad": 0.975,
@@ -10026,12 +10026,31 @@
      "inicio": 1973,
      "fin": 1992,
      "n": 240,
-     "entropia_permutacion": 0.946985,
+     "entropia_permutacion": 0.948152,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.42077,
-     "lyapunov": 0.02317,
-     "determinismo": 0.42315,
-     "k_01": 0.998909,
+     "entropia_muestral": 1.435458,
+     "lyapunov": 0.042634,
+     "determinismo": 0.418159,
+     "k_01": 0.999019,
+     "p_no_linealidad": 0.3,
+     "embedding": {
+      "tau": 1,
+      "m": 2,
+      "theiler": 4
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1974,
+     "fin": 1993,
+     "n": 240,
+     "entropia_permutacion": 0.943312,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.46465,
+     "lyapunov": 0.093002,
+     "determinismo": 0.406901,
+     "k_01": 0.999086,
      "p_no_linealidad": 0.225,
      "embedding": {
       "tau": 1,
@@ -10039,75 +10058,94 @@
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1974,
-     "fin": 1993,
-     "n": 240,
-     "entropia_permutacion": 0.942315,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.44833,
-     "lyapunov": 0.049929,
-     "determinismo": 0.41366,
-     "k_01": 0.999098,
-     "p_no_linealidad": 0.35,
-     "embedding": {
-      "tau": 1,
-      "m": 2,
-      "theiler": 4
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 1975,
      "fin": 1994,
      "n": 240,
-     "entropia_permutacion": 0.935292,
+     "entropia_permutacion": 0.936278,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.432258,
-     "lyapunov": 0.038376,
-     "determinismo": 0.419823,
-     "k_01": 0.999493,
-     "p_no_linealidad": 0.75,
+     "entropia_muestral": 1.446453,
+     "lyapunov": 0.042095,
+     "determinismo": 0.414013,
+     "k_01": 0.999475,
+     "p_no_linealidad": 0.6,
      "embedding": {
       "tau": 1,
       "m": 2,
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 1976,
      "fin": 1995,
      "n": 240,
-     "entropia_permutacion": 0.931496,
+     "entropia_permutacion": 0.932404,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.45824,
-     "lyapunov": 0.134722,
-     "determinismo": 0.410109,
-     "k_01": 0.999148,
-     "p_no_linealidad": 0.325,
+     "entropia_muestral": 1.473536,
+     "lyapunov": 0.00694,
+     "determinismo": 0.403883,
+     "k_01": 0.999313,
+     "p_no_linealidad": 0.3,
      "embedding": {
       "tau": 1,
       "m": 2,
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 1977,
      "fin": 1996,
      "n": 240,
-     "entropia_permutacion": 0.92712,
+     "entropia_permutacion": 0.927835,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.457357,
-     "lyapunov": -0.050436,
-     "determinismo": 0.413548,
-     "k_01": 0.999265,
+     "entropia_muestral": 1.466126,
+     "lyapunov": -0.00841,
+     "determinismo": 0.408057,
+     "k_01": 0.999316,
+     "p_no_linealidad": 0.725,
+     "embedding": {
+      "tau": 1,
+      "m": 2,
+      "theiler": 4
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1978,
+     "fin": 1997,
+     "n": 240,
+     "entropia_permutacion": 0.929701,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.479795,
+     "lyapunov": -0.232607,
+     "determinismo": 0.399077,
+     "k_01": 0.999156,
+     "p_no_linealidad": 0.375,
+     "embedding": {
+      "tau": 1,
+      "m": 2,
+      "theiler": 4
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1979,
+     "fin": 1998,
+     "n": 240,
+     "entropia_permutacion": 0.922475,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.489812,
+     "lyapunov": -0.058021,
+     "determinismo": 0.394616,
+     "k_01": 0.998254,
      "p_no_linealidad": 0.425,
      "embedding": {
       "tau": 1,
@@ -10115,56 +10153,18 @@
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1978,
-     "fin": 1997,
-     "n": 240,
-     "entropia_permutacion": 0.928942,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.473422,
-     "lyapunov": 0.01175,
-     "determinismo": 0.403405,
-     "k_01": 0.999088,
-     "p_no_linealidad": 0.55,
-     "embedding": {
-      "tau": 1,
-      "m": 2,
-      "theiler": 4
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1979,
-     "fin": 1998,
-     "n": 240,
-     "entropia_permutacion": 0.921811,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.484647,
-     "lyapunov": -0.034262,
-     "determinismo": 0.39974,
-     "k_01": 0.998083,
-     "p_no_linealidad": 0.35,
-     "embedding": {
-      "tau": 1,
-      "m": 2,
-      "theiler": 4
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 1980,
      "fin": 1999,
      "n": 240,
-     "entropia_permutacion": 0.916489,
+     "entropia_permutacion": 0.917396,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.475985,
-     "lyapunov": -0.083949,
-     "determinismo": 0.400128,
-     "k_01": 0.998277,
+     "entropia_muestral": 1.484647,
+     "lyapunov": 0.267171,
+     "determinismo": 0.393019,
+     "k_01": 0.998354,
      "p_no_linealidad": 0.4,
      "embedding": {
       "tau": 1,
@@ -10172,94 +10172,56 @@
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 1981,
      "fin": 2000,
      "n": 240,
-     "entropia_permutacion": 0.92057,
+     "entropia_permutacion": 0.921095,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.467173,
-     "lyapunov": 0.152252,
-     "determinismo": 0.3991,
-     "k_01": 0.997323,
-     "p_no_linealidad": 0.1,
+     "entropia_muestral": 1.474335,
+     "lyapunov": 0.095212,
+     "determinismo": 0.400257,
+     "k_01": 0.997557,
+     "p_no_linealidad": 0.125,
      "embedding": {
       "tau": 1,
       "m": 2,
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 1982,
      "fin": 2001,
      "n": 240,
-     "entropia_permutacion": 0.924499,
+     "entropia_permutacion": 0.924312,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.440988,
-     "lyapunov": 0.169855,
-     "determinismo": 0.836465,
-     "k_01": 0.995127,
-     "p_no_linealidad": 0.7,
-     "embedding": {
-      "tau": 1,
-      "m": 5,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1983,
-     "fin": 2002,
-     "n": 240,
-     "entropia_permutacion": 0.924495,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.430584,
-     "lyapunov": 0.155511,
-     "determinismo": 0.830148,
-     "k_01": 0.99805,
+     "entropia_muestral": 1.45054,
+     "lyapunov": 0.073672,
+     "determinismo": 0.852681,
+     "k_01": 0.994543,
      "p_no_linealidad": 0.8,
-     "embedding": {
-      "tau": 1,
-      "m": 5,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1984,
-     "fin": 2003,
-     "n": 240,
-     "entropia_permutacion": 0.924637,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.431642,
-     "lyapunov": 0.085394,
-     "determinismo": 0.852648,
-     "k_01": 0.998357,
-     "p_no_linealidad": 0.85,
      "embedding": {
       "tau": 1,
       "m": 4,
       "theiler": 5
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
-     "inicio": 1985,
-     "fin": 2004,
+     "inicio": 1983,
+     "fin": 2002,
      "n": 240,
-     "entropia_permutacion": 0.92418,
+     "entropia_permutacion": 0.927232,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.471452,
-     "lyapunov": 0.088234,
-     "determinismo": 0.843926,
-     "k_01": 0.999303,
+     "entropia_muestral": 1.443944,
+     "lyapunov": 0.069421,
+     "determinismo": 0.860459,
+     "k_01": 0.997714,
      "p_no_linealidad": 0.65,
      "embedding": {
       "tau": 1,
@@ -10267,37 +10229,75 @@
       "theiler": 5
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1984,
+     "fin": 2003,
+     "n": 240,
+     "entropia_permutacion": 0.930934,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.450833,
+     "lyapunov": 0.067862,
+     "determinismo": 0.85618,
+     "k_01": 0.998162,
+     "p_no_linealidad": 0.8,
+     "embedding": {
+      "tau": 1,
+      "m": 4,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1985,
+     "fin": 2004,
+     "n": 240,
+     "entropia_permutacion": 0.930162,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.490577,
+     "lyapunov": 0.079492,
+     "determinismo": 0.847521,
+     "k_01": 0.999085,
+     "p_no_linealidad": 0.875,
+     "embedding": {
+      "tau": 1,
+      "m": 4,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
     },
     {
      "inicio": 1986,
      "fin": 2005,
      "n": 240,
-     "entropia_permutacion": 0.928316,
+     "entropia_permutacion": 0.934622,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.491212,
-     "lyapunov": -0.181469,
-     "determinismo": 0.395848,
-     "k_01": 0.99866,
-     "p_no_linealidad": 0.875,
+     "entropia_muestral": 1.510474,
+     "lyapunov": 0.064066,
+     "determinismo": 0.850744,
+     "k_01": 0.998548,
+     "p_no_linealidad": 0.95,
      "embedding": {
       "tau": 1,
-      "m": 2,
+      "m": 3,
       "theiler": 5
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 1987,
      "fin": 2006,
      "n": 240,
-     "entropia_permutacion": 0.934981,
+     "entropia_permutacion": 0.940802,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.519926,
-     "lyapunov": -0.002325,
-     "determinismo": 0.846415,
-     "k_01": 0.997837,
+     "entropia_muestral": 1.530155,
+     "lyapunov": 0.023702,
+     "determinismo": 0.849212,
+     "k_01": 0.997595,
      "p_no_linealidad": 0.75,
      "embedding": {
       "tau": 1,
@@ -10305,75 +10305,227 @@
       "theiler": 5
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 1988,
      "fin": 2007,
      "n": 240,
-     "entropia_permutacion": 0.93633,
+     "entropia_permutacion": 0.942151,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.492062,
-     "lyapunov": -0.01966,
-     "determinismo": 0.628135,
-     "k_01": 0.997511,
-     "p_no_linealidad": 0.8,
+     "entropia_muestral": 1.507774,
+     "lyapunov": 0.153834,
+     "determinismo": 0.849048,
+     "k_01": 0.997262,
+     "p_no_linealidad": 0.825,
      "embedding": {
       "tau": 1,
-      "m": 3,
+      "m": 5,
       "theiler": 5
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 1989,
      "fin": 2008,
      "n": 240,
-     "entropia_permutacion": 0.928793,
+     "entropia_permutacion": 0.934724,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.536455,
-     "lyapunov": -0.018761,
-     "determinismo": 0.712176,
-     "k_01": 0.998814,
-     "p_no_linealidad": 0.65,
+     "entropia_muestral": 1.559464,
+     "lyapunov": 0.160537,
+     "determinismo": 0.83933,
+     "k_01": 0.99848,
+     "p_no_linealidad": 0.75,
+     "embedding": {
+      "tau": 1,
+      "m": 5,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1990,
+     "fin": 2009,
+     "n": 240,
+     "entropia_permutacion": 0.940079,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.562127,
+     "lyapunov": 0.011512,
+     "determinismo": 0.78683,
+     "k_01": 0.99763,
+     "p_no_linealidad": 0.95,
      "embedding": {
       "tau": 1,
       "m": 3,
       "theiler": 5
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
-     "inicio": 1990,
-     "fin": 2009,
+     "inicio": 1991,
+     "fin": 2010,
      "n": 240,
-     "entropia_permutacion": 0.934828,
+     "entropia_permutacion": 0.935223,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.540948,
-     "lyapunov": 0.095571,
-     "determinismo": 0.831582,
-     "k_01": 0.998009,
-     "p_no_linealidad": 0.975,
+     "entropia_muestral": 1.572605,
+     "lyapunov": 0.107932,
+     "determinismo": 0.921752,
+     "k_01": 0.997094,
+     "p_no_linealidad": 0.9,
+     "embedding": {
+      "tau": 1,
+      "m": 6,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1992,
+     "fin": 2011,
+     "n": 240,
+     "entropia_permutacion": 0.925977,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.532421,
+     "lyapunov": 0.077981,
+     "determinismo": 0.842749,
+     "k_01": 0.99754,
+     "p_no_linealidad": 0.925,
      "embedding": {
       "tau": 1,
       "m": 4,
       "theiler": 5
      },
      "p_holm": 1.0,
-     "q_bh": 0.975
+     "q_bh": 0.95
     },
     {
-     "inicio": 1991,
-     "fin": 2010,
+     "inicio": 1993,
+     "fin": 2012,
      "n": 240,
-     "entropia_permutacion": 0.929448,
+     "entropia_permutacion": 0.931834,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.550707,
-     "lyapunov": 0.0923,
-     "determinismo": 0.836831,
-     "k_01": 0.997215,
+     "entropia_muestral": 1.565253,
+     "lyapunov": 0.024796,
+     "determinismo": 0.758409,
+     "k_01": 0.996831,
+     "p_no_linealidad": 0.675,
+     "embedding": {
+      "tau": 1,
+      "m": 2,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1994,
+     "fin": 2013,
+     "n": 240,
+     "entropia_permutacion": 0.923821,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.554838,
+     "lyapunov": -0.039989,
+     "determinismo": 0.827949,
+     "k_01": 0.997534,
+     "p_no_linealidad": 0.8,
+     "embedding": {
+      "tau": 1,
+      "m": 2,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1995,
+     "fin": 2014,
+     "n": 240,
+     "entropia_permutacion": 0.934711,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.586505,
+     "lyapunov": 0.102412,
+     "determinismo": 0.813778,
+     "k_01": 0.996879,
+     "p_no_linealidad": 0.65,
+     "embedding": {
+      "tau": 1,
+      "m": 4,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1996,
+     "fin": 2015,
+     "n": 240,
+     "entropia_permutacion": 0.940215,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.568449,
+     "lyapunov": 0.097303,
+     "determinismo": 0.779709,
+     "k_01": 0.997785,
+     "p_no_linealidad": 0.925,
+     "embedding": {
+      "tau": 1,
+      "m": 4,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1997,
+     "fin": 2016,
+     "n": 240,
+     "entropia_permutacion": 0.937511,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.610334,
+     "lyapunov": 0.172998,
+     "determinismo": 0.781949,
+     "k_01": 0.997501,
+     "p_no_linealidad": 0.775,
+     "embedding": {
+      "tau": 1,
+      "m": 4,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1998,
+     "fin": 2017,
+     "n": 240,
+     "entropia_permutacion": 0.939222,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.594211,
+     "lyapunov": 0.095599,
+     "determinismo": 0.770601,
+     "k_01": 0.99815,
+     "p_no_linealidad": 0.65,
+     "embedding": {
+      "tau": 1,
+      "m": 4,
+      "theiler": 5
+     },
+     "p_holm": 1.0,
+     "q_bh": 0.95
+    },
+    {
+     "inicio": 1999,
+     "fin": 2018,
+     "n": 240,
+     "entropia_permutacion": 0.941138,
+     "orden_permutacion": 4,
+     "entropia_muestral": 1.580839,
+     "lyapunov": 0.192718,
+     "determinismo": 0.764302,
+     "k_01": 0.997566,
      "p_no_linealidad": 0.9,
      "embedding": {
       "tau": 1,
@@ -10381,216 +10533,64 @@
       "theiler": 5
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1992,
-     "fin": 2011,
-     "n": 240,
-     "entropia_permutacion": 0.919504,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.520474,
-     "lyapunov": -0.11907,
-     "determinismo": 0.588733,
-     "k_01": 0.997647,
-     "p_no_linealidad": 0.925,
-     "embedding": {
-      "tau": 1,
-      "m": 2,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1993,
-     "fin": 2012,
-     "n": 240,
-     "entropia_permutacion": 0.926292,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.550488,
-     "lyapunov": 0.160175,
-     "determinismo": 0.65393,
-     "k_01": 0.996882,
-     "p_no_linealidad": 0.7,
-     "embedding": {
-      "tau": 1,
-      "m": 2,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1994,
-     "fin": 2013,
-     "n": 240,
-     "entropia_permutacion": 0.91683,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.536281,
-     "lyapunov": -0.022972,
-     "determinismo": 0.659598,
-     "k_01": 0.997631,
-     "p_no_linealidad": 0.6,
-     "embedding": {
-      "tau": 1,
-      "m": 2,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1995,
-     "fin": 2014,
-     "n": 240,
-     "entropia_permutacion": 0.928213,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.566113,
-     "lyapunov": 0.102313,
-     "determinismo": 0.828509,
-     "k_01": 0.99709,
-     "p_no_linealidad": 0.65,
-     "embedding": {
-      "tau": 1,
-      "m": 4,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1996,
-     "fin": 2015,
-     "n": 240,
-     "entropia_permutacion": 0.93451,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.555415,
-     "lyapunov": 0.281533,
-     "determinismo": 0.804147,
-     "k_01": 0.997926,
-     "p_no_linealidad": 0.825,
-     "embedding": {
-      "tau": 1,
-      "m": 4,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1997,
-     "fin": 2016,
-     "n": 240,
-     "entropia_permutacion": 0.932212,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.593309,
-     "lyapunov": 0.009333,
-     "determinismo": 0.8102,
-     "k_01": 0.997773,
-     "p_no_linealidad": 0.825,
-     "embedding": {
-      "tau": 1,
-      "m": 2,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1998,
-     "fin": 2017,
-     "n": 240,
-     "entropia_permutacion": 0.933614,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.577975,
-     "lyapunov": 0.293104,
-     "determinismo": 0.774081,
-     "k_01": 0.998088,
-     "p_no_linealidad": 0.625,
-     "embedding": {
-      "tau": 1,
-      "m": 4,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
-    },
-    {
-     "inicio": 1999,
-     "fin": 2018,
-     "n": 240,
-     "entropia_permutacion": 0.935243,
-     "orden_permutacion": 4,
-     "entropia_muestral": 1.559517,
-     "lyapunov": 0.182887,
-     "determinismo": 0.775334,
-     "k_01": 0.997792,
-     "p_no_linealidad": 0.8,
-     "embedding": {
-      "tau": 1,
-      "m": 4,
-      "theiler": 5
-     },
-     "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 2000,
      "fin": 2019,
      "n": 240,
-     "entropia_permutacion": 0.943119,
+     "entropia_permutacion": 0.946628,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.628762,
-     "lyapunov": 0.103633,
-     "determinismo": 0.759048,
-     "k_01": 0.998442,
-     "p_no_linealidad": 0.8,
+     "entropia_muestral": 1.616082,
+     "lyapunov": 0.114412,
+     "determinismo": 0.754518,
+     "k_01": 0.998322,
+     "p_no_linealidad": 0.575,
      "embedding": {
       "tau": 1,
       "m": 4,
       "theiler": 5
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 2001,
      "fin": 2020,
      "n": 240,
-     "entropia_permutacion": 0.944217,
+     "entropia_permutacion": 0.947161,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.643038,
-     "lyapunov": 0.096433,
-     "determinismo": 0.747822,
-     "k_01": 0.996526,
-     "p_no_linealidad": 0.7,
+     "entropia_muestral": 1.637746,
+     "lyapunov": 0.099458,
+     "determinismo": 0.745851,
+     "k_01": 0.996629,
+     "p_no_linealidad": 0.725,
      "embedding": {
       "tau": 1,
       "m": 4,
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 2002,
      "fin": 2021,
      "n": 240,
-     "entropia_permutacion": 0.941658,
+     "entropia_permutacion": 0.944677,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.642547,
-     "lyapunov": -0.052196,
-     "determinismo": 0.7207,
-     "k_01": 0.996754,
-     "p_no_linealidad": 0.65,
+     "entropia_muestral": 1.639233,
+     "lyapunov": 0.065281,
+     "determinismo": 0.732754,
+     "k_01": 0.996757,
+     "p_no_linealidad": 0.35,
      "embedding": {
       "tau": 1,
       "m": 2,
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 2003,
@@ -10609,7 +10609,7 @@
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 2004,
@@ -10628,7 +10628,7 @@
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 2005,
@@ -10647,7 +10647,7 @@
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 2006,
@@ -10666,7 +10666,7 @@
       "theiler": 4
      },
      "p_holm": 1.0,
-     "q_bh": 0.95303
+     "q_bh": 0.95
     },
     {
      "inicio": 2007,
@@ -10692,14 +10692,14 @@
     {
      "inicio": 1973,
      "fin": 1992,
-     "n": 369,
-     "entropia_permutacion": 0.986379,
+     "n": 370,
+     "entropia_permutacion": 0.985944,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.979754,
-     "lyapunov": 0.114363,
-     "determinismo": 0.700428,
-     "k_01": 0.998564,
-     "p_no_linealidad": 0.575,
+     "entropia_muestral": 1.94674,
+     "lyapunov": 0.118564,
+     "determinismo": 0.696592,
+     "k_01": 0.997849,
+     "p_no_linealidad": 0.525,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -10711,14 +10711,14 @@
     {
      "inicio": 1974,
      "fin": 1993,
-     "n": 371,
-     "entropia_permutacion": 0.987775,
+     "n": 372,
+     "entropia_permutacion": 0.987467,
      "orden_permutacion": 4,
-     "entropia_muestral": 2.034576,
-     "lyapunov": 0.117246,
-     "determinismo": 0.709746,
-     "k_01": 0.99866,
-     "p_no_linealidad": 0.4,
+     "entropia_muestral": 1.999597,
+     "lyapunov": 0.121714,
+     "determinismo": 0.7059,
+     "k_01": 0.998084,
+     "p_no_linealidad": 0.35,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -10730,14 +10730,14 @@
     {
      "inicio": 1975,
      "fin": 1994,
-     "n": 373,
-     "entropia_permutacion": 0.984868,
+     "n": 374,
+     "entropia_permutacion": 0.984723,
      "orden_permutacion": 4,
-     "entropia_muestral": 2.117116,
-     "lyapunov": 0.116965,
-     "determinismo": 0.706762,
-     "k_01": 0.998587,
-     "p_no_linealidad": 0.675,
+     "entropia_muestral": 2.080297,
+     "lyapunov": 0.122794,
+     "determinismo": 0.702888,
+     "k_01": 0.998647,
+     "p_no_linealidad": 0.625,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -10749,14 +10749,14 @@
     {
      "inicio": 1976,
      "fin": 1995,
-     "n": 368,
-     "entropia_permutacion": 0.986631,
+     "n": 369,
+     "entropia_permutacion": 0.98661,
      "orden_permutacion": 4,
-     "entropia_muestral": 2.109138,
-     "lyapunov": 0.111386,
-     "determinismo": 0.703601,
-     "k_01": 0.998911,
-     "p_no_linealidad": 0.725,
+     "entropia_muestral": 2.067547,
+     "lyapunov": 0.116819,
+     "determinismo": 0.700214,
+     "k_01": 0.998577,
+     "p_no_linealidad": 0.45,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -10768,14 +10768,14 @@
     {
      "inicio": 1977,
      "fin": 1996,
-     "n": 367,
-     "entropia_permutacion": 0.988233,
+     "n": 368,
+     "entropia_permutacion": 0.988417,
      "orden_permutacion": 4,
-     "entropia_muestral": 2.144993,
-     "lyapunov": 0.112834,
-     "determinismo": 0.710306,
-     "k_01": 0.998734,
-     "p_no_linealidad": 0.725,
+     "entropia_muestral": 2.107334,
+     "lyapunov": 0.117289,
+     "determinismo": 0.705937,
+     "k_01": 0.998574,
+     "p_no_linealidad": 0.6,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -10787,14 +10787,14 @@
     {
      "inicio": 1978,
      "fin": 1997,
-     "n": 372,
-     "entropia_permutacion": 0.987172,
+     "n": 373,
+     "entropia_permutacion": 0.987318,
      "orden_permutacion": 4,
-     "entropia_muestral": 2.081726,
-     "lyapunov": 0.111791,
-     "determinismo": 0.711921,
-     "k_01": 0.997464,
-     "p_no_linealidad": 0.525,
+     "entropia_muestral": 2.065958,
+     "lyapunov": 0.114528,
+     "determinismo": 0.707784,
+     "k_01": 0.996669,
+     "p_no_linealidad": 0.175,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -10806,14 +10806,14 @@
     {
      "inicio": 1979,
      "fin": 1998,
-     "n": 374,
-     "entropia_permutacion": 0.986645,
+     "n": 375,
+     "entropia_permutacion": 0.986888,
      "orden_permutacion": 4,
-     "entropia_muestral": 2.056388,
-     "lyapunov": 0.036832,
-     "determinismo": 0.56263,
-     "k_01": 0.998447,
-     "p_no_linealidad": 0.725,
+     "entropia_muestral": 2.068911,
+     "lyapunov": 0.03586,
+     "determinismo": 0.561708,
+     "k_01": 0.998081,
+     "p_no_linealidad": 0.525,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -10825,14 +10825,14 @@
     {
      "inicio": 1980,
      "fin": 1999,
-     "n": 366,
-     "entropia_permutacion": 0.986957,
+     "n": 367,
+     "entropia_permutacion": 0.987143,
      "orden_permutacion": 4,
-     "entropia_muestral": 2.100982,
-     "lyapunov": 0.110162,
-     "determinismo": 0.697356,
-     "k_01": 0.998551,
-     "p_no_linealidad": 0.5,
+     "entropia_muestral": 2.099276,
+     "lyapunov": 0.113991,
+     "determinismo": 0.694522,
+     "k_01": 0.998514,
+     "p_no_linealidad": 0.6,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -10845,12 +10845,12 @@
      "inicio": 1981,
      "fin": 2000,
      "n": 367,
-     "entropia_permutacion": 0.987851,
+     "entropia_permutacion": 0.988274,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.999854,
-     "lyapunov": 0.117602,
-     "determinismo": 0.686475,
-     "k_01": 0.998479,
+     "entropia_muestral": 2.010798,
+     "lyapunov": 0.114815,
+     "determinismo": 0.688641,
+     "k_01": 0.998198,
      "p_no_linealidad": 0.35,
      "embedding": {
       "tau": 1,
@@ -10864,13 +10864,13 @@
      "inicio": 1982,
      "fin": 2001,
      "n": 377,
-     "entropia_permutacion": 0.986052,
+     "entropia_permutacion": 0.986315,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.821858,
-     "lyapunov": 0.126756,
-     "determinismo": 0.693811,
-     "k_01": 0.998053,
-     "p_no_linealidad": 0.75,
+     "entropia_muestral": 1.819158,
+     "lyapunov": 0.123202,
+     "determinismo": 0.695292,
+     "k_01": 0.997929,
+     "p_no_linealidad": 0.95,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -10882,18 +10882,18 @@
     {
      "inicio": 1983,
      "fin": 2002,
-     "n": 371,
-     "entropia_permutacion": 0.986664,
+     "n": 372,
+     "entropia_permutacion": 0.986908,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.815774,
-     "lyapunov": 0.125204,
-     "determinismo": 0.688494,
-     "k_01": 0.998278,
-     "p_no_linealidad": 0.925,
+     "entropia_muestral": 1.848683,
+     "lyapunov": 0.057956,
+     "determinismo": 0.584287,
+     "k_01": 0.997066,
+     "p_no_linealidad": 0.775,
      "embedding": {
       "tau": 1,
-      "m": 4,
-      "theiler": 6
+      "m": 3,
+      "theiler": 5
      },
      "p_holm": 1.0,
      "q_bh": 0.975
@@ -10901,17 +10901,17 @@
     {
      "inicio": 1984,
      "fin": 2003,
-     "n": 374,
-     "entropia_permutacion": 0.990606,
+     "n": 375,
+     "entropia_permutacion": 0.990707,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.748656,
-     "lyapunov": 0.129312,
-     "determinismo": 0.700898,
-     "k_01": 0.998228,
-     "p_no_linealidad": 0.65,
+     "entropia_muestral": 1.783007,
+     "lyapunov": 0.060868,
+     "determinismo": 0.581877,
+     "k_01": 0.997907,
+     "p_no_linealidad": 0.925,
      "embedding": {
       "tau": 1,
-      "m": 4,
+      "m": 3,
       "theiler": 5
      },
      "p_holm": 1.0,
@@ -10920,14 +10920,14 @@
     {
      "inicio": 1985,
      "fin": 2004,
-     "n": 379,
-     "entropia_permutacion": 0.989951,
+     "n": 380,
+     "entropia_permutacion": 0.990175,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.745499,
-     "lyapunov": 0.063045,
-     "determinismo": 0.601855,
-     "k_01": 0.998034,
-     "p_no_linealidad": 0.85,
+     "entropia_muestral": 1.794649,
+     "lyapunov": 0.063798,
+     "determinismo": 0.588473,
+     "k_01": 0.996592,
+     "p_no_linealidad": 0.675,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -10939,14 +10939,14 @@
     {
      "inicio": 1986,
      "fin": 2005,
-     "n": 390,
-     "entropia_permutacion": 0.992957,
+     "n": 391,
+     "entropia_permutacion": 0.99349,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.757319,
-     "lyapunov": 0.061571,
-     "determinismo": 0.600984,
-     "k_01": 0.9974,
-     "p_no_linealidad": 0.9,
+     "entropia_muestral": 1.791215,
+     "lyapunov": 0.060399,
+     "determinismo": 0.587435,
+     "k_01": 0.996485,
+     "p_no_linealidad": 0.925,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -10959,13 +10959,13 @@
      "inicio": 1987,
      "fin": 2006,
      "n": 401,
-     "entropia_permutacion": 0.992779,
+     "entropia_permutacion": 0.993069,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.803153,
-     "lyapunov": 0.117217,
-     "determinismo": 0.692368,
-     "k_01": 0.997717,
-     "p_no_linealidad": 0.875,
+     "entropia_muestral": 1.842172,
+     "lyapunov": 0.115591,
+     "determinismo": 0.683623,
+     "k_01": 0.996521,
+     "p_no_linealidad": 0.95,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -10978,13 +10978,13 @@
      "inicio": 1988,
      "fin": 2007,
      "n": 412,
-     "entropia_permutacion": 0.993443,
+     "entropia_permutacion": 0.99397,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.804391,
-     "lyapunov": 0.04876,
-     "determinismo": 0.606942,
-     "k_01": 0.997716,
-     "p_no_linealidad": 0.95,
+     "entropia_muestral": 1.845041,
+     "lyapunov": 0.050881,
+     "determinismo": 0.588365,
+     "k_01": 0.996115,
+     "p_no_linealidad": 0.925,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -10997,13 +10997,13 @@
      "inicio": 1989,
      "fin": 2008,
      "n": 418,
-     "entropia_permutacion": 0.993281,
+     "entropia_permutacion": 0.99408,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.770595,
-     "lyapunov": 0.060248,
-     "determinismo": 0.607973,
-     "k_01": 0.998502,
-     "p_no_linealidad": 0.875,
+     "entropia_muestral": 1.810964,
+     "lyapunov": 0.060717,
+     "determinismo": 0.593261,
+     "k_01": 0.99733,
+     "p_no_linealidad": 0.975,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11016,13 +11016,13 @@
      "inicio": 1990,
      "fin": 2009,
      "n": 424,
-     "entropia_permutacion": 0.992581,
+     "entropia_permutacion": 0.993162,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.75493,
-     "lyapunov": 0.07028,
-     "determinismo": 0.606179,
-     "k_01": 0.997741,
-     "p_no_linealidad": 0.9,
+     "entropia_muestral": 1.788693,
+     "lyapunov": 0.070483,
+     "determinismo": 0.591381,
+     "k_01": 0.998014,
+     "p_no_linealidad": 0.85,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11035,16 +11035,16 @@
      "inicio": 1991,
      "fin": 2010,
      "n": 428,
-     "entropia_permutacion": 0.994081,
+     "entropia_permutacion": 0.994818,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.749662,
-     "lyapunov": 0.072467,
-     "determinismo": 0.61248,
-     "k_01": 0.998662,
-     "p_no_linealidad": 0.675,
+     "entropia_muestral": 1.786596,
+     "lyapunov": 0.104223,
+     "determinismo": 0.694684,
+     "k_01": 0.998252,
+     "p_no_linealidad": 0.65,
      "embedding": {
       "tau": 1,
-      "m": 3,
+      "m": 4,
       "theiler": 5
      },
      "p_holm": 1.0,
@@ -11054,13 +11054,13 @@
      "inicio": 1992,
      "fin": 2011,
      "n": 430,
-     "entropia_permutacion": 0.9946,
+     "entropia_permutacion": 0.995407,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.751118,
-     "lyapunov": 0.062001,
-     "determinismo": 0.613713,
-     "k_01": 0.998708,
-     "p_no_linealidad": 0.975,
+     "entropia_muestral": 1.790836,
+     "lyapunov": 0.060494,
+     "determinismo": 0.602061,
+     "k_01": 0.99782,
+     "p_no_linealidad": 0.75,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11073,13 +11073,13 @@
      "inicio": 1993,
      "fin": 2012,
      "n": 439,
-     "entropia_permutacion": 0.995501,
+     "entropia_permutacion": 0.996053,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.763807,
-     "lyapunov": 0.067331,
-     "determinismo": 0.613617,
-     "k_01": 0.996974,
-     "p_no_linealidad": 0.85,
+     "entropia_muestral": 1.809268,
+     "lyapunov": 0.066164,
+     "determinismo": 0.604082,
+     "k_01": 0.997647,
+     "p_no_linealidad": 0.725,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11092,13 +11092,13 @@
      "inicio": 1994,
      "fin": 2013,
      "n": 455,
-     "entropia_permutacion": 0.994968,
+     "entropia_permutacion": 0.995616,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.756403,
-     "lyapunov": 0.064727,
-     "determinismo": 0.60735,
-     "k_01": 0.998394,
-     "p_no_linealidad": 0.875,
+     "entropia_muestral": 1.786833,
+     "lyapunov": 0.063909,
+     "determinismo": 0.597763,
+     "k_01": 0.998489,
+     "p_no_linealidad": 0.6,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11111,13 +11111,13 @@
      "inicio": 1995,
      "fin": 2014,
      "n": 470,
-     "entropia_permutacion": 0.996774,
+     "entropia_permutacion": 0.997413,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.79863,
-     "lyapunov": 0.065618,
-     "determinismo": 0.594054,
-     "k_01": 0.997541,
-     "p_no_linealidad": 0.575,
+     "entropia_muestral": 1.824631,
+     "lyapunov": 0.064495,
+     "determinismo": 0.590688,
+     "k_01": 0.998806,
+     "p_no_linealidad": 0.925,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11130,13 +11130,13 @@
      "inicio": 1996,
      "fin": 2015,
      "n": 498,
-     "entropia_permutacion": 0.997082,
+     "entropia_permutacion": 0.997587,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.856674,
-     "lyapunov": 0.063442,
-     "determinismo": 0.604555,
-     "k_01": 0.997519,
-     "p_no_linealidad": 0.75,
+     "entropia_muestral": 1.865371,
+     "lyapunov": 0.062372,
+     "determinismo": 0.601729,
+     "k_01": 0.998075,
+     "p_no_linealidad": 0.675,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11149,13 +11149,13 @@
      "inicio": 1997,
      "fin": 2016,
      "n": 511,
-     "entropia_permutacion": 0.997882,
+     "entropia_permutacion": 0.998263,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.842288,
-     "lyapunov": 0.108816,
-     "determinismo": 0.708855,
-     "k_01": 0.99766,
-     "p_no_linealidad": 0.85,
+     "entropia_muestral": 1.862342,
+     "lyapunov": 0.106751,
+     "determinismo": 0.704783,
+     "k_01": 0.998245,
+     "p_no_linealidad": 0.525,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -11168,13 +11168,13 @@
      "inicio": 1998,
      "fin": 2017,
      "n": 525,
-     "entropia_permutacion": 0.997529,
+     "entropia_permutacion": 0.99798,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.930037,
-     "lyapunov": 0.059776,
-     "determinismo": 0.611708,
-     "k_01": 0.998658,
-     "p_no_linealidad": 0.25,
+     "entropia_muestral": 1.958323,
+     "lyapunov": 0.057985,
+     "determinismo": 0.608572,
+     "k_01": 0.998205,
+     "p_no_linealidad": 0.325,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11187,13 +11187,13 @@
      "inicio": 1999,
      "fin": 2018,
      "n": 530,
-     "entropia_permutacion": 0.996773,
+     "entropia_permutacion": 0.997241,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.929699,
-     "lyapunov": 0.06304,
-     "determinismo": 0.607588,
-     "k_01": 0.997579,
-     "p_no_linealidad": 0.475,
+     "entropia_muestral": 1.952836,
+     "lyapunov": 0.060432,
+     "determinismo": 0.605537,
+     "k_01": 0.997727,
+     "p_no_linealidad": 0.375,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11206,13 +11206,13 @@
      "inicio": 2000,
      "fin": 2019,
      "n": 552,
-     "entropia_permutacion": 0.996762,
+     "entropia_permutacion": 0.997293,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.940292,
-     "lyapunov": 0.06044,
-     "determinismo": 0.602671,
-     "k_01": 0.997266,
-     "p_no_linealidad": 0.55,
+     "entropia_muestral": 1.949458,
+     "lyapunov": 0.057556,
+     "determinismo": 0.601457,
+     "k_01": 0.997817,
+     "p_no_linealidad": 0.175,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11224,14 +11224,14 @@
     {
      "inicio": 2001,
      "fin": 2020,
-     "n": 564,
-     "entropia_permutacion": 0.996749,
+     "n": 565,
+     "entropia_permutacion": 0.996945,
      "orden_permutacion": 4,
-     "entropia_muestral": 1.970586,
-     "lyapunov": 0.057144,
-     "determinismo": 0.606612,
-     "k_01": 0.99781,
-     "p_no_linealidad": 0.75,
+     "entropia_muestral": 1.981947,
+     "lyapunov": 0.05805,
+     "determinismo": 0.603011,
+     "k_01": 0.998152,
+     "p_no_linealidad": 0.7,
      "embedding": {
       "tau": 1,
       "m": 3,
@@ -11243,14 +11243,14 @@
     {
      "inicio": 2002,
      "fin": 2021,
-     "n": 570,
-     "entropia_permutacion": 0.995336,
+     "n": 571,
+     "entropia_permutacion": 0.995541,
      "orden_permutacion": 4,
-     "entropia_muestral": 2.074607,
-     "lyapunov": 0.111789,
-     "determinismo": 0.726836,
-     "k_01": 0.997855,
-     "p_no_linealidad": 0.425,
+     "entropia_muestral": 2.090852,
+     "lyapunov": 0.110005,
+     "determinismo": 0.724399,
+     "k_01": 0.997689,
+     "p_no_linealidad": 0.875,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -11268,8 +11268,8 @@
      "entropia_muestral": 2.079066,
      "lyapunov": 0.108188,
      "determinismo": 0.727251,
-     "k_01": 0.997112,
-     "p_no_linealidad": 0.775,
+     "k_01": 0.998227,
+     "p_no_linealidad": 0.75,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -11287,8 +11287,8 @@
      "entropia_muestral": 2.080873,
      "lyapunov": 0.104569,
      "determinismo": 0.732198,
-     "k_01": 0.997884,
-     "p_no_linealidad": 0.775,
+     "k_01": 0.997991,
+     "p_no_linealidad": 0.85,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -11306,8 +11306,8 @@
      "entropia_muestral": 2.109602,
      "lyapunov": 0.110337,
      "determinismo": 0.732611,
-     "k_01": 0.997762,
-     "p_no_linealidad": 0.45,
+     "k_01": 0.996814,
+     "p_no_linealidad": 0.475,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -11325,8 +11325,8 @@
      "entropia_muestral": 2.079781,
      "lyapunov": 0.113796,
      "determinismo": 0.730125,
-     "k_01": 0.996676,
-     "p_no_linealidad": 0.925,
+     "k_01": 0.996956,
+     "p_no_linealidad": 0.85,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -11344,8 +11344,8 @@
      "entropia_muestral": 2.069293,
      "lyapunov": 0.104957,
      "determinismo": 0.741887,
-     "k_01": 0.997856,
-     "p_no_linealidad": 0.925,
+     "k_01": 0.997721,
+     "p_no_linealidad": 0.975,
      "embedding": {
       "tau": 1,
       "m": 4,
@@ -11367,132 +11367,132 @@
  },
  "series_omitidas": {},
  "procedencia": {
-  "generado_utc": "2026-11-15T19:41:37+00:00",
-  "commit": "98846dfe121502312b8e4386cc85c94020d52034",
-  "config_sha256": "0382c23985f0b0c04460a28fde87d7e034710eef454c6cc2211280cb64323687",
-  "modelos_sha256": "ce2c8b19ad17cae2a60430c81f8b46cd055ddeb6f3a8b5f74171b829573b0d96",
+  "generado_utc": "2026-11-16T03:30:33+00:00",
+  "commit": "a59002d9f3cc05c2640997dd272a7223fc4a0442",
+  "config_sha256": "f21a4244c8c5955eb936b85f84218ddd87c9b4b8dc704f1740ba11679c963f41",
+  "modelos_sha256": "520a8e20c6e595833a662646b1c9416482b8b316077740c62bdf40918925d039",
   "preregistro_sha256": "c40676fd76ab55434bb8f0a89fe6c1bcf8845551dd884b41444682f3bd00d596",
   "crudos": {
    "chirps": [
     {
      "archivo": "chirps_ciudad_local_1981_1990.json",
-     "sha256": "b34772f0e33024bd512ec3b2afead35890b0d74030b74a8dd7f486e3f754f899",
+     "sha256": "ce514dbb89d1ee1bb57a48a9da5566a8b1a838aa82f8f03c0b781903fc7ddc87",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:33:05+00:00"
+     "descargado_utc": "2026-11-15T23:24:56+00:00"
     },
     {
      "archivo": "chirps_ciudad_local_1991_2000.json",
-     "sha256": "cc12c0da75b7edc23ab244f4c28a14eb4ddce9b524d388144012906cd7a50fad",
+     "sha256": "615b9bb71b0ad6ba14983808b1639df22fd3b71d704376f22c20124dbcf6b2ab",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:33:37+00:00"
+     "descargado_utc": "2026-11-15T23:25:27+00:00"
     },
     {
      "archivo": "chirps_ciudad_local_2001_2010.json",
-     "sha256": "f6a6b59f7df461a516e82d3dbaed4593620ec5cd6150b5a36459c3448fe01f4f",
+     "sha256": "66ad56fc4250a04623ec557a3972ce0e5902678f454846dee45303b0c3c0e62d",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:34:10+00:00"
+     "descargado_utc": "2026-11-15T23:25:58+00:00"
     },
     {
      "archivo": "chirps_ciudad_local_2011_2020.json",
-     "sha256": "efd08f2cb9e26cb74ff97c319522173161e5950170479353b0ab1a1e1fe13063",
+     "sha256": "8c27d0625e5a2f9b75a51e3de48b30d82df1b8f604c40b4c188ac8ddbe3ef93f",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:34:41+00:00"
+     "descargado_utc": "2026-11-15T23:26:30+00:00"
     },
     {
      "archivo": "chirps_ciudad_local_2021_2026.json",
-     "sha256": "5cbe3d78861fe7931539cf2740b581c9ce27b1b9fc211ea8d2777158b652712e",
+     "sha256": "d5038ff8ebb0925023f7560ee4d316628de98d023976b8e90434d2704cabbc43",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.585%2C+-16.45%5D%2C+%5B-71.485%2C+-16.45%5D%2C+%5B-71.485%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.349999999999998%5D%2C+%5B-71.585%2C+-16.45%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:35:07+00:00"
+     "descargado_utc": "2026-11-15T23:26:55+00:00"
     },
     {
      "archivo": "chirps_ciudad_celda_power_1981_1990.json",
-     "sha256": "d19cdb49562f401bae20f9d811a68b6842f205866b95b5678d2a0685b0f09edb",
+     "sha256": "7ad225dfe7c2d4a2eb9c6a5dd35aeb20322e09a1a4ba60499c6ae48872790e26",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:35:46+00:00"
+     "descargado_utc": "2026-11-15T23:27:27+00:00"
     },
     {
      "archivo": "chirps_ciudad_celda_power_1991_2000.json",
-     "sha256": "4ee66d60b4cd35a59e61a88e5a2ad26145376d512af7092b26bacb4acc71db98",
+     "sha256": "6a7ad0b37d91408c20a374464abd0111f72b6ba21b517c1e0667576351b5c62e",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:36:25+00:00"
+     "descargado_utc": "2026-11-15T23:27:58+00:00"
     },
     {
      "archivo": "chirps_ciudad_celda_power_2001_2010.json",
-     "sha256": "0a829f3f156312f4ac92fed988ec8f2ddd1773e4f5bf59893f7bd86ea99140e4",
+     "sha256": "fad2f616ba470ec037c20660acb1f97d6e97ba52e2d58413cb7f97c984ac08e7",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:36:59+00:00"
+     "descargado_utc": "2026-11-15T23:28:30+00:00"
     },
     {
      "archivo": "chirps_ciudad_celda_power_2011_2020.json",
-     "sha256": "a9c40d2420e150f3fce011d0f119f348a938e00efc6928bce45359c8556b54e5",
+     "sha256": "112a6f4ed091d412456e75c5e701d4ec06218acc32ff4805d471c53eb927f737",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:37:38+00:00"
+     "descargado_utc": "2026-11-15T23:29:01+00:00"
     },
     {
      "archivo": "chirps_ciudad_celda_power_2021_2026.json",
-     "sha256": "7ae4ea5da437dfd74294d1a41a5d6291e80caebbcd6cf3b912528f8b2f003daa",
+     "sha256": "810d7a9310f7a60b902339c23fdb46c159bece507ff672f131bc8a274fb38e8f",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.75%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.25%5D%2C+%5B-71.5625%2C+-16.75%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:38:12+00:00"
+     "descargado_utc": "2026-11-15T23:29:20+00:00"
     },
     {
      "archivo": "chirps_cabecera_local_1981_1990.json",
-     "sha256": "14e2fd15166fe5c21e257e61d6060e7eae88a726e757dae451c02877ae6ce18d",
+     "sha256": "2bbb959955680336862307812632c5e991dff30e2eb08a695f9bf692221259e3",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:38:45+00:00"
+     "descargado_utc": "2026-11-15T23:29:59+00:00"
     },
     {
      "archivo": "chirps_cabecera_local_1991_2000.json",
-     "sha256": "fa3c25da4e643eecd0f3bf4f630e7fd1173b5eb629829c06851f3657c02d624f",
+     "sha256": "cef9cffff77f6a6f50c9415b36f742a7ab13375309b6199949460d16161b3eff",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:39:18+00:00"
+     "descargado_utc": "2026-11-15T23:30:30+00:00"
     },
     {
      "archivo": "chirps_cabecera_local_2001_2010.json",
-     "sha256": "a05107ad61a065f9fb672af6a9152a2551e4f25264b7dd177375b0403e3e979a",
+     "sha256": "6cc0efe05d2f4fed3a8a23b042196b45dc23858da977abd4608eb8f791b34483",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:39:56+00:00"
+     "descargado_utc": "2026-11-15T23:31:01+00:00"
     },
     {
      "archivo": "chirps_cabecera_local_2011_2020.json",
-     "sha256": "7fc0a7c0d0e19df40109674a089b9b1e2d8f328e88d73834aaa48d3b5b4e5ef6",
+     "sha256": "7f3f295b217d887aec0a7e7969c30d51a985c8f69232a3f5ac1c6d9b3593f034",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:40:29+00:00"
+     "descargado_utc": "2026-11-15T23:31:32+00:00"
     },
     {
      "archivo": "chirps_cabecera_local_2021_2026.json",
-     "sha256": "699f1ebbd5e7d4231a6b2b8102408143428865597c214b311ad39f239fe4d9fb",
+     "sha256": "c08bda673698b62a00d413688e8807bd4331ea3d6d258d42d1bdf5b6d6c04297",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.3%2C+-16.0%5D%2C+%5B-71.2%2C+-16.0%5D%2C+%5B-71.2%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-15.899999999999999%5D%2C+%5B-71.3%2C+-16.0%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:40:56+00:00"
+     "descargado_utc": "2026-11-15T23:31:50+00:00"
     },
     {
      "archivo": "chirps_cabecera_celda_power_1981_1990.json",
-     "sha256": "8d15a8f5f384a7c613790173d9818748314cb32320a20c866c5d7e6420a537b9",
+     "sha256": "ed5559076277fd0b4a46ef427d09ae826cb30e75b62b9a126ccc9bd63471c2e5",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1981&endtime=12%2F31%2F1990&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:41:35+00:00"
+     "descargado_utc": "2026-11-15T23:32:22+00:00"
     },
     {
      "archivo": "chirps_cabecera_celda_power_1991_2000.json",
-     "sha256": "b0902e5b0eff75ea2bfb295e6e9042e2ff8d20cf93e67cb114f15be2edfb8995",
+     "sha256": "7823311287723cfb6d2e441dd6bcc88adb4e495811a262d7a21f824cd679bff9",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F1991&endtime=12%2F31%2F2000&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:42:14+00:00"
+     "descargado_utc": "2026-11-15T23:33:00+00:00"
     },
     {
      "archivo": "chirps_cabecera_celda_power_2001_2010.json",
-     "sha256": "341247c4b7cdaf86eca85064611bcdd9487fed3a561112deffb67a6b33e1b666",
+     "sha256": "05dcfa66b0ffc042143ca5bfe7542f8ad35eb2c667c344d38e2b2cadcfddddd1",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2001&endtime=12%2F31%2F2010&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:42:53+00:00"
+     "descargado_utc": "2026-11-15T23:33:36+00:00"
     },
     {
      "archivo": "chirps_cabecera_celda_power_2011_2020.json",
-     "sha256": "d11dbf1911a66d271301a7c407ceaade8c729f5f7e9fdffe669fda4c026ae39d",
+     "sha256": "3c5565d4cb35154ee834f80f6126e6f14c14e9a9c6f4c5961147f5885fc664a7",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2011&endtime=12%2F31%2F2020&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:43:31+00:00"
+     "descargado_utc": "2026-11-15T23:34:07+00:00"
     },
     {
      "archivo": "chirps_cabecera_celda_power_2021_2026.json",
-     "sha256": "301c7db6b5f00f230661c22f381836c3bc598b2d0dd9652efed7ebf03a4fe0ab",
+     "sha256": "e202755428e29fc6fb975389cdc0b1f762f65f28cbf8587855173dfa57ecc8b0",
      "url": "https://climateserv.servirglobal.net/api/submitDataRequest/?datatype=0&begintime=01%2F01%2F2021&endtime=10%2F31%2F2026&intervaltype=0&operationtype=5&geometry=%7B%22type%22%3A+%22Polygon%22%2C+%22coordinates%22%3A+%5B%5B%5B-71.5625%2C+-16.25%5D%2C+%5B-70.9375%2C+-16.25%5D%2C+%5B-70.9375%2C+-15.75%5D%2C+%5B-71.5625%2C+-15.75%5D%2C+%5B-71.5625%2C+-16.25%5D%5D%5D%7D",
-     "descargado_utc": "2026-11-15T05:43:58+00:00"
+     "descargado_utc": "2026-11-15T23:34:26+00:00"
     }
    ],
    "ghcn": [
@@ -11500,7 +11500,7 @@
      "archivo": "ghcn_PE000084752.csv",
      "sha256": "1963def04a0c425d2dad4511d7ae6f88f733485645f30dd44acbc526e8edfd88",
      "url": "https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/PE000084752.csv",
-     "descargado_utc": "2026-11-15T10:32:08+00:00"
+     "descargado_utc": "2026-11-15T23:24:08+00:00"
     }
    ],
    "glc": [
@@ -11508,21 +11508,21 @@
      "archivo": "glc.csv",
      "sha256": "2c4898899dd4f373c4320e121c5b655ebb5394d431fa42e57ec4828d07d48b04",
      "url": "https://data.nasa.gov/docs/legacy/Global_Landslide_Catalog_Export/Global_Landslide_Catalog_Export_rows.csv",
-     "descargado_utc": "2026-11-15T10:32:16+00:00"
+     "descargado_utc": "2026-11-15T23:24:18+00:00"
     }
    ],
    "gvp": [
     {
      "archivo": "gvp_volcanes.geojson",
-     "sha256": "10ae0a5437833c91cb42015811c5a3b091c4203d7f6c8a21f6545540de277291",
+     "sha256": "7f7028d89d6e4426305d192ddb7008c3291b417b0109b3ede5b4a20dd1b793b5",
      "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Volcanoes&outputFormat=application%2Fjson&CQL_FILTER=Country%3D%27Peru%27",
-     "descargado_utc": "2026-11-15T19:27:26+00:00"
+     "descargado_utc": "2026-11-15T23:24:16+00:00"
     },
     {
      "archivo": "gvp_erupciones.geojson",
-     "sha256": "120bdbbc3c9e1cdf7e95f11a468276d18d4e0b4ddae0225b403f6106e84365de",
+     "sha256": "c2d24b70c2b46d750d72b249e6802931706b0510167cf580ef8086b48cdef5ba",
      "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=2.0.0&request=GetFeature&typeNames=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Eruptions&outputFormat=application%2Fjson&CQL_FILTER=Volcano_Number+IN+%28354000%2C354001%2C354003%2C354004%2C354005%2C354006%2C354010%2C354020%2C354031%2C354030%2C354040%2C354050%2C354060%29",
-     "descargado_utc": "2026-11-15T19:27:26+00:00"
+     "descargado_utc": "2026-11-15T23:24:16+00:00"
     }
    ],
    "igp": [
@@ -11530,91 +11530,91 @@
      "archivo": "igp_2012.json",
      "sha256": "5a56bd7dff31e85c043710310d4c4789be228f958dcbe8bf36f9523a647ce0a6",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2012",
-     "descargado_utc": "2026-11-15T05:43:58+00:00"
+     "descargado_utc": "2026-11-15T23:34:26+00:00"
     },
     {
      "archivo": "igp_2013.json",
      "sha256": "78dd9a9e47171ab143c8bbdeab46c2a6e6d98a78bd3b510c4dd393f3347553f9",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2013",
-     "descargado_utc": "2026-11-15T05:43:59+00:00"
+     "descargado_utc": "2026-11-15T23:34:26+00:00"
     },
     {
      "archivo": "igp_2014.json",
      "sha256": "cd80fe325c376fa7f3c7d69fef7ce7285e8d5e112aa9124237264a81c22ff72a",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2014",
-     "descargado_utc": "2026-11-15T05:43:59+00:00"
+     "descargado_utc": "2026-11-15T23:34:27+00:00"
     },
     {
      "archivo": "igp_2015.json",
      "sha256": "770f27dbbb4fda2f29451274a610edb574f2f5b0fe34f50108b97b6e8768c915",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2015",
-     "descargado_utc": "2026-11-15T05:43:59+00:00"
+     "descargado_utc": "2026-11-15T23:34:27+00:00"
     },
     {
      "archivo": "igp_2016.json",
      "sha256": "7af111ea2ef569b2fd0bb384683c3dcbc566140a1b2b63bb9443c601e8404229",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2016",
-     "descargado_utc": "2026-11-15T05:44:00+00:00"
+     "descargado_utc": "2026-11-15T23:34:27+00:00"
     },
     {
      "archivo": "igp_2017.json",
      "sha256": "528e8bbfb1cc03553a7985a83319266ac20007e719688119919292aa933f44de",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2017",
-     "descargado_utc": "2026-11-15T05:44:00+00:00"
+     "descargado_utc": "2026-11-15T23:34:28+00:00"
     },
     {
      "archivo": "igp_2018.json",
      "sha256": "fe13c341f4f201b84e6439b801b5a62189ef8092cbedb9733c439652760911a9",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2018",
-     "descargado_utc": "2026-11-15T05:44:01+00:00"
+     "descargado_utc": "2026-11-15T23:34:28+00:00"
     },
     {
      "archivo": "igp_2019.json",
      "sha256": "10d25d977ff5a0ac05fbfec9780e1d386fc057c0dfed94e7d9db9ec15f87dd41",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2019",
-     "descargado_utc": "2026-11-15T05:44:02+00:00"
+     "descargado_utc": "2026-11-15T23:34:29+00:00"
     },
     {
      "archivo": "igp_2020.json",
      "sha256": "b620ea2d19d389a3c7a2928ffa73a4b797d6b9b3fd9d76a3e706fbb8827d6ffa",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2020",
-     "descargado_utc": "2026-11-15T05:44:03+00:00"
+     "descargado_utc": "2026-11-15T23:34:30+00:00"
     },
     {
      "archivo": "igp_2021.json",
      "sha256": "3221703053ba50e3531c94583cdf09332d0321c49b09928308f6d90e585a73f0",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2021",
-     "descargado_utc": "2026-11-15T05:44:03+00:00"
+     "descargado_utc": "2026-11-15T23:34:30+00:00"
     },
     {
      "archivo": "igp_2022.json",
      "sha256": "0512ee920b19ca14edd62256827d9ea0e05de4faed497f2521bdffb5ad8f9707",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2022",
-     "descargado_utc": "2026-11-15T05:44:04+00:00"
+     "descargado_utc": "2026-11-15T23:34:31+00:00"
     },
     {
      "archivo": "igp_2023.json",
      "sha256": "6a1ad500373b9370b9e0d5070de07d0545dc1ecbe4359316a9995b8e486f1882",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2023",
-     "descargado_utc": "2026-11-15T05:44:05+00:00"
+     "descargado_utc": "2026-11-15T23:34:32+00:00"
     },
     {
      "archivo": "igp_2024.json",
      "sha256": "ebe59cb0a0ee472e630961374a6878edb4603cff71b52fdd9c63d41abfc6a0d8",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2024",
-     "descargado_utc": "2026-11-15T05:44:06+00:00"
+     "descargado_utc": "2026-11-15T23:34:32+00:00"
     },
     {
      "archivo": "igp_2025.json",
      "sha256": "cf1564646eefcfb999caefe38706ef19cb1f5892dc988452decddbaf97af2716",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2025",
-     "descargado_utc": "2026-11-15T05:44:06+00:00"
+     "descargado_utc": "2026-11-15T23:34:33+00:00"
     },
     {
      "archivo": "igp_2026.json",
-     "sha256": "6c1d7c0195999e70887c86ffabc9c3723771853774e02ccafb3bebdcfc9f1bea",
+     "sha256": "e5db78ce734b777e698233b178e4794f458902da2cb9cf9040aaf8e9cfdd0df2",
      "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2026",
-     "descargado_utc": "2026-11-15T05:44:07+00:00"
+     "descargado_utc": "2026-11-15T23:34:33+00:00"
     }
    ],
    "imerg": [
@@ -11622,27 +11622,203 @@
      "archivo": "imerg_diaria_1998.txt",
      "sha256": "edf074a962a197f184412ebed810d323c9b573e331361cf18413f24851c81582",
      "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
-     "descargado_utc": "2026-11-15T07:12:36+00:00"
+     "descargado_utc": "2026-11-15T23:06:23+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_1999.txt",
+     "sha256": "6ec614985770952c76ab065ed97889c599e0bde88fe4083f6ad9cd88336fee6e",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:09:25+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2000.txt",
+     "sha256": "ed3cf1425daf034603e1165364c927b08f510ab437e4a67dbc285b22f7b23e0f",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:12:51+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2001.txt",
+     "sha256": "4eb669eae17614e566efcda623e0942bf22c34dcc041e6ea4bdab0a44f7808aa",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:15:56+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2002.txt",
+     "sha256": "7e1176aa844889a9685337c84e6604420b0da4f2f38e88a91e312ac0b4e6501a",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:19:10+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2003.txt",
+     "sha256": "1243fd3869d43609df0abc23804d0385f5215599a0fe939456db41e050afe6d2",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:26:41+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2004.txt",
+     "sha256": "0340d8c28d80761587b25f889a1a35de9cfed4f0fc00479ac0104d288d0ba7ea",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:29:55+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2005.txt",
+     "sha256": "43763af75ebf10b91ad4c15da39a6e32307e87a7eaf0e5a32b9aa4f8f32a1b1f",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:33:43+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2006.txt",
+     "sha256": "7a590b01bcb3a892cc68e985c2dc88e9aa7499262c11d82d74284ce1aa822b2d",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:37:35+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2007.txt",
+     "sha256": "7e31e07ae9ceaaed5cc51c902af6677fb20ca57a6ee530a1c6e54863817b8307",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:41:31+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2008.txt",
+     "sha256": "b6e6ad24d65a98f3150cb7387d553b1f0c50aee0629311090a9a4687cdd318ba",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:46:10+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2009.txt",
+     "sha256": "f1914cebde7f4903e70e569fe0a3d828f0e5507a5fce403deec7a4b569cc9797",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:50:34+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2010.txt",
+     "sha256": "8a14b46cb7f16c35517e91d9c1694c5b2132e5379c0ae64ae273ba5948cccfac",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:54:43+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2011.txt",
+     "sha256": "08a7ec0f640dea36e8c6b18f8c87e645cf290f9db478299eab39c2674ec8a943",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-15T23:58:55+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2012.txt",
+     "sha256": "216e5d4cba1316a26936ca6436d9739918b39b8ba5c8cfa0bbe15f99e40dadbc",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T00:03:47+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2013.txt",
+     "sha256": "f200d6834538ec6e616a5a041a23aa9491641364329cdff6e52e9db7a45f7111",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T00:09:36+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2014.txt",
+     "sha256": "27afc9878451fb64fd53ec67d6cc7bedceffff34cff9ac4e36e3acb38329c52d",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T00:15:54+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2015.txt",
+     "sha256": "7cc2e1691cd4c1dcabcef8390653e0531ffd9ee9aa68510710e772c1fa045d40",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T00:22:06+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2016.txt",
+     "sha256": "3b9dc5d16b01f8dfb3a05ea2f77cbc3aa13a1948cfbdc8a7e5513c239c0248fb",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T00:28:57+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2017.txt",
+     "sha256": "b5e784a9c09a6bbf1697ac2c3f9759ae34442b05a58de767b21f2820592b853d",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T00:38:56+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2018.txt",
+     "sha256": "01294e19dcbe6d49e0059015f9a14ce423bed1a3b8d7d5feca6bfa9d86b064d9",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T00:48:22+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2019.txt",
+     "sha256": "b1a329435d6a8610339653d4a88bfca2c92cf1c04c3b1c3e6e66e38da696781e",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T01:08:21+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2020.txt",
+     "sha256": "278e4c154e39a32eb98f0afee18a278eae1a8f440bb2605818e296a1c33d5fef",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T01:31:13+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2021.txt",
+     "sha256": "f244efe044485be26545a4c1c8d5d14bfa7eb7074eba3f45965b36018e419d9e",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T01:49:30+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2022.txt",
+     "sha256": "7153c0ccb57a17159a796b5339642d6de10e49ade9689b2c50f0e39eee9db5b7",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T02:06:09+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2023.txt",
+     "sha256": "6551757e36ee98d51b657f90c99952d3e8c111a22bf265a1086ceb12cf5a386a",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T02:30:31+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2024.txt",
+     "sha256": "fec71411ed6f297814b4cb1ffd197ae7a206e400362cefda5777e62ded63377e",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T02:53:59+00:00"
+    },
+    {
+     "archivo": "imerg_diaria_2025.txt",
+     "sha256": "354b46e8d472ff80c9136ef91abca254f342338d18666711ad7a7af8a0611dab",
+     "url": "https://gpm1.gesdisc.eosdis.nasa.gov/opendap/GPM_L3/GPM_3IMERGDF.07",
+     "descargado_utc": "2026-11-16T03:15:33+00:00"
+    }
+   ],
+   "ingemmet": [
+    {
+     "archivo": "peligros_geologicos.json",
+     "sha256": "f0a67faa80645f9bd610302a1d2a2914df4488f684fdb65f806e6e78d77192bf",
+     "url": "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_PELIGROS_GEOLOGICOS/MapServer/0",
+     "descargado_utc": "2026-11-16T02:16:36+00:00"
     }
    ],
    "modis": [
     {
+     "archivo": "modis_ciudad_LST_Day_1km.json",
+     "sha256": "1e2efa50e5752b045b2a2c668b2083c3ae8dfc4194ec051aad9e3cf589c30fbb",
+     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Day_1km",
+     "descargado_utc": "2026-11-15T23:47:07+00:00"
+    },
+    {
+     "archivo": "modis_ciudad_LST_Night_1km.json",
+     "sha256": "1ca923f5231fa2740281517298fb8cc120489cdf9a6f401903e41783c324aba8",
+     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Night_1km",
+     "descargado_utc": "2026-11-15T23:55:16+00:00"
+    },
+    {
      "archivo": "modis_cabecera_LST_Day_1km.json",
      "sha256": "64370a990e76babf08b6b3ac62917d8acbd389f0e107d1292c645b0b22985287",
      "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Day_1km",
-     "descargado_utc": "2026-11-15T19:27:09+00:00"
+     "descargado_utc": "2026-11-16T00:03:37+00:00"
     },
     {
      "archivo": "modis_cabecera_LST_Night_1km.json",
      "sha256": "eb29fb908214681c9e1de707a590e6e4d4ed48b283d0150c511a1ab1e2f93b1f",
      "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-15.95&longitude=-71.25&band=LST_Night_1km",
-     "descargado_utc": "2026-11-15T19:30:55+00:00"
-    },
-    {
-     "archivo": "modis_ciudad_LST_Day_1km.json",
-     "sha256": "1e2efa50e5752b045b2a2c668b2083c3ae8dfc4194ec051aad9e3cf589c30fbb",
-     "url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset?latitude=-16.4&longitude=-71.535&band=LST_Day_1km",
-     "descargado_utc": "2026-11-15T19:40:31+00:00"
+     "descargado_utc": "2026-11-16T00:10:49+00:00"
     }
    ],
    "noaa": [
@@ -11650,295 +11826,295 @@
      "archivo": "oni.ascii.txt",
      "sha256": "118c563331335c8649cdc2677e6be7ae89d1259d901345fcddbc2857af280f7f",
      "url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
-     "descargado_utc": "2026-11-15T10:32:07+00:00"
+     "descargado_utc": "2026-11-15T23:24:06+00:00"
     }
    ],
    "power": [
     {
      "archivo": "power_diario_ciudad.json",
-     "sha256": "f85d621b9986c5cdd274c9f0aa1d0598ff9eb3bca583e229f81e85ad40cef7e4",
+     "sha256": "37fc00b2b37323987cbd4594a0210defd16407699d1e0f35a85c4cbcb746f6eb",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.535&latitude=-16.4&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:21+00:00"
+     "descargado_utc": "2026-11-15T23:24:02+00:00"
     },
     {
      "archivo": "power_diario_cabecera.json",
-     "sha256": "acc78f55dbd12c58e6357f11439342c68a64b7a0386ad1d1b94331c8c1badb8e",
+     "sha256": "4bf1e7430ff526a0d581ce7d0d3edf0016fa7b1f8ba2ddf39c05c979ca6a5c8a",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M%2CWS2M%2CPS%2CALLSKY_SFC_SW_DWN&community=AG&longitude=-71.25&latitude=-15.95&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:24+00:00"
+     "descargado_utc": "2026-11-15T23:24:04+00:00"
     },
     {
      "archivo": "power_-71.25_-15.95_1981_2025.json",
-     "sha256": "441c1c8d4383a952b97623afa2074858317934bd1675a24fec95889417fa9aba",
+     "sha256": "d5a120d27c7db204d3c27d9d4aa507fee8910f43c40030603d3a468352f62126",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR%2CT2M%2CT2M_MAX%2CT2M_MIN%2CRH2M%2CQV2M&community=AG&longitude=-71.25&latitude=-15.95&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:25+00:00"
+     "descargado_utc": "2026-11-15T23:24:06+00:00"
     }
    ],
    "power_celdas": [
     {
      "archivo": "power_diario_celda_-75.0_-13.0.json",
-     "sha256": "b6f57b21b7760cc6e9545aada6adba42e6aebfed108fbec37a1b0a32903dd680",
+     "sha256": "902eeef1dd2a0bb64310ba2e3459824cce6d95a9c50965ecc9ec1e8b80c11a36",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:28+00:00"
+     "descargado_utc": "2026-11-16T00:10:51+00:00"
     },
     {
      "archivo": "power_diario_celda_-75.0_-12.5.json",
-     "sha256": "8f2f3d1ca18948adc97aa9c7417e84ea7b9ac89fc09d94ea88a1e17bb714da49",
+     "sha256": "d7a1879419da2545745a5448d7c83611edb868a5d7eaed2e0307e689017883bc",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-75.0&latitude=-12.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:29+00:00"
+     "descargado_utc": "2026-11-16T00:10:52+00:00"
     },
     {
      "archivo": "power_diario_celda_-74.375_-13.0.json",
-     "sha256": "577926a76dbe895e8a7876a53c5fe4bb4b1f4f24da0702ea67e7dccababd470f",
+     "sha256": "845c5e72360d23e1ddc84af8fd8163e1b754576ebde4cf2662316cd48fa63bb1",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-74.375&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:30+00:00"
+     "descargado_utc": "2026-11-16T00:10:52+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.75_-15.5.json",
-     "sha256": "2d82582f0be9d57dd058cd92008acb2185cd587ceee78a474ce0b6cb96d0116a",
+     "sha256": "fbd75c0366b87aaea59cb1156b2127033e5ff06c8c5ce91a130822d67fae12d5",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-15.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:31+00:00"
+     "descargado_utc": "2026-11-16T00:10:53+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.75_-13.5.json",
-     "sha256": "9fa6db94eca2280a4fe7cbc2b81f475b3c44316b5c07433cb845c4d6e2cd5bea",
+     "sha256": "0df094fb779d540d0e92207139bf3e504f2d151af34a0812df9e3d8298464dc5",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.75&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:33+00:00"
+     "descargado_utc": "2026-11-16T00:10:55+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-15.0.json",
-     "sha256": "aa6b4203b1746a841c168b252061e67bfb70a7f3285ccafcac96735ca0d875b0",
+     "sha256": "d7d0203370da9081963d6f4dc2f5da930b0557abdc0f0d3af065fcd3fec6f9f7",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-15.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:34+00:00"
+     "descargado_utc": "2026-11-16T00:10:56+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-14.0.json",
-     "sha256": "9e2d5644dd47886a5f4db3ae50385aac725f5682233fc230911c5dd964a0b79c",
+     "sha256": "84d753211b51c93b9353d68e3198849110f7c2f413d96618b6cee7e019d621c7",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-14.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:35+00:00"
+     "descargado_utc": "2026-11-16T00:10:57+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-13.5.json",
-     "sha256": "823e1b2e1b650b7311d4a84dff5ded085acb6f67e434881837d6f4318986878a",
+     "sha256": "52a2668ffc842ea0ac7bd16f2d1b8c25e1eafd6ebf05860920526adca6e10d78",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:36+00:00"
+     "descargado_utc": "2026-11-16T00:10:59+00:00"
     },
     {
      "archivo": "power_diario_celda_-73.125_-12.5.json",
-     "sha256": "ec3c6ba89f40faa8db94ba87af2c68eae2ce0a2b4288afae574420feffa1e3d9",
+     "sha256": "4fbbccf478d94a4b1f894d74493f69c89bf7e08ab775b4bd6863601232c7fc0d",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-73.125&latitude=-12.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:37+00:00"
+     "descargado_utc": "2026-11-16T00:11:00+00:00"
     },
     {
      "archivo": "power_diario_celda_-72.5_-13.5.json",
-     "sha256": "f9a34899fac7006226becbefc9bcefd74c48c6f07dedbce1cde00982a6c5b686",
+     "sha256": "15e1d0fc329ed04231f7f1bce7196a925e7ef5a27b85641c2d6a5f0a810921f5",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:38+00:00"
+     "descargado_utc": "2026-11-16T00:11:01+00:00"
     },
     {
      "archivo": "power_diario_celda_-72.5_-13.0.json",
-     "sha256": "8141fa2e60f1e10f4362bc2c67c7da1689d076d6e9c99fee0aa29f2be108d083",
+     "sha256": "3a274f3ef8cfacc935b4f230658f8badce77a6b37c8352862155ad2779c764cd",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-72.5&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:39+00:00"
+     "descargado_utc": "2026-11-16T00:11:02+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.875_-15.5.json",
-     "sha256": "3f4421438543552e9d102a6bf53274e83447effc1ba93377124e0fcd46772f76",
+     "sha256": "52754712c12613388578bfa3f0922eed7509887bda1e87da02632e0bbed1c13a",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-15.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:40+00:00"
+     "descargado_utc": "2026-11-16T00:11:02+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.875_-13.5.json",
-     "sha256": "c6d45b4db583f1cb1721811c7a54610dd1a6b0f428bf622e6121a1bec1ef4d53",
+     "sha256": "6a02806f3e377f52c43187da36f53e8e77eed76351003c387670b506770cd4e7",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:41+00:00"
+     "descargado_utc": "2026-11-16T00:11:03+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.875_-13.0.json",
-     "sha256": "10ca55dba90f5f4092eaaf8989b63a857d6bd597e6b539bd093b7a2279c0fde7",
+     "sha256": "4066276b2685e875d26fd83720812ee2483e67536f499968275e04bb394b1375",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.875&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:43+00:00"
+     "descargado_utc": "2026-11-16T00:11:04+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.25_-16.5.json",
-     "sha256": "52818bdad63946d21fd13773c49e931292d739df542b99bc9ebd22f47b9b1966",
+     "sha256": "7209e6ab2d2a8f9a9e1474c9005aea3c6f696a10fb0504790549cc1afcd62bc0",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-16.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:43+00:00"
+     "descargado_utc": "2026-11-16T00:11:05+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.25_-15.5.json",
-     "sha256": "45ce5f8d64d559d733bb7915c717d58f1c63a6d2cce245361355e5a43480ce91",
+     "sha256": "64b4f461fba82b2b115763e6accb943ba936ed3aebca2b03d66dd319238baa1e",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-15.5&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:45+00:00"
+     "descargado_utc": "2026-11-16T00:11:07+00:00"
     },
     {
      "archivo": "power_diario_celda_-71.25_-13.0.json",
-     "sha256": "30bb7479a799df81081a444b30733e635ae9c91c201f8cbd88b629db5dce594e",
+     "sha256": "42a0746235258be20be6136d6703e2d31c6b4e596b737fe5b426763eded17238",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-71.25&latitude=-13.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:46+00:00"
+     "descargado_utc": "2026-11-16T00:11:08+00:00"
     },
     {
      "archivo": "power_diario_celda_-70.625_-14.0.json",
-     "sha256": "9752f768677fcefcf3d44d77918f177cf86c296bd9e69b82379ea1d2c66641a3",
+     "sha256": "b9bd44fe7c2facab70702132c6dd82230e882cc0794b57306a7b2b0032b57661",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.625&latitude=-14.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:47+00:00"
+     "descargado_utc": "2026-11-16T00:11:09+00:00"
     },
     {
      "archivo": "power_diario_celda_-70.0_-14.0.json",
-     "sha256": "8e3404d56aef6b6b3db623bacc41e07c1513355117e934bbf1ec46bde025bcb7",
+     "sha256": "3439a970266c8b376369a209137ef3520a05c09c8c96a4cc69d60ece56f450b9",
      "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=PRECTOTCORR&community=AG&longitude=-70.0&latitude=-14.0&start=19810101&end=20261031&format=JSON",
-     "descargado_utc": "2026-11-15T19:27:48+00:00"
+     "descargado_utc": "2026-11-16T00:11:11+00:00"
     }
    ],
    "power_nacional": [
     {
      "archivo": "power_-77.869_-6.231_1981_2025.json",
-     "sha256": "d32f115b65296d16e078eb7d714f11265537b970889fa3e8c15f4ddeaa3cb714",
+     "sha256": "fb6fcd6430a1eb3c5c262ffe6c66bab3a067257b05d65372c8f29ed61cde865e",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.869&latitude=-6.231&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:12+00:00"
+     "descargado_utc": "2026-11-16T00:02:16+00:00"
     },
     {
      "archivo": "power_-77.528_-9.527_1981_2025.json",
-     "sha256": "b061197d726a1bfb763211ade088ed7b1ff6ce0b8f40a3d4b11c26d9fb862d32",
+     "sha256": "e2811f178e78e915f8873dbf647ddecd686bf4af184e4439e14be6ca8321aaf7",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.528&latitude=-9.527&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:13+00:00"
+     "descargado_utc": "2026-11-16T00:02:16+00:00"
     },
     {
      "archivo": "power_-72.881_-13.634_1981_2025.json",
-     "sha256": "cda1824a50af3356505da9809142217b621bbc465db1b2e6c49aabd01ed8e115",
+     "sha256": "d3b751310dccd9d15d0db913c2c7765b279dd9959ccf39f76c49a9c0699635ca",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-72.881&latitude=-13.634&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:14+00:00"
+     "descargado_utc": "2026-11-16T00:02:17+00:00"
     },
     {
      "archivo": "power_-71.535_-16.399_1981_2025.json",
-     "sha256": "4853095911ce7bfe41189832aa26e910c4d8b7ddd8cefb2c6514c09496873265",
+     "sha256": "196a0db434610933630f0c951189920e66c0f2b520856869c052811d15aa4c70",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-71.535&latitude=-16.399&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:15+00:00"
+     "descargado_utc": "2026-11-16T00:02:18+00:00"
     },
     {
      "archivo": "power_-74.224_-13.159_1981_2025.json",
-     "sha256": "28291657859fc66121418ee34081ddac0ed3bd7d08e5063aa8d37fe232cf9ca3",
+     "sha256": "6b6773140074c5bd996f581abd70ad2be6b296d86e78f811e0ce0987f0a56b31",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-74.224&latitude=-13.159&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:16+00:00"
+     "descargado_utc": "2026-11-16T00:02:18+00:00"
     },
     {
      "archivo": "power_-78.5_-7.163_1981_2025.json",
-     "sha256": "00d96b73723ae6eacadb45d60035f342d5243787eb2e36c409c0bc29babc28a4",
+     "sha256": "a540c7e9fd6d2acc8351b51eb271c5af3973ddf7e8ca263faf0c0557049872e6",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-78.5&latitude=-7.163&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:17+00:00"
+     "descargado_utc": "2026-11-16T00:02:19+00:00"
     },
     {
      "archivo": "power_-77.125_-12.052_1981_2025.json",
-     "sha256": "58db56d1c566ba0dbfdbd4ca6a9b627469e60281a665d4c21d09f8b2092ea78c",
+     "sha256": "3c60daeda07670d73d2ad2ab037ffab7ced42ed656bf6da5af74f86271f45077",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.125&latitude=-12.052&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:17+00:00"
+     "descargado_utc": "2026-11-16T00:02:20+00:00"
     },
     {
      "archivo": "power_-71.967_-13.532_1981_2025.json",
-     "sha256": "9f81493cbb2759febb4a0a077680f0b4c3f9ca87c417297b5fcf71ac01bf9fcf",
+     "sha256": "a75caba3bfc5cead899328e64fa7d3083d6d282a557114090c90f1c53c3284e8",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-71.967&latitude=-13.532&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:18+00:00"
+     "descargado_utc": "2026-11-16T00:02:21+00:00"
     },
     {
      "archivo": "power_-74.973_-12.787_1981_2025.json",
-     "sha256": "82eed0515f8f684978e06369ec541b04fd40bb6def6b7e7ee00b8b174ef74031",
+     "sha256": "12a57d7c58db5e801b02c8c042fe21d17e9727c1bd67f91a3af019398566efd6",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-74.973&latitude=-12.787&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:19+00:00"
+     "descargado_utc": "2026-11-16T00:02:22+00:00"
     },
     {
      "archivo": "power_-76.242_-9.93_1981_2025.json",
-     "sha256": "f109236d6462d62566d324ea294b5e40aaa9250d290489ba871f8302ff57ebe6",
+     "sha256": "fdb1cbb82e4a14d8e2975cb09cff538db9ee19fc4b0bb250141b5e5cd09e37b5",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-76.242&latitude=-9.93&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:20+00:00"
+     "descargado_utc": "2026-11-16T00:02:22+00:00"
     },
     {
      "archivo": "power_-75.729_-14.068_1981_2025.json",
-     "sha256": "a92e466d25a74bfbb13113679591e23106e06df24f60981ccd4886c628e693f5",
+     "sha256": "cfb9ae82027774afeb00fc899188ffd7520da309680cb914ff8a9dd51ab9bd08",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-75.729&latitude=-14.068&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:21+00:00"
+     "descargado_utc": "2026-11-16T00:02:23+00:00"
     },
     {
      "archivo": "power_-75.204_-12.065_1981_2025.json",
-     "sha256": "40f54649ced4fcd570d93103b21b27c5a1059f342d8f801e868b65e07cbd500f",
+     "sha256": "177dcfdc9109e69c846f90017da72105ba7ee0becd3511168857e76e7fe38b9d",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-75.204&latitude=-12.065&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:22+00:00"
+     "descargado_utc": "2026-11-16T00:02:24+00:00"
     },
     {
      "archivo": "power_-79.029_-8.112_1981_2025.json",
-     "sha256": "f03e0478a127166471f450c036bbe2dcec521aaeed2e71423d4241dc2746d280",
+     "sha256": "4bfc42a5404b30f712257d09f22c6e28bbdfc87c346f08c6597c997033c79e98",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-79.029&latitude=-8.112&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:23+00:00"
+     "descargado_utc": "2026-11-16T00:02:25+00:00"
     },
     {
      "archivo": "power_-79.841_-6.771_1981_2025.json",
-     "sha256": "355dfbd27ee549d0850725071ea26302eae3b04b8ade677c5097057133ce0d9d",
+     "sha256": "4faf2fb1ba1e6c04efc817ea77cd392fd7cbf2a1e90b3a1fdeb162dc5cea8354",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-79.841&latitude=-6.771&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:23+00:00"
+     "descargado_utc": "2026-11-16T00:02:26+00:00"
     },
     {
      "archivo": "power_-77.043_-12.046_1981_2025.json",
-     "sha256": "25a1fabc56fdd32e2a154f7da2e7d677d65ed9ad912b81add2cb340db3b6ebe1",
+     "sha256": "b9e75fd063bf47a5d8ede4e6182fbe5995717f2a6abd00e5f21025fb2b1d150c",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-77.043&latitude=-12.046&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:24+00:00"
+     "descargado_utc": "2026-11-16T00:02:27+00:00"
     },
     {
      "archivo": "power_-73.253_-3.749_1981_2025.json",
-     "sha256": "bd84b797c8b561d6746eedefe09de53fb0d6935c6840ba452afcfdc7b6418239",
+     "sha256": "342bee7685417d856910f7f67bf7b01ba2ecb11537b7bbc65fb51bffe4ccfbc6",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-73.253&latitude=-3.749&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:25+00:00"
+     "descargado_utc": "2026-11-16T00:02:28+00:00"
     },
     {
      "archivo": "power_-69.189_-12.593_1981_2025.json",
-     "sha256": "c64793851c5dddaa482e5583efd4ff060d68206ae4b292732d846e7ac6fc3cf2",
+     "sha256": "255fe51ed485531bd5d532b2567c2a8cab069dafffc24e88eaac909d4436587b",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-69.189&latitude=-12.593&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:26+00:00"
+     "descargado_utc": "2026-11-16T00:02:28+00:00"
     },
     {
      "archivo": "power_-70.935_-17.195_1981_2025.json",
-     "sha256": "3aa9f9a53ffb5e39b58025ed1d580e12c93ade051d03161497054e0dd30a0f1f",
+     "sha256": "eb0943c900abc42a6384201977096ba6cb4b16599cae64ed178c7f1354c70347",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-70.935&latitude=-17.195&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:27+00:00"
+     "descargado_utc": "2026-11-16T00:02:29+00:00"
     },
     {
      "archivo": "power_-76.263_-10.686_1981_2025.json",
-     "sha256": "6e4f5d7a651ef0fc94cf2a1be8177922a64df16a13f306043c88501add4ee0de",
+     "sha256": "ad6188d4a002e455693051d707a588481becd482b3cdc2f211abc24edb4a700f",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-76.263&latitude=-10.686&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:28+00:00"
+     "descargado_utc": "2026-11-16T00:02:30+00:00"
     },
     {
      "archivo": "power_-80.633_-5.195_1981_2025.json",
-     "sha256": "710ea405deee9816c21136d809c5a3aaa506a0c416c1f55a38482e6811f5ece8",
+     "sha256": "d40f4236ff44bb5b16d9bc292ca8868de62fd36cd725cd24ab2b23eec8aac2ee",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-80.633&latitude=-5.195&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:28+00:00"
+     "descargado_utc": "2026-11-16T00:02:31+00:00"
     },
     {
      "archivo": "power_-70.022_-15.84_1981_2025.json",
-     "sha256": "c3f727c8cceeb3b4c84b1996a9c90a38bde2ae50c06de3d9792778f0fe8b2533",
+     "sha256": "4914d2e5d2639c31ac5aa589ac035cf7d01b643c8f3e71afc2979a0360e44c79",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-70.022&latitude=-15.84&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:29+00:00"
+     "descargado_utc": "2026-11-16T00:02:32+00:00"
     },
     {
      "archivo": "power_-76.974_-6.034_1981_2025.json",
-     "sha256": "551e48886f7131e7f913de2d038c00f06daf6dae64b3ece7e59be467d8a0ce53",
+     "sha256": "ceeac16b6b30f9136f2f74babcc26d474df91ef4b1a067962c713cb6066cfe1a",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-76.974&latitude=-6.034&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:30+00:00"
+     "descargado_utc": "2026-11-16T00:02:33+00:00"
     },
     {
      "archivo": "power_-70.246_-18.006_1981_2025.json",
-     "sha256": "88f14644596f6c31e50f7db97d3fccc6669aa48b77fdbc059e532a2f69608003",
+     "sha256": "a6070ad7eb6feb2fb2dc5b2af4010b9096c72361840b7bceedde0f9341316c34",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-70.246&latitude=-18.006&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:30+00:00"
+     "descargado_utc": "2026-11-16T00:02:33+00:00"
     },
     {
      "archivo": "power_-80.451_-3.567_1981_2025.json",
-     "sha256": "1ede01dac516c40d87ad658a059b7464a9e6a25b3a790f9aab76c56c3d5d8ac4",
+     "sha256": "43727bfa7713484f8279127ae3fc29970b30988f1ff7da8b0a163fb677bbad5e",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-80.451&latitude=-3.567&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:31+00:00"
+     "descargado_utc": "2026-11-16T00:02:34+00:00"
     },
     {
      "archivo": "power_-74.554_-8.379_1981_2025.json",
-     "sha256": "4c3529a628a1a81f5de7e17c51538513ca6e36e85ac10036d64be24204dac836",
+     "sha256": "0fdc9c6e3627b657e15e1414c0924c86fd3dbd288f3b83e20481edd60adbe5a8",
      "url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M%2CPRECTOTCORR&community=AG&longitude=-74.554&latitude=-8.379&start=1981&end=2025&format=JSON",
-     "descargado_utc": "2026-11-15T19:40:32+00:00"
+     "descargado_utc": "2026-11-16T00:02:35+00:00"
     }
    ],
    "usgs": [
@@ -11946,67 +12122,67 @@
      "archivo": "usgs_1973_1977.csv",
      "sha256": "b195959730b48df2e75aa6717fb4f3756c757bb082ae7469a71e910673c600f7",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:09+00:00"
+     "descargado_utc": "2026-11-15T23:24:09+00:00"
     },
     {
      "archivo": "usgs_1978_1982.csv",
      "sha256": "f5275542fa290568268cc283c383960d0fb0aca64196f1f95d6b608d6ca1dda1",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:09+00:00"
+     "descargado_utc": "2026-11-15T23:24:10+00:00"
     },
     {
      "archivo": "usgs_1983_1987.csv",
      "sha256": "a48602fb11ae60cb2f92b54e1184f8749216244fe24556a0f4e3774902898d6f",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:10+00:00"
+     "descargado_utc": "2026-11-15T23:24:10+00:00"
     },
     {
      "archivo": "usgs_1988_1992.csv",
      "sha256": "d8fbf64991aaff8006c81f70969123d39a6d5e6734994ef1804fe30679705ac1",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:10+00:00"
+     "descargado_utc": "2026-11-15T23:24:10+00:00"
     },
     {
      "archivo": "usgs_1993_1997.csv",
      "sha256": "bca383f30e8896dbd442ee4ac540a72d98032ceb638733d3f7dbd6cb37635091",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:10+00:00"
+     "descargado_utc": "2026-11-15T23:24:11+00:00"
     },
     {
      "archivo": "usgs_1998_2002.csv",
      "sha256": "c577f921f4848c1f48ce6620d6768ceaf7a0b02a625f2b6bb51d7d46e9ee7bc1",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:11+00:00"
+     "descargado_utc": "2026-11-15T23:24:12+00:00"
     },
     {
      "archivo": "usgs_2003_2007.csv",
      "sha256": "06081ab1876bf0e64f82bead8c9db41413781969d68729c83515156f0be28f3d",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:11+00:00"
+     "descargado_utc": "2026-11-15T23:24:12+00:00"
     },
     {
      "archivo": "usgs_2008_2012.csv",
      "sha256": "d53710ae5b3c6aa725ce50edd488b0130eddaeed2bc2c2167e4de8ee0723a3eb",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:12+00:00"
+     "descargado_utc": "2026-11-15T23:24:13+00:00"
     },
     {
      "archivo": "usgs_2013_2017.csv",
      "sha256": "d33196222084b31a4e1cfb3d0148d0e4f02041e09f2c36852b650761c08e7b82",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:13+00:00"
+     "descargado_utc": "2026-11-15T23:24:13+00:00"
     },
     {
      "archivo": "usgs_2018_2022.csv",
      "sha256": "72b239f770ea156f37966ec04fa7ca0d2646f44dfd306f91d5be517712f45f6c",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:13+00:00"
+     "descargado_utc": "2026-11-15T23:24:14+00:00"
     },
     {
      "archivo": "usgs_2023_2026.csv",
-     "sha256": "dbe080e268a56779c5d3d14a658202be8a11f5ac16fdc8b9718b3a1ad4317231",
+     "sha256": "dcf48e81ab1a11eb437795d83c9dccb616d03f45e1b5d2afe095e150102c0bd2",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&latitude=-16.4&longitude=-71.535&maxradiuskm=350&minmagnitude=4.0&orderby=time-asc",
-     "descargado_utc": "2026-11-15T10:32:14+00:00"
+     "descargado_utc": "2026-11-15T23:24:15+00:00"
     }
    ],
    "usgs_nacional": [
@@ -12014,82 +12190,82 @@
      "archivo": "usgs_1973_1977.csv",
      "sha256": "086d03790a4a3c691616bb6860f66925db9dc019f4f65bf7a66ab81ee0687128",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1973-01-01&endtime=1977-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:33+00:00"
+     "descargado_utc": "2026-11-16T00:02:35+00:00"
     },
     {
      "archivo": "usgs_1978_1982.csv",
      "sha256": "b15992c395fa06556dd30237c14ebf45922fe7af86e2b21fd217d8126daaf747",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1978-01-01&endtime=1982-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:34+00:00"
+     "descargado_utc": "2026-11-16T00:02:36+00:00"
     },
     {
      "archivo": "usgs_1983_1987.csv",
      "sha256": "52b88681a91c39d9fc23f69baf32ef874c2b417966c9ca8933a587fc7ff729e4",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1983-01-01&endtime=1987-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:35+00:00"
+     "descargado_utc": "2026-11-16T00:02:37+00:00"
     },
     {
      "archivo": "usgs_1988_1992.csv",
      "sha256": "958673b3acdffaedd2a97b071314a9d1fd213980957219c766af7eecc9fffca0",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1988-01-01&endtime=1992-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:35+00:00"
+     "descargado_utc": "2026-11-16T00:02:37+00:00"
     },
     {
      "archivo": "usgs_1993_1997.csv",
      "sha256": "f8cd90eaebdf9cb3a5fe1836811eabd024f632c760529c0a5d48ea77a5cc549b",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1993-01-01&endtime=1997-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:36+00:00"
+     "descargado_utc": "2026-11-16T00:02:38+00:00"
     },
     {
      "archivo": "usgs_1998_2002.csv",
      "sha256": "29f1f21a29c88a544d9725b0e999606e6672d9c6b68cdaa859863305e628a65d",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=1998-01-01&endtime=2002-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:37+00:00"
+     "descargado_utc": "2026-11-16T00:02:39+00:00"
     },
     {
      "archivo": "usgs_2003_2007.csv",
      "sha256": "e945e3daa36cfd48dcff6d68b210bf8f305460141995777b4b9957bb79ad27f7",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2003-01-01&endtime=2007-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:37+00:00"
+     "descargado_utc": "2026-11-16T00:02:39+00:00"
     },
     {
      "archivo": "usgs_2008_2012.csv",
      "sha256": "b205da8782a8569942ab1ffb845e1cd52564873e13b1f118f1e393fcbfc2c2df",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2008-01-01&endtime=2012-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:38+00:00"
+     "descargado_utc": "2026-11-16T00:02:40+00:00"
     },
     {
      "archivo": "usgs_2013_2017.csv",
      "sha256": "1d5f147e8b6619ae6f0fb0e2117f68f4a096768f498198292cdb7c226f60c8ad",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2013-01-01&endtime=2017-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:39+00:00"
+     "descargado_utc": "2026-11-16T00:02:41+00:00"
     },
     {
      "archivo": "usgs_2018_2022.csv",
      "sha256": "67732b660107990d0b05dc7fa716c5eadfb5b0eb3f8eb4c8dece9c126980e896",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2018-01-01&endtime=2022-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:40+00:00"
+     "descargado_utc": "2026-11-16T00:02:41+00:00"
     },
     {
      "archivo": "usgs_2023_2026.csv",
      "sha256": "1c1f5364cbd59080d1c56a157368ed9d0f3a205a21bfa085c72154932c4dcb92",
      "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2023-01-01&endtime=2026-12-31T23%3A59%3A59&minlongitude=-81.5&minlatitude=-18.5&maxlongitude=-68.5&maxlatitude=0.0&minmagnitude=4.5&orderby=time-asc",
-     "descargado_utc": "2026-11-15T19:40:40+00:00"
+     "descargado_utc": "2026-11-16T00:02:42+00:00"
     }
    ]
   },
   "versiones": {
-   "python": "3.13.15",
-   "numpy": "2.5.4",
+   "python": "3.12.8",
+   "numpy": "2.5.5",
    "torch": "2.15.0+cpu",
    "scikit_learn": "1.9.1"
   },
   "integridad_crudos": {
-   "verificados": 113,
+   "verificados": 142,
    "faltantes": 0,
    "sin_manifiesto": 0
   },
-  "segundos": 3333.3,
+  "segundos": 723.6,
   "modo": "completo"
  }
 }
