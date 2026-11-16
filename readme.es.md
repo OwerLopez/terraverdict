@@ -2,517 +2,354 @@
 
 # TerraVerdict
 
-### Ciencia de datos geoespaciales para saber **qué cambia** en una cuenca de montaña, **por qué**, **con cuánta confianza** y **dónde actuar**
+**Veredictos auditables del sistema Tierra para una ciudad de montaña que pierde agua por sequía y por inundaciones**
 
-**Caso piloto:** el sistema que abastece de agua a Arequipa (Perú) · **Reto:** [Be An Earth System Trend Detective!](https://www.spaceappschallenge.org/2026/challenges/earth-system-trend-detective/) · NASA Space Apps 2026
+NASA Space Apps Challenge 2026 · [Be An Earth System Trend Detective!](https://www.spaceappschallenge.org/2026/challenges/earth-system-trend-detective/) · Equipo TerraVerdict · Arequipa, Perú
 
-[![Fuentes verificadas](https://img.shields.io/badge/fuentes-37%2F40%20verificadas-2E7D32)](docs/verificacion/README.md)
-[![Datos](https://img.shields.io/badge/datos-NASA%20%C2%B7%20NOAA%20%C2%B7%20Copernicus%20%C2%B7%20USGS-0B3D91)](docs/variables.md)
-[![Estado](https://img.shields.io/badge/estado-publicado%20y%20verificado-2E7D32)](#0-estado-real-del-proyecto)
-[![Demo](https://img.shields.io/badge/demo-terraverdict.vercel.app-0B3D91)](https://terraverdict.vercel.app)
+[![Aplicación](https://img.shields.io/badge/en%20vivo-terraverdict.vercel.app-0B3D91)](https://terraverdict.vercel.app)
+[![CI](https://github.com/OwerLopez/terraverdict/actions/workflows/ci.yml/badge.svg)](https://github.com/OwerLopez/terraverdict/actions/workflows/ci.yml)
+[![API](https://img.shields.io/badge/API-OpenAPI%203%20%C2%B7%2047%20rutas-2E7D32)](https://terraverdict.vercel.app/api/docs)
+[![Cadena de custodia](https://img.shields.io/badge/crudos-143%20archivos%2C%20SHA--256-2E7D32)](docs/trazabilidad.md)
+[![Licencia](https://img.shields.io/badge/licencia-MIT-lightgrey)](LICENSE)
 
-**Aplicación publicada: <https://terraverdict.vercel.app>** · API: [`/api/docs`](https://terraverdict.vercel.app/api/docs)
+[Aplicación en vivo](https://terraverdict.vercel.app) · [Referencia de la API](https://terraverdict.vercel.app/api/docs) · [English version](readme.md)
+
+<img src="docs/capturas/readme/portada.jpg" alt="Portada de TerraVerdict: qué resuelve el sistema, recorrido guiado y evaluación en 3 minutos" width="920">
 
 </div>
 
+> **Aviso.** TerraVerdict publica resultados experimentales de investigación. No son alertas oficiales ni reemplazan a SENAMHI, IGP, INGEMMET, INDECI o ENFEN.
+
 ---
 
-## 0. Estado real del proyecto
+## Contenido
 
-Esta propuesta separa con claridad lo hecho de lo prometido. Estado al **15-11-2026 (cierre)**.
-
-| Categoría | Qué incluye | Evidencia |
-|---|---|---|
-| **Publicado y verificado** | Aplicación completa en <https://terraverdict.vercel.app>: web React bilingüe y API FastAPI como función Python. Verificado en producción: API, rutas de la SPA, mapa satelital con la CSP estricta y sin errores de consola, cabeceras de seguridad | [`docs/despliegue.md`](docs/despliegue.md) |
-| **Datos reales al día** | Refrescados el 15-11: NASA POWER (Arequipa, celdas y 25 departamentos), **NASA GPM IMERG Final diaria 1998–2025 completa**, NASA GLC, NASA GIBS, USGS ComCat (hasta el 15-11-2026), Smithsonian GVP, NOAA ONI y GHCN, CHIRPS, IGP y MODIS LST. Cada crudo con SHA-256; `tv verificar-integridad` sin alteraciones | `data/raw/*/manifiesto.json` · [`docs/traspaso.md`](docs/traspaso.md) |
-| **Ciencia de datos validada** | 10 redes neuronales + clásicos + dos ensambles; IC90 por bootstrap de bloques, Diebold-Mariano, calibración, conformal y abstención; ninguna elección con la prueba (auditoría de 19 hallazgos). Historial fuera de muestra 2016–2026 con el modelo elegido en la validación de cada año | [`docs/experimentos.md`](docs/experimentos.md) · [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) |
-| **M1 · Matriz de Relevancia** | Implementada para P1 (lluvia extrema en la cabecera, objetivo IMERG): dos modelos, permutación por bloques, estabilidad con 200 remuestreos, significancia condicional con FDR y evaluación única en 2021–2025. Validada con datos sintéticos (recuperación, FDR y dirección) | [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) · vista `/relevancia` |
-| **IA verificada (Google Gemini)** | **Terra**, asistente flotante en todas las páginas, en **español e inglés**: responde **solo** con expedientes publicados, cita cada uno y pasa cada cifra por el verificador numérico (formato de cada idioma; reescritura si alguna no tiene respaldo). Explicación en lenguaje claro por expediente. Cadena de cuatro modelos ante alta demanda; clave solo en el servidor; límites por IP y global | botón abajo a la derecha · [`backend/app/services/asistente.py`](backend/app/services/asistente.py) |
-| **Cinco fenómenos, escala nacional** | Lluvia extrema, sequía, sismos, volcanes y deslizamientos con datos reales; Sello de Confianza, SPI y sismicidad en los **25 departamentos del Perú**; caos validado (global y en ventanas) | [`config/fenomenos.yaml`](config/fenomenos.yaml) · vistas `/peru`, `/caos`, `/metricas` |
-| **Seguridad y trazabilidad** | Cadena de custodia SHA-256 de crudos a web; CSP estricta, HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`; modo solo lectura sin secreto JWT; procesos con las ejecuciones reales del pipeline | [`docs/trazabilidad.md`](docs/trazabilidad.md) (R1–R35) |
-| **Verificación de fuentes y enlaces** | 40 fuentes contra catálogos oficiales (37 correctas); 40 enlaces del reto revisados con consultas reales | [`docs/verificacion/README.md`](docs/verificacion/README.md) · [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) |
-| **Bilingüe y fácil de leer** | Interfaz completa en español e inglés; los textos de datos se traducen con un glosario validado (cada traducción conserva todos sus dígitos). Cada vista muestra una frase y el método completo en un panel lateral "Cómo leer esta vista" | [`scripts/glosario_en.py`](scripts/glosario_en.py) |
-| **Calidad** | Pruebas de ciencia, backend, frontend y E2E (Playwright), CI en GitHub Actions y portabilidad Windows/Linux. Cifras de la última corrida en la bitácora | [`docs/bitacora.md`](docs/bitacora.md) |
-| ⏳ **Lo que falta** | Fuentes nacionales por convenio (SENAMHI, IGP, INGEMMET, ANA); M1 para P2–P4 (requieren NDVI, volumen de represas y más eventos de turbidez); base persistente para usuarios en Vercel (opcional) | [`docs/pendientes.md`](docs/pendientes.md) |
-
-**Cifras vigentes** (historial fuera de muestra, modelo elegido en la validación de cada año): ver [`docs/experimentos.md`](docs/experimentos.md). Resultados experimentales: **no son alertas oficiales** (SENAMHI, IGP, INGEMMET, INDECI).
-
-### Correrlo en local
-```bash
-python -m venv .venv && . .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install torch --index-url https://download.pytorch.org/whl/cpu && pip install -e ".[dev,ml]" -e "backend[dev]"
-```
-```bash
-tv ingest-fenomenos && tv experimentos && tv informe && tv publicar --exportar resultados/contrato/expedientes.json
-```
-```bash
-docker compose up --build    # API en :8000 y web en :8080
-```
-Secretos (`EARTHDATA_TOKEN`, `TV_GEMINI_API_KEY`, `TV_JWT_SECRETO`) solo en `.env` o en el panel de Vercel: ver [`.env.example`](.env.example) y [`docs/traspaso.md`](docs/traspaso.md).
+1. [Resumen](#1-resumen)
+2. [Lo más destacado](#2-lo-más-destacado)
+3. [Planteamiento del problema](#3-planteamiento-del-problema)
+4. [Recorrido por el producto](#4-recorrido-por-el-producto)
+5. [Datos](#5-datos)
+6. [Metodología](#6-metodología)
+7. [Resultados](#7-resultados)
+8. [Arquitectura e ingeniería](#8-arquitectura-e-ingeniería)
+9. [Reproducibilidad](#9-reproducibilidad)
+10. [Aseguramiento de la calidad](#10-aseguramiento-de-la-calidad)
+11. [Despliegue, seguridad y operación](#11-despliegue-seguridad-y-operación)
+12. [Amenazas a la validez y limitaciones](#12-amenazas-a-la-validez-y-limitaciones)
+13. [Estado de los módulos y hoja de ruta](#13-estado-de-los-módulos-y-hoja-de-ruta)
+14. [Equipo](#14-equipo)
+15. [Mapa de la documentación](#15-mapa-de-la-documentación)
 
 ---
 
 ## 1. Resumen
 
-**El problema.** Arequipa vive del agua que cae en el altiplano y se guarda en siete represas. En tres años sufrió las dos caras de la misma crisis:
+TerraVerdict es un sistema de ciencia de datos geoespaciales que responde cuatro preguntas para una cuenca de montaña regulada: **qué está cambiando, por qué, con cuánta confianza y dónde actuar**. El piloto es el sistema regulado del Chili, que abastece a Arequipa, la segunda ciudad del Perú; el mismo motor se aplica a los 25 departamentos del país.
 
-- **Falta de agua:** en noviembre de 2023 las represas tenían **159 de 409 hm³** ([La República](https://larepublica.pe/sociedad/2023/11/07/arequipa-represas-del-sur-tienen-bajo-nivel-de-almacenamiento-de-agua-lrsd-444311)) y se declararon **70 distritos en emergencia** ([Andina](https://andina.pe/agencia/noticia-deficit-hidrico-estos-son-los-70-distritos-arequipa-declarados-emergencia-961301.aspx)).
-- **Exceso de agua:** en febrero de 2025 la turbidez llegó a **5000 NTU** y **más del 70 %** de la población se quedó sin agua potable ([El Búho](https://elbuho.pe/2025/02/lluvias-en-arequipa-sedapar-detiene-produccion-de-agua-potable-y-pide-a-poblacion-almacenarla/), [Andina](https://andina.pe/agencia/noticia-arequipa-sin-agua-potable-corte-del-servicio-afecta-a-mas-del-70-de-poblacion-977336.aspx)).
-- **Pérdida de capacidad:** la represa Aguada Blanca bajó de 43 a unos 22 hm³ por sedimentos ([El Búho](https://elbuho.pe/2024/03/arequipa-proyectan-nueva-represa-ante-altos-niveles-de-colmatacion-en-aguada-blanca/)).
+Su decisión de diseño central es que **cada número que ve un usuario es un expediente publicado e inmutable**. Cada expediente (`TV-…`) lleva la estimación, su intervalo de incertidumbre del 90 % y su veredicto, las fuentes, los SHA-256 de sus datos crudos, el hash del preregistro y el commit que lo produjo. La aplicación web, la API REST, los informes ejecutivos en PDF y el asistente de IA leen de esos expedientes; ninguno calcula ni escribe cifras por su cuenta.
 
-Hoy, 14 de noviembre de 2026, empieza la temporada de lluvias con **El Niño fuerte en curso: ONI ASO 2026 = +2,46** (NOAA CPC, consultado hoy).
+Cuando la evidencia no alcanza, el sistema lo dice: se abstiene, califica las tendencias como *preliminares* o *frágiles* y nombra la prueba que falló.
 
-**La brecha científica.** Los datos de tierra no alcanzan para responder. La única estación GHCN de Arequipa tiene **14 años de lluvia con datos completos y ninguno desde 2010** (verificado hoy). Los satélites sí cubren la cuenca, pero hay que decidir **qué variables mirar** y **qué tendencias creer**. Eso es exactamente lo que pide el reto.
+## 2. Lo más destacado
 
-**La solución.** TerraVerdict es un sistema de ciencia de datos geoespaciales con seis módulos encadenados:
-
-| Módulo | Pregunta |
-|---|---|
-| **M0 · Ingesta trazable** | ¿De dónde viene cada dato y puedo reproducirlo? |
-| **M1 · Matriz de Relevancia** | Para este problema, ¿qué variables importan y con cuánta confianza? |
-| **M2 · Detective de tendencias + Sello de Confianza** | ¿Qué cambia, dónde, cuánto, y es significativo de verdad? |
-| **M3 · Gemelo hidrológico y atribución** | ¿El agua cambia por la lluvia, por el calor o por la cuenca? |
-| **M4 · Anticipación** | ¿Cuál es la probabilidad de déficit esta temporada? ¿Viene un evento de turbidez? |
-| **M5 · Cuenca y decisión** | ¿Cuánto almacenamiento se perdió? ¿Dónde invertir el fondo de conservación? |
-| **M6 · Interfaz y acceso** | Mapa 3D, gráficos científicos, grafo del proceso, matriz de calor, chat con IA verificada y API REST (MCP: expansión prevista, no implementada) |
-
----
-
-## 2. Primer resultado con datos reales
-
-> **Preliminar:** un solo producto (POWER/MERRA-2) en una celda de 0,5° cuya elevación media es 4232 m, sin la prueba de independencia. Por las reglas del propio proyecto, ninguna de estas tendencias puede calificar todavía como "robusta". Datos y código: [`analisis_preliminar.json`](docs/verificacion/analisis_preliminar.json).
-
-| Variable (cabecera, lon −71,25, lat −15,95) | Tendencia de Sen (IC 90 %) | p (Mann-Kendall, el mayor de las dos variantes) | Sin El Niño | Ventanas ≥ 20 años con el mismo signo | Años necesarios / disponibles | Lectura preliminar |
-|---|---|---|---|---|---|---|
-| **Temperatura media anual (T2M), 1981–2024** | **+0,23 °C/década** (0,15 a 0,30) | < 0,001 | +0,25 °C/década, p < 0,001 | **100 %** (86 % significativas) | 14 / 44 | Calentamiento claro. Falta una segunda familia de datos independiente |
-| **Lluvia dic–mar (PRECTOTCORR), 1982–2024** | +16 mm/década (1,7 a 30,4) | 0,057 | +16,8 mm/década, p = 0,029 | 92 % (solo **23 %** significativas) | 28 / 43 | **Frágil:** depende del periodo elegido |
-
-**Relación con El Niño (dato real):** la lluvia dic–mar se correlaciona con el ONI de dic–feb con **r = −0,345 (p = 0,024)**, el signo que espera la literatura para los Andes del sur. En las cinco temporadas con El Niño fuerte (ONI ≥ 1,5) el promedio fue **98 mm**, frente a 171 mm con La Niña y 144 mm en años neutros. **Pero no siempre:** 1983 tuvo 5 mm y 2024 tuvo 201 mm.
-
-La década 2015–2024 fue **0,88 °C más cálida** que 1981–1990 en esa celda.
-
-**Qué enseña este primer resultado:**
-
-1. **Hay una señal térmica que probablemente es real.** El sistema debe confirmarla con otra familia de datos (ERA5 o MODIS/VIIRS LST como corroboración física) antes de llamarla robusta.
-2. **La lluvia no permite afirmar una tendencia.** Quien diga "llueve menos" o "llueve más" en la cabecera no tiene respaldo con estos datos.
-3. **El Niño fuerte no garantiza sequía.** Por eso el pronóstico de temporada debe ser probabilístico y honesto.
-4. **La magnitud de lluvia de MERRA-2 parece baja** para la cabecera (146 mm promedio en dic–mar). Esta hipótesis se contrasta con IMERG, CHIRPS v3 y la lluvia local de los reportes de AUTODEMA, y es justamente el motivo de la prueba de independencia.
-
----
+| | Qué hace | Por qué importa |
+|---|---|---|
+| **Sello de Confianza** | Toda tendencia debe pasar seis pruebas adversariales (ventanas, filtro de El Niño, cambio de sensor, familias de datos independientes, detectabilidad, años influyentes) antes de llamarse robusta | Separa las tendencias reales de los artefactos de El Niño, de los cambios de sensor o de unos pocos años extremos |
+| **Pronóstico honesto** | Un zoológico de modelos (clásicos, gradient boosting, diez arquitecturas neuronales, ensambles) se elige en validación y se evalúa una sola vez en 2021–2026, con intervalos por bootstrap de bloques, pruebas de Diebold–Mariano y bandas conformales | La habilidad para la sequía a 1 mes, 0,68 (IC 90 % 0,54–0,78), está confirmada fuera de muestra; las señales débiles se informan como tales |
+| **Dos familias de evidencia independientes para deslizamientos** | El Global Landslide Catalog de la NASA (basado en noticias) se contrasta con el inventario de campo de INGEMMET (28 915 registros) frente a una línea base de lugares al azar | 24 de 30 eventos de la NASA (80 %) caen a menos de 5 km de un movimiento inventariado, frente al 39,5 % de lugares al azar (p binomial < 0,001) |
+| **Evidencia satelital a la escala correcta** | Mapa 3D sobre NASA GIBS con cortina de dos fechas alineada píxel a píxel: el embalse a 30 m (HLS), el verdor de la cuenca a 1 km (MODIS NDVI) y la humedad del suelo a 9 km (SMAP), además de un time-lapse mensual 2020–2026 solo con escenas sin nubes verificadas | Cada comparación se abre al acercamiento que su resolución permite leer y dice qué se puede y qué no se puede concluir |
+| **IA verificada** | Terra (Google Gemini) responde solo con expedientes y eventos citados. Un verificador determinista comprueba cada cifra **y la fuente de datos a la que se atribuye**, y pide reescribir cuando alguna no tiene respaldo | Las cifras inventadas y las atribuciones cruzadas entre fuentes se detectan antes de mostrarse |
+| **Pensado para una revisión de 3 minutos** | Un recorrido guiado de 8 pasos resalta cada función en su página real; inglés por defecto y español completo; funciona en teléfonos | Un jurado o un tomador de decisiones ve qué resuelve el sistema sin tener que buscarlo |
+| **Cadena de custodia** | 143 archivos crudos verificados contra manifiestos SHA-256 antes y después de cada corrida; 12 resultados sellados; la verificación TLS nunca se desactiva (a INGEMMET se llega fijando su certificado intermedio faltante) | Cualquier revisor puede reproducir cada cifra con los mismos datos |
 
 ## 3. Planteamiento del problema
 
-### 3.1 Realidad problemática (fuentes citadas)
+La cuenca del Chili falla en las dos direcciones, a menudo dentro del mismo ciclo de El Niño–Oscilación del Sur (ENOS):
 
-| Hecho | Dato | Fuente |
-|---|---|---|
-| Sistema regulado del Chili | 7 represas; capacidad útil de 404,01 hm³ (otras fuentes citan entre 393 y 410) | [El Búho, 2025](https://elbuho.pe/2025/02/arequipa-represas-de-la-cuenca-del-chili-regulado-registran-60-de-volumen-util/) |
-| Reporte diario de AUTODEMA (13-03-2024) | Volumen útil, caudal afluente, descarga y lluvia por represa; total Chili 373,30 hm³ | [PDF verificado](https://www.autodema.gob.pe/wp-content/uploads/2024/03/REPORTE-HIDRICO.pdf) |
-| Escasez de 2023 | 159 de 409 hm³; Decreto Supremo 122-2023-PCM con 70 distritos en emergencia; solo el 95 % de la demanda garantizada | [La República](https://larepublica.pe/sociedad/2023/11/07/arequipa-represas-del-sur-tienen-bajo-nivel-de-almacenamiento-de-agua-lrsd-444311) · [Andina](https://andina.pe/agencia/noticia-deficit-hidrico-estos-son-los-70-distritos-arequipa-declarados-emergencia-961301.aspx) · [Energiminas](https://energiminas.com/?p=10890) |
-| Turbidez de 2024 y 2025 | Plantas detenidas por huaicos y por el rebose de Aguada Blanca (2024); 5000 NTU y más del 70 % de la población sin agua (2025) | [La República](https://larepublica.pe/sociedad/2024/03/07/corte-de-agua-en-arequipa-sedapar-paraliza-produccion-en-sus-2-plantas-por-huaicos-y-rebose-de-represa-aguada-blanca-lrsd-432572) · [El Búho](https://elbuho.pe/2025/02/lluvias-en-arequipa-sedapar-detiene-produccion-de-agua-potable-y-pide-a-poblacion-almacenarla/) · [Andina](https://andina.pe/agencia/noticia-arequipa-sin-agua-potable-corte-del-servicio-afecta-a-mas-del-70-de-poblacion-977336.aspx) |
-| Colmatación | Aguada Blanca: de 43 a ~22 hm³; sin estudios de colmatación en más de 50 años; dragado estimado en US$ 50–100 M | [El Búho](https://elbuho.pe/2024/03/arequipa-proyectan-nueva-represa-ante-altos-niveles-de-colmatacion-en-aguada-blanca/) |
-| Bofedales | −8,7 % de área en la Reserva de Salinas y Aguada Blanca entre 2000 y 2024 | [Tesis UCSM](https://repositorio.ucsm.edu.pe/bitstreams/0eb69d01-db27-4e5d-a82c-95b19afaad40/download) |
-| Fondo de conservación | MERESE de SEDAPAR: ~US$ 454 mil ejecutados en 2022–2023; US$ 1,5 M comprometidos para 2024–2026 | [Forest Trends](https://www.forest-trends.org/wp-content/uploads/2024/10/Brochure-Merese-COP-14.01.25.pdf) |
-| Datos de tierra | Estación GHCN PE000084752: 14 años de lluvia completos (1973–2025), ninguno desde 2010; ningún año completo de temperatura máxima | Verificación propia, [evidencia](docs/verificacion/evidencia.json) |
-| Debate público | El Ministerio de Agricultura negó la escasez que SENAMHI advertía | [Proactivo](https://proactivo.com.pe/?p=33591) |
-
-### 3.2 Formulación
-
-**Pregunta general:** ¿cómo convertir los datos abiertos de observación de la Tierra en conocimiento **cuantitativo, reproducible y con incertidumbre explícita** sobre qué cambia en la cuenca que abastece a Arequipa, por qué cambia y dónde intervenir?
-
-### 3.3 Hipótesis científicas comprobables
-
-| # | Hipótesis | Cómo se pone a prueba | Qué la refutaría |
+| Fecha | Evento | Cifra | Fuente citada |
 |---|---|---|---|
-| H1 | La cabecera se calienta de forma robusta | Sello de Confianza con al menos dos familias independientes | Que la tendencia desaparezca en la segunda familia o con la prueba de sensor |
-| H2 | La lluvia dic–mar no tiene una tendencia decidible, pero sí una dependencia negativa con El Niño | M2 + M1 con IMERG, CHIRPS v3 y MERRA-2 | Una tendencia robusta en ≥ 2 familias, o una correlación con El Niño no significativa en IMERG/CHIRPS |
-| H3 | El aporte a las represas está más limitado por la evaporación (calor) que por la lluvia | Atribución contrafactual con el gemelo (M3) | Que la fracción atribuida al calor no sea significativamente mayor que cero |
-| H4 | Los cortes por turbidez siguen a lluvias intensas de 3 a 24 h sobre subcuencas con alta erosión potencial | M4, con los eventos documentados | Que no haya separación entre los días con corte y los días de lluvia sin corte |
-| H5 | El verdor de época seca de los bofedales disminuye donde hay más quemas y menos humedad | M1 (P2) con validación espacial por bloques | Importancias no estables o con el signo contrario |
+| Nov 2023 | Sequía: almacenamiento en las siete represas | 159 de 409 hm³ útiles (39 %) | La República |
+| Mar 2024 | Colmatación de la represa Aguada Blanca | Capacidad de diseño 43 hm³, estimada 22 hm³ | El Búho |
+| Feb 2025 | Turbidez por crecida en la captación de la ciudad | 5000 NTU; corte de agua a más del 70 % de la población | El Búho, Andina |
+| Ago–oct 2026 | Estado de ENOS | ONI +2,46 °C (episodio El Niño según el criterio de NOAA) | NOAA CPC |
 
-### 3.4 Objetivos
+La brecha científica es de observación. La única estación GHCN-Daily de Arequipa tiene 14 años completos de lluvia y ninguno desde 2010. Los productos satelitales y de reanálisis cubren la cuenca, pero discrepan entre sí, cambian de sensor y están confundidos por ENOS. La tarea no es producir más tendencias: es decidir **qué variables tienen señal, qué tendencias sobreviven a pruebas adversariales y cuándo la respuesta honesta es "no hay evidencia suficiente"**.
 
-**General:** desarrollar y validar un sistema reproducible que detecte, explique, anticipe y priorice los cambios del agua en una cuenca de montaña, con incertidumbre explícita, comenzando en Arequipa y replicable en cualquier región.
+## 4. Recorrido por el producto
 
-| # | Objetivo específico | Indicador verificable |
+La aplicación abre con lo que resuelve el sistema y un **recorrido guiado de 8 pasos** que navega por las páginas reales y resalta cada función.
+
+| | |
+|---|---|
+| <img src="docs/capturas/readme/recorrido.jpg" alt="Recorrido guiado resaltando la tabla maestra de veredictos" width="450"><br>**Recorrido guiado.** Ocho pasos por la aplicación, con teclado y también en móvil. | <img src="docs/capturas/readme/estado.jpg" alt="Estado hídrico actual" width="450"><br>**Cómo estamos hoy.** Represas, ONI y Niño 3.4 / 1+2 mensuales, SPI-3 de la cabecera, cada uno con la fecha de su último dato real. |
+| <img src="docs/capturas/readme/tabla.jpg" alt="Tabla maestra de veredictos" width="450"><br>**Tabla maestra de veredictos.** Cinco amenazas con su tendencia, su capacidad de anticipación fuera de muestra y su veredicto, enlazadas a su expediente. | <img src="docs/capturas/readme/prediccion.jpg" alt="Predicción frente a realidad con banda conformal del 90 %" width="450"><br>**Pronóstico frente a realidad.** SPI-3 a 1 mes en años que el modelo nunca vio, con la banda conformal del 90 %. |
+| <img src="docs/capturas/readme/embalse.jpg" alt="Cortina de dos fechas sobre Aguada Blanca a 30 m" width="450"><br>**Embalse a 30 m.** Cortina alineada: Aguada Blanca angosta y verde azulada en la sequía de 2023 (izquierda), parda clara en la turbidez de febrero de 2025 (derecha). | <img src="docs/capturas/readme/ndvi.jpg" alt="Verdor de la cuenca con MODIS NDVI a 1 km" width="450"><br>**Verdor de la cuenca a 1 km.** MODIS NDVI: mínimo de estiaje en noviembre de 2023 frente al reverdecimiento tras las lluvias de febrero de 2025. |
+| <img src="docs/capturas/readme/peru.jpg" alt="Coropletas de los 25 departamentos" width="450"><br>**Escala nacional.** El mismo motor para 25 departamentos; cada uno se colorea con la celda POWER de su capital (se declara que no es un promedio del territorio). | <img src="docs/capturas/readme/deslizamientos.jpg" alt="Deslizamientos: NASA GLC frente al inventario de INGEMMET" width="450"><br>**Deslizamientos, dos familias de evidencia.** NASA GLC frente al inventario de campo de INGEMMET, con línea base al azar y densidad del inventario. |
+| <img src="docs/capturas/readme/chat.jpg" alt="Asistente Terra con citas y verificación" width="450"><br>**Terra, la IA verificada.** Cita los expedientes; cada cifra y su fuente se comprueban antes de mostrarse. | <img src="docs/capturas/readme/auditoria.jpg" alt="Ejecuciones del pipeline con procedencia SHA-256" width="450"><br>**Auditoría.** Ejecuciones reales del pipeline, descargas de NASA con su SHA-256 y el commit detrás de cada resultado. |
+
+<p align="center"><img src="docs/capturas/readme/movil.jpg" alt="TerraVerdict en un teléfono" width="260"></p>
+
+## 5. Datos
+
+### 5.1 Fuentes
+
+| Producto | Proveedor | Cobertura usada | Rol |
+|---|---|---|---|
+| GPM IMERG Final diaria, V07 (0,1°) | NASA GES DISC | Ene 1998 – sep 2025, completa | Objetivo de la Matriz de Relevancia; familia de lluvia independiente |
+| POWER (meteorología MERRA-2; radiación CERES/SRB) | NASA LaRC | Diaria ene 1981 – oct 2026; 25 celdas departamentales | Tendencias, SPI, modelos de lluvia extrema y sequía, escala nacional |
+| Harmonized Landsat Sentinel-2, S30/L30 (30 m) | NASA/USGS; Sentinel-2 de ESA/Copernicus | 2020–2026, una escena verificada por mes | Cortina y time-lapse del embalse, caso de estudio |
+| MODIS Terra color real, NDVI (1 km), LST (1 km) | NASA vía GIBS y ORNL DAAC | 2000 – hoy | Capas del mapa; contraste de temperatura de superficie |
+| SMAP L4 humedad del suelo en la zona radicular (9 km) | NASA vía GIBS | 2015 – hoy | Capa del mapa (no entra en los modelos) |
+| Global Landslide Catalog | NASA | Sur del Perú | Inventario de deslizamientos (basado en noticias) |
+| Inventario de peligros geológicos (GEOCATMIN) | INGEMMET | 28 915 movimientos en masa, nacional | Segunda familia de evidencia de deslizamientos, de campo |
+| Índice Oceánico El Niño; Niño 3.4 y 1+2 (OISST v2.1) | NOAA CPC | 1950 – oct 2026 | Covariable ENOS y estado actual |
+| GHCN-Daily, estación PE000084752 | NOAA NCEI | Registro de la estación | Validación puntual, referencia de gradiente térmico |
+| ComCat | USGS | 1973 – nov 2026 | Sismicidad |
+| Volcanoes of the World | Smithsonian GVP | Desde 1550 | Recurrencia volcánica |
+| CHIRPS v2.0 | UCSB Climate Hazards Center | 1981 – 2026 | Familia de lluvia independiente para el Sello |
+| Límites admin-1 v5.1.2 | Natural Earth (dominio público) | Perú | Coropletas por departamento; línea base al azar |
+| SRTM vía Mapzen Terrain Tiles | NASA/NGA, USGS, NOAA | — | Relieve 3D |
+
+Cada fuente se comprobó contra su catálogo oficial con consultas reales ([`docs/verificacion/README.md`](docs/verificacion/README.md)). Las fuentes nacionales se volvieron a consultar el 15-11-2026 con verificación TLS activa: INGEMMET está integrado; SENAMHI (GeoServer WMS/WFS) y CENEPRED (ArcGIS REST) responden pero aún no se usan; el observatorio vulcanológico del IGP no resuelve en DNS. Atribuciones y licencias en [`docs/licencias-y-atribuciones.md`](docs/licencias-y-atribuciones.md). TerraVerdict no está avalado por NASA, ESA, USGS ni por ninguna institución peruana.
+
+### 5.2 Gobierno de datos
+
+- Cada descarga se guarda con su entrada de manifiesto (URL, producto, versión, bytes, SHA-256, fecha). `tv verificar-integridad` verifica los 143 archivos crudos antes y después de cada corrida.
+- Los resultados están sellados: `resultados/indice.json` guarda el SHA-256 de cada uno de los 12 resultados, así que cualquier edición se detecta.
+- Las imágenes satelitales se eligen por regla, no a mano. `scripts/timelapse_hls.py` evalúa cada adquisición HLS sobre la huella del embalse (OpenStreetMap way 23815221) y conserva la escena con cobertura completa y la menor fracción de píxeles brillantes, como máximo 10 %. Los meses sin escena válida quedan vacíos y nunca se interpolan.
+- Ninguna fuente se consulta con la verificación TLS desactivada. El servidor de INGEMMET omite su certificado intermedio; se añade el intermedio oficial de Sectigo con huella SHA-256 fijada y una prueba rechaza cualquier copia alterada.
+
+## 6. Metodología
+
+### 6.1 Protocolo de evaluación
+
+- **Partición temporal congelada.** Entrenamiento 1981–2015, validación 2016–2020, prueba 2021–2026. La partición forma parte de un preregistro cuyo hash va en cada resultado; una prueba falla si el preregistro se edita.
+- **Selección solo en validación.** Hiperparámetros, ventanas, calibración, pesos de ensamble y el modelo informado se eligen en validación. La prueba se evalúa una sola vez y solo se informa.
+- **Origen móvil.** Un historial año a año (2016–2026) reajusta el diseño congelado, con entrenamiento hasta Y−2, validación en Y−1 y prueba en Y. Los años hasta 2020 se marcan como optimistas porque informaron el diseño.
+- **Zoológico de modelos.** Referencias de persistencia y climatología; modelos lineales, regularizados y de gradient boosting; diez arquitecturas neuronales (GRU, LSTM, TCN, MLP, DLinear, N-BEATS, N-HiTS, PatchTST, iTransformer y un modelo de espacio de estados selectivo); y dos ensambles. Las redes se corren con varias semillas y se informa su dispersión.
+
+### 6.2 Habilidad, incertidumbre y significancia
+
+| Magnitud | Definición |
+|---|---|
+| Brier skill score | BSS = 1 − BS(modelo) / BS(climatología), para la probabilidad diaria de lluvia fuerte |
+| Habilidad en MSE | 1 − MSE(modelo) / MSE(climatología), para la regresión del SPI-3 |
+| Ganancia de información | Ganancia de log-verosimilitud sobre un proceso de Poisson de tasa constante, en bits por mes, para conteos sísmicos |
+| Intervalos de confianza | Bootstrap de bloques móviles del diferencial de pérdida en la prueba (90 %) |
+| Significancia | Prueba de Diebold–Mariano con varianza HAC y corrección de Harvey–Leybourne–Newbold, frente a la climatología |
+| Intervalos predictivos | Conformal partido, calibrado en validación (nominal 90 %) |
+| Calibración | Diagrama de confiabilidad y error de calibración esperado (bins de igual frecuencia) |
+
+**Regla de evidencia.** La habilidad está *confirmada* cuando el límite inferior del IC del 90 % es mayor que cero **y** el p de Diebold–Mariano es menor que 0,10, el umbral preregistrado. Cumplir solo una de las dos es un *indicio*. Un modelo que no supera a la climatología en validación no se publica como pronóstico: el sistema se abstiene y explica por qué.
+
+### 6.3 Detección de tendencias y Sello de Confianza
+
+Las pendientes son de Theil–Sen. La inferencia usa el más conservador de los p de Mann–Kendall original, Hamed–Rao y con preblanqueo. Una tendencia significativa se califica *robusta* solo si pasa todas las pruebas del Sello:
+
+1. **Ventanas.** El signo es estable en subperiodos móviles.
+2. **ENOS.** La pendiente se mantiene al quitar el ONI, con inferencia HAC.
+3. **Sensor.** No hay cambio de signo ni cambio relativo grande en las transiciones de sensor o producto.
+4. **Independencia.** El signo coincide entre familias de datos independientes (POWER, CHIRPS, IMERG).
+5. **Detectabilidad.** Hay años suficientes para detectar el efecto con el ruido observado.
+6. **Palanca.** La tendencia sobrevive al quitar sus años más influyentes.
+
+Una prueba fallida da *frágil*; las condiciones no evaluadas dan *preliminar*. El contrato de la API rechaza un veredicto *robusto* con alguna prueba no aprobada y un *frágil* que no nombre la prueba fallida.
+
+### 6.4 Matriz de Relevancia (M1)
+
+Para el problema P1, lluvia extrema en la cabecera con objetivo IMERG, la matriz combina importancia por permutación en bloques de validación, estabilidad en 200 remuestreos, significancia condicional con control FDR de Benjamini–Hochberg y una única evaluación en 2021–2025. El procedimiento se validó con datos sintéticos de variables relevantes conocidas. Los problemas P2–P4 (degradación de bofedales, déficit de represas, turbidez) se muestran a la espera de datos locales en vez de rellenarse.
+
+### 6.5 Evidencia de deslizamientos entre familias
+
+Para cada evento del NASA GLC en el sur del Perú se calcula la distancia al punto más cercano del inventario de INGEMMET y se compara con 2000 lugares uniformes al azar dentro del Perú en la misma caja (semilla 0). La fracción a menos de 5 km se contrasta con una prueba binomial unilateral frente a la fracción de los lugares al azar. Las fechas del inventario son de levantamiento, no del evento, así que la comparación valida la **ubicación**, no el momento; ambas fuentes favorecen terrenos accesibles, y así se declara junto al resultado.
+
+### 6.6 Indicadores del estado actual
+
+`tv publicar` calcula `indicadores.json` a partir de los crudos: estado del episodio ENOS (criterio de NOAA), SPI-3 de la cabecera (ajuste gamma con el periodo de entrenamiento y meses no confiables marcados), frecuencia de sequía condicionada a ENOS (intervalos de Wilson y prueba exacta de Fisher unilateral; descriptiva, no un pronóstico) y el gradiente térmico observado entre la estación GHCN (2520 m) y la celda POWER de la cabecera (4232 m), comparado con la referencia de 6,5 °C/km, nunca usado como corrección.
+
+## 7. Resultados
+
+Todas las cifras se leen de `resultados/contrato/*.json`, producidas con datos descargados el 15-11-2026. Las tablas completas están en [`docs/experimentos.md`](docs/experimentos.md).
+
+### 7.1 Veredictos por amenaza
+
+| Amenaza | Señal histórica | Capacidad de anticipar fuera de muestra (prueba 2021–2026) | Veredicto |
+|---|---|---|---|
+| Sequía (SPI-3, cabecera) | Temperatura media +0,22 °C/década (IC 90 % 0,15–0,29; 1981–2025); preliminar, independencia pendiente | A 1 mes, Ridge: habilidad MSE 0,68 (IC 90 % 0,54–0,78), p DM = 0,022, cobertura conformal 0,90 | Habilidad confirmada |
+| Lluvia extrema (día siguiente ≥ p90 del entrenamiento) | Lluvia dic–mar +19,15 mm/década (IC 90 % 4,38–31,88; 1982–2025); frágil, falla la prueba de palanca | Ensamble ponderado: BSS 0,092 (IC 90 % 0,02–0,17), p DM = 0,097, ECE 0,035 | Confirmada en el umbral preregistrado; en la práctica, solo monitoreo |
+| Sismos (350 km de Arequipa) | Gutenberg–Richter b = 1,00 (IC 90 % 0,96–1,03), Mc 4,5 | Conteos mensuales: 0,26 bits/mes sobre Poisson, p DM = 0,073 | Descripción estadística, no un pronóstico |
+| Volcanes | Probabilidad anual de erupción del Misti 0,8 % (IC 90 % 0,3–1,9 %) | No se intenta sin datos de monitoreo continuo | Recurrencia histórica |
+| Deslizamientos por lluvia | 28 eventos con serie de lluvia (NASA GLC); ubicación corroborada por INGEMMET (80 % a menos de 5 km frente a 39,5 % al azar, p < 0,001) | El umbral de lluvia exige al menos 30 eventos | Abstención |
+
+A tres meses, la habilidad para la sequía baja a 0,14 (iTransformer, POWER) y a 0,08 (DLinear, CHIRPS). La habilidad a un mes proviene sobre todo de la persistencia del SPI-1 y el SPI-3; el ONI aporta en el horizonte más largo.
+
+### 7.2 Estado actual (calculado de los crudos)
+
+| Indicador | Valor | Periodo |
 |---|---|---|
-| OE1 | Identificar las variables relevantes por problema | Matriz de Relevancia con habilidad fuera de muestra > línea base y estabilidad reportada |
-| OE2 | Detectar tendencias robustas por variable y zona | Veredicto por celda y subcuenca con el Sello de Confianza y "años para decidir" |
-| OE3 | Atribuir el cambio del aporte a sus causas | Rangos de atribución con un gemelo validado (KGE en años independientes) |
-| OE4 | Anticipar el déficit de temporada y los eventos de turbidez | CRPSS > 0 frente a la climatología; aciertos y falsas alarmas frente a los eventos documentados |
-| OE5 | Cuantificar la colmatación y priorizar la inversión de conservación | Serie del espejo de agua de Aguada Blanca; ranking de inversión exportable |
-| OE6 | Comunicar con trazabilidad completa | Cada número de la interfaz y del chat enlazado a su expediente reproducible |
+| ONI | +2,46 °C; episodio El Niño (5 temporadas seguidas ≥ +0,5) | Ago–oct 2026 |
+| Anomalía mensual Niño 3.4 / Niño 1+2 | +3,25 °C / +5,25 °C (OISST, base 1991–2020; no comparable cifra a cifra con el ONI) | Oct 2026 |
+| SPI-3 de la cabecera | +1,67, muy húmedo | Ago–oct 2026 |
+| Frecuencia de sequía en temporadas de El Niño fuerte | 2 de 5 (IC Wilson 90 % 14–73 %), frente a 1 de 30 en el resto; p de Fisher = 0,10 | 1982–2026 |
+| Último dato público de las represas | 60 % del volumen útil | Feb 2025 (se muestra como desactualizado) |
 
----
+### 7.3 Evidencia de observación de la Tierra
 
-## 4. Arquitectura integrada
+| 5 nov 2023, sequía | 12 feb 2025, episodio de turbidez |
+|---|---|
+| <img src="docs/capturas/readme/hls_antes.jpg" width="320" alt="Aguada Blanca verde azulada en noviembre de 2023"> | <img src="docs/capturas/readme/hls_despues.jpg" width="320" alt="Aguada Blanca parda clara en febrero de 2025"> |
+
+HLS S30 a 30 m sobre Aguada Blanca. El espejo de agua es verde azulado en la sequía de 2023 y pardo claro durante el corte de febrero de 2025, compatible con agua cargada de sedimentos. Es color de reflectancia de superficie, no una medición de turbidez ni de volumen, y la aplicación lo dice. En febrero de 2025 la celda de la cabecera registró 9 días de lluvia fuerte, en los que el modelo de lluvia extrema asignó una probabilidad media de 0,50, frente a 0,15 de la climatología.
+
+## 8. Arquitectura e ingeniería
 
 ```mermaid
-flowchart TB
-    subgraph M0["M0 · Ingesta trazable"]
-        SRC[CMR / Earthdata · AppEEARS · POWER · PO.DAAC<br/>NOAA CPC · GHCN · Copernicus · CHIRPS · AUTODEMA]
-        SRC --> CT[Contratos de datos<br/>esquema · unidades · QC · fracción válida]
-        CT --> CUBE[(Cubo analítico<br/>Zarr/Parquet por unidad de análisis<br/>+ catálogo STAC + grafo de procedencia)]
+flowchart LR
+    SRC[NASA Earthdata · POWER · GIBS<br/>NOAA · USGS · GVP · CHC · INGEMMET] --> ING
+    subgraph Ciencia["Paquete científico · src/terraverdict"]
+        ING[Ingesta<br/>manifiestos + SHA-256] --> EXP[Experimentos<br/>12 resultados sellados]
+        ING --> TR[Tendencias<br/>Sello de Confianza]
+        EXP & TR --> PUB[Publicación<br/>contrato + indicadores]
     end
-    subgraph Ciencia
-        M1[M1 · Matriz de Relevancia<br/>plantillas por problema · permutación · estabilidad · FDR]
-        M2[M2 · Tendencias + Sello<br/>Sen · MK · ENSO · ventanas · sensor · independencia · n*]
-        M3[M3 · Gemelo GR2M + embalse<br/>calibración con SWOT/HLS · atribución contrafactual]
-        M4[M4 · Anticipación<br/>ESP condicionado por ENSO · umbral de turbidez]
-        M5[M5 · Cuenca y decisión<br/>colmatación · RUSLE · bofedales · optimización MERESE]
+    PUB --> K[(resultados/contrato<br/>expedientes · indicadores · ejecuciones)]
+    subgraph Servicio["FastAPI · backend/app"]
+        K --> API[REST /api/v1<br/>validación del contrato con Pydantic]
+        API --> AST[Asistente<br/>recuperación + Gemini + verificador de cifras y fuentes]
     end
-    PRE[preregistro.yaml + hash SHA-256] --> M1 & M2 & M3 & M4 & M5
-    CUBE --> M1 --> M2 --> M3 --> M4
-    M1 --> M5
-    M2 & M3 & M4 & M5 --> EXP[(Expedientes JSON<br/>resultado + procedencia + versión)]
-    subgraph M6["M6 · Interfaz y acceso"]
-        UI[Web: mapa 3D · gráficos · grafo del proceso · matriz de calor · chat]
-        API[API REST · FastAPI]
-        IA[IA verificada · RAG REST<br/>Gemini + verificador numérico determinista]
+    subgraph Cliente["React · frontend"]
+        UI[Portada · recorrido guiado · mapa · modelos · informes<br/>inglés / español]
     end
-    EXP --> UI & API
-    API --> IA --> UI
+    API --> UI
+    AST --> UI
+    GIBS[NASA GIBS WMTS] --> UI
 ```
 
-**Principios de ingeniería:**
+**Decisiones de diseño**
 
-1. **Reproducibilidad.** Cada resultado es un expediente con el hash de los datos, del código y del preregistro.
-2. **Trazabilidad.** Un grafo de procedencia va del píxel al veredicto.
-3. **Calcular en vivo sobre datos reales ya ingeridos.** Los análisis tardan milisegundos; la ingesta sigue el ritmo de publicación de cada misión.
-4. **Publicar solo lo validado.** Un modelo o un pronóstico sin habilidad no se muestra.
-5. **La IA solo en la interfaz.** Nunca calcula.
+- **El contrato como interfaz.** La API solo importa `resultados/contrato/` al arrancar y no depende de la pila científica (NumPy, PyTorch). La función serverless queda pequeña y la ciencia puede volver a correrse sin desplegar código.
+- **Reglas científicas en el esquema.** Los validadores de Pydantic codifican reglas del dominio: una tendencia robusta exige todas las pruebas del Sello aprobadas, una frágil debe nombrar su falla y un modelo publicado debe superar a la climatología en validación. La ciencia inválida se rechaza con HTTP 422 en vez de mostrarse.
+- **Publicación idempotente.** Los expedientes se direccionan por contenido; republicar lo mismo no crea duplicados.
+- **Generación anclada.** El asistente recupera expedientes y eventos citados por REST. Del texto generado se extraen los números y los nombres de fuentes; cada uno se contrasta con los expedientes citados y una respuesta sin respaldo se reescribe o se marca. Un servidor MCP para agentes externos está diseñado pero **no implementado**.
+- **Flujo de datos en el frontend.** Todos los datos vienen del cliente OpenAPI tipado (`openapi-typescript`) con caché de TanStack Query. Los gráficos usan Recharts; el mapa usa MapLibre GL con relieve Terrarium y un segundo mapa sincronizado para la cortina. Los textos de la interfaz se escriben en los dos idiomas a la vez y una prueba lo comprueba; los textos de datos se traducen con un glosario que conserva cada dígito.
 
----
+**Pila.** Python 3.12, pandas, SciPy, scikit-learn, PyTorch · FastAPI, SQLAlchemy 2, Alembic, Pydantic 2 · React 18, TypeScript, Vite, TanStack Query, Recharts, MapLibre GL 4, Tailwind CSS · Playwright · GitHub Actions · Vercel.
 
-## 5. Módulos
-
-### M0 · Ingesta trazable
-
-- **Extractores por fuente** con una interfaz común: CMR/earthaccess para NASA, AppEEARS, la API de POWER, PO.DAAC (SWOT), NOAA CPC, NCEI, la API OData de Copernicus y CHIRPS.
-- **Contratos de datos:** unidades SI, banderas de calidad de cada producto, fracción de píxeles válidos por mes y DOI obligatorio. Un contrato roto detiene el proceso.
-- **Unidad de análisis:** subcuencas de cada represa (con trasvases), polígonos de bofedales y celdas de producto. Agregación ponderada por área.
-- **Grafo de procedencia:** qué producto usa qué insumos (por ejemplo, IMERG Final usa GPCC; FLDAS usa CHIRPS y MERRA-2). Sirve para contar familias independientes.
-- **Actualización automatizada:** tareas programadas según la latencia verificada (IMERG Early cada 30 min; IMERG Final, MERRA-2 y GLDAS mensual; MOD16A2GF anual). Cada corrida queda registrada con su manifiesto.
-
-### M1 · Matriz de Relevancia — [detalle](docs/modulo-relevancia.md)
-
-Para cada problema hay una **plantilla** con un objetivo medible y variables candidatas justificadas en la física. El método combina dos modelos (elastic-net y árboles con gradiente), validación cruzada por bloques temporales o espaciales, importancia por permutación, SHAP, estabilidad con 200 remuestreos, una distribución nula por barajado en bloques, corrección FDR y una prueba final en años apartados desde el inicio.
-
-| Problema | Viabilidad con los datos verificados |
-|---|---|
-| P1 · Lluvia extrema en la cabecera | Alta (~10 000 días) |
-| P2 · Degradación de bofedales | Alta (miles de píxeles) |
-| P3 · Déficit de las represas | Baja (~25 temporadas): solo modelos lineales, con advertencia |
-| P4 · Turbidez | Insuficiente (3 eventos): prototipo con umbrales, sin ranking |
-
-**Salida principal:** un **mapa de calor problema × variable** donde el color es la importancia, la intensidad es la confianza y una flecha indica la dirección. Se acompaña de un historial por versión que muestra qué variables son estables. Se reentrena con cada actualización y solo se publica si no pierde habilidad.
-
-### M2 · Detective de tendencias + Sello de Confianza
-
-Responde los cuatro objetivos del reto: **qué** cambia (por variable), **dónde** (mapa por celda y por subcuenca), **cuánto** (Sen por década con IC) y **si es significativo**. Cada tendencia pasa cinco pruebas:
-
-| Prueba | Método | Ya ejecutada en el primer análisis |
-|---|---|---|
-| Ventanas | Todas las ventanas de 20 años o más | |
-| ENSO | Regresión con ONI/RONI y desfases de 0 a 3 meses | (desfase 0) |
-| Sensor | Escalón en TRMM→GPM (2014-06), en las transiciones de Landsat y en la deriva de Terra (2020) + prueba de Pettitt | ⏳ |
-| Independencia | Al menos dos familias del grafo de procedencia coinciden en el signo | ⏳ |
-| Detectabilidad | Weatherhead et al. (1998) + bootstrap por bloques | (analítica) |
-
-**Regla conservadora:** de las variantes de Mann-Kendall (clásica y Hamed-Rao) se usa el p más alto. Los mapas aplican la corrección FDR de Benjamini-Hochberg (Wilks, 2016). Los veredictos son robusta, frágil (con la prueba que falla), no decidible (con años para decidir) o sin tendencia detectable.
-
-**El caso del reto "un mismo proceso, tendencias opuestas":** El Niño reduce la lluvia en los Andes del sur y la aumenta en la costa norte del Perú. M2 lo muestra en un mapa de correlación por celda con el ONI, con FDR.
-
-### M3 · Gemelo hidrológico y atribución
-
-- **Modelo:** GR2M mensual (Mouelhi et al., 2006) por subcuenca, con evapotranspiración potencial de Oudin (2005) a partir de la temperatura corregida por altitud. Se acopla un balance del embalse con evaporación de agua libre (Penman, con radiación, humedad y viento de POWER).
-- **Calibración sin batimetría:** cambio de almacenamiento de SWOT LakeSP (desde 2022-12, verificado), área de agua de HLS (desde 2013) y, hacia atrás, Landsat. Se valida con los reportes de AUTODEMA.
-- **Incertidumbre:** un ensamble de parámetros aceptables y varias familias de lluvia (IMERG, CHIRPS v3 y MERRA-2).
-- **Validación:** se calibra con 2001–2015 y se valida con 2016–2025 (KGE), más la prueba de años secos contra años húmedos (Klemeš, 1986).
-- **Atribución:** corridas contrafactuales sin la tendencia de la lluvia o sin la de la temperatura. Se reportan rangos al 90 % y el residuo que el clima no explica.
-
-### M4 · Anticipación
-
-- **Probabilidad de déficit de temporada:** Ensemble Streamflow Prediction (Day, 1985) desde el estado actual del gemelo, ponderado por la similitud del ONI. Se evalúa con pronósticos retrospectivos dejando un año fuera (CRPSS, diagrama de confiabilidad). **No se publica si no le gana a la climatología.** Con El Niño fuerte en curso (ONI +2,46), es la salida de mayor interés inmediato, y la de mayor riesgo de interpretarse mal: el primer análisis muestra que El Niño fuerte no siempre trae sequía.
-- **Alerta de turbidez (prototipo):** acumulados de IMERG Early y Late (latencia verificada: dato del mismo día) sobre las subcuencas que drenan a la captación, más la humedad previa (SMAP L4) y la erosión potencial. Umbral de intensidad y duración calibrado con los eventos documentados. Se reportan aciertos, falsas alarmas y horas de anticipación, sin presentarlo como un sistema operativo.
-
-### M5 · Cuenca y decisión
-
-- **Colmatación de Aguada Blanca:** serie del espejo de agua a nivel máximo (Landsat, HLS, y Sentinel-1 bajo nubes), tendencia con sello, índice de vegetación sobre el delta y, desde 2022, coherencia volumétrica con SWOT.
-- **Erosión:** RUSLE como índice relativo (erosividad de IMERG, factor LS de NASADEM, cobertura C de HLS y MODIS).
-- **Bofedales:** mapa por NDVI de época seca y pendiente, con validación por fotointerpretación y tendencia por bofedal.
-- **Optimización MERESE:** problema de mochila 0-1 con presupuesto real. El beneficio combina degradación robusta, conectividad hidrológica hacia la represa o la captación y reducción de la erosión.
-
-### M6 · Interfaz y acceso
+**Estructura del repositorio**
 
 ```
-┌──────────────────────────────────────────────┬───────────────────────────┐
-│ MAPA 3D (NASADEM + GIBS del día)           │ DETECTIVE (chat)        │
-│ · variable elegida · veredictos por celda    │ respuestas con cifras      │
-│ · represas, bofedales y ríos                 │ clicables y expediente     │
-│ · etiqueta de frescura por capa              │                           │
-│ ⏯ 1984 ─────────●───────── hoy              │                           │
-├──────────────────────────────────────────────┤ MATRIZ DE RELEVANCIA   │
-│ Serie · anomalías · Sen · bandas de El     │ problema × variable        │
-│ Niño · triángulo de ventanas                 │ (intensidad = confianza)   │
-├──────────────────────────────────────────────┴───────────────────────────┤
-│ CÓMO LLEGUÉ A ESTO: grafo del proceso que se enciende paso a paso      │
-│ [IMERG Final: N meses] → [QC: meses descartados] → [Anomalías] → [MK] →   │
-│ [ENSO] → [Años para decidir] → [Veredicto]   (valores reales al ejecutar) │
-│ cada nodo es clicable: entrada, salida y fuente            [logs ▸]      │
-└──────────────────────────────────────────────────────────────────────────┘
+src/terraverdict/    ingesta, señales, tendencias y Sello, modelos, experimentos, publicación
+backend/app/         rutas de la API, esquemas, servicios (asistente, verificador), persistencia, migraciones
+frontend/src/        páginas, mapa, gráficos, recorrido guiado, portada, cliente tipado, i18n
+config/              configuración congelada: fenómenos, fuentes, métricas, particiones, certificados fijados
+datos/               eventos documentados citados; reporte de AUTODEMA transcrito
+resultados/          resultados sellados y el contrato de la API
+scripts/             selección del time-lapse HLS, glosario, verificación de fuentes y enlaces
+tests/               pruebas científicas: unitarias, estadísticas, integración, integridad, portabilidad
+docs/                metodología, auditorías, guía de la API, despliegue, bitácora, traspaso, propuesta original
 ```
 
-- **Todo conectado:** un clic en una cifra del chat resalta el nodo del proceso que la calculó, el punto del gráfico y la zona del mapa.
-- **Traza legible:** se muestran los pasos del proceso y su resultado. Los logs técnicos completos quedan en un panel aparte para auditoría.
-- **Frescura honesta:** cada capa muestra la fecha de su último dato (por ejemplo, "IMERG Final: septiembre de 2025"; "IMERG Early: hoy").
-- **IA verificada (implementada):** Google Gemini (`gemini-flash-latest`, con respaldo `gemini-flash-lite-latest`) responde solo con los expedientes publicados más pertinentes y cita cada uno; un verificador numérico determinista comprueba cada cifra contra los expedientes citados e informa la probabilidad de coincidencia por azar. Si alguna cifra no tiene respaldo, se pide una reescritura y el resultado se muestra tal cual. Diseño original: [sección 7b del diseño técnico](docs/diseno-tecnico.md#7b-ia-generativa-con-garantías).
-- **API REST (FastAPI)** sobre el mismo núcleo. La IA opera como una arquitectura RAG REST desacoplada (`POST /api/v1/asistente/consultas`) con verificación numérica determinista; **no hay servidor MCP implementado**: el protocolo MCP queda como expansión prevista para agentes externos.
+## 9. Reproducibilidad
 
----
+```bash
+python -m venv .venv && . .venv/bin/activate              # Windows: .venv\Scripts\activate
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install -e ".[dev,ml]" && pip install -e "backend[dev]"
+```
 
-## 6. Fuentes de datos seleccionadas
+Regeneración completa, de las descargas al contrato de la API (IMERG exige `EARTHDATA_TOKEN`):
 
-Selección por **valor científico**, no por cantidad. Detalle completo, con licencias, en el [informe de verificación](docs/verificacion/README.md) y el [catálogo de variables](docs/variables.md).
+```bash
+tv ingest-fenomenos && tv ingest-nino && tv ingest-ingemmet && tv verificar-integridad
+tv experimentos && tv trends && tv informe
+tv publicar --exportar resultados/contrato/expedientes.json
+tv verificar-integridad
+```
 
-| Uso | Fuente principal (verificada) | Familia de contraste | Por qué |
+Haga commit antes de `tv experimentos`: cada resultado registra el commit `HEAD` que lo produjo.
+
+Aplicación en local:
+
+```bash
+cd backend && python -m app.cli migrar && python -m app.cli importar && uvicorn app.main:app --port 8000
+```
+```bash
+cd frontend && npm ci && npm run dev
+```
+```bash
+docker compose up --build
+```
+
+Los secretos solo se leen de `.env` o de la plataforma de hosting: `EARTHDATA_TOKEN`, `TV_GEMINI_API_KEY` y `TV_JWT_SECRETO` (ver [`.env.example`](.env.example)). En Windows, use `git config core.autocrlf false`: los sellos SHA-256 suponen saltos de línea LF.
+
+## 10. Aseguramiento de la calidad
+
+| Suite | Alcance | Comando | Último resultado |
 |---|---|---|---|
-| Lluvia (tendencias) | IMERG V07 Final, 1998-01 → 2025-09 | CHIRPS v3 (satélite + pluviómetros); MERRA-2 | Tres familias con insumos distintos |
-| Lluvia (anticipación) | IMERG Early/Late, vigente al día | — | Latencia de horas |
-| Temperatura | MERRA-2 / POWER, 1980 → | MODIS y VIIRS LST (corroboración física); ERA5 | Serie larga y corregible por altitud |
-| Vegetación y bofedales | HLS 30 m (2013 →); MOD13Q1 (2000 →) | VIIRS VNP13A1 (continuidad tras MODIS) | Escala de bofedal y continuidad de misiones |
-| Evapotranspiración | MOD16A2GF | GLDAS 2.1, FLDAS | Única observación con base satelital |
-| Nieve | MOD10A1F; VNP10A1F | — | Indicador térmico de los volcanes |
-| Humedad del suelo | SMAP L3 y L4 (2015 →) | GLDAS 2.0 (1948–2014) | Memoria de la cuenca y condición previa a huaicos |
-| Represas | SWOT LakeSP (2022 →); HLS; Sentinel-1/2; Landsat | ICESat-2 ATL13; reportes de AUTODEMA | Volumen sin batimetría |
-| Fuego | VIIRS VNP14IMG; MCD64A1 | — | Presión sobre bofedales |
-| Terreno | NASADEM 30 m | — | Altitud, drenaje y erosión |
-| El Niño | ONI y RONI (NOAA CPC); Niño3.4 (KNMI) | — | Covariable del sello y de la anticipación |
+| Paquete científico | Unitarias, propiedades estadísticas, recuperación sintética, integración con el contrato, integridad, portabilidad | `pytest` | 168 aprobadas, 2 omitidas |
+| Backend | Endpoints, validadores científicos, asistente (verificación de cifras y fuentes), seguridad, migraciones | `cd backend && pytest` | 111 aprobadas |
+| Frontend | Componentes, formato, completitud i18n, unión de coropletas, lógica de la portada | `cd frontend && npm test` | 48 aprobadas |
+| Extremo a extremo | Primera visita en inglés, recorrido guiado completo de 8 pasos, procedencia, verificador numérico, vistas de fenómenos, cambio a español | `cd frontend && npm run e2e` | 3 de 3, en local y contra producción |
+| Análisis estático | Tipos y lint | `ruff`, `mypy`, `npm run typecheck`, `npm run lint` | Limpio |
 
-**Evaluadas y no usadas para tendencias:** NISAR (solo 6 gránulos sobre la cuenca, desde octubre de 2026; útil para monitoreo futuro), GRACE (~300 km, demasiado grueso), GSMaP de JAXA (no verificado; candidato a cuarta familia de lluvia) y la estación GHCN (incompleta; solo validación puntual).
+GitHub Actions corre todas las suites en cada push (`.github/workflows/ci.yml`) y el documento OpenAPI se regenera desde el código y se compara contra deriva. Las 16 páginas también se revisaron a ancho de teléfono (375 px) en busca de desbordes horizontales y errores de consola.
 
----
+## 11. Despliegue, seguridad y operación
 
-## 7. Metodología: resumen y respaldo
+- **Hosting.** Vercel sirve el build estático de React y `api/index.py` como función Python; cada push a `main` despliega. En un arranque en frío la función aplica migraciones a SQLite en `/tmp` e importa el contrato en 2–4 s, y el cliente muestra un aviso real de conexión mientras hay consultas pendientes. Los resultados científicos son inmutables y se reconstruyen igual en cada instancia. Las cuentas de usuario solo persisten con `TV_DATABASE_URL` apuntando a PostgreSQL; la demo pública es de solo lectura y no requiere inicio de sesión.
+- **Seguridad.** Content Security Policy estricta, HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy` y `Permissions-Policy`. Sin `TV_JWT_SECRETO` la API funciona en solo lectura. El asistente tiene límites por IP y globales, y la clave del proveedor del modelo solo vive en el servidor.
+- **Operación.** El procedimiento de publicación, la gestión de secretos y el runbook de actualización de datos están en [`docs/traspaso.md`](docs/traspaso.md) y [`docs/despliegue.md`](docs/despliegue.md).
 
-| Etapa | Método | Referencia |
-|---|---|---|
-| Anomalías | Climatología mensual del periodo base | Wilks (2011) |
-| Tendencia | Theil-Sen con IC al 90 % | Sen (1968) |
-| Significancia | Mann-Kendall clásico y Hamed-Rao (se usa el p mayor); t-test con n efectivo | Hamed y Rao (1998); Santer et al. (2000) |
-| Mapas | FDR de Benjamini-Hochberg con α_FDR = 2α | Benjamini y Hochberg (1995); Wilks (2016) |
-| ENSO | Regresión con ONI/RONI y desfases | Jonaitis et al. (2021) |
-| Quiebres | Escalón en transiciones documentadas + Pettitt | Pettitt (1979) |
-| Detectabilidad | n* y bootstrap por bloques | Weatherhead et al. (1998) |
-| Relevancia | Permutación, SHAP, selección por estabilidad, nulo por barajado y FDR | Breiman (2001); Lundberg y Lee (2017); Meinshausen y Bühlmann (2010) |
-| Sequía | SPI y SPEI | McKee et al. (1993); Vicente-Serrano et al. (2010) |
-| Extremos | Índices ETCCDI | Zhang et al. (2011) |
-| Hidrología | GR2M, Oudin, Penman, KGE, validación de Klemeš | Mouelhi et al. (2006); Oudin et al. (2005); Gupta et al. (2009); Klemeš (1986) |
-| Pronóstico | ESP, CRPS/CRPSS, confiabilidad | Day (1985); Hersbach (2000) |
-| Agua superficial | MNDWI + Otsu; armonización de Landsat | Xu (2006); Roy et al. (2016) |
-| Erosión | RUSLE relativo | Renard et al. (1997) |
-| Incertidumbre visual | Paletas que suprimen valores inciertos (VSUP) | Correll, Moritz y Heer (2018) |
+## 12. Amenazas a la validez y limitaciones
 
----
+- **Muestras de prueba pequeñas.** Los periodos de prueba son cortos (por ejemplo, 60 meses para el SPI-3). Los intervalos son anchos y se informan así; no se interpretan años sueltos.
+- **Resolución del reanálisis.** Las celdas POWER son de 0,5° × 0,625°; los extremos puntuales se suavizan.
+- **Una sola familia de datos a escala nacional.** Con solo POWER a escala nacional, la prueba de independencia queda pendiente: las tendencias nacionales llegan como máximo a *preliminar* o *frágil*.
+- **Estado de las represas.** AUTODEMA no publica series abiertas, lo que bloquea el gemelo del embalse (M3) y el problema P3.
+- **Catálogos de eventos.** El NASA GLC se basa en noticias y subregistra eventos rurales; INGEMMET valida la ubicación, no las fechas. El umbral de deslizamientos se abstiene con menos de 30 eventos.
+- **Completitud sísmica.** Mc = 4,5 se declaró antes del análisis y se mantiene como limitación explícita.
+- **El color no es concentración.** La comparación HLS del embalse documenta color de superficie, no turbidez.
 
-## 8. Innovación y diferenciación
+## 13. Estado de los módulos y hoja de ruta
 
-| Lo que existe | Qué hace | Qué agrega TerraVerdict |
-|---|---|---|
-| Giovanni, Worldview, AppEEARS | Series y mapas por variable | Elige las variables por problema (M1), verifica sus tendencias (M2) y las conecta en una explicación (M3) |
-| Global Water Watch, JRC Global Surface Water | Monitoreo de embalses | Volumen con SWOT, atribución de causas y colmatación |
-| GEOGLOWS, HydroSOS | Pronósticos globales | Pronóstico local calibrado, con regla de no publicar sin habilidad |
-| RIOS / InVEST (fondos de agua) | Priorización de inversiones | Priorización con degradación medida desde el espacio y su confianza |
-| Modelos fundacionales (Prithvi de NASA e IBM) | Representaciones generales de imágenes | Explicación por problema, con significancia y "no decidible" |
-| Otros proyectos del reto | Tendencia y valor p por celda | Las cinco pruebas del sello, el preregistro, la matriz de relevancia y el resultado "faltan X años" |
-
-*Las herramientas de esta tabla se describen de memoria; hay que verificarlas antes de la presentación.*
-
-**Las cinco innovaciones defendibles:**
-
-1. **La matriz de relevancia por problema,** con estabilidad, significancia y la posibilidad de "no explicable": convierte la pregunta "¿qué variables mirar?" en un resultado medible.
-2. **El sello de confianza con independencia por genealogía de datos.** Las confirmaciones se cuentan por familias de insumos, no por número de productos.
-3. **Volumen de las represas sin batimetría** fusionando SWOT, HLS, ICESat-2 y NASADEM, en una cuenca sin series de tierra continuas.
-4. **Publicar solo lo validado:** el pronóstico sin habilidad y los modelos sin ventaja sobre la línea base no se muestran.
-5. **IA que no puede inventar cifras:** un verificador determinista entre el modelo y el usuario, más la digitalización de verdad terrestre que hoy solo existe en PDF.
-
----
-
-## 9. Validación experimental
-
-| ID | Experimento | Datos | Métrica y criterio | Estado |
-|---|---|---|---|---|
-| E0 | Verificación de fuentes | Catálogos oficiales | Existencia, periodo y cobertura | 37/40 |
-| E1 | Tendencia de T y de lluvia en la cabecera | POWER + ONI | Sen, MK, ENSO, ventanas, n* | preliminar (una familia) |
-| E2 | Independencia de la tendencia térmica | MERRA-2 frente a MODIS/VIIRS LST y ERA5 | Coincidencia de signo en ≥ 2 familias | ⏳ |
-| E3 | Lluvia: IMERG frente a CHIRPS v3, MERRA-2 y AUTODEMA | Series por subcuenca | Sesgo, correlación, coincidencia de tendencias | ⏳ |
-| E4 | Calibración del sello (falsos positivos) | Monte Carlo AR(1) + forzamiento tipo ENSO | Tasa de "robusta" falsa ≤ α | ⏳ |
-| E5 | Matriz de Relevancia: recuperación sintética y estabilidad | Datos sintéticos + P1 y P2 reales | FDR efectivo; Jaccard del top-k; habilidad > línea base | ⏳ |
-| E6 | Gemelo de El Frayle | SWOT, HLS y AUTODEMA | KGE en validación ≥ umbral preregistrado | ⏳ |
-| E7 | ESP retrospectivo | 1998–2025 dejando un año fuera | CRPSS > 0 con IC al 90 % | ⏳ |
-| E8 | Alerta de turbidez | IMERG Early/Late y eventos de 2024 y 2025 | Aciertos, falsas alarmas y anticipación | ⏳ (pocos eventos) |
-| E9 | Espejo de agua de Aguada Blanca | Landsat, HLS y SWOT | Tendencia con sello; coherencia con la pérdida reportada | ⏳ |
-| E10 | IA verificada | Preguntas de referencia y documentos con instrucciones ocultas | 100 % de cifras verificadas; 0 instrucciones obedecidas | ⏳ |
-| E11 | Usabilidad | Estudiantes de la UNSA | Interpretación correcta de la incertidumbre, antes y después | ⏳ |
-
----
-
-## 10. Métricas de rendimiento
-
-| Ámbito | Métrica | Meta |
-|---|---|---|
-| Ciencia | Habilidad fuera de muestra (KGE, CRPSS, AUC-PR) frente a la línea base | > 0 con IC al 90 %, o no se publica |
-| Ciencia | Tasa de falsos "robusta" en simulación | ≤ α nominal |
-| Reproducibilidad | Misma salida con el mismo hash de datos, código y preregistro | 100 % |
-| Trazabilidad | Cifras de la interfaz y del chat con expediente | 100 % (lo impone el verificador) |
-| Software | Cálculo de tendencia y sello para una unidad y una variable | < 1 s |
-| Software | Primera carga de la web sin terreno | < 3 MB |
-| Operación | Atraso respecto del último dato publicado por la fuente | ≤ 1 ciclo de actualización |
-
----
-
-## 11. Limitaciones
-
-1. **Series cortas:** unos 25–28 años de IMERG y MODIS. Muchas tendencias saldrán "no decidibles", y eso es un resultado.
-2. **Escala:** IMERG (~11 km) y MERRA-2 (~55 km) son gruesos frente a los bofedales y las quebradas. Cada indicador declara su escala.
-3. **Productos de modelo:** MERRA-2, GLDAS y FLDAS heredan sus forzantes. Se tratan como familias dependientes.
-4. **Pocos datos para P3 y P4:** el déficit de temporada y la turbidez tienen pocas muestras; se presentan con esa advertencia.
-5. **Relevancia y atribución no son causalidad probada:** se redactan como "compatible con".
-6. **Operación humana:** las descargas de las represas confunden la señal climática; sin los datos de AUTODEMA, la atribución se hace sobre el aporte y no sobre el volumen.
-7. **Dependencias de acceso:** Landsat 1984–2012 automatizado, la base de lagos de SWOT y el archivo de AUTODEMA siguen pendientes.
-
----
-
-## 12. Escalabilidad
-
-| Nivel | Qué cambia | Qué se mantiene |
-|---|---|---|
-| **Arequipa** | Polígonos, represas y plantillas P1–P4 | — |
-| **Perú** | Archivo de configuración por cuenca (Rímac para Lima, Mantaro, Santa) | Todas las fuentes (globales) y el código |
-| **Andes** | La Paz/El Alto, Quito, Bogotá, Santiago, Mendoza | Igual; se agregan plantillas como "retroceso glaciar" |
-| **Global** | Biblioteca abierta de plantillas (sequía, olas de calor, incendios, ciclones) y atlas de ciudades de montaña | La misma matriz, sello, gemelo y expedientes |
-
-Lo que lo hace escalable: datos globales verificados, plantillas declarativas, ingesta con contratos de datos, expedientes estándar y una API REST documentada (OpenAPI) para que otras herramientas consuman los resultados; un servidor MCP es la expansión prevista para agentes externos.
-
----
-
-## 13. Plan para las 48 horas (un corte vertical real)
-
-**Meta:** un flujo completo con datos reales de punta a punta, mejor que muchos módulos a medias.
-
-| Bloque | Entrega | Criterio de terminado |
-|---|---|---|
-| Hora 0–2 | Solicitudes de AppEEARS (HLS, SMAP, MOD13Q1, NASADEM); descarga de IMERG Final y CHIRPS v3 por subcuenca; cruce de las represas con la base de lagos de SWOT | Archivos con hash en el cubo |
-| Día 1 | M2 completo para lluvia y temperatura (con la prueba de independencia: IMERG, CHIRPS y MERRA-2) | Expedientes reales con las 5 pruebas |
-| Día 1 | M1 para P1 (lluvia extrema) | Matriz con habilidad, estabilidad y FDR, o "no explicable" |
-| Día 2 | Interfaz: mapa 3D + gráfico + grafo del proceso + matriz + chat con verificador | Demo navegable con datos reales |
-| Día 2 | Espejo de agua de Aguada Blanca (HLS 2013 →) | Serie y tendencia con sello |
-| Si alcanza | Gemelo de El Frayle con SWOT; ESP | Solo si pasan su validación |
-
-**Nunca se recortan:** los datos reales, el sello y el "no decidible".
-
----
-
-## 14. Estrategia de datos y pipeline
-
-**Qué datos se usan:** series y cubos numéricos de 15 fuentes verificadas (NASA Earthdata, AppEEARS, POWER, ASF, Copernicus, EarthExplorer, NOAA, KNMI, CHIRPS y AUTODEMA). Las imágenes se usan como valores por píxel; las fotos solo como fondo visual.
-
-**Cuántos datos (estimado):** recortados a la cuenca del Chili, unos **20–50 GB**, en su mayoría imágenes HLS y Sentinel-1. Para entrenar a nivel regional en los Andes del sur, unos **150–400 GB**. Lo descargado hasta hoy son unos 36 KB de series reales usadas en la verificación y en el primer análisis.
-
-**Dónde se entrena:**
-
-| Componente | Datos |
+| Módulo | Estado |
 |---|---|
-| Tendencias, sello y gemelo | Solo la cuenca del Chili |
-| Matriz de Relevancia (lluvia extrema, bofedales) y segmentación de imágenes | Andes del sur (Perú, Bolivia, Chile), con la cuenca del Chili apartada como prueba final |
+| M1 Matriz de Relevancia | Implementado para P1; P2–P4 esperan datos locales |
+| M2 Tendencias + Sello de Confianza | Implementado, seis pruebas, expedientes publicados |
+| M3 Gemelo hidrológico y atribución | No implementado: requiere series de aporte y volumen de AUTODEMA (o SWOT) para calibrar GR2M + embalse |
+| M4 Anticipación | Parcial: pronósticos de lluvia y sequía fuera de muestra; el pronóstico estacional condicionado a ENOS y la alerta de turbidez dependen de M3 |
+| M5 Decisiones de cuenca | No implementado: requiere la serie del espejo de agua de Aguada Blanca y la erosión RUSLE |
+| M6 Amenazas naturales · M7 Escala nacional · M8 Historial de métricas | Implementados |
 
-**Cómo se construye:** ver la especificación en [`docs/pipeline.md`](docs/pipeline.md), con etapas, contratos, trampas por producto, particiones, hitos y criterios de terminado. El catálogo de fuentes está en [`config/fuentes.yaml`](config/fuentes.yaml) y las zonas de estudio en [`config/dominios.yaml`](config/dominios.yaml).
+Siguiente: convenios de datos con SENAMHI, AUTODEMA y ANA (desbloquean P2–P4, M3 y la prueba de independencia nacional); integrar los escenarios de riesgo de CENEPRED; un servidor MCP para agentes externos; almacenamiento persistente en PostgreSQL para operación multiusuario.
 
----
+## 14. Equipo
 
-## 15. Documentación
+**Equipo TerraVerdict** · NASA Space Apps Challenge 2026 · Arequipa, Perú
 
-| Documento | Contenido |
+| Integrante | Contribuciones |
 |---|---|
-| [`docs/traspaso.md`](docs/traspaso.md) | **Cómo operar el proyecto**: dónde está todo, secretos, refresco de datos y resultados, decisiones del cierre y prompt de traspaso |
-| [`docs/pendientes.md`](docs/pendientes.md) · [`docs/bitacora.md`](docs/bitacora.md) | Qué falta · qué se hizo y cómo se verificó |
-| [`docs/experimentos.md`](docs/experimentos.md) | Informe generado solo desde `resultados/*.json` (todas las cifras vigentes) |
-| [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) · [`docs/metodologia.md`](docs/metodologia.md) | Auditoría de métricas y pesos · métodos con bibliografía verificable |
-| [`docs/trazabilidad.md`](docs/trazabilidad.md) | Requisito → código → prueba → resultado (R1–R35) |
-| [`docs/arquitectura.md`](docs/arquitectura.md) · [`docs/api/README.md`](docs/api/README.md) | Arquitectura ciencia → API → web · endpoints, autenticación y errores |
-| [`docs/pipeline.md`](docs/pipeline.md) | **Especificación de construcción del pipeline** (para el responsable de datos) |
-| [`docs/verificacion/README.md`](docs/verificacion/README.md) | Verificación de fuentes, licencias, incompatibilidades y vacíos |
-| [`docs/despliegue.md`](docs/despliegue.md) | Despliegue en Vercel (publicado y verificado) y con Docker Compose |
-| [`docs/licencias-y-atribuciones.md`](docs/licencias-y-atribuciones.md) | Licencia del código, términos y cita obligatoria de cada fuente de datos, consecuencias para el uso comercial |
-| [`docs/licencias-terceros.md`](docs/licencias-terceros.md) | Inventario generado de las licencias de todas las dependencias (ciencia, backend y frontend) |
-| [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) | Revisión de los 40 enlaces del reto y de la guía: cuáles se usan, cuáles no y por qué |
-| [`docs/variables.md`](docs/variables.md) | Variables, unidades, resoluciones, procesamiento, indicadores y relaciones físicas |
-| [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) | Módulo M1: plantillas, algoritmo, salidas y validación |
-| [`docs/diseno-tecnico.md`](docs/diseno-tecnico.md) | Ecuaciones, decisiones de arquitectura, contratos, API (MCP previsto), IA verificada, pruebas y riesgos |
-| [`docs/recursos-guia.md`](docs/recursos-guia.md) | Guía de recursos de la sede |
+| Ower Frank (Ower López, UNSA) | Dueño del repositorio; planteamiento del problema y propuesta; backend FastAPI; frontend React; motor científico (Sello de Confianza, análisis de caos, zoológico de modelos); escala nacional; cadena de custodia; Matriz de Relevancia; asistente de IA; despliegue |
+| MaxsForocca (UNSA) | Arquitectura; corridas completas de experimentos; caos en series observadas; integración ciencia–API; CI; Docker; pruebas de extremo a extremo; documentación; ingesta de IMERG |
+| DiegoNiS | Integrante del equipo; organización del equipo en GitHub durante la primera etapa |
 
-```bash
-pip install requests numpy scipy pymannkendall
-```
+Las contribuciones por commit se listan con `git shortlog -sn`; el registro detallado está en [`docs/bitacora.md`](docs/bitacora.md).
 
-```bash
-python scripts/verificar_fuentes.py
-```
+## 15. Mapa de la documentación
 
-```bash
-python scripts/analisis_preliminar.py
-```
-
----
-
-## 16. Equipo
-
-Sede Arequipa, NASA Space Apps Challenge 2026. Los aportes de cada integrante salen del historial de `main` (`git shortlog -sn`). El detalle de cada aporte está en [`docs/bitacora.md`](docs/bitacora.md).
-
-| Integrante (GitHub) | Aportes verificables en el historial |
+| Documento | Propósito |
 |---|---|
-| **Ower Frank** (Ower López, UNSA) | Owner del repositorio actual; planteamiento y propuesta; backend FastAPI; frontend; motor científico (Sello, caos, zoológico de modelos); escala nacional; interfaz bilingüe; cadena de custodia; licencias; M1 (Matriz de Relevancia); asistente con Gemini; despliegue en Vercel |
-| **MaxsForocca** (UNSA) | Arquitectura y estructura del proyecto (`feat/architecture`); corrida completa de experimentos; caos en series reales; integración ciencia → backend; CI; Docker; E2E; documentación (API, arquitectura, metodología, trazabilidad, presentación); ingesta de IMERG |
-| **DiegoNiS** | Integrante del equipo; organización del equipo en GitHub durante la primera etapa |
+| [`docs/experimentos.md`](docs/experimentos.md) | Resultados vigentes, generados desde los JSON sellados |
+| [`docs/metodologia.md`](docs/metodologia.md) | Métodos estadísticos y sus referencias |
+| [`docs/diseno-tecnico.md`](docs/diseno-tecnico.md) | Diseño técnico, ecuaciones y registros de decisiones de arquitectura |
+| [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) | Auditoría del protocolo de evaluación (19 hallazgos y su resolución) |
+| [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) | Matriz de Relevancia (M1) |
+| [`docs/trazabilidad.md`](docs/trazabilidad.md) | Requisitos de cadena de custodia |
+| [`docs/api/README.md`](docs/api/README.md) | Guía de la API, modelo de errores y `openapi.json` |
+| [`docs/despliegue.md`](docs/despliegue.md) | Opciones de despliegue y verificación en producción |
+| [`docs/traspaso.md`](docs/traspaso.md) | Traspaso operativo y runbook de actualización de datos |
+| [`docs/bitacora.md`](docs/bitacora.md) · [`docs/pendientes.md`](docs/pendientes.md) | Bitácora de ingeniería y pendientes |
+| [`docs/propuesta-original.md`](docs/propuesta-original.md) | Propuesta original en español: hipótesis, objetivos, módulos y referencias |
 
 ---
 
-## 17. Referencias
-
-- Benjamini, Y. y Hochberg, Y. (1995). Controlling the false discovery rate. *JRSS-B* 57.
-- Breiman, L. (2001). Random forests. *Machine Learning* 45.
-- Correll, M., Moritz, D. y Heer, J. (2018). Value-suppressing uncertainty palettes. *CHI 2018*.
-- Day, G. N. (1985). Extended streamflow forecasting using NWSRFS. *J. Water Resour. Plann. Manage.* 111(2).
-- Funk, C. et al. (2026). CHIRPS v3. *Scientific Data* 13, 718. DOI 10.1038/s41597-026-07096-4.
-- Gupta, H. V. et al. (2009). Decomposition of the mean squared error and NSE performance criteria. *J. Hydrology* 377.
-- Hamed, K. H. y Rao, A. R. (1998). A modified Mann-Kendall trend test for autocorrelated data. *J. Hydrology* 204.
-- Hersbach, H. (2000). Decomposition of the continuous ranked probability score. *Weather and Forecasting* 15.
-- Jonaitis, J. A. et al. (2021). ENSO-precipitation relationships in the tropical Andes of southern Peru and Bolivia. *Int. J. Climatology*.
-- Klemeš, V. (1986). Operational testing of hydrological simulation models. *Hydrol. Sci. J.* 31.
-- Kogan, F. N. (1995). Application of vegetation index and brightness temperature for drought detection. *Adv. Space Res.* 15.
-- Lundberg, S. y Lee, S.-I. (2017). A unified approach to interpreting model predictions. *NeurIPS*.
-- McKee, T. B., Doesken, N. J. y Kleist, J. (1993). The relationship of drought frequency and duration to time scales. *8th Conf. Applied Climatology*.
-- Meinshausen, N. y Bühlmann, P. (2010). Stability selection. *JRSS-B* 72.
-- Mouelhi, S. et al. (2006). Stepwise development of a two-parameter monthly water balance model. *J. Hydrology* 318.
-- Oudin, L. et al. (2005). Which potential evapotranspiration input for a lumped rainfall–runoff model? *J. Hydrology* 303.
-- Pettitt, A. N. (1979). A non-parametric approach to the change-point problem. *Applied Statistics* 28.
-- Renard, K. G. et al. (1997). *Predicting soil erosion by water: RUSLE*. USDA Handbook 703.
-- Roy, D. P. et al. (2016). Characterization of Landsat-7 to Landsat-8 reflective wavelength and NDVI continuity. *Remote Sens. Environ.* 185.
-- Sankarasubramanian, A., Vogel, R. M. y Limbrunner, J. F. (2001). Climate elasticity of streamflow in the United States. *Water Resour. Res.* 37.
-- Santer, B. D. et al. (2000). Statistical significance of trends and trend differences. *JGR* 105.
-- Sen, P. K. (1968). Estimates of the regression coefficient based on Kendall's tau. *JASA* 63.
-- Vicente-Serrano, S. M., Beguería, S. y López-Moreno, J. I. (2010). A multiscalar drought index (SPEI). *J. Climate* 23.
-- Wilks, D. S. (2011). *Statistical Methods in the Atmospheric Sciences*, 3.ª ed. Academic Press.
-- Weatherhead, E. C. et al. (1998). Factors affecting the detection of trends. *JGR* 103.
-- Wilks, D. S. (2016). "The stippling shows statistically significant grid points". *BAMS* 97.
-- Xu, H. (2006). Modification of normalised difference water index (MNDWI). *Int. J. Remote Sens.* 27.
-- Zhang, X. et al. (2011). Indices for monitoring changes in extremes (ETCCDI). *WIREs Climate Change* 2.
-
-**Licencias y atribuciones:** código bajo licencia MIT ([`LICENSE`](LICENSE)). Las licencias de terceros están en [`docs/licencias-terceros.md`](docs/licencias-terceros.md). La cita obligatoria de cada fuente está en [`docs/licencias-y-atribuciones.md`](docs/licencias-y-atribuciones.md). Los resultados de volcanes derivan del Smithsonian GVP, que permite el uso no comercial con cita. Datos NASA y USGS de uso libre, citados con su DOI. Copernicus Sentinel: *"Contains modified Copernicus Sentinel data [año]"*. CHIRPS v3: DOI 10.15780/G2JQ0P. PISCOp solo para validación interna (CC BY-NC-ND). NASA GIBS: *"We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS)."*
-
-<div align="center">
-
-**TerraVerdict** · NASA Space Apps Challenge 2026 · Arequipa, Perú
-*Primero verificamos los datos. Después les preguntamos qué cambia, por qué y con cuánta confianza.*
-
-</div>
+Licencia MIT. TerraVerdict usa datos abiertos de NASA, NOAA, USGS, ESA/Copernicus, Smithsonian Institution, UCSB CHC, INGEMMET y Natural Earth, y fuentes peruanas citadas.
