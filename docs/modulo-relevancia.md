@@ -1,5 +1,7 @@
 # Módulo M1 · Matriz de Relevancia
 
+> **Estado (15-11-2026): implementado para P1** con datos reales (`src/terraverdict/experimentos/relevancia.py`, `tv experimentos --solo relevancia`, resultado en `resultados/relevancia.json` y en la matriz de `/relevancia`). Diferencias con el diseño de abajo, decididas al probarlo: (1) predictores disponibles = ONI, T2M, humedad relativa y viento (POWER); la humedad del suelo no se mide y queda como candidata sin dato; (2) la significancia es **condicional por variable** (se desplaza la variable, no el objetivo), porque el nulo de objetivo desplazado hacía significativo al ruido; (3) la estabilidad usa k ≤ n − 1. P2–P4 siguen pendientes de datos (ver `pendientes.md`).
+
 > **Pregunta que responde:** para un problema concreto (por ejemplo, lluvia extrema en la cabecera o degradación de bofedales), **¿qué variables importan, en qué dirección y con cuánta confianza?** Es la parte que el reto describe como la más difícil: elegir qué variables mirar.
 
 ## 1. Principios

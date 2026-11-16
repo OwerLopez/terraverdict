@@ -8,7 +8,10 @@
 
 [![Fuentes verificadas](https://img.shields.io/badge/fuentes-37%2F40%20verificadas-2E7D32)](docs/verificacion/README.md)
 [![Datos](https://img.shields.io/badge/datos-NASA%20%C2%B7%20NOAA%20%C2%B7%20Copernicus%20%C2%B7%20USGS-0B3D91)](docs/variables.md)
-[![Estado](https://img.shields.io/badge/estado-dise%C3%B1o%20%2B%20verificaci%C3%B3n%20%2B%20primer%20an%C3%A1lisis%20real-orange)](#0-estado-real-del-proyecto)
+[![Estado](https://img.shields.io/badge/estado-publicado%20y%20verificado-2E7D32)](#0-estado-real-del-proyecto)
+[![Demo](https://img.shields.io/badge/demo-terraverdict.vercel.app-0B3D91)](https://terraverdict.vercel.app)
+
+**🌐 Aplicación publicada: <https://terraverdict.vercel.app>** · API: [`/api/docs`](https://terraverdict.vercel.app/api/docs)
 
 </div>
 
@@ -16,20 +19,35 @@
 
 ## 0. Estado real del proyecto
 
-Esta propuesta separa con claridad lo hecho de lo prometido.
+Esta propuesta separa con claridad lo hecho de lo prometido. Estado al **15-11-2026 (cierre)**.
 
 | Categoría | Qué incluye | Evidencia |
 |---|---|---|
-| ✅ **Implementado y ejecutado** | (1) Verificación automática de 40 fuentes contra catálogos oficiales: **37 correctas**. (2) Primer análisis con datos reales (NASA POWER + NOAA ONI): tendencia, filtro ENSO, ventanas y detectabilidad en la cabecera | [`scripts/verificar_fuentes.py`](scripts/verificar_fuentes.py) → [`evidencia.json`](docs/verificacion/evidencia.json) · [`scripts/analisis_preliminar.py`](scripts/analisis_preliminar.py) → [`analisis_preliminar.json`](docs/verificacion/analisis_preliminar.json) |
-| ✅ **Revisión de enlaces** | Los 40 enlaces del reto y de la guía consultados en tres corridas reales: 35 con HTTP 200, 2 bloquean bots (403) y 3 con certificado SSL no validable desde el proxy; decisión de uso para cada uno | [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) · [`scripts/revisar_enlaces.py`](scripts/revisar_enlaces.py) |
-| 🟦 **Verificado, aún sin implementar** | Existencia, periodo y cobertura sobre la cuenca de 29 colecciones NASA; AppEEARS, POWER, ONI/RONI, Niño3.4 de KNMI, GHCN, Sentinel-1/2, CHIRPS v3, GIBS y el reporte de AUTODEMA | [Informe de verificación](docs/verificacion/README.md) |
-| ⚠️ **Pendiente de verificar** | Giovanni, la API de FIRMS y *data rods* (conexión reiniciada); Landsat 1984–2012 automatizado; presencia de cada represa en SWOT; archivo histórico de AUTODEMA; ERA5; GSMaP | [Sección 6 del informe](docs/verificacion/README.md#6-vacíos-de-información) |
-| 🧪 **Requiere validación experimental** | Matriz de Relevancia, gemelo hidrológico, atribución, pronóstico de temporada, alerta de turbidez, priorización MERESE e IA verificada | [Plan de validación](#9-validación-experimental) |
-| 📐 **Diseño** | Arquitectura, interfaz, API, servidor MCP | [Diseño técnico](docs/diseno-tecnico.md) |
-| 💻 **Software implementado** | Backend FastAPI (73 pruebas), frontend React bilingüe español/inglés (33 pruebas + E2E 2 de 2), paquete científico (135 pruebas; 2 omitidas por diseño) con Sello de Confianza, teoría del caos validada, 10 redes neuronales con IC90, Diebold-Mariano, conformal y abstención; cadena de custodia SHA-256 de los crudos a la web | [Bitácora](docs/bitacora.md) |
-| 🗺️ **Cinco fenómenos, escala nacional** | Lluvia extrema, sequía, sismos, volcanes y deslizamientos con datos reales (POWER, ONI, GHCN, USGS, Smithsonian GVP, NASA GLC); Sello de Confianza, SPI y sismicidad en los **25 departamentos del Perú** | [`config/fenomenos.yaml`](config/fenomenos.yaml) · [`config/nacional.yaml`](config/nacional.yaml) · [`docs/experimentos.md`](docs/experimentos.md) |
-| 📊 **Métricas e historial (M8)** | Mapas de calor de cada métrica (modelo × tarea), importancia de variables, historial año a año 2016–2026 por origen móvil (fuera de muestra, con el modelo que eligió la validación de cada año: sequía a 1 mes 0,658 y a 3 meses 0,232 **confirmadas**; lluvia a 1 día y conteo sísmico **no confirmados**) y caos en ventanas deslizantes con corrección por comparaciones múltiples; 24 fichas bilingües de métricas. **Auditoría de métricas y pesos** (2026-11-15): 19 hallazgos corregidos | [`docs/experimentos.md`](docs/experimentos.md) · [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) · vista `/metricas` · [`config/metricas.yaml`](config/metricas.yaml) · [`config/modelos.yaml`](config/modelos.yaml) |
-| ⏳ **Lo que falta para el 100 %** | Conectar el repositorio a Vercel (acción del owner del repositorio, [`despliegue.md`](docs/despliegue.md)); completar IMERG (1998–2001 descargados; la descarga se reanuda año por año; ver [`traspaso.md`](docs/traspaso.md)); datos de SENAMHI, IGP e INGEMMET por convenio | [Pendientes](docs/pendientes.md) |
+| 🌐 **Publicado y verificado** | Aplicación completa en <https://terraverdict.vercel.app>: web React bilingüe y API FastAPI como función Python. Verificado en producción: API, rutas de la SPA, mapa satelital con la CSP estricta y sin errores de consola, cabeceras de seguridad | [`docs/despliegue.md`](docs/despliegue.md) |
+| ✅ **Datos reales al día** | Refrescados el 15-11: NASA POWER (Arequipa, celdas y 25 departamentos), **NASA GPM IMERG Final diaria 1998–2025 completa**, NASA GLC, NASA GIBS, USGS ComCat (hasta el 15-11-2026), Smithsonian GVP, NOAA ONI y GHCN, CHIRPS, IGP y MODIS LST. Cada crudo con SHA-256; `tv verificar-integridad` sin alteraciones | `data/raw/*/manifiesto.json` · [`docs/traspaso.md`](docs/traspaso.md) |
+| 📊 **Ciencia de datos validada** | 10 redes neuronales + clásicos + dos ensambles; IC90 por bootstrap de bloques, Diebold-Mariano, calibración, conformal y abstención; ninguna elección con la prueba (auditoría de 19 hallazgos). Historial fuera de muestra 2016–2026 con el modelo elegido en la validación de cada año | [`docs/experimentos.md`](docs/experimentos.md) · [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) |
+| 🔥 **M1 · Matriz de Relevancia** | Implementada para P1 (lluvia extrema en la cabecera, objetivo IMERG): dos modelos, permutación por bloques, estabilidad con 200 remuestreos, significancia condicional con FDR y evaluación única en 2021–2025. Validada con datos sintéticos (recuperación, FDR y dirección) | [`docs/modulo-relevancia.md`](docs/modulo-relevancia.md) · vista `/relevancia` |
+| 🤖 **IA verificada (Google Gemini)** | Asistente que responde **solo** con expedientes publicados, cita cada uno y pasa cada cifra por el verificador numérico (con reescritura si alguna no tiene respaldo). Explicación en lenguaje claro en cada expediente. Clave solo en el servidor; límites por IP y global | `/asistente` · [`backend/app/services/asistente.py`](backend/app/services/asistente.py) |
+| 🗺️ **Cinco fenómenos, escala nacional** | Lluvia extrema, sequía, sismos, volcanes y deslizamientos con datos reales; Sello de Confianza, SPI y sismicidad en los **25 departamentos del Perú**; caos validado (global y en ventanas) | [`config/fenomenos.yaml`](config/fenomenos.yaml) · vistas `/peru`, `/caos`, `/metricas` |
+| 🔐 **Seguridad y trazabilidad** | Cadena de custodia SHA-256 de crudos a web; CSP estricta, HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`; modo solo lectura sin secreto JWT; procesos con las ejecuciones reales del pipeline | [`docs/trazabilidad.md`](docs/trazabilidad.md) (R1–R35) |
+| ✅ **Verificación de fuentes y enlaces** | 40 fuentes contra catálogos oficiales (37 correctas); 40 enlaces del reto revisados con consultas reales | [`docs/verificacion/README.md`](docs/verificacion/README.md) · [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) |
+| 🧪 **Calidad** | Pruebas de ciencia, backend, frontend y E2E (Playwright), CI en GitHub Actions y portabilidad Windows/Linux. Cifras de la última corrida en la bitácora | [`docs/bitacora.md`](docs/bitacora.md) |
+| ⏳ **Lo que falta** | Fuentes nacionales por convenio (SENAMHI, IGP, INGEMMET, ANA); M1 para P2–P4 (requieren NDVI, volumen de represas y más eventos de turbidez); base persistente para usuarios en Vercel (opcional) | [`docs/pendientes.md`](docs/pendientes.md) |
+
+**Cifras vigentes** (historial fuera de muestra, modelo elegido en la validación de cada año): ver [`docs/experimentos.md`](docs/experimentos.md). Resultados experimentales: **no son alertas oficiales** (SENAMHI, IGP, INGEMMET, INDECI).
+
+### Correrlo en local
+```bash
+python -m venv .venv && . .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install torch --index-url https://download.pytorch.org/whl/cpu && pip install -e ".[dev,ml]" -e "backend[dev]"
+```
+```bash
+tv ingest-fenomenos && tv experimentos && tv informe && tv publicar --exportar resultados/contrato/expedientes.json
+```
+```bash
+docker compose up --build    # API en :8000 y web en :8080
+```
+Secretos (`EARTHDATA_TOKEN`, `TV_GEMINI_API_KEY`, `TV_JWT_SECRETO`) solo en `.env` o en el panel de Vercel: ver [`.env.example`](.env.example) y [`docs/traspaso.md`](docs/traspaso.md).
 
 ---
 
@@ -149,7 +167,7 @@ flowchart TB
     subgraph M6["M6 · Interfaz y acceso"]
         UI[Web: mapa 3D · gráficos · grafo del proceso · matriz de calor · chat]
         API[API REST] & MCP[Servidor MCP]
-        IA[IA verificada<br/>Claude + verificador numérico]
+        IA[IA verificada<br/>Gemini + verificador numérico]
     end
     EXP --> UI & API & MCP
     MCP --> IA --> UI
@@ -247,7 +265,7 @@ Responde los cuatro objetivos del reto: **qué** cambia (por variable), **dónde
 - **Todo conectado:** un clic en una cifra del chat resalta el nodo del proceso que la calculó, el punto del gráfico y la zona del mapa.
 - **Traza legible:** se muestran los pasos del proceso y su resultado. Los logs técnicos completos quedan en un panel aparte para auditoría.
 - **Frescura honesta:** cada capa muestra la fecha de su último dato (por ejemplo, "IMERG Final: septiembre de 2025"; "IMERG Early: hoy").
-- **IA verificada:** Claude (`claude-opus-5-5`) responde usando solo las herramientas del sistema. Un verificador numérico determinista rechaza cualquier cifra que no salga de los expedientes. La IA también digitaliza los reportes de AUTODEMA con doble extracción y reglas de consistencia ([sección 7b del diseño técnico](docs/diseno-tecnico.md#7b-ia-generativa-con-garantías)).
+- **IA verificada (implementada):** Google Gemini (`gemini-flash-latest`, con respaldo `gemini-flash-lite-latest`) responde solo con los expedientes publicados más pertinentes y cita cada uno; un verificador numérico determinista comprueba cada cifra contra los expedientes citados e informa la probabilidad de coincidencia por azar. Si alguna cifra no tiene respaldo, se pide una reescritura y el resultado se muestra tal cual. Diseño original: [sección 7b del diseño técnico](docs/diseno-tecnico.md#7b-ia-generativa-con-garantías).
 - **API REST y servidor MCP** sobre el mismo núcleo.
 
 ---
@@ -415,9 +433,16 @@ Lo que lo hace escalable: datos globales verificados, plantillas declarativas, i
 
 | Documento | Contenido |
 |---|---|
+| [`docs/traspaso.md`](docs/traspaso.md) | **Cómo operar el proyecto**: dónde está todo, secretos, refresco de datos y resultados, decisiones del cierre y prompt de traspaso |
+| [`docs/pendientes.md`](docs/pendientes.md) · [`docs/bitacora.md`](docs/bitacora.md) | Qué falta · qué se hizo y cómo se verificó |
+| [`docs/experimentos.md`](docs/experimentos.md) | Informe generado solo desde `resultados/*.json` (todas las cifras vigentes) |
+| [`docs/auditoria-metricas.md`](docs/auditoria-metricas.md) · [`docs/metodologia.md`](docs/metodologia.md) | Auditoría de métricas y pesos · métodos con bibliografía verificable |
+| [`docs/trazabilidad.md`](docs/trazabilidad.md) | Requisito → código → prueba → resultado (R1–R35) |
+| [`docs/arquitectura.md`](docs/arquitectura.md) · [`docs/api/README.md`](docs/api/README.md) | Arquitectura ciencia → API → web · endpoints, autenticación y errores |
+| [`docs/mapa-commits.md`](docs/mapa-commits.md) | Equivalencia de hashes con el repositorio original (procedencia de resultados anteriores) |
 | [`docs/pipeline.md`](docs/pipeline.md) | **Especificación de construcción del pipeline** (para el responsable de datos) |
 | [`docs/verificacion/README.md`](docs/verificacion/README.md) | Verificación de fuentes, licencias, incompatibilidades y vacíos |
-| [`docs/despliegue.md`](docs/despliegue.md) | Despliegue en Vercel (función Python + estáticos) y con Docker Compose: qué está verificado y qué falta |
+| [`docs/despliegue.md`](docs/despliegue.md) | Despliegue en Vercel (publicado y verificado) y con Docker Compose |
 | [`docs/licencias-y-atribuciones.md`](docs/licencias-y-atribuciones.md) | Licencia del código, términos y cita obligatoria de cada fuente de datos, consecuencias para el uso comercial |
 | [`docs/licencias-terceros.md`](docs/licencias-terceros.md) | Inventario generado de las licencias de todas las dependencias (ciencia, backend y frontend) |
 | [`docs/verificacion/enlaces.md`](docs/verificacion/enlaces.md) | Revisión de los 40 enlaces del reto y de la guía: cuáles se usan, cuáles no y por qué |
@@ -446,9 +471,9 @@ Sede Arequipa, NASA Space Apps Challenge 2026. Los aportes de cada integrante sa
 
 | Integrante (GitHub) | Aportes verificables en el historial |
 |---|---|
-| **Ower Frank** (Ower López, UNSA) | Planteamiento y propuesta; backend FastAPI; frontend; motor científico (Sello, caos, zoológico de modelos); escala nacional; interfaz bilingüe; cadena de custodia; licencias |
+| **Ower Frank** (Ower López, UNSA) | Owner del repositorio actual; planteamiento y propuesta; backend FastAPI; frontend; motor científico (Sello, caos, zoológico de modelos); escala nacional; interfaz bilingüe; cadena de custodia; licencias; M1 (Matriz de Relevancia); asistente con Gemini; despliegue en Vercel |
 | **MaxsForocca** (UNSA) | Arquitectura y estructura del proyecto (`feat/architecture`); corrida completa de experimentos; caos en series reales; integración ciencia → backend; CI; Docker; E2E; documentación (API, arquitectura, metodología, trazabilidad, presentación); ingesta de IMERG |
-| **DiegoNiS** | Propietario del repositorio y de la organización del equipo en GitHub |
+| **DiegoNiS** | Propietario del repositorio original (`DiegoNiS/terraverdict`) y de la organización del equipo en GitHub |
 
 ---
 

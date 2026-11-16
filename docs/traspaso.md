@@ -1,168 +1,135 @@
-# Traspaso de TerraVerdict · después de la auditoría de métricas (15-11-2026)
+# Traspaso de TerraVerdict · cierre del 15-11-2026 (noche)
 
-Este documento es para el siguiente integrante que continúe el trabajo. Tiene dos partes:
-1. el estado y los pasos de cada tarea pendiente;
-2. un **prompt de traspaso** listo para pegar en un asistente de código (§3).
+Documento para quien continúe el trabajo. Tiene dos partes: el estado verificado y cómo operarlo (§1–§4),
+y un **prompt de traspaso** listo para pegar en un asistente de código (§5).
 
 Reglas del proyecto que no cambian:
 - Solo datos reales y trazables a fuentes oficiales: NASA, NOAA, USGS y Smithsonian.
-- Toda cifra mostrada sale de `resultados/*.json`.
+- Toda cifra mostrada sale de `resultados/*.json`; ninguna elección se hace mirando la prueba.
 - Nada se da por terminado sin evidencia ejecutada.
-- Los resultados no son alertas oficiales.
-- Cada avance lleva código, pruebas, bitácora, pendientes y commit en `main` con tu propio usuario.
+- Los resultados no son alertas oficiales (SENAMHI, IGP, INGEMMET, INDECI).
+- Cada avance lleva código, pruebas, bitácora, pendientes y commit en `main`.
 
 ---
 
-## 1. Dónde quedó la sesión del 15-11
+## 1. Dónde está todo
 
-Último trabajo: **auditoría de métricas y pesos** (MaxsForocca). Commits `8a63d55`, `98846df` y `783e08d`, más el de este traspaso.
-- **Informe completo:** [`auditoria-metricas.md`](auditoria-metricas.md). Tiene 19 hallazgos corregidos, la tabla por métrica y por parámetro, qué cambió en las cifras y los riesgos que quedan (§11).
-- **Hiperparámetros y reglas de método:** [`config/modelos.yaml`](../config/modelos.yaml), con la justificación de cada valor.
-- **Bitácora:** entrada "Auditoría de métricas y pesos" en [`bitacora.md`](bitacora.md).
+| Qué | Dónde |
+|---|---|
+| Repositorio (owner: Ower Frank) | <https://github.com/OwerLopez/terraverdict> · rama `main` |
+| Repositorio original (solo lectura; la cuenta del owner dejó de estar disponible) | <https://github.com/DiegoNiS/terraverdict> · equivalencia de hashes en [`mapa-commits.md`](mapa-commits.md) |
+| Aplicación publicada | <https://terraverdict.vercel.app> (proyecto `terraverdict` en la cuenta de Vercel de Ower Frank; cada `push` a `main` despliega) |
+| Cifras vigentes | [`experimentos.md`](experimentos.md) (generado por `tv informe`) |
+| Qué falta | [`pendientes.md`](pendientes.md) |
+| Qué se hizo y cómo se verificó | [`bitacora.md`](bitacora.md) |
 
-**Cifras vigentes del historial fuera de muestra** (modelo elegido en la validación de cada año):
+**Traslado del repositorio (15-11).** El historial de `main` se copió completo a `OwerLopez/terraverdict`
+con sus autores, fechas y horas originales; solo se quitaron las líneas `Co-Authored-By` de herramientas de
+IA de los mensajes (por eso cambian los hashes, ver `mapa-commits.md`). Los commits posteriores no llevan
+firma de IA, por decisión del equipo.
 
-| Tarea | Habilidad | Lectura |
-|---|---|---|
-| Sequía a 1 mes | 0,658 | confirmada |
-| Sequía a 3 meses | 0,232 | confirmada |
-| Lluvia a 1 día | 0,031 | no confirmada |
-| Sismos | 0,149 bits | no confirmado |
+## 2. Estado verificado al cerrar
 
-No vuelvas a usar las cifras viejas ("Ridge 0,711", "PatchTST 0,256"): se habían elegido mirando la prueba.
+- **Datos refrescados el 15-11** (todas las fuentes, hasta la fecha de descarga): POWER, ONI, GHCN, USGS
+  (hasta el 15-11-2026), GVP, GLC, CHIRPS, IGP, MODIS LST e **IMERG Final diaria completa 1998–2025-09**
+  (1998–2001 coinciden bit a bit con la descarga de MaxsForocca).
+- **Experimentos regenerados** con una sola corrida y un solo commit (`resultados/indice.json`).
+- **M1 · Matriz de Relevancia implementada** para P1 (lluvia extrema en la cabecera, objetivo IMERG).
+- **Asistente con Google Gemini** anclado en expedientes y verificado cifra por cifra; botón
+  "Explicación en lenguaje claro" en cada expediente.
+- **Procesos**: la API muestra las ejecuciones reales del pipeline (descargas y corridas).
+- **Despliegue** en Vercel verificado en producción (API, SPA, cabeceras de seguridad y CSP).
+- Pruebas, integridad y CI: ver la entrada de cierre de [`bitacora.md`](bitacora.md).
 
-**Estado verificado al cerrar:**
-- **Pruebas:** ciencia 135 pasan y 2 se omiten; backend 73; frontend 33; E2E 2 de 2.
-- **`tv verificar-integridad`:** 0 crudos alterados y 11 resultados sellados.
-- **Reproducibilidad:** dos corridas completas de `tv experimentos` dieron resultados idénticos bit a bit.
+## 3. Cómo operarlo
 
----
-
-## 2. Tareas pendientes
-
-### 2.1 Publicar en Vercel · **solo el owner del repositorio (DiegoNiS)**
-MaxsForocca no tiene permisos de administración sobre `DiegoNiS/terraverdict`; quien los tenga debe hacer esto. Pasos completos en [`despliegue.md`](despliegue.md) §A.1:
-1. Instalar la integración de GitHub de Vercel para el repositorio e importarlo en Vercel.
-2. Definir `TV_JWT_SECRETO`: 32 caracteres o más, por ejemplo `python -c "import secrets; print(secrets.token_urlsafe(48))"`. Opcionalmente, `TV_ADMIN_EMAIL` y `TV_ADMIN_PASSWORD`.
-3. Desplegar y verificar:
-   ```bash
-   curl -s https://<sitio>/api/v1/salud/lista
-   cd frontend && E2E_BASE_URL=https://<sitio> npm run e2e -- --trace off
-   ```
-4. Registrar la URL y la evidencia en `docs/despliegue.md`, `docs/bitacora.md` y `docs/pendientes.md`.
-
-### 2.2 Completar IMERG (2002–2025) · cualquier integrante con cuenta Earthdata
-**Estado:** 1998–2001 descargados y verificados (`data/raw/imerg/manifiesto.json`, 0 días faltantes). La descarga se detuvo a propósito al cerrar la sesión.
-
-**Velocidad observada:** unos 45 minutos por año con 4 hilos, o sea unas 18 horas para 2002–2025. GES DISC cortó la conexión una vez (`ConnectionError`); la orden termina con código 1 y se relanza.
-
-**Pasos:**
-1. Poner tu token en `.env`: `EARTHDATA_TOKEN=...`. Va solo en `.env`, nunca en git. Tu cuenta debe haber aceptado la EULA de GES DISC.
-2. Relanzar hasta que termine. Retoma el primer año que falte y no repite los ya guardados:
-   ```bash
-   tv ingest-fenomenos --solo-adicionales --fuentes imerg
-   ```
-   No subas los hilos por encima de 4: con 12, GES DISC respondió 401 por límite de tasa. Puedes dejarlo en un bucle (`until tv ingest-fenomenos --solo-adicionales --fuentes imerg; do sleep 60; done`) en una máquina que no se suspenda.
-3. Cuando el manifiesto llegue a 2025 (hasta 2025-09-30, el rango V07 Final):
-   ```bash
-   tv verificar-integridad
-   tv experimentos --solo fuentes
-   tv informe
-   tv publicar --exportar resultados/contrato/expedientes.json
-   pytest tests/integridad tests/experimentos/test_informe.py
-   ```
-4. Commit de `data/raw/imerg/manifiesto.json`, `data/raw/registro_descarga.json`, `resultados/`, `docs/experimentos.md`, más la entrada en la bitácora y en pendientes.
-
-IMERG solo alimenta el contraste de fuentes (`resultados/fuentes.json`). Ningún modelo depende de él, así que no hace falta repetir los demás experimentos.
-
-### 2.3 Si tus crudos no coinciden con los manifiestos
-Los crudos (`data/raw/*/*`) no están en git; solo sus manifiestos. Si `tv verificar-integridad` muestra crudos **alterados** o **faltantes** en tu máquina:
-- **Faltantes:** `tv ingest-fenomenos`. Los nacionales también los descarga `tv experimentos --solo nacional`.
-- **Alterados:** vuelve a descargar solo esas fuentes. POWER y USGS se actualizan y su SHA-256 cambia con cada descarga.
-- Después repite `tv experimentos` completo, porque los manifiestos nuevos cambian la procedencia, y haz commit de los manifiestos junto con los resultados. Así se hizo el 15-11 (ver la bitácora, H18).
-
-### 2.4 Decisiones del equipo que dejó abiertas la auditoría (§11 de `auditoria-metricas.md`)
-1. **Completitud sísmica.** La Mc por década llega a 4,9–5,1 antes de 2000, por encima de la Mc usada (4,5). Opciones:
-   - Mc variable por periodo;
-   - empezar la serie de conteos en 2000;
-   - dejarlo como limitación declarada.
-
-   Cualquier cambio exige repetir `tv experimentos` y documentarlo.
-2. **Sustitutos del caos en ventanas.** Con 39 por ventana, ningún p puede sobrevivir a Holm. Si se quiere una prueba por ventana con corrección, subir `n_sustitutos` en `config/historial.yaml`; 999 multiplica el tiempo por unas 25 veces.
-
-### 2.5 Opcionales
-- **Asistente conversacional:** necesita una clave de API del proveedor; el verificador numérico ya funciona sin ella.
-- **Redes líquidas (LNN/CfC):** no están implementadas. Si se agregan, se registran en `modelos/redes.py` y se repite `tv experimentos`.
-- **Pitch y video:** usar `docs/presentacion-ejecutiva.md` y `docs/capturas/`, con las cifras vigentes (§1), no las anteriores a la auditoría.
-- **Fuentes nacionales** (SENAMHI, IGP, INGEMMET, ANA): requieren convenio o descarga manual verificada.
-
-### 2.6 Nota de entorno
-Con Node 26, `npm test` necesita `NODE_OPTIONS=--no-experimental-webstorage`, porque Node trae su propio `localStorage` y tapa el de jsdom. CI usa Node 22 y no lo necesita.
-
----
-
-## 3. Prompt de traspaso (para pegar en el asistente)
-
-```text
-# Traspaso de TerraVerdict: tareas pendientes después de la auditoría de métricas
-
-## Contexto
-- Proyecto TerraVerdict, NASA Space Apps 2026, reto "Be An Earth System Trend Detective!", sede
-  Arequipa. Uso no comercial (hackatón). Repositorio DiegoNiS/terraverdict; se trabaja solo en `main`.
-- Equipo: Ower Frank, MaxsForocca y DiegoNiS.
-- Reglas que no se negocian:
-  1. Solo datos reales, verificables y trazables a fuentes oficiales (NASA, NOAA, USGS, Smithsonian).
-  2. Toda cifra mostrada sale de `resultados/*.json`, generados por el pipeline con procedencia y SHA-256.
-     Ninguna elección (modelo, cifra destacada) puede hacerse mirando la prueba.
-  3. Distinguir implementado, verificado, pendiente y lo que requiere validación experimental.
-     Nada se declara terminado sin evidencia ejecutada.
-  4. Los resultados no son alertas oficiales (SENAMHI, IGP, INGEMMET, INDECI).
-  5. Cada avance: código, pruebas que pasan, entrada en docs/bitacora.md, actualización de
-     docs/pendientes.md y commit en `main` con mi propio usuario de GitHub.
-  6. Los secretos (EARTHDATA_TOKEN, TV_JWT_SECRETO) solo en `.env` o en el panel de Vercel, nunca en git.
-
-## 1. Ponerse al día
-git fetch origin && git checkout main && git pull --ff-only origin main
-Lee en este orden: docs/traspaso.md (este traspaso, con los pasos detallados),
-docs/auditoria-metricas.md, docs/pendientes.md, la primera entrada de docs/bitacora.md,
-docs/metodologia.md y config/modelos.yaml.
-
-Entornos y pruebas (resultado esperado: ciencia 135 pasan y 2 se omiten; backend 73; frontend 33; E2E 2 de 2):
-python -m venv .venv && . .venv/bin/activate
+### 3.1 Entorno (Windows o Linux)
+```bash
+python -m venv .venv && . .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -e ".[dev,ml]" && pip install -e "backend[dev]"
 pytest && tv verificar-integridad
 cd backend && python -m venv .venv && .venv/bin/pip install -e ".[dev]" && .venv/bin/pytest && cd ..
 cd frontend && npm ci && npm run typecheck && npm run lint && npm test && npm run build && npm run e2e -- --trace off
-(Con Node 26: anteponer NODE_OPTIONS=--no-experimental-webstorage a npm test.)
-Si `tv verificar-integridad` muestra crudos alterados o faltantes, sigue docs/traspaso.md §2.3 antes
-de correr experimentos.
+```
+- **Windows:** el repositorio trae `.gitattributes` (LF) y todo el código lee y escribe en UTF-8, así que
+  ya no hace falta `PYTHONUTF8`. Si un clon antiguo marca resultados "alterados", es el CRLF: `git config
+  core.autocrlf false` y `git checkout -- .` (el contenido es el mismo; lo comprueba el SHA-256).
+- Con Node 26, `npm test` necesita `NODE_OPTIONS=--no-experimental-webstorage` (CI usa Node 22).
 
-## 2. Cifras vigentes (no uses las anteriores a la auditoría)
-Historial fuera de muestra, con el modelo que eligió la validación de cada año:
-sequía a 1 mes 0,658 y a 3 meses 0,232 (confirmadas); lluvia a 1 día 0,031 y sismos 0,149 bits
-(no confirmados). "Ridge 0,711" y "PatchTST 0,256" eran cifras elegidas con la prueba: no usarlas.
+### 3.2 Secretos (solo en `.env` o en el panel de Vercel; nunca en git)
+| Variable | Para qué | Dónde |
+|---|---|---|
+| `EARTHDATA_TOKEN` | Descargar IMERG (la cuenta acepta una vez la EULA de GES DISC) | `.env` |
+| `TV_GEMINI_API_KEY` | Asistente con Gemini | `.env` (local) y Vercel |
+| `TV_JWT_SECRETO` | Sesiones; sin él, producción queda en **modo solo lectura** | Vercel |
+| `TV_ADMIN_EMAIL`, `TV_ADMIN_PASSWORD` | Administrador de la demostración | Vercel (opcional) |
+| `TV_CLAVE_INGESTA` | `tv publicar --api …` contra una API viva | `.env` (opcional) |
 
-## 3. Tareas pendientes (detalle en docs/traspaso.md §2)
-1. Vercel (solo si tengo permisos de owner del repositorio): integración de GitHub, importar el
-   repositorio, TV_JWT_SECRETO (≥ 32 caracteres), verificar /api/v1/salud/lista y la E2E con
-   E2E_BASE_URL apuntando al sitio publicado. Si no tengo permisos, no tocar y dejarlo para DiegoNiS.
-2. IMERG 2002–2025: EARTHDATA_TOKEN en .env; repetir `tv ingest-fenomenos --solo-adicionales
-   --fuentes imerg` hasta llegar a 2025 (≈ 45 min por año, 4 hilos como máximo, se reanuda solo).
-   Después: tv verificar-integridad, tv experimentos --solo fuentes, tv informe,
-   tv publicar --exportar resultados/contrato/expedientes.json, pruebas, bitácora, pendientes y commit.
-3. Proponer al equipo (sin decidir solo) qué hacer con la completitud sísmica previa a 2000
-   (docs/auditoria-metricas.md §11, riesgo 1). Si se cambia, repetir tv experimentos, informar las
-   cifras nuevas y explicar por qué cambiaron.
-4. Opcionales: asistente conversacional (necesita clave de API), redes líquidas LNN/CfC, pitch y
-   video con las cifras vigentes.
+En Vercel: *Settings → Environment Variables* (se puede importar un `.env`) y después *Redeploy*.
 
-## 4. Al cambiar el backend o los esquemas
+### 3.3 Refrescar datos y resultados
+```bash
+tv ingest-fenomenos                       # todas las fuentes (IMERG ≈ 3–5 min por año; se reanuda)
+tv verificar-integridad
+tv experimentos                           # ≈ 20 min con 20 núcleos
+tv informe
+tv publicar --exportar resultados/contrato/expedientes.json   # también escribe ejecuciones.json
+pytest
+```
+Haz commit **antes** de `tv experimentos`: cada resultado registra el commit `HEAD` que lo produjo.
+
+### 3.4 Al cambiar el backend o los esquemas
+```bash
 cd backend && .venv/bin/python -m app.cli exportar-openapi --salida ../docs/api/openapi.json
 cd frontend && npm run api:tipos
+```
 
-## 5. Antes de cerrar la sesión
-Pruebas completas, tv verificar-integridad (código 0), entrada en docs/bitacora.md, docs/pendientes.md
-actualizado, commit en main y push. Si algo queda a medias (una descarga larga), detenlo, deja el
-manifiesto consistente y actualiza docs/traspaso.md.
+## 4. Decisiones tomadas al cierre (con su porqué)
+1. **Mc sísmica = 4,5 como limitación declarada** (no se cambia después de ver que el conteo no se
+   confirma; el preregistro está congelado). Detalle: [`auditoria-metricas.md`](auditoria-metricas.md) §12.
+2. **39 sustitutos por ventana** en el caos en ventanas: lectura descriptiva (§12 de la auditoría).
+3. **M1 · significancia condicional por variable** en lugar de desplazar el objetivo: con el objetivo
+   desplazado el modelo nulo era más débil y el ruido salía significativo (comprobado con datos sintéticos).
+4. **IMERG diario completo** (no una muestra): con 4 hilos se descargó a ≈ 3–5 min por año, no 45.
+5. **Producción sin `TV_JWT_SECRETO` = solo lectura** en lugar de no arrancar: la consulta pública sigue
+   disponible y no se emite ni acepta ningún token.
+
+---
+
+## 5. Prompt de traspaso (para pegar en el asistente)
+
+```text
+# Traspaso de TerraVerdict (NASA Space Apps 2026, reto "Be An Earth System Trend Detective!", Arequipa)
+
+## Contexto
+- Repositorio: OwerLopez/terraverdict (owner Ower Frank); se trabaja en `main`. Publicado en
+  https://terraverdict.vercel.app (cada push a main despliega). El repositorio original
+  DiegoNiS/terraverdict es solo de lectura; equivalencia de hashes en docs/mapa-commits.md.
+- Equipo: Ower Frank, MaxsForocca y DiegoNiS.
+- Reglas: solo datos reales y trazables (NASA, NOAA, USGS, Smithsonian); toda cifra sale de
+  resultados/*.json; nada se elige mirando la prueba; nada se declara terminado sin evidencia ejecutada;
+  los resultados no son alertas oficiales; secretos solo en .env o en Vercel; commits sin firma de IA.
+
+## 1. Ponerse al día
+git pull --ff-only origin main
+Lee: docs/traspaso.md, docs/pendientes.md, la primera entrada de docs/bitacora.md, docs/experimentos.md,
+docs/auditoria-metricas.md (§11–12), docs/modulo-relevancia.md y config/modelos.yaml.
+Entornos y pruebas: docs/traspaso.md §3.1. Integridad: tv verificar-integridad (código 0).
+
+## 2. Qué hay
+Ingesta trazable (SHA-256), 10 redes + clásicos + ensambles con IC90 y Diebold-Mariano, conformal y
+abstención, caos validado, historial fuera de muestra 2016–2026, escala nacional (25 departamentos),
+M1 (Matriz de Relevancia, P1 con IMERG), asistente Gemini con verificador numérico, API FastAPI y web
+React bilingüe, procesos con las ejecuciones reales del pipeline, CSP y cabeceras de seguridad.
+
+## 3. Qué falta (docs/pendientes.md)
+Fuentes nacionales (SENAMHI, IGP, INGEMMET, ANA) por convenio; M1 para P2–P4 (requieren NDVI, volumen
+de represas y eventos de turbidez); base PostgreSQL para usuarios persistentes en Vercel (opción C);
+redes líquidas (opcional).
+
+## 4. Antes de cerrar una sesión
+Pruebas completas, tv verificar-integridad, entrada en docs/bitacora.md, docs/pendientes.md al día,
+commit en main y push. Si algo queda a medias, detenlo, deja los manifiestos consistentes y actualiza
+este traspaso.
 ```

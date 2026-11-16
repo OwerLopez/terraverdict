@@ -50,7 +50,7 @@ Con el servidor en marcha, la documentación interactiva está en `/api/docs` (S
 | | `GET, POST /ejecuciones` | Manifiestos de ejecución del pipeline | público / `ingesta` |
 | Procesos | `GET, POST /procesos`, `GET, PATCH /procesos/{id}` | Cola de procesos científicos | público / analista / `trabajador` |
 | | `POST /procesos/reclamar`, `GET, POST /procesos/{id}/eventos` | Protocolo del trabajador y bitácora | `trabajador` |
-| Asistente | `POST /asistente/consultas` | Asistente conversacional (pendiente de conexión: 503) | público |
+| Asistente | `POST /asistente/consultas` | Pregunta a Google Gemini anclada en expedientes publicados: devuelve el texto, los IDs citados, los expedientes de contexto, el modelo, la latencia y la verificación numérica de cada cifra. Límite: 6/min por IP y 40/min por instancia (429) | público |
 | | `POST /asistente/verificar` | Marca cada cifra de un texto sin respaldo en expedientes | público |
 
 ### Tipos de expediente
@@ -126,7 +126,7 @@ cabecera `X-Request-ID` y aparece en los registros del servidor, incluso en los 
 **429.** Se superó el límite de intentos de inicio de sesión. Reintentar más tarde.
 
 ### errores-servicio_no_disponible
-**503.** El módulo todavía no está conectado (p. ej., el asistente sin clave de modelo).
+**503.** El servicio no está disponible: el asistente sin `TV_GEMINI_API_KEY` o con el proveedor sin responder (se prueba `gemini-flash-latest` y luego `gemini-flash-lite-latest`), o el inicio de sesión en un despliegue de producción sin `TV_JWT_SECRETO` (modo solo lectura).
 
 ### errores-error_interno
 **500.** Error no controlado. El `request_id` permite encontrarlo en los registros.

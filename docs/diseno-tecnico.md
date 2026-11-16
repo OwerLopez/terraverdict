@@ -329,6 +329,8 @@ Se valida con un esquema JSON versionado (`schema_version`). La web, la API y el
 
 ## 7b. IA generativa con garantías
 
+> **Implementación (15-11-2026):** el asistente se implementó con **Google Gemini** (`gemini-flash-latest`, respaldo `gemini-flash-lite-latest`) en lugar del modelo previsto abajo; el principio, las herramientas de solo lectura y el verificador numérico se mantienen tal cual. Ver `backend/app/services/{gemini,asistente}.py`. La digitalización de PDF con IA no se implementó.
+
 ### 7b.1 Principio
 
 El modelo de lenguaje es un **traductor y digitalizador**, no una fuente de verdad. Toda cifra que llega a un usuario proviene del núcleo determinista o de un documento citado, y un verificador lo comprueba **después** de la generación, no por confianza en el modelo.

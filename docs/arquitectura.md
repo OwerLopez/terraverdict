@@ -41,7 +41,8 @@ flowchart LR
 | Informe | `experimentos/informe.py` | `docs/experimentos.md` | Solo cifras de los JSON |
 | Publicación | `publicar/` | Resultados → contrato de expedientes → `POST /expedientes` | Idempotente; un 422 no se "arregla" en el cliente |
 | API | `backend/app/` | Catálogo, series, expedientes inmutables, procesos, capas y verificador | Las reglas científicas viven en los esquemas |
-| Interfaz | `frontend/src/` | Panel, mapa, series, expedientes, fenómenos y asistente | Sin lógica científica; muestra la procedencia y las abstenciones |
+| Interfaz | `frontend/src/` | Panel, mapa, series, expedientes, fenómenos, relevancia, procesos y asistente | Sin lógica científica; muestra la procedencia y las abstenciones |
+| Asistente | `backend/app/services/{gemini,asistente}.py` | Google Gemini con recuperación de expedientes y verificación numérica de cada cifra | La clave vive solo en el servidor; el modelo explica, no calcula |
 
 Las dependencias van solo hacia abajo: la interfaz no calcula y la API no entrena. El paquete
 científico no depende de la API, salvo el cliente de publicación, que solo hace HTTP.

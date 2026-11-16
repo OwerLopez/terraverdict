@@ -1,6 +1,8 @@
 # Auditoría de métricas y pesos
 
-**Fecha:** 2026-11-15 · **Autor:** MaxsForocca (con asistencia de Claude) · **Commits:** ver `git log` desde `8a63d55`.
+> **Cifras posteriores:** los datos se refrescaron al cierre del 15-11 y los resultados se regeneraron; las cifras vigentes están en [`experimentos.md`](experimentos.md). Las de este documento son las de la fecha de la auditoría.
+
+**Fecha:** 2026-11-15 · **Autor:** MaxsForocca · **Commits:** ver `git log` desde `8a63d55`.
 
 **Objetivo.** Demostrar con evidencia que:
 - cada métrica se calcula y se usa como dice su definición;

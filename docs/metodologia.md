@@ -185,6 +185,38 @@ Reglas:
 ### Catálogo de métricas
 `config/metricas.yaml` (servido en `GET /api/v1/metricas`) explica cada métrica en español e inglés: qué mide, cómo leerla, si es mejor alta o baja y su referencia.
 
+## 9 bis. Matriz de Relevancia (M1, `experimentos/relevancia.py`)
+
+Responde qué variables candidatas importan para anticipar un día de lluvia extrema en la cabecera (P1),
+en qué dirección y con cuánta confianza. Especificación completa en [`modulo-relevancia.md`](modulo-relevancia.md).
+
+- **Objetivo:** día con IMERG Final ≥ percentil 99 del desarrollo (Huffman et al., doi:10.5067/GPM/IMERGDF/DAY/07).
+  Predictores del **día anterior** (POWER) y ONI **publicado a la fecha** (sin fuga del futuro).
+- **Partición:** la congelada del proyecto; desarrollo 1998–2020 con validación cruzada dejando un año fuera;
+  prueba 2021–2025 usada una sola vez.
+- **Modelos:** logística elastic-net (Zou y Hastie, 2005, doi:10.1111/j.1467-9868.2005.00503.x) y árboles con
+  gradiente de profundidad limitada (Friedman, 2001, doi:10.1214/aos/1013203451).
+- **Importancia:** permutación por bloques en el año apartado (Breiman, 2001, doi:10.1023/A:1010933404324),
+  promediada entre los dos modelos y normalizada.
+- **Estabilidad:** frecuencia en el top-k entre 200 remuestreos de años (Meinshausen y Bühlmann, 2010,
+  doi:10.1111/j.1467-9868.2010.00740.x), con k ≤ n − 1.
+- **Significancia condicional:** se desplaza circularmente solo la variable evaluada (≥ 365 días, conserva su
+  autocorrelación), se reentrena y se compara la pérdida; FDR de Benjamini y Hochberg (1995,
+  doi:10.1111/j.2517-6161.1995.tb02031.x). Desplazar el objetivo se descartó: el nulo resultaba más débil que
+  el modelo observado y el ruido salía significativo.
+- **Dirección:** signo del coeficiente estandarizado de la logística contrastado con la dependencia parcial
+  de los árboles (Spearman ≥ 0,8 para llamarla monótona); si discrepan, "indeterminada".
+- **Publicación:** solo si la habilidad de Brier en la prueba supera a la climatología con el IC90 por bootstrap
+  de bloques por encima de 0.
+
+## 9 ter. Asistente con IA verificado (`backend/app/services/asistente.py`)
+
+Recuperación léxica de los expedientes publicados más pertinentes, generación con Google Gemini restringida a
+ese contexto (citar cada ID, no hacer cuentas ni convertir unidades) y **verificación numérica** de cada cifra
+contra los expedientes citados, con la probabilidad de coincidencia por azar. Si alguna cifra no tiene
+respaldo, se pide una reescritura; el resultado se muestra siempre con su informe. El modelo no calcula
+resultados científicos: solo los explica.
+
 ## 10. Reproducibilidad
 
 ```bash
