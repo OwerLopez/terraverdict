@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import hmac
+import os
 import secrets
 import threading
 import time
@@ -110,3 +111,18 @@ class LimitadorVentana:
                 espera = int(self.ventana_s - (ahora - cola[0])) + 1
                 raise DemasiadasSolicitudes(f"Demasiados intentos. Reintente en {espera} s.")
             cola.append(ahora)
+
+
+def ip_cliente(request: Any) -> str:
+    """IP del cliente para los límites de uso.
+
+    En Vercel la conexión llega desde su borde: la IP real viene en `x-vercel-forwarded-for`, que el
+    borde fija (un cliente no puede imponerla). Solo se confía en esa cabecera y únicamente cuando la
+    función corre en Vercel (`VERCEL=1`); en cualquier otro despliegue se usa la conexión directa,
+    porque `X-Forwarded-For` sin un proxy de confianza la falsifica cualquiera.
+    """
+    if os.environ.get("VERCEL") == "1":
+        reenviada = request.headers.get("x-vercel-forwarded-for", "")
+        if reenviada.strip():
+            return str(reenviada.split(",")[0].strip())
+    return str(request.client.host) if request.client else "desconocido"

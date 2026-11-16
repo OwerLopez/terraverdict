@@ -10,7 +10,7 @@ from sqlalchemy import select
 
 from app.api.deps import Admin, ConfigDep, PrincipalDep, SesionDep
 from app.core.errors import NoAutenticado
-from app.core.security import LimitadorVentana, crear_token, exigir_sesiones
+from app.core.security import LimitadorVentana, crear_token, exigir_sesiones, ip_cliente
 from app.db.models import ClaveApi, Usuario
 from app.domain.vocabulario import Rol
 from app.schemas.auth import (
@@ -44,7 +44,7 @@ def iniciar_sesion(
 ) -> Token:
     exigir_sesiones(settings)
     limitador: LimitadorVentana = request.app.state.limitador_login
-    limitador.verificar(request.client.host if request.client else "desconocido")
+    limitador.verificar(ip_cliente(request))
     usuario = servicio.autenticar(sesion, form.username, form.password)
     if usuario is None:
         raise NoAutenticado("Correo o contraseña incorrectos.")

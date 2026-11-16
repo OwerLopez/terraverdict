@@ -6,7 +6,7 @@ from fastapi import APIRouter, Request
 from sqlalchemy import select
 
 from app.api.deps import ConfigDep, SesionDep
-from app.core.security import LimitadorVentana
+from app.core.security import LimitadorVentana, ip_cliente
 from app.db.models import Expediente
 from app.domain.vocabulario import EstadoExpediente
 from app.schemas.comun import errores
@@ -65,7 +65,7 @@ def consultar(
     proveedor = asistente.obtener_proveedor(settings)
     por_ip: LimitadorVentana = request.app.state.limitador_asistente
     global_: LimitadorVentana = request.app.state.limitador_asistente_global
-    por_ip.verificar(request.client.host if request.client else "desconocido")
+    por_ip.verificar(ip_cliente(request))
     global_.verificar("global")
 
     publicados = list(

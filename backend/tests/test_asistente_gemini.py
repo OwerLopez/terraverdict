@@ -233,3 +233,18 @@ def test_api_valida_entrada(cliente: TestClient) -> None:
         ).status_code
         == 422
     )
+
+
+def test_ip_del_cliente_solo_confia_en_la_cabecera_del_borde_de_vercel(monkeypatch: pytest.MonkeyPatch) -> None:
+    from types import SimpleNamespace
+
+    from app.core.security import ip_cliente
+
+    req = SimpleNamespace(
+        headers={"x-vercel-forwarded-for": "203.0.113.7, 10.0.0.1", "x-forwarded-for": "1.2.3.4"},
+        client=SimpleNamespace(host="10.0.0.9"),
+    )
+    monkeypatch.delenv("VERCEL", raising=False)
+    assert ip_cliente(req) == "10.0.0.9"  # fuera de Vercel no se confía en cabeceras
+    monkeypatch.setenv("VERCEL", "1")
+    assert ip_cliente(req) == "203.0.113.7"
