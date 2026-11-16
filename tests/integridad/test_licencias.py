@@ -29,6 +29,7 @@ FUENTE_POR_CARPETA = {
     "chirps": "CHIRPS",
     "igp": "IGP",
     "modis": "MODIS LST",
+    "ingemmet": "INGEMMET · GEOCATMIN",
 }
 
 

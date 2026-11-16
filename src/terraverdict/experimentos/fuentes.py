@@ -272,6 +272,8 @@ def ejecutar(cfg: dict[str, Any], raw: Path, registro=print) -> dict[str, Any]:
         "fuentes_no_usadas": {
             "SMAP (NSIDC)": "Acceso con token verificado, pero empieza en 2015 (después del entrenamiento) y solo se distribuye por gránulo global; no aporta a los experimentos con la partición congelada.",
             "HLS (LP DAAC)": "Acceso con token verificado; reflectancia a 30 m sin relación directa con las variables objetivo de estos experimentos.",
-            "SENAMHI, ANA, CENEPRED, SINIA, INGEMMET": "Sin API pública de datos (ver docs/verificacion/fuentes_fenomenos.json); se integrarán por convenio o descarga manual verificada.",
+            "SENAMHI": "GeoServer WMS/WFS público con capas cartográficas; las series de estaciones no tienen API pública (convenio o descarga verificada).",
+            "CENEPRED": "ArcGIS REST público con escenarios de riesgo; aún no se usa en los experimentos.",
+            "ANA, SINIA": "Portales sin API de datos (ver config/fenomenos.yaml, acceso_fuentes_nacionales).",
         },
     }

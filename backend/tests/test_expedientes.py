@@ -32,7 +32,22 @@ def test_regla_robusta_exige_sello_completo(cliente: TestClient, ingesta: dict[s
     )
     r = cliente.post("/api/v1/expedientes", json=datos, headers=ingesta)
     assert r.status_code == 422
-    assert "cinco pruebas" in str(r.json()["errores"])
+    assert "todas las pruebas evaluadas" in str(r.json()["errores"])
+
+
+def _sello(estado: str = "aprobada", **otros: str) -> dict[str, dict[str, str]]:
+    claves = ("ventanas", "enso", "sensor", "independencia", "detectabilidad")
+    return {k: {"estado": estado} for k in claves} | {k: {"estado": v} for k, v in otros.items()}
+
+
+def test_palanca_fallida_impide_robusta_y_justifica_fragil(cliente: TestClient, ingesta: dict[str, str]) -> None:
+    sig = {"p_mann_kendall": 0.01, "p_conservador": 0.01}
+    robusta = prueba_tendencia(veredicto="robusta", significancia=sig, sello=_sello(palanca="fallida"))
+    r = cliente.post("/api/v1/expedientes", json=robusta, headers=ingesta)
+    assert r.status_code == 422
+    assert "palanca" in str(r.json()["errores"])
+    fragil = prueba_tendencia(veredicto="fragil", significancia=sig, sello=_sello(palanca="fallida"))
+    assert cliente.post("/api/v1/expedientes", json=fragil, headers=ingesta).status_code == 201
 
 
 def test_regla_p_conservador(cliente: TestClient, ingesta: dict[str, str]) -> None:

@@ -2945,7 +2945,7 @@ export interface components {
         };
         /**
          * Sello
-         * @description Las cinco pruebas del Sello de Confianza.
+         * @description Pruebas del Sello de Confianza: las cinco base y, si se evaluó, la de palanca.
          */
         Sello: {
             ventanas: components["schemas"]["Prueba"];
@@ -2953,6 +2953,8 @@ export interface components {
             sensor: components["schemas"]["Prueba"];
             independencia: components["schemas"]["Prueba"];
             detectabilidad: components["schemas"]["Prueba"];
+            /** @description ¿Sobrevive la tendencia al quitar los años de mayor influencia (leverage)? Opcional en expedientes antiguos. */
+            palanca?: components["schemas"]["Prueba"] | null;
         };
         /**
          * SerieCrear

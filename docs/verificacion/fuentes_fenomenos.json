@@ -1,20 +1,29 @@
 {
- "generado_utc": "2026-11-14T20:50:42+00:00",
+ "generado_utc": "2026-11-16T02:46:38+00:00",
  "SENAMHI": {
-  "url": "https://www.senamhi.gob.pe/",
-  "error": "ConnectionError: HTTPSConnectionPool(host='www.senamhi.gob.pe', port=443): Max retries exceeded with url: / (Caused by ProtocolError('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer')))"
+  "url": "https://idesep.senamhi.gob.pe/geoserver/ows?service=WMS&request=GetCapabilities",
+  "http": 200,
+  "url_final": "https://idesep.senamhi.gob.pe/geoserver/ows?service=WMS&request=GetCapabilities",
+  "bytes": 2552592
  },
  "IGP": {
-  "url": "https://ultimosismos.igp.gob.pe/",
-  "error": "ProxyError: HTTPSConnectionPool(host='ultimosismos.igp.gob.pe', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 502 Bad Gateway')))"
+  "url": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2025",
+  "http": 200,
+  "url_final": "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2025",
+  "bytes": 583166
  },
  "IGP_OVS": {
   "url": "https://ovs.igp.gob.pe/",
-  "error": "ProxyError: HTTPSConnectionPool(host='ovs.igp.gob.pe', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 502 Bad Gateway')))"
+  "error": "ConnectionError: HTTPSConnectionPool(host='ovs.igp.gob.pe', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='ovs.igp.gob.pe', port=443): Failed to resolve 'ovs.igp.gob.pe' ([Errno 11001] getaddrinfo failed)\"))"
+ },
+ "_almacen_tls": {
+  "INGEMMET": "certifi + config/certificados (intermedio con huella fijada)"
  },
  "INGEMMET": {
-  "url": "https://geocatmin.ingemmet.gob.pe/geocatmin/",
-  "error": "SSLError: HTTPSConnectionPool(host='geocatmin.ingemmet.gob.pe', port=443): Max retries exceeded with url: /geocatmin/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1035)')))"
+  "url": "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_PELIGROS_GEOLOGICOS/MapServer/0?f=json",
+  "http": 200,
+  "url_final": "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_PELIGROS_GEOLOGICOS/MapServer/0?f=json",
+  "bytes": 109554
  },
  "ANA": {
   "url": "https://snirh.ana.gob.pe/",
@@ -23,15 +32,15 @@
   "bytes": 1560
  },
  "CENEPRED": {
-  "url": "https://sigrid.cenepred.gob.pe/sigridv3/",
+  "url": "https://sigrid.cenepred.gob.pe/arcgis/rest/services?f=json",
   "http": 200,
-  "url_final": "https://sigrid.cenepred.gob.pe/sigridv3/",
-  "bytes": 62241
+  "url_final": "https://sigrid.cenepred.gob.pe/arcgis/rest/services?f=json",
+  "bytes": 193
  },
  "SINIA": {
   "url": "https://sinia.minam.gob.pe/",
-  "http": 403,
+  "http": 200,
   "url_final": "https://sinia.minam.gob.pe/",
-  "bytes": 864
+  "bytes": 64070
  }
 }

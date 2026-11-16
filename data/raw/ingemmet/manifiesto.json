@@ -1,0 +1,12 @@
+[
+ {
+  "archivo": "peligros_geologicos.json",
+  "sha256": "f0a67faa80645f9bd610302a1d2a2914df4488f684fdb65f806e6e78d77192bf",
+  "bytes": 9587201,
+  "url": "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_PELIGROS_GEOLOGICOS/MapServer/0",
+  "producto": "INGEMMET_PELIGROS_GEOLOGICOS",
+  "version": null,
+  "descargado_utc": "2026-11-16T02:16:36+00:00",
+  "registros": 28915
+ }
+]

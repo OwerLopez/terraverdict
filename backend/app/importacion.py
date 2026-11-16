@@ -85,6 +85,7 @@ NOMBRES_FUENTES = {
     "igp_sismos_reportados": "IGP · sismos reportados",
     "gvp_volcanes": "Smithsonian GVP · volcanes y erupciones",
     "nasa_glc": "NASA · Global Landslide Catalog",
+    "ingemmet_peligros": "INGEMMET · inventario de peligros geológicos (GEOCATMIN)",
     "modis_lst_ornl": "MODIS MOD11A2 · LST por ORNL DAAC",
     "oni": "NOAA CPC · índice ONI",
     "roni": "NOAA CPC · índice RONI",

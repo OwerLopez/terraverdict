@@ -217,6 +217,15 @@ def ingest_fenomenos(
         raise typer.Exit(code=1)
 
 
+@app.command("ingest-ingemmet")
+def ingest_ingemmet(raw: Path = Path("data/raw")) -> None:
+    """Inventario nacional de peligros geológicos de INGEMMET (GEOCATMIN), con verificación TLS completa."""
+    from .ingest import ingemmet
+
+    entrada = ingemmet.descargar(raw / "ingemmet")
+    typer.echo(f"OK ingemmet {entrada['registros']} registros sha256={entrada['sha256'][:12]}")
+
+
 @app.command("experimentos")
 def experimentos(
     rapido: bool = typer.Option(False, help="Solo GRU y TCN con una semilla (para probar el pipeline)"),

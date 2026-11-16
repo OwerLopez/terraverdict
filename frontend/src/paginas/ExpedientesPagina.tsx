@@ -122,10 +122,10 @@ function ResultadoTendencia({ r, serieId }: { r: Esquemas["ResultadoTendencia"];
 
       <Tarjeta
         titulo={<span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-accent" /> {t("Sello de confianza", "Confidence seal")}</span>}
-        subtitulo={t("Cinco pruebas antes de creer una tendencia. Un veredicto 'robusta' exige las cinco aprobadas: la API rechaza cualquier otro caso.", "Five tests before believing a trend. A 'robust' verdict requires all five passed: the API rejects any other case.")}
+        subtitulo={t("Cinco pruebas base, más la de años influyentes cuando se evaluó. Un veredicto 'robusta' exige todas aprobadas: la API rechaza cualquier otro caso.", "Five base tests, plus the influential-years test when evaluated. A 'robust' verdict requires all of them passed: the API rejects any other case.")}
       >
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
-          {Object.entries(r.sello).map(([clave, prueba]) => (
+        <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-6">
+          {Object.entries(r.sello).flatMap(([clave, prueba]) => (prueba ? [[clave, prueba] as const] : [])).map(([clave, prueba]) => (
             <div key={clave} className="flex flex-col rounded-xl border border-line bg-surface-2 p-3.5">
               <div className="flex items-start justify-between gap-2">
                 <p className="text-[13.5px] font-semibold text-ink">{NOMBRES_PRUEBA[clave] ?? clave}</p>

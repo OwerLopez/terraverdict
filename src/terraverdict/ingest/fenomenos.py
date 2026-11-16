@@ -193,13 +193,22 @@ def descargar_celdas_deslizamientos(
     return reg
 
 
-def verificar_fuentes_nacionales(fuentes: dict[str, str], timeout: int = 60) -> dict[str, Any]:
-    """Prueba de acceso real a los portales nacionales; registra código HTTP o error exacto."""
+def verificar_fuentes_nacionales(
+    fuentes: dict[str, str], timeout: int = 60, ca_por_fuente: dict[str, str] | None = None
+) -> dict[str, Any]:
+    """Prueba de acceso real a los portales nacionales; registra código HTTP o error exacto.
+
+    La verificación TLS siempre está activa; `ca_por_fuente` solo añade un almacén con el intermedio
+    que el servidor omite (p. ej., INGEMMET), nunca la desactiva.
+    """
     s = sesion(reintentos=1)
     salida: dict[str, Any] = {"generado_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}
     for nombre, url in fuentes.items():
         try:
-            r = s.get(url, timeout=timeout, allow_redirects=True)
+            ca = (ca_por_fuente or {}).get(nombre)
+            r = s.get(url, timeout=timeout, allow_redirects=True, **({"verify": ca} if ca else {}))
+            if ca:
+                salida.setdefault("_almacen_tls", {})[nombre] = "certifi + config/certificados (intermedio con huella fijada)"
             salida[nombre] = {"url": url, "http": r.status_code, "url_final": r.url, "bytes": len(r.content)}
         except Exception as e:  # noqa: BLE001 — la evidencia registra cualquier fallo de acceso
             salida[nombre] = {"url": url, "error": f"{type(e).__name__}: {e}"[:300]}

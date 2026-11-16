@@ -336,6 +336,12 @@ fuentes:
     advertencia: "Basado en noticias: subregistra eventos rurales; cobertura principal 2007–2017."
     uso: [deslizamientos]
 
+  ingemmet_peligros:
+    url: https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_PELIGROS_GEOLOGICOS/MapServer/0
+    acceso: http
+    advertencia: "Inventario de campo: la fecha es la del levantamiento, no la del evento. TLS verificado con el intermedio Sectigo OV R36 (config/certificados)."
+    uso: [deslizamientos]
+
   modis_lst_ornl:
     coleccion: MOD11A2
     version: "061"

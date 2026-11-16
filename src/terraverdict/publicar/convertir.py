@@ -19,7 +19,7 @@ from ..integridad import exigir_resultado_integro
 # Fuentes del catálogo (config/fuentes.yaml) y carpetas de data/raw que usa cada experimento.
 FUENTES = {
     "volcanes": (["gvp_volcanes", "usgs_comcat"], ["gvp", "usgs"]),
-    "deslizamientos": (["nasa_glc", "power_diaria"], ["glc", "power_celdas"]),
+    "deslizamientos": (["nasa_glc", "power_diaria", "ingemmet_peligros"], ["glc", "power_celdas", "ingemmet"]),
     "sismos": (["usgs_comcat"], ["usgs"]),
     "sequia": (["power_mensual", "oni"], ["power", "noaa"]),
     "sequia_chirps": (["chirps_v2_diaria", "power_mensual", "oni"], ["chirps", "power", "noaa"]),
@@ -381,6 +381,27 @@ def de_deslizamientos(r: dict[str, Any], eventos_minimos: int) -> list[dict[str,
         "umbral_estimado": False,
         "abstencion": abstencion(r["abstencion"]),
     }
+    c = r.get("contraste_ingemmet")
+    if c:
+        d, base = c["distancia_glc_a_ingemmet_km"], c["linea_base_azar"]
+        resultado["contraste_ingemmet"] = {
+            "fuente": c["fuente"],
+            "servicio": c["servicio"],
+            "registros_nacionales": c["registros_nacionales"],
+            "registros_dominio": c["registros_dominio"],
+            "por_tipo_dominio": c["por_tipo_dominio"],
+            "por_departamento_dominio": {k: v for k, v in c["por_departamento_dominio"].items() if k},
+            "eventos_glc_comparados": c["eventos_glc_comparados"],
+            "mediana_km": _f(d["mediana"]),
+            "fraccion_menor_5km": _f(d["fraccion_menor_5km"]),
+            "fraccion_menor_10km": _f(d["fraccion_menor_10km"]),
+            "azar_mediana_km": _f(base["mediana_km"]),
+            "azar_fraccion_menor_5km": _f(base["fraccion_menor_5km"]),
+            "p_valor_binomial_5km": _f(base["p_valor_binomial_5km"]),
+            "metodo_linea_base": base["metodo"],
+            "densidad_celdas": c["densidad_celdas"],
+            "nota": c["nota"],
+        }
     return [
         _expediente(
             "sur_peru_fenomenos",
@@ -390,7 +411,11 @@ def de_deslizamientos(r: dict[str, Any], eventos_minimos: int) -> list[dict[str,
             procedencia(
                 "deslizamientos",
                 r["procedencia"],
-                _pasos(("descarga", "Descarga GLC y POWER"), ("antecedente", "Lluvia antecedente y percentiles")),
+                _pasos(
+                    ("descarga", "Descarga GLC, POWER e inventario INGEMMET"),
+                    ("antecedente", "Lluvia antecedente y percentiles"),
+                    ("contraste", "Distancia GLC–INGEMMET frente a lugares al azar"),
+                ),
             ),
         )
     ]
@@ -745,6 +770,10 @@ def _estado_prueba(clave: str, sello: dict[str, Any], resultado: dict[str, Any])
     return {"estado": estado, "metricas": metricas}
 
 
+# Productos de la prueba de independencia del Sello → fuente del catálogo.
+FUENTE_PRODUCTO = {"CHIRPS_V2": "chirps_v2_diaria", "IMERG_FINAL": "imerg_final_diaria"}
+
+
 def de_tendencia(e: dict[str, Any], alfa: float) -> dict[str, Any]:
     """Expediente de tendencia del paquete (Sello de Confianza) → contrato `tendencia` del backend.
 
@@ -762,7 +791,9 @@ def de_tendencia(e: dict[str, Any], alfa: float) -> dict[str, Any]:
     else:
         veredicto = "robusta" if significativa else "sin_tendencia"
     unidad = "Cel/decada" if e["objeto"]["variable"].startswith("t2m") else "mm/decada"
-    claves = ("ventanas", "enso", "sensor", "independencia", "detectabilidad")
+    claves = ("ventanas", "enso", "sensor", "independencia", "detectabilidad") + (
+        ("palanca",) if (r.get("palanca") or {}).get("evaluada") else ()
+    )
     resultado = {
         "tipo": "tendencia",
         "periodo": {"desde": str(e["periodo"]["desde"]), "hasta": str(e["periodo"]["hasta"])},
@@ -790,7 +821,12 @@ def de_tendencia(e: dict[str, Any], alfa: float) -> dict[str, Any]:
         f"{_texto(r['mk']['p_conservador'], 4)}. Sello del paquete: {sello['codigo']} ({sello.get('nota') or 'sin nota'}).",
         resultado,
         {
-            "fuentes": [{"fuente_id": "power_mensual"}],
+            "fuentes": [{"fuente_id": "power_mensual"}]
+            + [
+                {"fuente_id": FUENTE_PRODUCTO[d["producto"]]}
+                for d in (r.get("independencia") or {}).get("detalle", [])
+                if d.get("producto") in FUENTE_PRODUCTO
+            ],
             "codigo": {"repositorio": REPOSITORIO, "commit": proc.get("codigo_commit"), "script": "tv trends"},
             "preregistro_sha256": proc["preregistro_sha256"],
             "hash_entradas": {"entradas": proc["entradas_sha256"]},

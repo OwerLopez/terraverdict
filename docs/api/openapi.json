@@ -9466,6 +9466,17 @@
           },
           "detectabilidad": {
             "$ref": "#/components/schemas/Prueba"
+          },
+          "palanca": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Prueba"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "¿Sobrevive la tendencia al quitar los años de mayor influencia (leverage)? Opcional en expedientes antiguos."
           }
         },
         "additionalProperties": false,
@@ -9478,7 +9489,7 @@
           "detectabilidad"
         ],
         "title": "Sello",
-        "description": "Las cinco pruebas del Sello de Confianza."
+        "description": "Pruebas del Sello de Confianza: las cinco base y, si se evaluó, la de palanca."
       },
       "SerieCrear": {
         "properties": {

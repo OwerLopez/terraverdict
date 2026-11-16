@@ -192,7 +192,7 @@ function PrimerResultado() {
               <div>
                 <p className="etiqueta mb-1.5">{t("Sello de confianza", "Confidence seal")}</p>
                 <ul className="space-y-1.5 text-[13px]">
-                  {Object.entries(tendencia.sello).map(([k, p]) => (
+                  {Object.entries(tendencia.sello).flatMap(([k, p]) => (p ? [[k, p] as const] : [])).map(([k, p]) => (
                     <li key={k} className="flex items-center justify-between gap-2">
                       <span className="text-ink-2">{NOMBRES_PRUEBA[k] ?? k}</span>
                       <ChipEstado mapa={ESTADOS_PRUEBA} valor={p.estado} />

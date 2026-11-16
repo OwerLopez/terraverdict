@@ -164,6 +164,7 @@ export const NOMBRES_PRUEBA: Record<string, string> = bilingue({
   sensor: ["Cambio de sensor", "Sensor change"],
   independencia: ["Independencia", "Independence"],
   detectabilidad: ["Detectabilidad", "Detectability"],
+  palanca: ["Años influyentes (palanca)", "Influential years (leverage)"],
 });
 
 export const ESTADOS_PROCESO: Record<string, Def> = {

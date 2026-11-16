@@ -7,7 +7,10 @@ const TONO_RELEVANCIA: Record<string, Tono> = { alta: "accent", media: "neutral"
 const PARTES: Record<string, [string, string]> = { entrenamiento: ["Entrenamiento", "Training"], validacion: ["Validación", "Validation"], prueba: ["Prueba", "Test"] };
 const RELEVANCIA: Record<string, [string, string]> = { alta: ["alta", "high"], media: ["media", "medium"], baja: ["baja", "low"] };
 const ESTADO_ACCESO: Record<string, { texto: [string, string]; tono: Tono }> = {
+  integrado: { texto: ["Integrado", "Integrated"], tono: "good" },
   api_publica: { texto: ["API pública", "Public API"], tono: "good" },
+  servicio_ogc: { texto: ["Servicio OGC (mapas)", "OGC service (maps)"], tono: "accent" },
+  servicio_arcgis: { texto: ["ArcGIS REST, sin integrar", "ArcGIS REST, not integrated"], tono: "warning" },
   portal: { texto: ["Portal sin API", "Portal without API"], tono: "warning" },
   no_accesible: { texto: ["No accesible", "Not accessible"], tono: "critical" },
 };

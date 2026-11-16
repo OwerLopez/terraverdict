@@ -72,22 +72,27 @@ class Prueba(Esquema):
 
 
 class Sello(Esquema):
-    """Las cinco pruebas del Sello de Confianza."""
+    """Pruebas del Sello de Confianza: las cinco base y, si se evaluó, la de palanca."""
 
     ventanas: Prueba
     enso: Prueba
     sensor: Prueba
     independencia: Prueba
     detectabilidad: Prueba
+    palanca: Prueba | None = Field(
+        None,
+        description="¿Sobrevive la tendencia al quitar los años de mayor influencia (leverage)? Opcional en expedientes antiguos.",
+    )
 
     def pruebas(self) -> dict[str, Prueba]:
-        return {
+        base = {
             "ventanas": self.ventanas,
             "enso": self.enso,
             "sensor": self.sensor,
             "independencia": self.independencia,
             "detectabilidad": self.detectabilidad,
         }
+        return base | ({"palanca": self.palanca} if self.palanca is not None else {})
 
 
 class ResultadoTendencia(Esquema):
@@ -108,7 +113,7 @@ class ResultadoTendencia(Esquema):
             no_aprobadas = [k for k, p in pruebas.items() if p.estado != EstadoPrueba.aprobada]
             if no_aprobadas:
                 raise ValueError(
-                    f"Una tendencia 'robusta' exige las cinco pruebas aprobadas; faltan: {no_aprobadas}"
+                    f"Una tendencia 'robusta' exige todas las pruebas evaluadas aprobadas; faltan: {no_aprobadas}"
                 )
         if self.veredicto in (Veredicto.robusta, Veredicto.fragil) and not significativa:
             raise ValueError("'robusta' y 'fragil' exigen p_conservador ≤ alfa.")

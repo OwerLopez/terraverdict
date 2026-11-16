@@ -130,7 +130,7 @@ fenomenos:
          limitaciones: "Magnitudes de distinto tipo (mb, Mw, Ms); completitud menor que la red nacional del IGP."}
       - {id: catalogo_igp, nombre: "Catálogo sísmico del IGP", rol: validacion, relevancia: alta, fuente: IGP,
          justificacion: "Red nacional con menor magnitud de completitud.",
-         limitaciones: "Sin acceso desde el entorno (ver acceso_fuentes_nacionales)."}
+         limitaciones: "La API pública publica los sismos reportados (percibidos o relevantes), no el catálogo completo de detección; se contrasta con USGS en el experimento de fuentes."}
     metricas: [magnitud_completitud, valor_b, tasa_anual, ganancia_informacion_poisson, coeficiente_variacion_intereventos]
 
   volcanes:
@@ -173,18 +173,18 @@ fenomenos:
       - {id: lluvia_antecedente, nombre: "Lluvia acumulada 1, 3, 10 y 30 días antes", unidad: "mm", rol: predictor, relevancia: alta,
          fuente: NASA_POWER_MERRA2, justificacion: "La lluvia acumulada satura el suelo y reduce la resistencia al corte (Guzzetti et al., 2008)."}
       - {id: inventario_ingemmet, nombre: "Inventario de peligros geológicos (GEOCATMIN)", rol: validacion, relevancia: alta,
-         fuente: INGEMMET, limitaciones: "Certificado SSL incompleto: no se pudo consultar sin desactivar la verificación.",
-         justificacion: "Inventario nacional con miles de eventos: daría los ≥ 30 eventos necesarios para estimar un umbral de lluvia."}
+         fuente: INGEMMET, limitaciones: "La fecha es la del levantamiento de campo, no la del evento: valida la ubicación, no el umbral de lluvia.",
+         justificacion: "Inventario de campo nacional (28 915 movimientos en masa): segunda familia de evidencia, independiente del catálogo de noticias GLC."}
     metricas: [n_eventos, percentil_lluvia_antecedente, umbral_intensidad_duracion]
 
-acceso_fuentes_nacionales:     # consulta real del 2026-11-14 (ver docs/verificacion/fuentes_fenomenos.json); SENAMHI e IGP revisados el 2026-11-15
-  SENAMHI:  {url: "https://www.senamhi.gob.pe/", estado: portal, motivo: "Responde (HTTP 200 el 2026-11-15; el 14-11 cortaba la conexión), pero no se encontró una API de datos."}
+acceso_fuentes_nacionales:     # consulta real del 2026-11-15 con verificación TLS activa (ver docs/verificacion/fuentes_fenomenos.json)
+  SENAMHI:  {url: "https://idesep.senamhi.gob.pe/geoserver/ows", estado: servicio_ogc, motivo: "GeoServer WMS/WFS público (GetCapabilities HTTP 200 el 2026-11-15): capas cartográficas; las series de estaciones siguen sin API pública."}
   IGP:      {url: "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/{anio}", estado: api_publica, motivo: "Responde (2026-11-15): API pública con los sismos reportados desde 2012; integrada en tv ingest-fenomenos."}
-  IGP_OVS:  {url: "https://ovs.igp.gob.pe/", estado: no_accesible, motivo: "El servidor de origen no responde (502 en el proxy)."}
-  INGEMMET: {url: "https://geocatmin.ingemmet.gob.pe/geocatmin/", estado: no_accesible, motivo: "Cadena de certificado SSL incompleta."}
+  IGP_OVS:  {url: "https://ovs.igp.gob.pe/", estado: no_accesible, motivo: "El nombre de host no resuelve en DNS (2026-11-15); el 14-11 devolvía 502. Los volcanes se cubren con GVP (Smithsonian)."}
+  INGEMMET: {url: "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_PELIGROS_GEOLOGICOS/MapServer/0", estado: integrado, motivo: "El servidor omite el certificado intermedio; se añadió el intermedio oficial de Sectigo (AIA, huella SHA-256 fijada) sin desactivar la verificación. 28 915 registros descargados con tv ingest-ingemmet."}
   ANA:      {url: "https://snirh.ana.gob.pe/", estado: portal, motivo: "Responde, pero los datos se descargan con formularios interactivos (sin API)."}
-  CENEPRED: {url: "https://sigrid.cenepred.gob.pe/sigridv3/", estado: portal, motivo: "Responde: visor de escenarios de riesgo, sin API de datos."}
-  SINIA:    {url: "https://sinia.minam.gob.pe/", estado: no_accesible, motivo: "Firewall de aplicaciones: 403."}
+  CENEPRED: {url: "https://sigrid.cenepred.gob.pe/arcgis/rest/services", estado: servicio_arcgis, motivo: "ArcGIS REST público (v10.81, HTTP 200 el 2026-11-15) con escenarios de riesgo; aún no integrado en los experimentos."}
+  SINIA:    {url: "https://sinia.minam.gob.pe/", estado: portal, motivo: "Responde (HTTP 200 el 2026-11-15; el 14-11, 403 del firewall), pero no se encontró una API de datos."}
   via_integracion: >
     Estas fuentes se integran por convenio o descarga manual verificada: el contrato de series del
     backend (POST /api/v1/series/{id}/observaciones) acepta los datos con su procedencia sin cambiar
