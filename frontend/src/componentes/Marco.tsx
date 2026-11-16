@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Activity, BookOpenText, BrainCircuit, ChevronDown, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, ShieldCheck, Sun, Workflow, X, type LucideIcon } from "lucide-react";
+import { Activity, BrainCircuit, ChevronDown, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, ShieldCheck, Sun, Workflow, X, type LucideIcon } from "lucide-react";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ErrorApi } from "../api/cliente";
@@ -165,7 +165,7 @@ function SelectorTema() {
   );
 }
 
-function Acceso() {
+export function Acceso() {
   const { identidad, iniciar, cerrar } = useSesion();
   const [abierto, setAbierto] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -283,11 +283,7 @@ function PieLateral() {
       <div className="flex items-center justify-between">
         <SelectorTema />
         <SelectorIdioma />
-        <a href="/api/docs" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-[12px] font-medium text-ink-2 hover:bg-surface-2 hover:text-ink">
-          <BookOpenText className="h-3.5 w-3.5" /> API
-        </a>
       </div>
-      <Acceso />
     </div>
   );
 }
@@ -339,16 +335,46 @@ export function Marco({ children }: { children: ReactNode }) {
   );
 }
 
-/** Aviso permanente en todas las vistas: nada de lo que muestra el sistema es una alerta oficial. */
+/** Aviso en todas las vistas: nada de lo que muestra el sistema es una alerta oficial (descartable con X). */
 export function AvisoNoOficial() {
+  const [cerrado, setCerrado] = useState(() => {
+    try {
+      return sessionStorage.getItem("tv-aviso-cerrado") === "1";
+    } catch {
+      return false;
+    }
+  });
+
+  if (cerrado) return null;
+
+  const cerrar = () => {
+    setCerrado(true);
+    try {
+      sessionStorage.setItem("tv-aviso-cerrado", "1");
+    } catch {
+      /* almacenamiento no disponible */
+    }
+  };
+
   return (
-    <p
+    <div
       role="note"
-      className="vidrio flex min-h-9 items-center justify-center gap-2 border-b border-line px-4 py-1.5 text-center text-[12.5px] font-medium text-ink-2"
+      className="vidrio flex min-h-9 items-center justify-between gap-2 border-b border-line px-4 py-1.5 text-[12.5px] font-medium text-ink-2"
     >
-      <Info aria-hidden className="h-3.5 w-3.5 shrink-0 text-accent" />
-      {t("Resultados experimentales. No son alertas oficiales (SENAMHI, IGP, INGEMMET, INDECI).", "Experimental results. Not official warnings (SENAMHI, IGP, INGEMMET, INDECI).")}
-    </p>
+      <div className="flex flex-1 items-center justify-center gap-2 text-center">
+        <Info aria-hidden className="h-3.5 w-3.5 shrink-0 text-accent" />
+        <span>{t("Resultados experimentales. No son alertas oficiales (SENAMHI, IGP, INGEMMET, INDECI).", "Experimental results. Not official warnings (SENAMHI, IGP, INGEMMET, INDECI).")}</span>
+      </div>
+      <button
+        type="button"
+        onClick={cerrar}
+        className="shrink-0 rounded p-1 text-ink-3 hover:bg-surface-2 hover:text-ink transition-colors"
+        aria-label={t("Cerrar aviso", "Dismiss alert")}
+        title={t("Cerrar aviso", "Dismiss alert")}
+      >
+        <X className="h-3.5 w-3.5" />
+      </button>
+    </div>
   );
 }
 
