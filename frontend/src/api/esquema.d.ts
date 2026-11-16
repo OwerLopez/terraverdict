@@ -1110,6 +1110,11 @@ export interface components {
             /** Descripcion */
             descripcion: string;
             /**
+             * Descripcion En
+             * @description Descripción en inglés.
+             */
+            descripcion_en?: string | null;
+            /**
              * @description Si la fuente da una cota ('más del 70 %') en lugar de un valor exacto.
              * @default exacta
              */
@@ -1201,6 +1206,13 @@ export interface components {
              * @description Expedientes a usar como contexto. Vacío: el sistema elige los más pertinentes.
              */
             expediente_ids?: string[];
+            /**
+             * Idioma
+             * @description Idioma de la respuesta y formato de sus cifras (es: 0,658 · en: 0.658).
+             * @default es
+             * @enum {string}
+             */
+            idioma: "es" | "en";
         };
         /** ConteoPorClave */
         ConteoPorClave: {
@@ -1472,6 +1484,16 @@ export interface components {
             titulo: string;
             /** Descripcion */
             descripcion: string;
+            /**
+             * Titulo En
+             * @description Título en inglés (traducción del equipo).
+             */
+            titulo_en?: string | null;
+            /**
+             * Descripcion En
+             * @description Descripción en inglés (traducción del equipo).
+             */
+            descripcion_en?: string | null;
             /** Cifras */
             cifras: components["schemas"]["Cifra"][];
             /** Fuentes */
@@ -3111,6 +3133,13 @@ export interface components {
              * @default 0.005
              */
             tolerancia_relativa: number;
+            /**
+             * Idioma
+             * @description Formato de las cifras del texto (es: 0,658 · en: 0.658).
+             * @default es
+             * @enum {string}
+             */
+            idioma: "es" | "en";
         };
         /** TareaMapa */
         TareaMapa: {

@@ -32,6 +32,16 @@ const ESTADISTICOS: Record<string, [string, string]> = {
   asimetria_temporal: ["Asimetría temporal", "Time asymmetry"],
   error_prediccion_analogos: ["Error de predicción por análogos", "Analog prediction error"],
 };
+const SERIES: Record<string, [string, string]> = {
+  lluvia_pentadas_cabecera: ["Lluvia por péntadas · cabecera (POWER)", "5-day rainfall · headwaters (POWER)"],
+  lluvia_pentadas_cabecera_chirps: ["Lluvia por péntadas · cabecera (CHIRPS)", "5-day rainfall · headwaters (CHIRPS)"],
+  temperatura_diaria_cabecera: ["Temperatura diaria · cabecera", "Daily temperature · headwaters"],
+  spi3_mensual_cabecera: ["SPI-3 mensual · cabecera", "Monthly SPI-3 · headwaters"],
+  oni_mensual: ["ONI mensual", "Monthly ONI"],
+  sismos_conteo_mensual: ["Sismos por mes", "Earthquakes per month"],
+  sismos_intereventos_log: ["Tiempo entre sismos (log)", "Time between earthquakes (log)"],
+};
+const nombreSerie = (id: string) => (SERIES[id] ? t(...(SERIES[id] as [string, string])) : id.replace(/_/g, " "));
 const nombreEstadistico = (e: string) => (ESTADISTICOS[e] ? t(...(ESTADISTICOS[e] as [string, string])) : e.replace(/_/g, " "));
 
 const CONDICIONES: Record<string, [string, string]> = {
@@ -151,7 +161,7 @@ export function CaosPagina() {
                     : "panel-vidrio rounded-full px-3.5 py-1.5 text-[13px] font-medium text-ink-2 hover:text-ink"
                 }
               >
-                {s.serie_id.replace(/_/g, " ")}
+                {nombreSerie(s.serie_id)}
               </button>
             ))}
           </div>

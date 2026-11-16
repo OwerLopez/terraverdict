@@ -4,6 +4,7 @@ import { CATEGORIAS_EVENTO } from "../../lib/colores";
 import { textoCota, cifraCitada, fecha } from "../../lib/formato";
 import { ESTADOS_VERIFICACION, Insignia } from "../ui";
 import { t } from "../../lib/i18n";
+import { bilingueDato } from "../../lib/titulos";
 
 const ORDEN_ESTADOS = ["verificado", "parcial", "no_verificado", "sin_evidencia"];
 const COLOR_ESTADO: Record<string, string> = {
@@ -100,13 +101,13 @@ export function LineaTiempo({ eventos, limite }: { eventos: Esquemas["EventoDocu
               <time className="cifra text-[12px] font-medium text-ink-3" dateTime={e.fecha}>{fecha(e.fecha, e.precision)}</time>
               <Insignia>{cat?.texto ?? e.categoria}</Insignia>
             </div>
-            <p className="mt-1 font-semibold leading-snug text-ink">{e.titulo}</p>
-            <p className="mt-0.5 text-[13px] leading-relaxed text-ink-2">{e.descripcion}</p>
+            <p className="mt-1 font-semibold leading-snug text-ink">{bilingueDato(e.titulo, e.titulo_en)}</p>
+            <p className="mt-0.5 text-[13px] leading-relaxed text-ink-2">{bilingueDato(e.descripcion, e.descripcion_en)}</p>
             {e.cifras.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-2">
                 {e.cifras.map((c) => (
                   <span key={c.descripcion} className="rounded-lg border border-line bg-surface-2 px-2 py-1 text-[12px] text-ink-2" title={textoCota(c.cota)}>
-                    <span className="cifra font-semibold text-ink">{cifraCitada(c)}</span> · {c.descripcion}
+                    <span className="cifra font-semibold text-ink">{cifraCitada(c)}</span> · {bilingueDato(c.descripcion, c.descripcion_en)}
                   </span>
                 ))}
               </div>

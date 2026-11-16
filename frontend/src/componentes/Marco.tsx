@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Activity, BookOpenText, Bot, BrainCircuit, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, Sun, Workflow, X, type LucideIcon } from "lucide-react";
+import { Activity, BookOpenText, BrainCircuit, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, ShieldCheck, Sun, Workflow, X, type LucideIcon } from "lucide-react";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ErrorApi } from "../api/cliente";
@@ -7,6 +7,7 @@ import { useResumen, useSalud } from "../api/consultas";
 import { useSesion } from "../lib/sesion";
 import { t, useIdioma, type Idioma } from "../lib/i18n";
 import { useTema, type Tema } from "../lib/tema";
+import { ChatFlotante } from "./ChatFlotante";
 import { Dialogo } from "./Dialogo";
 import { Boton, Insignia, Segmentado } from "./ui";
 
@@ -44,7 +45,7 @@ const NAVEGACION: { grupo: [string, string]; items: { a: string; texto: [string,
     items: [
       { a: "/fuentes", texto: ["Fuentes verificadas", "Verified sources"], icono: Satellite },
       { a: "/eventos", texto: ["Crónica de eventos", "Event chronicle"], icono: CalendarClock },
-      { a: "/asistente", texto: ["Asistente", "Assistant"], icono: Bot },
+      { a: "/asistente", texto: ["Verificador numérico", "Numeric verifier"], icono: ShieldCheck },
     ],
   },
 ];
@@ -262,10 +263,11 @@ export function Marco({ children }: { children: ReactNode }) {
 
       <div className="flex min-w-0 flex-col">
         <AvisoNoOficial />
-        <main className={clsx(esMapa ? "h-[calc(100vh-57px-36px)] lg:h-[calc(100vh-36px)]" : "mx-auto w-full max-w-[1280px] px-4 py-6 md:px-8 md:py-10")}>
+        <main className={clsx(esMapa ? "h-[calc(100vh-57px-36px)] lg:h-[calc(100vh-36px)]" : "mx-auto w-full max-w-[1280px] px-4 pb-28 pt-6 md:px-8 md:pb-28 md:pt-10")}>
           {children}
         </main>
       </div>
+      <ChatFlotante />
     </div>
   );
 }

@@ -21,6 +21,7 @@ import {
 } from "../componentes/ui";
 import { conUnidad, etiquetaMetrica, fechaHora, numero, valorMetrica, valorP } from "../lib/formato";
 import { t } from "../lib/i18n";
+import { traducirTitulo } from "../lib/titulos";
 
 const TIPOS_ES_EN: Record<string, [string, string]> = {
   tendencia: ["Tendencia", "Trend"],
@@ -76,7 +77,7 @@ function ListaExpedientes() {
                   <Insignia>{e.modulo} · {tipoTexto(e.tipo)}</Insignia>
                   {e.veredicto && <ChipEstado mapa={VEREDICTOS} valor={e.veredicto} />}
                 </div>
-                <h2 className="mt-3 text-[16px] font-semibold leading-snug text-ink">{e.titulo}</h2>
+                <h2 className="mt-3 text-[16px] font-semibold leading-snug text-ink">{traducirTitulo(e.titulo)}</h2>
                 <p className="mt-1.5 line-clamp-3 text-[13px] leading-relaxed text-ink-2">{e.resumen}</p>
                 <p className="mt-3 text-[12px] text-ink-3">{t("Publicado", "Published")} {fechaHora(e.creado_en)}</p>
               </article>
@@ -238,7 +239,7 @@ function DetalleExpediente({ id }: { id: string }) {
       </Link>
       <Encabezado
         eyebrow={`${e.modulo} · ${tipoTexto(e.tipo)} · ${e.id}`}
-        titulo={e.titulo}
+        titulo={traducirTitulo(e.titulo)}
         descripcion={e.resumen}
         acciones={
           <>

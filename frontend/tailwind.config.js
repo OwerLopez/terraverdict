@@ -8,6 +8,7 @@ export default {
         surface: "var(--surface)",
         "surface-2": "var(--surface-2)",
         "surface-3": "var(--surface-3)",
+        "surface-solida": "var(--surface-solida)",
         line: "var(--border)",
         "line-strong": "var(--border-strong)",
         ink: { DEFAULT: "var(--ink)", 2: "var(--ink-2)", 3: "var(--ink-3)" },

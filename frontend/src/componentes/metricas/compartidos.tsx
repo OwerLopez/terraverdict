@@ -7,13 +7,14 @@ import { idiomaActual, t } from "../../lib/i18n";
 import { evidencia, nombreVariable } from "../../lib/modelos";
 import { LeyendaEscala, MatrizCalor } from "../graficos/MatrizCalor";
 import { Insignia, Tarjeta } from "../ui";
+import { traducirTitulo } from "../../lib/titulos";
 
 type Ficha = Esquemas["FichaMetrica"];
 type Mapas = Esquemas["MapasMetricas"];
 
 /** Separa "Título (fuente)" en etiqueta y subtítulo, para que tareas con distinta fuente no se confundan. */
 export function partesTitulo(titulo: string): { etiqueta: string; sub?: string } {
-  const m = /^(.*?)\s*\(([^)]*)\)\s*$/.exec(titulo);
+  const m = /^(.*?)\s*\(([^)]*)\)\s*$/.exec(traducirTitulo(titulo));
   return m ? { etiqueta: m[1] as string, sub: m[2] } : { etiqueta: titulo };
 }
 

@@ -1,6 +1,7 @@
 /** Componentes base del sistema de diseño de TerraVerdict. */
 import { clsx } from "clsx";
 import {
+  BookOpen,
   AlertTriangle,
   Ban,
   Calculator,
@@ -17,9 +18,10 @@ import {
   XCircle,
   type LucideIcon,
 } from "lucide-react";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { useState, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { ErrorApi } from "../api/cliente";
 import { t } from "../lib/i18n";
+import { PanelLateral, primeraOracion } from "./PanelLateral";
 
 export type Tono = "neutral" | "accent" | "good" | "warning" | "serious" | "critical";
 
@@ -31,6 +33,27 @@ const COLOR_TONO: Record<Tono, string> = {
   serious: "var(--serious)",
   critical: "var(--critical)",
 };
+
+/** Subtítulo breve: si es largo, muestra la primera oración y despliega el resto a pedido. */
+function Subtitulo({ texto }: { texto: ReactNode }) {
+  const [abierto, setAbierto] = useState(false);
+  const partes = typeof texto === "string" && texto.length > 150 ? primeraOracion(texto) : null;
+  if (!partes?.resto) return <p className="mt-0.5 text-[13px] leading-snug text-ink-2">{texto}</p>;
+  return (
+    <p className="mt-0.5 text-[13px] leading-snug text-ink-2">
+      {partes.inicio}
+      {abierto && <> {partes.resto}</>}{" "}
+      <button
+        type="button"
+        onClick={() => setAbierto((a) => !a)}
+        aria-expanded={abierto}
+        className="font-medium text-accent-ink hover:underline"
+      >
+        {abierto ? t("menos", "less") : t("más", "more")}
+      </button>
+    </p>
+  );
+}
 
 export function Tarjeta({
   titulo,
@@ -56,7 +79,7 @@ export function Tarjeta({
         <header className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 px-5 pt-4">
           <div className="min-w-0">
             {titulo && <h2 className="text-[15px] font-semibold tracking-tight text-ink">{titulo}</h2>}
-            {subtitulo && <p className="mt-0.5 text-[13px] leading-snug text-ink-2">{subtitulo}</p>}
+            {subtitulo && <Subtitulo texto={subtitulo} />}
           </div>
           {acciones && <div className="flex max-w-full flex-wrap items-center gap-2">{acciones}</div>}
         </header>
@@ -237,20 +260,46 @@ export function Encabezado({
   titulo,
   descripcion,
   acciones,
+  ayuda,
 }: {
   eyebrow?: string;
   titulo: string;
   descripcion?: ReactNode;
   acciones?: ReactNode;
+  /** Contenido extra del panel lateral "Cómo leer esta vista" (método, fuentes, advertencias). */
+  ayuda?: ReactNode;
 }) {
+  const [abierto, setAbierto] = useState(false);
+  // Una descripción larga se resume en su primera oración; el resto vive en el panel lateral.
+  const partes = typeof descripcion === "string" ? primeraOracion(descripcion) : null;
+  const hayMas = Boolean(ayuda || partes?.resto);
   return (
     <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div className="max-w-3xl">
         {eyebrow && <p className="etiqueta mb-1.5">{eyebrow}</p>}
         <h1 className="text-[26px] font-semibold leading-tight tracking-tight text-ink md:text-[30px]">{titulo}</h1>
-        {descripcion && <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{descripcion}</p>}
+        {descripcion && (
+          <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
+            {partes ? partes.inicio : descripcion}
+            {hayMas && (
+              <button
+                type="button"
+                onClick={() => setAbierto(true)}
+                className="ml-2 inline-flex items-center gap-1 rounded-full border border-line px-2.5 py-0.5 align-middle text-[12.5px] font-medium text-accent-ink hover:bg-surface-2"
+              >
+                <BookOpen aria-hidden className="h-3.5 w-3.5" /> {t("Cómo leer esta vista", "How to read this view")}
+              </button>
+            )}
+          </p>
+        )}
       </div>
-      {acciones && <div className="flex shrink-0 gap-2">{acciones}</div>}
+      {acciones && <div className="flex shrink-0 flex-wrap gap-2">{acciones}</div>}
+      {hayMas && (
+        <PanelLateral abierto={abierto} alCerrar={() => setAbierto(false)} titulo={titulo}>
+          {descripcion && <p>{descripcion}</p>}
+          {ayuda}
+        </PanelLateral>
+      )}
     </div>
   );
 }

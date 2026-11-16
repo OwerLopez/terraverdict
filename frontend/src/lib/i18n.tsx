@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 /**
  * Internacionalización español / inglés.
  *
@@ -47,15 +48,18 @@ const Contexto = createContext<{ idioma: Idioma; cambiar: (i: Idioma) => void }>
 
 export function ProveedorIdioma({ children }: { children: ReactNode }) {
   const [idioma, setIdioma] = useState<Idioma>(actual);
+  const consultas = useQueryClient();
   const cambiar = useCallback((i: Idioma) => {
     actual = i;
+    // Los datos se traducen al recibirlos: al cambiar de idioma se vuelven a pedir.
+    consultas.removeQueries();
     try {
       localStorage.setItem(CLAVE, i);
     } catch {
       /* sin persistencia: el cambio vale para esta visita */
     }
     setIdioma(i);
-  }, []);
+  }, [consultas]);
   useEffect(() => {
     document.documentElement.lang = idioma;
   }, [idioma]);

@@ -3,6 +3,8 @@
  * (`npm run api:tipos`): si el backend cambia el contrato, TypeScript lo detecta.
  */
 import createClient from "openapi-fetch";
+import glosario from "../lib/glosario-en.json";
+import { idiomaActual } from "../lib/i18n";
 import type { components, paths } from "./esquema";
 
 export type Esquemas = components["schemas"];
@@ -71,5 +73,21 @@ export async function pedir<T>(
   if (resultado.error !== undefined || resultado.data === undefined) {
     throw interpretarProblema(resultado.response.status, resultado.error);
   }
-  return resultado.data;
+  return idiomaActual() === "en" ? traducirDatos(resultado.data) : resultado.data;
+}
+
+const GLOSARIO: Record<string, string> = glosario;
+
+/**
+ * Textos de los datos en inglés: cada cadena que coincide exactamente con el glosario
+ * (`scripts/glosario_en.py`, traducción validada: conserva todos los dígitos) se reemplaza.
+ * Los valores numéricos, los identificadores y las cadenas sin traducción quedan intactos.
+ */
+export function traducirDatos<T>(valor: T): T {
+  if (typeof valor === "string") return (GLOSARIO[valor] ?? valor) as T;
+  if (Array.isArray(valor)) return valor.map((v) => traducirDatos(v)) as T;
+  if (valor && typeof valor === "object") {
+    return Object.fromEntries(Object.entries(valor).map(([k, v]) => [k, traducirDatos(v)])) as T;
+  }
+  return valor;
 }

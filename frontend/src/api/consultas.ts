@@ -1,5 +1,6 @@
 /** Consultas de datos con TanStack Query. Cada hook consume un endpoint del contrato. */
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { idiomaActual } from "../lib/i18n";
 import { api, pedir, type Esquemas } from "./cliente";
 
 const MINUTO = 60_000;
@@ -126,15 +127,20 @@ export function useCancelarProceso() {
 export function useVerificarTexto() {
   return useMutation({
     // Sin `tolerancia_relativa` se usa la del backend (única fuente: app/services/verificador.py).
-    mutationFn: (cuerpo: Omit<Esquemas["SolicitudVerificacion"], "tolerancia_relativa"> & { tolerancia_relativa?: number }) =>
-      pedir(api.POST("/api/v1/asistente/verificar", { body: cuerpo as Esquemas["SolicitudVerificacion"] })),
+    mutationFn: (
+      cuerpo: Omit<Esquemas["SolicitudVerificacion"], "tolerancia_relativa" | "idioma"> & {
+        tolerancia_relativa?: number;
+        idioma?: Esquemas["SolicitudVerificacion"]["idioma"];
+      },
+    ) => pedir(api.POST("/api/v1/asistente/verificar", { body: { idioma: "es", ...cuerpo } as Esquemas["SolicitudVerificacion"] })),
   });
 }
 
 export function useConsultarAsistente() {
   return useMutation({
-    mutationFn: (cuerpo: Esquemas["ConsultaAsistente"]) =>
-      pedir(api.POST("/api/v1/asistente/consultas", { body: cuerpo })),
+    // El idioma de la respuesta (y el formato de sus cifras) sigue al de la interfaz.
+    mutationFn: (cuerpo: Omit<Esquemas["ConsultaAsistente"], "idioma">) =>
+      pedir(api.POST("/api/v1/asistente/consultas", { body: { ...cuerpo, idioma: idiomaActual() } })),
   });
 }
 

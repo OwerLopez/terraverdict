@@ -36,7 +36,7 @@ export function SismosPagina() {
   const capa = useCapaSismos(Number(magnitudMin));
   const { detalle } = useExpedienteVigente("sismicidad");
   const comparaciones = useExpedientes({ tipo: "comparacion_modelos" });
-  const conteos = comparaciones.data?.items.find((e) => e.titulo.startsWith("Conteo sísmico"));
+  const conteos = comparaciones.data?.items.find((e) => e.titulo.includes("Poisson"));
   const colores = useColores();
   const r = detalle.data?.resultado.tipo === "sismicidad" ? (detalle.data.resultado as Sismicidad) : undefined;
   const anuales = useMemo(

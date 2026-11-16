@@ -48,6 +48,7 @@ import {
 import { CATEGORIAS_EVENTO } from "../lib/colores";
 import { textoCota, cifraCitada, conUnidad, fecha, numero, valorP } from "../lib/formato";
 import { t } from "../lib/i18n";
+import { bilingueDato } from "../lib/titulos";
 
 const SERIE_T = "chili_analisis.cabecera_power:temperatura_aire_2m:power_mensual:p1y";
 type Crisis = {
@@ -95,7 +96,7 @@ function Crisis() {
             <p className="cifra mt-3 text-[34px] font-semibold leading-none tracking-tight text-ink" title={textoCota(cifra.cota)}>
               {cifraCitada(cifra)}
             </p>
-            <p className="mt-1.5 text-[12.5px] text-ink-2">{cifra.descripcion}</p>
+            <p className="mt-1.5 text-[12.5px] text-ink-2">{bilingueDato(cifra.descripcion, cifra.descripcion_en)}</p>
             {proporcion !== null && medidor && (
               <div className="mt-3">
                 <div className="h-1.5 overflow-hidden rounded-full bg-surface-3" role="img" aria-label={`${numero(proporcion, 0)} % ${t(...medidor.texto)}`}>
@@ -110,16 +111,16 @@ function Crisis() {
               <dl className="mt-3 space-y-1 border-t border-line pt-3 text-[12.5px]">
                 {secundarias.map((c) => (
                   <div key={c.descripcion} className="flex items-baseline justify-between gap-3">
-                    <dt className="text-ink-2">{c.descripcion}</dt>
+                    <dt className="text-ink-2">{bilingueDato(c.descripcion, c.descripcion_en)}</dt>
                     <dd className="cifra shrink-0 font-semibold text-ink" title={textoCota(c.cota)}>{cifraCitada(c)}</dd>
                   </div>
                 ))}
               </dl>
             )}
-            <p className="mt-3 text-[13.5px] font-medium leading-snug text-ink">{e.titulo}</p>
+            <p className="mt-3 text-[13.5px] font-medium leading-snug text-ink">{bilingueDato(e.titulo, e.titulo_en)}</p>
             {fuente && (
               <a href={fuente.url} target="_blank" rel="noreferrer" className="mt-auto inline-flex items-center gap-1 pt-3 text-[12px] text-accent-ink hover:underline">
-                <ExternalLink aria-hidden className="h-3 w-3" /> Fuente: {fuente.medio ?? fuente.titulo}
+                <ExternalLink aria-hidden className="h-3 w-3" /> {t("Fuente", "Source")}: {fuente.medio ?? fuente.titulo}
               </a>
             )}
           </article>

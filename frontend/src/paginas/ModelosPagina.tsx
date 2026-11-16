@@ -8,6 +8,7 @@ import { Dato, Encabezado, ErrorCarga, EstadoVacio, Esqueleto, Insignia, Tarjeta
 import { numero, valorP } from "../lib/formato";
 import { t } from "../lib/i18n";
 import { UMBRAL_P_DM, evidencia as reglaEvidencia } from "../lib/modelos";
+import { traducirTitulo } from "../lib/titulos";
 
 type Comparacion = Esquemas["ResultadoComparacionModelos"];
 type Modelo = Esquemas["ModeloEvaluado"];
@@ -147,7 +148,7 @@ export function ModelosPagina() {
             className="panel-vidrio mt-1 block h-10 w-full rounded-xl px-3 text-[14px] text-ink outline-none focus:ring-2 focus:ring-accent"
           >
             {lista.data.items.map((e) => (
-              <option key={e.id} value={e.id}>{e.titulo}</option>
+              <option key={e.id} value={e.id}>{traducirTitulo(e.titulo)}</option>
             ))}
           </select>
         </label>
