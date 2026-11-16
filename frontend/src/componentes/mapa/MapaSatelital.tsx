@@ -104,12 +104,54 @@ function haceDias(n: number): string {
 }
 
 /** Comparaciones con fechas de la crónica de eventos documentados (datos/eventos/arequipa.json). */
-type Comparacion = { a: string; b: string; texto: [string, string]; capa: CapaId; capaB?: CapaId; centro?: [number, number] };
+/**
+ * Comparación guiada: dos fechas de la misma capa, abiertas a la escala que la resolución permite leer
+ * (30 m → el embalse; 1 km → la cuenca; 9 km → la región) y con lo que conviene mirar. Nada de lo que se
+ * describe es una medición: es lo que muestra la imagen.
+ */
+type Comparacion = {
+  a: string;
+  b: string;
+  capa: CapaId;
+  capaB?: CapaId;
+  titulo: [string, string];
+  observar: [string, string];
+  escala: [string, string];
+  centro: [number, number];
+  zoom: number;
+};
+
+/** Centro de la cuenca regulada del Chili (dominio `chili_analisis`: -71,6 a -70,9 E; -16,5 a -15,3 S). */
+const CENTRO_CUENCA: [number, number] = [-71.25, -15.9];
 
 const COMPARACIONES: Comparacion[] = [
   ...comparacionHls(),
-  { a: "2023-11-07", b: "2025-02-15", capa: "MODIS_Terra_L3_NDVI_Monthly", texto: ["Verdor: represas al 39 % (nov 2023) frente a crecida y turbidez (feb 2025)", "Greenness: reservoirs at 39 % (Nov 2023) vs flood and turbidity (Feb 2025)"] },
-  { a: "2024-09-15", b: "2025-02-15", capa: "SMAP_L4_Analyzed_Root_Zone_Soil_Moisture", texto: ["Estiaje (sep 2024) frente a lluvias (feb 2025)", "Dry season (Sep 2024) vs rainy season (Feb 2025)"] },
+  {
+    a: "2023-11-07",
+    b: "2025-02-15",
+    capa: "MODIS_Terra_L3_NDVI_Monthly",
+    titulo: ["Verdor de la cuenca: sequía de nov 2023 frente a lluvias de feb 2025", "Basin greenness: Nov 2023 drought vs Feb 2025 rains"],
+    observar: [
+      "Tonos verdes en pastizales y bofedales de la cabecera. En nov 2023 las represas tenían 159 de 409 hm³ (≈ 39 %). Píxel de 1 km: no distingue cada represa.",
+      "Green tones in the headwater grasslands and wetlands. In Nov 2023 the reservoirs held 159 of 409 hm³ (≈ 39 %). 1 km pixels: individual reservoirs are not resolved.",
+    ],
+    escala: ["MODIS · 1 km · compuesto mensual", "MODIS · 1 km · monthly composite"],
+    centro: CENTRO_CUENCA,
+    zoom: 8.6,
+  },
+  {
+    a: "2024-09-15",
+    b: "2025-02-15",
+    capa: "SMAP_L4_Analyzed_Root_Zone_Soil_Moisture",
+    titulo: ["Humedad del suelo: estiaje de sep 2024 frente a lluvias de feb 2025", "Soil moisture: Sep 2024 dry season vs Feb 2025 rains"],
+    observar: [
+      "Amarillo = suelo seco; verde y azul = más húmedo. Señal regional: un píxel de 9 km cubre varias quebradas.",
+      "Yellow = dry soil; green and blue = wetter. Regional signal: one 9 km pixel covers several ravines.",
+    ],
+    escala: ["SMAP L4 · 9 km · diaria", "SMAP L4 · 9 km · daily"],
+    centro: CENTRO_CUENCA,
+    zoom: 6.8,
+  },
 ];
 
 /**
@@ -127,7 +169,22 @@ function comparacionHls(): Comparacion[] {
   const a = masCercana("2023-11");
   const b = masCercana("2025-02");
   if (!a || !b) return [];
-  return [{ a: a.fecha, b: b.fecha, capa: a.capa, capaB: b.capa, centro: CENTRO_AGUADA_BLANCA, texto: [`Aguada Blanca a 30 m: ${a.fecha} (almacenamiento bajo) frente a ${b.fecha} (episodio de turbidez)`, `Aguada Blanca at 30 m: ${a.fecha} (low storage) vs ${b.fecha} (turbidity episode)`] }];
+  return [
+    {
+      a: a.fecha,
+      b: b.fecha,
+      capa: a.capa,
+      capaB: b.capa,
+      titulo: [`Embalse Aguada Blanca: ${a.fecha} (almacenamiento bajo) frente a ${b.fecha} (turbidez)`, `Aguada Blanca reservoir: ${a.fecha} (low storage) vs ${b.fecha} (turbidity)`],
+      observar: [
+        "Ancho y color del espejo de agua: verde azulado y angosto en nov 2023; pardo claro (compatible con agua cargada de sedimentos) en feb 2025. Es color de superficie, no una medición de turbidez ni de volumen.",
+        "Width and colour of the water surface: narrow and blue-green in Nov 2023; light brown (consistent with sediment-laden water) in Feb 2025. This is surface colour, not a turbidity or volume measurement.",
+      ],
+      escala: ["HLS (Sentinel-2 / Landsat) · 30 m", "HLS (Sentinel-2 / Landsat) · 30 m"],
+      centro: CENTRO_AGUADA_BLANCA,
+      zoom: 13.4,
+    },
+  ];
 }
 
 /** Margen para que el panel de controles (izquierda, ≥ 768 px) no tape el punto al que se vuela. */
@@ -176,6 +233,7 @@ export function MapaSatelital({
   const [mezcla, setMezcla] = useState(50);
   // Cortina (swipe): la fecha B se dibuja en un segundo mapa sincronizado y recortado a la derecha del corte.
   const [modoComparacion, setModoComparacion] = useState<"cortina" | "mezcla">("cortina");
+  const [zoomActual, setZoomActual] = useState(0);
   const [corte, setCorte] = useState(50);
   const contenedorB = useRef<HTMLDivElement>(null);
   const mapaB = useRef<MapaML | null>(null);
@@ -276,6 +334,7 @@ export function MapaSatelital({
       m.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-right");
       m.addControl(new maplibregl.ScaleControl({ unit: "metric" }), "bottom-right");
       m.on("load", () => setListo(true));
+      m.on("zoomend", () => setZoomActual(m.getZoom()));
       m.on("error", (e) => {
         const msg = e.error?.message ?? "";
         if (msg.includes("WebGL")) setError(t("Su navegador no soporta WebGL: el mapa 3D no puede mostrarse.", "Your browser does not support WebGL: the 3D map cannot be shown."));
@@ -485,6 +544,7 @@ export function MapaSatelital({
     mapa.current.fitBounds([[x1, y1], [x2, y2]], { padding: 60, pitch: tresD ? 50 : 0, bearing: -18, duration: 1200 });
   };
 
+  const [comparacionActiva, setComparacionActiva] = useState<Comparacion | null>(null);
   const usarComparacion = (c: Comparacion) => {
     setReproduciendo(false);
     setLapso(null);
@@ -493,18 +553,16 @@ export function MapaSatelital({
     setFecha(c.a);
     setFechaB(c.b);
     setMezcla(50);
-    setCorte(50);
     setComparar(true);
+    setComparacionActiva(c);
     const m = mapa.current;
-    if (c.centro && m) {
-      const centro = c.centro;
-      m.flyTo({ center: centro, zoom: 13.4, pitch: 0, bearing: 0, duration: 1400, padding: margenPanel() });
-      // La cortina queda justo sobre el embalse: mitad fecha A, mitad fecha B.
-      m.once("moveend", () => {
-        const x = m.project(centro).x / m.getContainer().clientWidth;
-        setCorte(Math.min(90, Math.max(10, Math.round(x * 100))));
-      });
-    }
+    if (!m) return;
+    m.flyTo({ center: c.centro, zoom: c.zoom, pitch: 0, bearing: 0, duration: 1400, padding: margenPanel() });
+    // La línea divisoria queda sobre el centro de interés: mitad fecha A, mitad fecha B.
+    m.once("moveend", () => {
+      const x = m.project(c.centro).x / m.getContainer().clientWidth;
+      setCorte(Math.min(90, Math.max(10, Math.round(x * 100))));
+    });
   };
 
   const botonCapa = (c: Capa) => (
@@ -597,57 +655,87 @@ export function MapaSatelital({
           {CAPAS.filter((c) => c.grupo === "imagen").map(botonCapa)}
         </div>
 
-        <label className="mt-3 block text-[12px] text-ink-2">
-          {comparar ? t("Fecha A (debajo)", "Date A (below)") : t("Fecha", "Date")}
-          <input type="date" value={fecha} max={haceDias(0)} min="2000-02-24" onChange={(e) => e.target.value && setFecha(e.target.value)} className="mt-1 h-9 w-full rounded-lg border border-line bg-surface px-2.5 text-[13px] text-ink" />
-        </label>
-        <label className="mt-2 flex items-center gap-2 text-[12.5px] font-medium text-ink">
-          <input type="checkbox" checked={comparar} onChange={(e) => setComparar(e.target.checked)} className="accent-[var(--accent)]" />
-          <SplitSquareHorizontal className="h-3.5 w-3.5" /> {t("Comparar dos fechas", "Compare two dates")}
-        </label>
-        {comparar && (
-          <div className="mt-2 space-y-2">
-            <label className="block text-[12px] text-ink-2">
-              {t("Fecha B (encima)", "Date B (on top)")}
-              <input type="date" value={fechaB} max={haceDias(0)} min="2000-02-24" onChange={(e) => e.target.value && setFechaB(e.target.value)} className="mt-1 h-9 w-full rounded-lg border border-line bg-surface px-2.5 text-[13px] text-ink" />
-            </label>
-            <Segmentado<"cortina" | "mezcla">
-              etiqueta={t("Modo de comparación", "Comparison mode")}
-              valor={modoComparacion}
-              alCambiar={setModoComparacion}
-              opciones={[
-                { valor: "cortina", texto: t("Cortina", "Swipe") },
-                { valor: "mezcla", texto: t("Transparencia", "Blend") },
-              ]}
-            />
-            <p className="rounded-lg bg-accent-soft px-2.5 py-1.5 text-[11.5px] leading-snug text-accent-ink">
-              {modoComparacion === "cortina"
-                ? t("Arrastre el círculo blanco del mapa (o esta barra): a la izquierda se ve la fecha A y a la derecha la fecha B, sobre el mismo lugar.", "Drag the white round handle on the map (or this slider): the left side shows date A and the right side date B, over the same place.")
-                : t("Mueva la barra: 0 muestra solo la fecha A y 100 solo la fecha B; en medio se superponen.", "Move the slider: 0 shows only date A and 100 only date B; in between they overlap.")}
-            </p>
-            <label className="block text-[11.5px] text-ink-3">
-              <span className="flex justify-between"><span>A · {fechaCapa(def, fecha)}</span><span>B · {fechaCapa(defB, fechaB)}</span></span>
-              {modoComparacion === "cortina" ? (
-                <input type="range" min={2} max={98} value={corte} onChange={(e) => setCorte(Number(e.target.value))} aria-label={t("Posición de la cortina", "Curtain position")} className="mt-1 w-full accent-[var(--accent)]" />
-              ) : (
-                <input type="range" min={0} max={100} value={mezcla} onChange={(e) => setMezcla(Number(e.target.value))} aria-label={t("Mezcla entre la fecha A y la fecha B", "Blend between date A and date B")} className="mt-1 w-full accent-[var(--accent)]" />
-              )}
-            </label>
-          </div>
-        )}
-        <div className="mt-2 space-y-1">
-          <p className="text-[11px] text-ink-3">{t("Comparaciones con eventos documentados:", "Comparisons with documented events:")}</p>
-          <p className="text-[11px] leading-snug text-ink-3">
+        {zoomActual > def.nivel + 2.5 && (
+          <p className="mt-3 rounded-lg border border-[var(--warning)]/50 bg-[var(--warning)]/10 px-2.5 py-1.5 text-[11.5px] leading-snug text-ink">
             {t(
-              "Observación: en feb-2025 el embalse se ve pardo claro (compatible con agua cargada de sedimentos) y en nov-2023 verde azulado. Es color de superficie en reflectancia, no una medición de turbidez ni de volumen.",
-              "Observation: in Feb 2025 the reservoir looks light brown (consistent with sediment-laden water) and in Nov 2023 blue-green. This is surface colour in reflectance, not a turbidity or volume measurement.",
+              `A este acercamiento se ve el interior de un solo píxel de ${def.resolucion}: aléjese para leer la capa.`,
+              `At this zoom you are looking inside a single ${def.resolucion} pixel: zoom out to read the layer.`,
             )}
           </p>
-          {COMPARACIONES.map((c) => (
-            <button key={c.a + c.capa} type="button" onClick={() => usarComparacion(c)} className="block w-full rounded-lg border border-line px-2.5 py-1.5 text-left text-[11.5px] text-ink-2 hover:bg-surface-2 hover:text-ink">
-              {t(...c.texto)}
-            </button>
-          ))}
+        )}
+
+        <div className="mt-3 rounded-xl border border-line p-2.5">
+          <label className="flex items-center gap-2 text-[13px] font-semibold text-ink">
+            <input type="checkbox" checked={comparar} onChange={(e) => { setComparar(e.target.checked); if (!e.target.checked) setComparacionActiva(null); }} className="accent-[var(--accent)]" />
+            <SplitSquareHorizontal className="h-4 w-4" aria-hidden /> {t("Comparar dos fechas", "Compare two dates")}
+          </label>
+
+          <label className="mt-2.5 block text-[12px] text-ink-2">
+            {comparar ? (
+              <span className="flex items-center gap-1.5">
+                <span className="rounded bg-[#1d63c8] px-1.5 py-px text-[10.5px] font-bold text-white">A</span>
+                {modoComparacion === "cortina" ? t("Fecha A · mitad izquierda del mapa", "Date A · left half of the map") : t("Fecha A · imagen de base", "Date A · base image")}
+              </span>
+            ) : (
+              t("Fecha de la imagen", "Image date")
+            )}
+            <input type="date" value={fecha} max={haceDias(0)} min="2000-02-24" onChange={(e) => e.target.value && setFecha(e.target.value)} className="mt-1 h-9 w-full rounded-lg border border-line bg-surface px-2.5 text-[13px] text-ink" />
+          </label>
+
+          {comparar && (
+            <div className="mt-2 space-y-2.5">
+              <label className="block text-[12px] text-ink-2">
+                <span className="flex items-center gap-1.5">
+                  <span className="rounded bg-[#eb6834] px-1.5 py-px text-[10.5px] font-bold text-white">B</span>
+                  {modoComparacion === "cortina" ? t("Fecha B · mitad derecha del mapa", "Date B · right half of the map") : t("Fecha B · imagen superpuesta", "Date B · overlay image")}
+                </span>
+                <input type="date" value={fechaB} max={haceDias(0)} min="2000-02-24" onChange={(e) => e.target.value && setFechaB(e.target.value)} className="mt-1 h-9 w-full rounded-lg border border-line bg-surface px-2.5 text-[13px] text-ink" />
+              </label>
+              <Segmentado<"cortina" | "mezcla">
+                etiqueta={t("Modo de comparación", "Comparison mode")}
+                valor={modoComparacion}
+                alCambiar={setModoComparacion}
+                opciones={[
+                  { valor: "cortina", texto: t("Cortina (dividir)", "Swipe (split)") },
+                  { valor: "mezcla", texto: t("Transparencia", "Blend (overlay)") },
+                ]}
+              />
+              {modoComparacion === "cortina" ? (
+                <p className="rounded-lg bg-accent-soft px-2.5 py-1.5 text-[11.5px] leading-snug text-accent-ink">
+                  {t(
+                    "El mapa se divide en dos sobre el mismo lugar: A a la izquierda y B a la derecha. Arrastre el círculo blanco del mapa para mover la línea divisoria; las fechas se cambian arriba.",
+                    "The map is split over the same place: A on the left, B on the right. Drag the white round handle on the map to move the dividing line; change the dates above.",
+                  )}
+                </p>
+              ) : (
+                <label className="block text-[11.5px] text-ink-2">
+                  {t("Opacidad de la fecha B", "Opacity of date B")}: <span className="cifra font-semibold text-ink">{mezcla} %</span>
+                  <input type="range" min={0} max={100} value={mezcla} onChange={(e) => setMezcla(Number(e.target.value))} aria-label={t("Opacidad de la fecha B", "Opacity of date B")} className="mt-1 w-full accent-[var(--accent)]" />
+                  <span className="flex justify-between text-[10.5px] text-ink-3"><span>0 % = {t("solo A", "only A")}</span><span>100 % = {t("solo B", "only B")}</span></span>
+                </label>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-3 space-y-1.5">
+          <p className="etiqueta">{t("Comparaciones guiadas", "Guided comparisons")}</p>
+          {COMPARACIONES.map((c) => {
+            const activa = comparacionActiva?.capa === c.capa && comparacionActiva.a === c.a;
+            return (
+              <button
+                key={c.a + c.capa}
+                type="button"
+                onClick={() => usarComparacion(c)}
+                aria-pressed={activa}
+                className={`block w-full rounded-lg border px-2.5 py-2 text-left transition-colors ${activa ? "border-accent bg-accent-soft" : "border-line hover:bg-surface-2"}`}
+              >
+                <span className="block text-[12px] font-semibold leading-snug text-ink">{t(...c.titulo)}</span>
+                <span className="mt-1 inline-block rounded bg-surface-3 px-1.5 py-px text-[10.5px] font-medium text-ink-2">{t(...c.escala)}</span>
+                {activa && <span className="mt-1.5 block text-[11.5px] leading-snug text-ink-2"><strong className="text-ink">{t("Qué mirar: ", "What to look for: ")}</strong>{t(...c.observar)}</span>}
+              </button>
+            );
+          })}
         </div>
 
         <div className="mt-3 rounded-xl border border-line p-2.5">
