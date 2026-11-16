@@ -1,5 +1,6 @@
 import type { ExpressionSpecification } from "maplibre-gl";
 import { CloudRain, Droplets, MapPinned, Thermometer, Waves } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Esquemas } from "../api/cliente";
@@ -9,11 +10,11 @@ import { TablaDatos } from "../componentes/fenomenos/TablaDatos";
 import { ChipEstado, Dato, Encabezado, ErrorCarga, EstadoVacio, Esqueleto, Insignia, Segmentado, Tarjeta, VEREDICTOS } from "../componentes/ui";
 import { RAMPA_AZUL } from "../lib/colores";
 import { fechaHora, nombreMes, numero, valorP } from "../lib/formato";
+import { areasDepartamentos, escala, valores, type Metrica } from "../lib/coropletas";
 import { t } from "../lib/i18n";
 
 type Panorama = Esquemas["ResultadoPanoramaNacional"];
 type Departamento = Esquemas["DepartamentoNacional"];
-type Metrica = "temperatura" | "lluvia" | "tendencia_lluvia";
 
 const RAMPA: ExpressionSpecification = ["interpolate", ["linear"], ["get", "valor"], 0, RAMPA_AZUL[0], 0.25, RAMPA_AZUL[2], 0.5, RAMPA_AZUL[3], 0.75, RAMPA_AZUL[5], 1, RAMPA_AZUL[6]];
 
@@ -26,18 +27,46 @@ function EstadoSpi({ d }: { d: Departamento }) {
   return <Insignia>{t("Normal", "Normal")} {numero(v, 2, { signo: true })}</Insignia>;
 }
 
+const UNIDADES: Record<Metrica, string> = { temperatura: "°C/dec", tendencia_lluvia: "mm/dec", lluvia: "mm/año" };
+
 function puntos(deps: Departamento[], metrica: Metrica): Esquemas["Feature"][] {
-  const valor = (d: Departamento) =>
-    metrica === "temperatura" ? d.tendencia_temperatura.sen_por_decada : metrica === "lluvia" ? Math.log10(1 + d.lluvia_anual_media_mm) : d.tendencia_lluvia.sen_por_decada;
-  const vals = deps.map(valor);
-  const min = Math.min(...vals);
-  const max = Math.max(...vals);
-  return deps.map((d) => ({
-    type: "Feature",
-    id: d.id,
-    geometry: { type: "Point", coordinates: [d.lon, d.lat] },
-    properties: { nombre: d.nombre, valor: max > min ? (valor(d) - min) / (max - min) : 0.5, original: valor(d) },
-  }));
+  const norm = escala(deps, metrica);
+  return deps.map((d) => {
+    const v = valores(d, metrica);
+    return {
+      type: "Feature",
+      id: d.id,
+      geometry: { type: "Point", coordinates: [d.lon, d.lat] },
+      properties: { nombre: d.nombre, valor: norm(v.color), original: v.real },
+    };
+  });
+}
+
+function useLimitesDepartamentos() {
+  return useQuery({
+    queryKey: ["peru-departamentos"],
+    staleTime: Infinity,
+    queryFn: async () => {
+      const r = await fetch("/datos/peru-departamentos.geojson");
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return (await r.json()) as GeoJSON.FeatureCollection;
+    },
+  });
+}
+
+/** Leyenda continua con los extremos en unidades reales. */
+function LeyendaRampa({ deps, metrica }: { deps: Departamento[]; metrica: Metrica }) {
+  const reales = deps.map((d) => valores(d, metrica).real);
+  const min = Math.min(...reales);
+  const max = Math.max(...reales);
+  return (
+    <div className="mt-3 flex items-center gap-3 text-[12px] text-ink-3">
+      <span className="cifra">{numero(min, metrica === "lluvia" ? 0 : 2)}</span>
+      <span aria-hidden className="h-2.5 flex-1 rounded-full" style={{ background: `linear-gradient(90deg, ${RAMPA_AZUL[0]}, ${RAMPA_AZUL[2]}, ${RAMPA_AZUL[3]}, ${RAMPA_AZUL[5]}, ${RAMPA_AZUL[6]})` }} />
+      <span className="cifra">{numero(max, metrica === "lluvia" ? 0 : 2)}</span>
+      <span>{metrica === "lluvia" ? t("mm/año (escala log)", "mm/yr (log scale)") : UNIDADES[metrica]}</span>
+    </div>
+  );
 }
 
 function Sismicidad({ s }: { s: NonNullable<Panorama["sismicidad"]> }) {
@@ -106,9 +135,11 @@ function Sismicidad({ s }: { s: NonNullable<Panorama["sismicidad"]> }) {
 
 export function NacionalPagina() {
   const consulta = useNacional();
+  const limites = useLimitesDepartamentos();
   const [metrica, setMetrica] = useState<Metrica>("temperatura");
   const r = consulta.data?.resultado as Panorama | null | undefined;
   const deps = useMemo(() => r?.departamentos ?? [], [r]);
+  const areas = useMemo(() => areasDepartamentos(limites.data, deps, metrica), [limites.data, deps, metrica]);
   const unicos = deps.filter((d) => !d.comparte_celda_con);
   const compartidas = deps.filter((d) => d.comparte_celda_con).map((d) => `${d.nombre} – ${deps.find((x) => x.id === d.comparte_celda_con)?.nombre ?? d.comparte_celda_con}`);
   const anios = deps.flatMap((d) => d.serie_anios ?? []);
@@ -159,18 +190,24 @@ export function NacionalPagina() {
                 ]}
               />
             }
-            pie={t(`Generado ${fechaHora(consulta.data?.generado_utc)} · intensidad del azul = valor relativo entre departamentos`, `Generated ${fechaHora(consulta.data?.generado_utc)} · blue intensity = relative value across departments`)}
+            pie={t(
+              `Generado ${fechaHora(consulta.data?.generado_utc)} · cada departamento se colorea con el valor de la celda NASA POWER (0,5°) de su capital, marcada con un punto; no es un promedio del territorio. Límites: Natural Earth (dominio público).`,
+              `Generated ${fechaHora(consulta.data?.generado_utc)} · each department is filled with the value of its capital's NASA POWER cell (0.5°), marked with a dot; it is not an area average. Boundaries: Natural Earth (public domain).`,
+            )}
           >
             <MapaPuntos
               puntos={puntos(deps, metrica)}
+              areas={areas}
+              atribucionAreas={t("Límites: Natural Earth", "Boundaries: Natural Earth")}
               color={RAMPA}
-              radio={9}
+              radio={5}
               centro={[-75.5, -9.5]}
               zoom={4.2}
               alto={460}
               descripcion={t("Departamentos del Perú", "Departments of Peru")}
-              etiqueta={(p) => `${String(p.nombre)}: ${numero(Number(p.original), 2)}`}
+              etiqueta={(p) => `${String(p.nombre)}: ${numero(Number(p.original), metrica === "lluvia" ? 0 : 2)} ${metrica === "lluvia" ? t("mm/año", "mm/yr") : UNIDADES[metrica]}`}
             />
+            <LeyendaRampa deps={deps} metrica={metrica} />
           </Tarjeta>
 
           <Tarjeta

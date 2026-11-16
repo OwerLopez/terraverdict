@@ -19,6 +19,8 @@ export function MapaPuntos({
   descripcion,
   etiqueta,
   alto = 420,
+  areas,
+  atribucionAreas,
 }: {
   puntos: Esquemas["Feature"][];
   color: ExpressionSpecification | string;
@@ -28,10 +30,18 @@ export function MapaPuntos({
   descripcion: string;
   etiqueta: (p: Record<string, unknown>) => string;
   alto?: number;
+  /** Polígonos opcionales (p. ej., departamentos) coloreados con la misma expresión que los puntos. */
+  areas?: GeoJSON.Feature[];
+  atribucionAreas?: string;
 }) {
   const contenedor = useRef<HTMLDivElement>(null);
   const mapa = useRef<MapaML | null>(null);
   const [listo, setListo] = useState(false);
+  // Los manejadores del mapa se registran una vez: leen la etiqueta vigente (cambia con la variable elegida).
+  const etiquetaVigente = useRef(etiqueta);
+  useEffect(() => {
+    etiquetaVigente.current = etiqueta;
+  }, [etiqueta]);
 
   useEffect(() => {
     if (!contenedor.current || mapa.current) return;
@@ -67,6 +77,34 @@ export function MapaPuntos({
 
   useEffect(() => {
     const m = mapa.current;
+    if (!m || !listo || !areas) return;
+    const datos = { type: "FeatureCollection" as const, features: areas };
+    const fuente = m.getSource("areas") as maplibregl.GeoJSONSource | undefined;
+    if (fuente) {
+      fuente.setData(datos);
+      m.setPaintProperty("areas", "fill-color", color);
+      return;
+    }
+    m.addSource("areas", { type: "geojson", data: datos, attribution: atribucionAreas });
+    // Debajo de los puntos (si ya existen), para que la capital siga visible y enfocable.
+    const antes = m.getLayer("puntos") ? "puntos" : undefined;
+    m.addLayer({ id: "areas", type: "fill", source: "areas", paint: { "fill-color": color, "fill-opacity": 0.72 } }, antes);
+    m.addLayer({ id: "areas-borde", type: "line", source: "areas", paint: { "line-color": "#ffffff", "line-width": 0.8, "line-opacity": 0.9 } }, antes);
+    const popup = new maplibregl.Popup({ closeButton: false, closeOnClick: false, offset: 4 });
+    m.on("mousemove", "areas", (e) => {
+      const f = e.features?.[0];
+      if (!f) return;
+      m.getCanvas().style.cursor = "pointer";
+      popup.setLngLat(e.lngLat).setText(etiquetaVigente.current(f.properties ?? {})).addTo(m);
+    });
+    m.on("mouseleave", "areas", () => {
+      m.getCanvas().style.cursor = "";
+      popup.remove();
+    });
+  }, [areas, listo, color, atribucionAreas]);
+
+  useEffect(() => {
+    const m = mapa.current;
     if (!m || !listo) return;
     const datos = { type: "FeatureCollection" as const, features: puntos as GeoJSON.Feature[] };
     const fuente = m.getSource("puntos") as maplibregl.GeoJSONSource | undefined;
@@ -90,14 +128,14 @@ export function MapaPuntos({
         m.getCanvas().style.cursor = "pointer";
         const f = e.features?.[0];
         if (!f) return;
-        popup.setLngLat(e.lngLat).setText(etiqueta(f.properties ?? {})).addTo(m);
+        popup.setLngLat(e.lngLat).setText(etiquetaVigente.current(f.properties ?? {})).addTo(m);
       });
       m.on("mouseleave", "puntos", () => {
         m.getCanvas().style.cursor = "";
         popup.remove();
       });
     }
-  }, [puntos, listo, color, radio, etiqueta]);
+  }, [puntos, listo, color, radio]);
 
   return (
     <div
