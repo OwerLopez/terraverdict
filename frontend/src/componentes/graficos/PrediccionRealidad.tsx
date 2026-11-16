@@ -10,6 +10,18 @@ import { numero } from "../../lib/formato";
 import type { SeriePrueba } from "../../lib/indicadores";
 import { t } from "../../lib/i18n";
 
+/**
+ * Banda del 90 % de un mes. El pipeline guarda el intervalo conformal como semianchura q (una sola cifra,
+ * calibrada en validación): banda = pronóstico ± q. Si trae un par [lo, hi] por mes, se usa tal cual.
+ */
+export function banda(serie: SeriePrueba, i: number): [number, number] | null {
+  const iv = serie.intervalo_90 as unknown as (number | [number, number] | null)[];
+  const p = serie.pronostico[i];
+  if (Array.isArray(iv[i])) return iv[i] as [number, number];
+  const q = iv.length === 1 && typeof iv[0] === "number" ? iv[0] : typeof iv[i] === "number" ? (iv[i] as number) : null;
+  return q != null && p != null ? [p - q, p + q] : null;
+}
+
 export function PrediccionRealidad({ serie, particion }: { serie: SeriePrueba; particion: Record<string, [string, string]> | null }) {
   const c = useColores();
   const datos = useMemo(
@@ -19,7 +31,7 @@ export function PrediccionRealidad({ serie, particion }: { serie: SeriePrueba; p
         observado: serie.observado[i] ?? null,
         pronostico: serie.pronostico[i] ?? null,
         referencia: serie.referencia[i] ?? null,
-        banda: serie.intervalo_90[i] ?? null,
+        banda: banda(serie, i),
       })),
     [serie],
   );
