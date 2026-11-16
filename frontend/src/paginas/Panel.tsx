@@ -3,14 +3,12 @@ import {
   ArrowRight,
   Bot,
   CheckCircle2,
-  Compass,
   Clock,
   Database,
   Droplets,
   ExternalLink,
   FileCheck2,
   Gauge,
-  Globe2,
   Mountain,
   Thermometer,
   Waves,
@@ -31,8 +29,7 @@ import {
   useVerificacion,
 } from "../api/consultas";
 import { Semaforo, SimuladorEnso, TablaVeredictos } from "../componentes/portada/Estado";
-import { BannerMapa, GuiaJurado, MuroMisiones, QueResuelve } from "../componentes/portada/Guia";
-import { abrirTerra } from "../componentes/ChatFlotante";
+import { BannerMapa, GuiaJurado, HeroPortada, MuroMisiones, QueResuelve } from "../componentes/portada/Guia";
 import { ModoHistoria } from "../componentes/portada/Historia";
 import { comoIndicadores } from "../lib/indicadores";
 import { BarraEstados, LineaTiempo } from "../componentes/graficos/Evidencia";
@@ -43,7 +40,6 @@ import {
   Dato,
   ESTADOS_PRUEBA,
   ESTADOS_VERIFICACION,
-  Encabezado,
   Esqueleto,
   ErrorCarga,
   Insignia,
@@ -350,7 +346,7 @@ function Modulos() {
               <span className="grid h-7 w-9 place-items-center rounded-md bg-surface-2 font-mono text-[11px] font-semibold text-ink-2">{f.m}</span>
               <span className="text-[13.5px] font-medium text-ink">{f.nombre}</span>
             </span>
-            <Insignia tono={f.listo ? "good" : "neutral"} icono={f.listo ? CheckCircle2 : Clock}>{f.estado}</Insignia>
+            <Insignia tono={f.listo ? "good" : "neutral"} icono={f.listo ? CheckCircle2 : Clock} className="max-w-full !whitespace-normal !rounded-xl text-left">{f.estado}</Insignia>
           </li>
         ))}
       </ul>
@@ -383,21 +379,7 @@ export function Panel() {
 
   return (
     <div className="space-y-6">
-      <Encabezado
-        eyebrow={t("NASA Space Apps 2026 · Cuenca del Chili, Arequipa → Perú", "NASA Space Apps 2026 · Chili basin, Arequipa → Peru")}
-        titulo={t("Arequipa se queda sin agua por falta… y por exceso", "Arequipa runs out of water from too little… and from too much")}
-        descripcion={t(
-          "TerraVerdict usa datos abiertos de NASA para responder, con evidencia auditable, tres preguntas: ¿qué está cambiando de verdad?, ¿qué se puede anticipar? y ¿dónde conviene actuar?",
-          "TerraVerdict uses NASA open data to answer three questions with auditable evidence: what is really changing, what can be anticipated, and where to act.",
-        )}
-        acciones={
-          <>
-            <Boton variante="primario" icono={Compass} onClick={() => document.getElementById("guia-jurado")?.scrollIntoView({ behavior: "smooth", block: "start" })}>{t("Recorrido de 3 minutos", "Start the 3-minute tour")}</Boton>
-            <Boton icono={Bot} onClick={() => abrirTerra()}>{t("Preguntar a la IA", "Ask the AI")}</Boton>
-            <Boton icono={Globe2} onClick={() => navegar("/mapa")}>{t("Mapa satelital 3D", "3D satellite map")}</Boton>
-          </>
-        }
-      />
+      <HeroPortada alMapa={() => navegar("/mapa")} />
 
       <QueResuelve />
 

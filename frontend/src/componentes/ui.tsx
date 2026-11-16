@@ -64,6 +64,7 @@ export function Tarjeta({
   children,
   className,
   sinPadding,
+  tour,
 }: {
   titulo?: ReactNode;
   subtitulo?: ReactNode;
@@ -72,17 +73,19 @@ export function Tarjeta({
   children: ReactNode;
   className?: string;
   sinPadding?: boolean;
+  /** Ancla del recorrido guiado (atributo data-tour). */
+  tour?: string;
 }) {
   return (
     // min-w-0: como ítem de grilla o flex, la tarjeta no hereda el ancho mínimo de sus tablas con scroll
-    <section className={clsx("panel-vidrio min-w-0 rounded-2xl animate-aparecer", className)}>
+    <section data-tour={tour} className={clsx("panel-vidrio min-w-0 rounded-2xl animate-aparecer", className)}>
       {(titulo || acciones) && (
         <header className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 px-5 pt-4">
           <div className="min-w-0">
             {titulo && <h2 className="text-[15px] font-semibold tracking-tight text-ink">{titulo}</h2>}
             {subtitulo && <Subtitulo texto={subtitulo} />}
           </div>
-          {acciones && <div className="flex max-w-full flex-wrap items-center gap-2">{acciones}</div>}
+          {acciones && <div className="flex min-w-0 max-w-full flex-wrap items-center gap-2">{acciones}</div>}
         </header>
       )}
       <div className={clsx(!sinPadding && "px-5 py-4")}>{children}</div>
@@ -203,7 +206,7 @@ export function Boton({
       className={clsx(
         "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50",
         tamano === "sm" ? "h-8 px-2.5 text-[13px]" : "h-9 px-3.5 text-sm",
-        variante === "primario" && "bg-accent text-white hover:brightness-110",
+        variante === "primario" && "bg-gradient-to-r from-[#1d63c8] to-[#0ea5b7] text-white shadow-[0_6px_16px_-8px_rgba(14,165,183,0.8)] hover:brightness-110",
         variante === "secundario" && "border border-line bg-surface text-ink hover:bg-surface-2",
         variante === "fantasma" && "text-ink-2 hover:bg-surface-2 hover:text-ink",
         className,

@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Activity, BrainCircuit, ChevronDown, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, ShieldCheck, Sun, Workflow, X, type LucideIcon } from "lucide-react";
+import { Activity, BrainCircuit, ChevronDown, Compass, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, ShieldCheck, Sun, Workflow, X, type LucideIcon } from "lucide-react";
 import { useIsFetching } from "@tanstack/react-query";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useSesion } from "../lib/sesion";
 import { t, useIdioma, type Idioma } from "../lib/i18n";
 import { useTema, type Tema } from "../lib/tema";
 import { ChatFlotante } from "./ChatFlotante";
+import { abrirRecorrido, InvitacionRecorrido, Recorrido } from "./Recorrido";
 import { Dialogo } from "./Dialogo";
 import { Boton, Insignia, Segmentado } from "./ui";
 
@@ -165,8 +166,8 @@ function SelectorIdioma() {
       valor={idioma}
       alCambiar={cambiar}
       opciones={[
-        { valor: "es", texto: "ES", titulo: "Español" },
         { valor: "en", texto: "EN", titulo: "English" },
+        { valor: "es", texto: "ES", titulo: "Español" },
       ]}
     />
   );
@@ -275,6 +276,20 @@ function Navegacion({ alNavegar }: { alNavegar?: () => void }) {
   const { pathname } = useLocation();
   return (
     <nav aria-label={t("Principal", "Main")} className="space-y-5">
+      <button
+        type="button"
+        onClick={() => {
+          alNavegar?.();
+          abrirRecorrido();
+        }}
+        className="group flex w-full items-center gap-3 rounded-xl bg-gradient-to-r from-[#1d63c8] via-[#1683c4] to-[#0ea5b7] px-3 py-2.5 text-left text-white shadow-[0_8px_20px_-8px_rgba(14,165,183,0.7)] transition hover:brightness-110"
+      >
+        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/15"><Compass aria-hidden className="h-4 w-4" /></span>
+        <span className="min-w-0">
+          <span className="block text-[13.5px] font-semibold leading-tight">{t("Recorrido guiado", "Guided tour")}</span>
+          <span className="block text-[11.5px] text-white/80">{t("8 pasos · 90 segundos", "8 steps · 90 seconds")}</span>
+        </span>
+      </button>
       {NAVEGACION.map((g) =>
         g.plegable ? (
           <details key={g.grupo[0]} open={g.items.some((i) => pathname.startsWith(i.a))} className="group">
@@ -355,6 +370,8 @@ export function Marco({ children }: { children: ReactNode }) {
       </div>
       <ChatFlotante />
       <AvisoConexion />
+      <Recorrido />
+      <InvitacionRecorrido />
     </div>
   );
 }

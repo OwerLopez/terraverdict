@@ -60,7 +60,7 @@ export function RelevanciaPagina() {
         titulo={t("Problema × variable", "Problem × variable")}
         acciones={
           matriz.data && (
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex min-w-0 max-w-full flex-wrap items-center gap-2">
               {hayValidados && (
                 <Segmentado<Vista>
                   etiqueta={t("Problemas mostrados", "Problems shown")}

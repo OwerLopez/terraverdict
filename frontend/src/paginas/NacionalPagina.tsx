@@ -274,6 +274,7 @@ export function NacionalPagina() {
           </div>
 
           <Tarjeta
+            tour="peru"
             titulo={t("Mapa por departamento", "Map by department")}
             subtitulo={t(`Celda NASA POWER de cada capital · expediente ${consulta.data?.expediente_id}`, `NASA POWER cell of each capital · case file ${consulta.data?.expediente_id}`)}
             acciones={

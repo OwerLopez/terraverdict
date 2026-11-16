@@ -6,11 +6,14 @@
 import { AlertTriangle, ArrowRight, Bot, Compass, Globe2, LineChart, Mountain, Satellite, ShieldCheck, Sun, Target, Waves } from "lucide-react";
 import { Link } from "react-router-dom";
 import { abrirTerra, PREGUNTAS_RAPIDAS } from "../ChatFlotante";
+import { abrirRecorrido } from "../Recorrido";
 import { numero } from "../../lib/formato";
 import { t } from "../../lib/i18n";
 import { LAPSO } from "../../lib/timelapse";
 
 type Habilidad = { valor: number | null; modelo: string | null; horizonte: string | null } | null | undefined;
+
+const COLORES_PASO = ["from-[#0d366b] to-[#1d63c8]", "from-[#e87ba4] to-[#6250d6]", "from-[#eb6834] to-[#e34948]", "from-[#008300] to-[#1baf7a]"];
 
 function Paso({ n, icono: Icono, titulo, texto, accion, a, alClic }: {
   n: number;
@@ -24,7 +27,7 @@ function Paso({ n, icono: Icono, titulo, texto, accion, a, alClic }: {
   const cuerpo = (
     <>
       <div className="flex items-center gap-3">
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent-ink"><Icono className="h-5 w-5" aria-hidden /></span>
+        <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${COLORES_PASO[(n - 1) % COLORES_PASO.length]} text-white shadow`}><Icono className="h-5 w-5" aria-hidden /></span>
         <p className="etiqueta">{t(`Paso ${n}`, `Step ${n}`)}</p>
       </div>
       <p className="mt-3 text-[15px] font-semibold leading-snug text-ink">{titulo}</p>
@@ -36,14 +39,53 @@ function Paso({ n, icono: Icono, titulo, texto, accion, a, alClic }: {
   return a ? <Link to={a} className={clase}>{cuerpo}</Link> : <button type="button" onClick={alClic} className={clase}>{cuerpo}</button>;
 }
 
+/** Portada: banner con degradado, la pregunta del problema y las tres acciones principales. */
+export function HeroPortada({ alMapa }: { alMapa: () => void }) {
+  return (
+    <section data-tour="hero" className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#071a35] via-[#0d366b] to-[#0b6a8a] p-6 text-white shadow-flotante md:p-9">
+      <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#0ea5b7]/30 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-28 left-1/3 h-72 w-72 rounded-full bg-[#eb6834]/25 blur-3xl" />
+      <div className="relative max-w-3xl">
+        <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11.5px] font-semibold uppercase tracking-wider text-white/85 ring-1 ring-white/15">
+          <Satellite className="h-3.5 w-3.5" aria-hidden /> {t("NASA Space Apps 2026 · Cuenca del Chili, Arequipa → Perú", "NASA Space Apps 2026 · Chili basin, Arequipa → Peru")}
+        </p>
+        <h1 className="mt-4 text-[28px] font-semibold leading-[1.15] tracking-tight md:text-[40px]">
+          {t("Arequipa se queda sin agua ", "Arequipa runs out of water ")}
+          <span className="bg-gradient-to-r from-[#7dd3fc] via-[#5eead4] to-[#fdba74] bg-clip-text text-transparent">
+            {t("por falta… y por exceso", "from too little… and from too much")}
+          </span>
+        </h1>
+        <p className="mt-3 max-w-2xl text-[15.5px] leading-relaxed text-white/85">
+          {t(
+            "TerraVerdict usa datos abiertos de NASA para responder, con evidencia auditable, tres preguntas: ¿qué está cambiando de verdad?, ¿qué se puede anticipar? y ¿dónde conviene actuar?",
+            "TerraVerdict uses NASA open data to answer three questions with auditable evidence: what is really changing, what can be anticipated, and where to act.",
+          )}
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <button type="button" onClick={abrirRecorrido} className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-[14px] font-semibold text-[#0d366b] shadow-lg transition hover:-translate-y-0.5">
+            <Compass className="h-4 w-4" aria-hidden /> {t("Iniciar el recorrido guiado", "Start the guided tour")}
+          </button>
+          <button type="button" onClick={() => abrirTerra()} className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2.5 text-[14px] font-semibold text-white ring-1 ring-white/30 transition hover:bg-white/20">
+            <Bot className="h-4 w-4" aria-hidden /> {t("Preguntar a la IA", "Ask the AI")}
+          </button>
+          <button type="button" onClick={alMapa} className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2.5 text-[14px] font-semibold text-white ring-1 ring-white/30 transition hover:bg-white/20">
+            <Globe2 className="h-4 w-4" aria-hidden /> {t("Mapa satelital 3D", "3D satellite map")}
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /**
  * "Qué resuelve" en tres tarjetas: el problema, lo que hace el sistema y por qué creerle. Sin cifras
  * escritas a mano: los números concretos aparecen debajo, leídos de la API y con su fuente.
  */
 export function QueResuelve() {
-  const tarjetas: { icono: typeof Globe2; etiqueta: [string, string]; titulo: [string, string]; texto: [string, string] }[] = [
+  const tarjetas: { icono: typeof Globe2; color: string; etiqueta: [string, string]; titulo: [string, string]; texto: [string, string] }[] = [
     {
       icono: AlertTriangle,
+      color: "from-[#eb6834] to-[#e34948]",
       etiqueta: ["El problema", "The problem"],
       titulo: ["Demasiada poca agua… y demasiada", "Too little water… and too much"],
       texto: [
@@ -53,6 +95,7 @@ export function QueResuelve() {
     },
     {
       icono: Target,
+      color: "from-[#1d63c8] to-[#0ea5b7]",
       etiqueta: ["Lo que hace TerraVerdict", "What TerraVerdict does"],
       titulo: ["Convierte datos de NASA en veredictos probados", "Turns NASA data into tested verdicts"],
       texto: [
@@ -62,6 +105,7 @@ export function QueResuelve() {
     },
     {
       icono: ShieldCheck,
+      color: "from-[#008300] to-[#1baf7a]",
       etiqueta: ["Por qué creerle", "Why you can trust it"],
       titulo: ["Cada cifra es auditable", "Every number is auditable"],
       texto: [
@@ -72,9 +116,13 @@ export function QueResuelve() {
   ];
   return (
     <section aria-label={t("Qué resuelve TerraVerdict", "What TerraVerdict solves")} className="grid gap-3 md:grid-cols-3">
-      {tarjetas.map(({ icono: Icono, etiqueta, titulo, texto }) => (
-        <div key={etiqueta[1]} className="rounded-2xl border border-line bg-surface p-4 shadow-tarjeta">
-          <p className="etiqueta flex items-center gap-2"><Icono className="h-4 w-4 text-accent" aria-hidden /> {t(...etiqueta)}</p>
+      {tarjetas.map(({ icono: Icono, color, etiqueta, titulo, texto }) => (
+        <div key={etiqueta[1]} className="relative overflow-hidden rounded-2xl border border-line bg-surface p-4 pt-5 shadow-tarjeta">
+          <span aria-hidden className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${color}`} />
+          <p className="etiqueta flex items-center gap-2">
+            <span className={`grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br ${color} text-white`}><Icono className="h-4 w-4" aria-hidden /></span>
+            {t(...etiqueta)}
+          </p>
           <p className="mt-2 text-[15.5px] font-semibold leading-snug text-ink">{t(...titulo)}</p>
           <p className="mt-1.5 text-[13px] leading-relaxed text-ink-2">{t(...texto)}</p>
         </div>

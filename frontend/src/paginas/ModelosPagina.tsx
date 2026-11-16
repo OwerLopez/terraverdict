@@ -127,11 +127,15 @@ function Importancia({ datos }: { datos: Esquemas["ImportanciaVariable"][] }) {
 export function ModelosPagina() {
   const [params, setParams] = useSearchParams();
   const lista = useExpedientes({ tipo: "comparacion_modelos" });
-  const { detalle, elegido } = useExpedienteVigente("comparacion_modelos", params.get("id") ?? undefined);
+  const portada = usePortada();
+  // Sin ?id, se abre el resultado principal (sequía a 1 mes, NASA POWER, con su predicción frente a
+  // realidad), que la portada enlaza; si no existe, el expediente más reciente.
+  const principal = portada.data?.filas.find((f) => f.fenomeno === "sequia")?.anticipacion?.expediente_id ?? undefined;
+  const { detalle, elegido } = useExpedienteVigente("comparacion_modelos", params.get("id") ?? principal);
   const r = detalle.data?.resultado.tipo === "comparacion_modelos" ? (detalle.data.resultado as Comparacion) : undefined;
   const mejor = r?.modelos.find((m) => m.nombre === r.mejor_validacion);
   const evidencia = mejor ? nivelEvidencia(mejor) : "no_confirmada";
-  const ind = comoIndicadores(usePortada().data?.indicadores);
+  const ind = comoIndicadores(portada.data?.indicadores);
   // La serie de prueba exportada es la de NASA POWER (resultados/sequia.json); la réplica CHIRPS no tiene serie.
   const clave = r?.fenomeno === "sequia" && !detalle.data?.titulo.includes("CHIRPS") ? (r.horizonte.startsWith("1 ") ? "h1" : r.horizonte.startsWith("3 ") ? "h3" : null) : null;
   const seriePrueba = clave ? ind?.predicciones?.sequia[clave] : undefined;
@@ -178,6 +182,7 @@ export function ModelosPagina() {
           {seriePrueba && seriePrueba.fechas.length > 0 && (
             <Tarjeta
               className="mb-5"
+              tour="prediccion"
               titulo={t("Predicción frente a realidad (prueba fuera de muestra)", "Prediction vs reality (out-of-sample test)")}
               subtitulo={t(`${seriePrueba.objetivo}: observado en negro, pronóstico en azul y cono conformal del 90 %.`, `${seriePrueba.objetivo}: observed in black, forecast in blue and the 90 % conformal cone.`)}
             >

@@ -86,7 +86,7 @@ export function Semaforo({ ind, cargando }: { ind: Indicadores | null; cargando:
   const antiguedad = represa ? mesesDesde(represa.fecha) : 0;
 
   return (
-    <section aria-labelledby="semaforo" className="rounded-3xl border border-line bg-surface-2/60 p-5 md:p-6">
+    <section aria-labelledby="semaforo" data-tour="estado" className="rounded-3xl border border-line bg-surface-2/60 p-5 md:p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="semaforo" className="text-[20px] font-semibold tracking-tight text-ink">{titulo}</h2>
         <p className="text-[12px] text-ink-3">{t("Cada tarjeta muestra la fecha de su último dato. No es una alerta oficial.", "Each card shows the date of its latest data. Not an official warning.")}</p>
@@ -198,6 +198,7 @@ export function TablaVeredictos({ portada }: { portada: Portada | undefined }) {
   if (!portada) return <Esqueleto className="h-72" />;
   return (
     <Tarjeta
+      tour="veredictos"
       titulo={t("Tabla maestra de veredictos: cinco fenómenos", "Master verdict table: five hazards")}
       subtitulo={t("Tendencia histórica, capacidad de anticipar (modelo elegido en validación, evaluado una sola vez en la prueba) y veredicto.", "Historical trend, ability to anticipate (model chosen on validation, evaluated once on the test set) and verdict.")}
       pie={portada.regla_evidencia}

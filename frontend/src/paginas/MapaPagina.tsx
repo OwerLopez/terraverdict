@@ -7,5 +7,9 @@ export function MapaPagina() {
   const unidades = useUnidadesGeo("chili_analisis");
   const dominio = dominios.data?.find((d) => d.id === "chili_analisis");
   if (dominios.error) return <div className="p-6"><ErrorCarga error={dominios.error} /></div>;
-  return <MapaSatelital dominio={dominio} unidades={unidades.data?.features ?? []} />;
+  return (
+    <div data-tour="mapa" className="h-full">
+      <MapaSatelital dominio={dominio} unidades={unidades.data?.features ?? []} />
+    </div>
+  );
 }

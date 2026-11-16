@@ -301,6 +301,7 @@ export function ChatFlotante() {
         type="button"
         onClick={() => setAbierto((a) => !a)}
         aria-expanded={abierto}
+        data-tour="terra"
         aria-label={abierto ? t("Cerrar asistente", "Close assistant") : t("Abrir asistente Terra", "Open Terra assistant")}
         className={clsx(
           "fixed bottom-5 right-5 z-50 grid h-16 w-16 place-items-center rounded-full bg-surface-solida shadow-flotante ring-2 ring-[#86b6ef]/60 transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-4",
