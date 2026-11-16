@@ -6,7 +6,7 @@ import { areasDepartamentos, claveDepartamento } from "../lib/coropletas";
 
 type Departamento = Esquemas["DepartamentoNacional"];
 
-const geo = JSON.parse(readFileSync(resolve(process.cwd(), "public/datos/peru-departamentos.geojson"), "utf-8")) as GeoJSON.FeatureCollection;
+const geo = JSON.parse(readFileSync(resolve(__dirname, "../../public/datos/peru-departamentos.geojson"), "utf-8")) as GeoJSON.FeatureCollection;
 const NOMBRES = ["Amazonas", "Áncash", "Apurímac", "Arequipa", "Ayacucho", "Cajamarca", "Callao", "Cusco", "Huancavelica", "Huánuco", "Ica", "Junín", "La Libertad", "Lambayeque", "Lima", "Loreto", "Madre de Dios", "Moquegua", "Pasco", "Piura", "Puno", "San Martín", "Tacna", "Tumbes", "Ucayali"];
 
 const dep = (nombre: string, i: number) =>
