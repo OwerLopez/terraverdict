@@ -3,7 +3,7 @@
  * muro de misiones. Todo enlaza a funciones reales; las cifras salen de la API (`/api/v1/portada`) o del
  * manifiesto verificado del time-lapse, nunca de texto fijo.
  */
-import { ArrowRight, Bot, Compass, Globe2, LineChart, Mountain, Satellite, ShieldCheck, Sun, Waves } from "lucide-react";
+import { AlertTriangle, ArrowRight, Bot, Compass, Globe2, LineChart, Mountain, Satellite, ShieldCheck, Sun, Target, Waves } from "lucide-react";
 import { Link } from "react-router-dom";
 import { abrirTerra, PREGUNTAS_RAPIDAS } from "../ChatFlotante";
 import { numero } from "../../lib/formato";
@@ -34,6 +34,53 @@ function Paso({ n, icono: Icono, titulo, texto, accion, a, alClic }: {
   );
   const clase = "flex h-full flex-col rounded-2xl border border-line bg-surface p-4 text-left shadow-tarjeta transition-transform hover:-translate-y-0.5 hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
   return a ? <Link to={a} className={clase}>{cuerpo}</Link> : <button type="button" onClick={alClic} className={clase}>{cuerpo}</button>;
+}
+
+/**
+ * "Qué resuelve" en tres tarjetas: el problema, lo que hace el sistema y por qué creerle. Sin cifras
+ * escritas a mano: los números concretos aparecen debajo, leídos de la API y con su fuente.
+ */
+export function QueResuelve() {
+  const tarjetas: { icono: typeof Globe2; etiqueta: [string, string]; titulo: [string, string]; texto: [string, string] }[] = [
+    {
+      icono: AlertTriangle,
+      etiqueta: ["El problema", "The problem"],
+      titulo: ["Demasiada poca agua… y demasiada", "Too little water… and too much"],
+      texto: [
+        "Arequipa, la segunda ciudad del Perú, depende de las represas del Chili. La sequía las vacía y la lluvia extrema arrastra lodo a la planta potabilizadora y corta el servicio (febrero de 2025).",
+        "Arequipa, Peru's second-largest city, depends on the Chili basin reservoirs. Drought empties them, and extreme rain washes mud into the treatment plant and cuts the supply (February 2025).",
+      ],
+    },
+    {
+      icono: Target,
+      etiqueta: ["Lo que hace TerraVerdict", "What TerraVerdict does"],
+      titulo: ["Convierte datos de NASA en veredictos probados", "Turns NASA data into tested verdicts"],
+      texto: [
+        "Cruza lluvia satelital GPM IMERG (desde 1998), clima NASA POWER (desde 1981) y catálogos oficiales para decir qué tendencias son reales, qué se puede pronosticar y con cuánta anticipación, con intervalos del 90 %.",
+        "It combines GPM IMERG satellite rain (since 1998), NASA POWER climate (since 1981) and official hazard catalogs to tell which trends are real, what can be forecast and how far ahead, with 90 % intervals.",
+      ],
+    },
+    {
+      icono: ShieldCheck,
+      etiqueta: ["Por qué creerle", "Why you can trust it"],
+      titulo: ["Cada cifra es auditable", "Every number is auditable"],
+      texto: [
+        "Cada resultado enlaza a descargas con hash SHA-256 y a una prueba fuera de muestra; si la evidencia no alcanza, se abstiene. La IA solo responde con resultados publicados y un verificador revisa cada cifra.",
+        "Every result links to SHA-256-hashed downloads and an out-of-sample test; when evidence is insufficient it abstains. The AI answers only from published results, and a verifier checks each figure.",
+      ],
+    },
+  ];
+  return (
+    <section aria-label={t("Qué resuelve TerraVerdict", "What TerraVerdict solves")} className="grid gap-3 md:grid-cols-3">
+      {tarjetas.map(({ icono: Icono, etiqueta, titulo, texto }) => (
+        <div key={etiqueta[1]} className="rounded-2xl border border-line bg-surface p-4 shadow-tarjeta">
+          <p className="etiqueta flex items-center gap-2"><Icono className="h-4 w-4 text-accent" aria-hidden /> {t(...etiqueta)}</p>
+          <p className="mt-2 text-[15.5px] font-semibold leading-snug text-ink">{t(...titulo)}</p>
+          <p className="mt-1.5 text-[13px] leading-relaxed text-ink-2">{t(...texto)}</p>
+        </div>
+      ))}
+    </section>
+  );
 }
 
 /** Guía de evaluación en 3 minutos: cuatro accesos directos a lo que distingue al proyecto. */

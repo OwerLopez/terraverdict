@@ -139,6 +139,8 @@ def test_historial_se_resume_con_la_lectura_vigente_fuera_de_muestra() -> None:
     assert "sequia_h1_power" not in str(c)  # sin claves internas en el contexto
     assert tarea["lectura_vigente_fuera_de_muestra"] == {"valor": 0.657915}
     assert "anios" not in tarea
+    # La fuente de datos llega en palabras (antes solo estaba en la clave interna, oculta al modelo).
+    assert tarea["fuente_de_datos"] == "NASA POWER (MERRA-2)"
 
 
 # --- Proveedor: verificación y reescritura -----------------------------------------------------
@@ -174,6 +176,34 @@ def test_cifra_inventada_provoca_reescritura_y_se_informa() -> None:
     r = asistente.AsistenteGemini(c).responder("¿habilidad?", [EXP], [])
     assert r.intentos == 2 and r.verificacion.aprobado
     assert "0,912" in c.mensajes[1]  # la reescritura recibe la cifra rechazada
+
+
+HIS = _exp(
+    "TV-HIS-ABCDEF123456",
+    "Historial de métricas",
+    {"tipo": "historial_metricas", "tareas": {"sequia_h1_power": {"descripcion": "SPI-3 dentro de 1 mes(es)", "agregado": {"fuera_de_muestra": {"seleccion_validacion": {"valor": 0.658}}}}}},
+)
+CMP = _exp("TV-CMP-ABCDEF123456", "Sequía a 1 mes con CHIRPS", {"habilidad": 0.576})
+
+
+def test_fuente_cruzada_se_detecta_aunque_la_cifra_exista() -> None:
+    mal = "La habilidad con datos de CHIRPS es 0,658 [TV-HIS-ABCDEF123456]. Con CHIRPS es 0,576 [TV-CMP-ABCDEF123456]."
+    assert asistente.fuentes_sin_respaldo(mal, [HIS, CMP]) == ["CHIRPS (TV-HIS-ABCDEF123456)"]
+    bien = "Con NASA POWER es 0,658 [TV-HIS-ABCDEF123456]. Con CHIRPS es 0,576 [TV-CMP-ABCDEF123456]."
+    assert asistente.fuentes_sin_respaldo(bien, [HIS, CMP]) == []
+
+
+def test_fuente_cruzada_provoca_reescritura() -> None:
+    c = Conexion(
+        [
+            "La habilidad con CHIRPS es 0,658 [TV-HIS-ABCDEF123456].",
+            "La habilidad con NASA POWER es 0,658 [TV-HIS-ABCDEF123456].",
+        ],
+        [],
+    )
+    r = asistente.AsistenteGemini(c).responder("¿habilidad?", [HIS, CMP], [])
+    assert r.intentos == 2 and "POWER" in r.texto
+    assert "CHIRPS (TV-HIS-ABCDEF123456)" in c.mensajes[1]
 
 
 def test_cifra_sin_cita_no_se_aprueba() -> None:

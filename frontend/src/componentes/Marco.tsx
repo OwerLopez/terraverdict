@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { Activity, BrainCircuit, ChevronDown, CalendarClock, ChartColumnBig, FileCheck2, Globe2, Grid3x3, Info, Layers3, LayoutDashboard, LineChart, LogIn, LogOut, MapPinned, Menu, Monitor, Moon, Mountain, Orbit, Satellite, ShieldCheck, Sun, Workflow, X, type LucideIcon } from "lucide-react";
+import { useIsFetching } from "@tanstack/react-query";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ErrorApi } from "../api/cliente";
@@ -14,53 +15,75 @@ import { Boton, Insignia, Segmentado } from "./ui";
 type GrupoNav = { grupo: [string, string]; plegable?: boolean; items: { a: string; texto: [string, string]; icono: LucideIcon }[] };
 
 /**
- * Navegación por importancia: primero los resultados, luego la exploración de datos y, plegada, la
- * auditoría (procedencia, procesos, verificación). Nada se elimina: lo técnico sigue a un clic.
+ * Navegación para una revisión rápida: cinco destinos visibles y el resto en dos grupos plegados (se
+ * abren solos si la página actual está dentro). Nada se elimina: lo técnico sigue a un clic.
  */
 const NAVEGACION: GrupoNav[] = [
   {
-    grupo: ["Resultados", "Results"],
+    // Lo que un evaluador necesita ver primero: cinco destinos, cada uno responde una pregunta.
+    grupo: ["Empiece aquí", "Start here"],
     items: [
-      { a: "/", texto: ["Panel", "Dashboard"], icono: LayoutDashboard },
-      { a: "/mapa", texto: ["Mapa satelital", "Satellite map"], icono: Globe2 },
-      { a: "/peru", texto: ["Perú: escala nacional", "Peru: national scale"], icono: MapPinned },
-      { a: "/metricas", texto: ["Pronósticos y métricas", "Forecasts & metrics"], icono: ChartColumnBig },
-      { a: "/relevancia", texto: ["Matriz de relevancia", "Relevance matrix"], icono: Grid3x3 },
+      { a: "/", texto: ["Resumen", "Overview"], icono: LayoutDashboard },
+      { a: "/mapa", texto: ["Mapa satelital 3D", "3D satellite map"], icono: Globe2 },
+      { a: "/modelos", texto: ["Pronósticos frente a realidad", "Forecasts vs reality"], icono: BrainCircuit },
+      { a: "/fenomenos", texto: ["Cinco amenazas naturales", "Five natural hazards"], icono: Layers3 },
+      { a: "/peru", texto: ["Perú: 25 departamentos", "Peru: 25 departments"], icono: MapPinned },
     ],
   },
   {
-    grupo: ["Fenómenos naturales", "Natural hazards"],
+    grupo: ["Más análisis", "More analyses"],
+    plegable: true,
     items: [
+      { a: "/metricas", texto: ["Métricas e historial", "Metrics & history"], icono: ChartColumnBig },
+      { a: "/relevancia", texto: ["Matriz de relevancia", "Relevance matrix"], icono: Grid3x3 },
       { a: "/sismos", texto: ["Sismos", "Earthquakes"], icono: Activity },
       { a: "/volcanes", texto: ["Volcanes", "Volcanoes"], icono: Mountain },
-      { a: "/modelos", texto: ["Modelos", "Models"], icono: BrainCircuit },
-      { a: "/fenomenos", texto: ["Catálogo de fenómenos", "Hazard catalog"], icono: Layers3 },
+      // Análisis no lineal (Takens, D₂, Lyapunov): valioso para especialistas, secundario para el resto.
+      { a: "/caos", texto: ["Dinámica avanzada (caos)", "Advanced dynamics (chaos)"], icono: Orbit },
     ],
   },
   {
-    // Análisis no lineal (Takens, D₂, Lyapunov): valioso para especialistas, secundario para el resto.
-    grupo: ["Dinámica avanzada", "Advanced dynamics"],
+    grupo: ["Datos y auditoría", "Data & audit"],
     plegable: true,
-    items: [{ a: "/caos", texto: ["Caos determinista", "Deterministic chaos"], icono: Orbit }],
-  },
-  {
-    grupo: ["Explorar datos", "Explore data"],
     items: [
       { a: "/expedientes", texto: ["Expedientes", "Case files"], icono: FileCheck2 },
       { a: "/series", texto: ["Series de tiempo", "Time series"], icono: LineChart },
       { a: "/eventos", texto: ["Crónica de eventos", "Event chronicle"], icono: CalendarClock },
-    ],
-  },
-  {
-    grupo: ["Auditoría y procedencia", "Audit & provenance"],
-    plegable: true,
-    items: [
       { a: "/fuentes", texto: ["Fuentes y su estado", "Sources & status"], icono: Satellite },
-      { a: "/procesos", texto: ["Ejecuciones del pipeline", "Pipeline runs"], icono: Workflow },
+      { a: "/procesos", texto: ["Ejecuciones del pipeline (SHA-256)", "Pipeline runs (SHA-256)"], icono: Workflow },
       { a: "/asistente", texto: ["Verificador numérico", "Numeric verifier"], icono: ShieldCheck },
     ],
   },
 ];
+
+/**
+ * Aviso de arranque en frío: la API es una función serverless y la primera petición tras una pausa puede
+ * tardar unos segundos. Solo aparece si hay consultas pendientes durante más de 2 s (estado real).
+ */
+function AvisoConexion() {
+  const pendientes = useIsFetching();
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (!pendientes) {
+      setVisible(false);
+      return;
+    }
+    const id = window.setTimeout(() => setVisible(true), 2000);
+    return () => window.clearTimeout(id);
+  }, [pendientes]);
+  if (!visible) return null;
+  return (
+    <div role="status" aria-live="polite" className="pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-4">
+      <p className="flex items-center gap-2 rounded-full border border-line bg-surface-solida px-4 py-2 text-[12.5px] text-ink-2 shadow-flotante">
+        <span className="h-2 w-2 animate-pulse rounded-full bg-accent" aria-hidden />
+        {t(
+          "Cargando resultados en vivo… la primera consulta tras una pausa tarda unos segundos mientras arranca la API serverless.",
+          "Loading live results… the first request after a pause takes a few seconds while the serverless API starts.",
+        )}
+      </p>
+    </div>
+  );
+}
 
 function Marca() {
   return (
@@ -331,6 +354,7 @@ export function Marco({ children }: { children: ReactNode }) {
         </main>
       </div>
       <ChatFlotante />
+      <AvisoConexion />
     </div>
   );
 }

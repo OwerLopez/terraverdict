@@ -27,7 +27,7 @@ from app.services.gemini import ClienteGemini  # noqa: E402
 RUTAS = [
     "fenomenos", "variables", "problemas", "metricas", "metricas/mapas", "historial", "fuentes?limite=500", "dominios",
     "eventos", "expedientes?limite=500", "series?limite=500", "capas/sismos", "capas/volcanes", "nacional",
-    "relevancia/matriz", "verificacion",
+    "relevancia/matriz", "verificacion", "portada", "unidades-medida",
 ]
 OMITIR = {
     "id", "url", "doi", "fuente_id", "variable_id", "problema_id", "coleccion", "version", "unidad", "unidad_id",
@@ -87,6 +87,9 @@ def main() -> None:
             textos(obtener(a.api, ruta), pendientes)
         except Exception as e:  # noqa: BLE001 (una ruta opcional no debe detener el glosario)
             print(f"{ruta}: {e}")
+    # Las unidades de cada dominio (celdas, estaciones, captaciones) se muestran en el mapa.
+    for d in obtener(a.api, "dominios"):  # type: ignore[union-attr]
+        textos(obtener(a.api, f"dominios/{d['id']}/unidades"), pendientes)  # type: ignore[index]
     # El detalle de cada expediente (métodos, tareas, abstenciones) también se muestra en la web.
     for e in obtener(a.api, "expedientes?limite=500")["items"]:  # type: ignore[index]
         textos(obtener(a.api, f"expedientes/{e['id']}"), pendientes)

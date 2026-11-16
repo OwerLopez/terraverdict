@@ -3,6 +3,7 @@ import {
   ArrowRight,
   Bot,
   CheckCircle2,
+  Compass,
   Clock,
   Database,
   Droplets,
@@ -10,7 +11,6 @@ import {
   FileCheck2,
   Gauge,
   Globe2,
-  MapPinned,
   Mountain,
   Thermometer,
   Waves,
@@ -31,7 +31,8 @@ import {
   useVerificacion,
 } from "../api/consultas";
 import { Semaforo, SimuladorEnso, TablaVeredictos } from "../componentes/portada/Estado";
-import { BannerMapa, GuiaJurado, MuroMisiones } from "../componentes/portada/Guia";
+import { BannerMapa, GuiaJurado, MuroMisiones, QueResuelve } from "../componentes/portada/Guia";
+import { abrirTerra } from "../componentes/ChatFlotante";
 import { ModoHistoria } from "../componentes/portada/Historia";
 import { comoIndicadores } from "../lib/indicadores";
 import { BarraEstados, LineaTiempo } from "../componentes/graficos/Evidencia";
@@ -241,7 +242,7 @@ function VerificacionFuentes() {
   return (
     <Tarjeta
       titulo={t("Verificación de fuentes", "Source verification")}
-      subtitulo={verificacion.data?.fuentes ? `Consultas reales del ${fecha(verificacion.data.fuentes.generado_utc)}` : undefined}
+      subtitulo={verificacion.data?.fuentes ? t(`Consultas reales del ${fecha(verificacion.data.fuentes.generado_utc)}`, `Live queries run on ${fecha(verificacion.data.fuentes.generado_utc)}`) : undefined}
       acciones={<Link to="/fuentes"><Boton tamano="sm" variante="fantasma" icono={ArrowRight}>{t("Ver fuentes", "See sources")}</Boton></Link>}
     >
       {verificacion.data ? <BarraEstados conteos={verificacion.data.estados_fuentes} /> : <Esqueleto className="h-16" />}
@@ -383,28 +384,33 @@ export function Panel() {
   return (
     <div className="space-y-6">
       <Encabezado
-        eyebrow={t("Cuenca regulada del Chili · Arequipa, Perú → escala nacional", "Chili regulated basin · Arequipa, Peru → national scale")}
+        eyebrow={t("NASA Space Apps 2026 · Cuenca del Chili, Arequipa → Perú", "NASA Space Apps 2026 · Chili basin, Arequipa → Peru")}
         titulo={t("Arequipa se queda sin agua por falta… y por exceso", "Arequipa runs out of water from too little… and from too much")}
-        descripcion={t("TerraVerdict reúne datos abiertos de NASA y fuentes oficiales para saber qué cambia, por qué, con cuánta confianza y dónde actuar: primero en la cuenca del Chili y luego en los 25 departamentos del Perú. Cada cifra de esta pantalla viene de una fuente real y citada.", "TerraVerdict combines NASA open data and official sources to learn what is changing, why, with how much confidence and where to act: first in the Chili basin, then across Peru's 25 departments. Every figure on this screen comes from a real, cited source.")}
+        descripcion={t(
+          "TerraVerdict usa datos abiertos de NASA para responder, con evidencia auditable, tres preguntas: ¿qué está cambiando de verdad?, ¿qué se puede anticipar? y ¿dónde conviene actuar?",
+          "TerraVerdict uses NASA open data to answer three questions with auditable evidence: what is really changing, what can be anticipated, and where to act.",
+        )}
         acciones={
           <>
-            <Boton variante="primario" icono={Globe2} onClick={() => navegar("/mapa")}>{t("Mapa satelital", "Satellite map")}</Boton>
-            <Boton icono={MapPinned} onClick={() => navegar("/peru")}>{t("Escala nacional", "National scale")}</Boton>
-            <Boton icono={ArrowRight} onClick={() => navegar("/expedientes")}>{t("Expedientes", "Case files")}</Boton>
+            <Boton variante="primario" icono={Compass} onClick={() => document.getElementById("guia-jurado")?.scrollIntoView({ behavior: "smooth", block: "start" })}>{t("Recorrido de 3 minutos", "Start the 3-minute tour")}</Boton>
+            <Boton icono={Bot} onClick={() => abrirTerra()}>{t("Preguntar a la IA", "Ask the AI")}</Boton>
+            <Boton icono={Globe2} onClick={() => navegar("/mapa")}>{t("Mapa satelital 3D", "3D satellite map")}</Boton>
           </>
         }
       />
+
+      <QueResuelve />
 
       <GuiaJurado habilidadSequia={sequia ? { valor: sequia.valor ?? null, modelo: sequia.modelo, horizonte: sequia.horizonte ?? null } : null} />
 
       <Semaforo ind={ind} cargando={portada.isLoading} />
 
+      <TablaVeredictos portada={portada.data} />
+
       <div className="grid gap-4 lg:grid-cols-[1fr_1.4fr]">
         <ModoHistoria lluvia={ind?.predicciones?.lluvia_eventos_documentados ?? []} />
         <BannerMapa />
       </div>
-
-      <TablaVeredictos portada={portada.data} />
 
       <SimuladorEnso ind={ind} />
 

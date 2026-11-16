@@ -184,7 +184,7 @@ fenomenos:
 acceso_fuentes_nacionales:     # consulta real del 2026-11-15 con verificación TLS activa (ver docs/verificacion/fuentes_fenomenos.json)
   SENAMHI:  {url: "https://idesep.senamhi.gob.pe/geoserver/ows", estado: servicio_ogc, motivo: "GeoServer WMS/WFS público (GetCapabilities HTTP 200 el 2026-11-15): capas cartográficas; las series de estaciones siguen sin API pública."}
   IGP:      {url: "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/{anio}", estado: api_publica, motivo: "Responde (2026-11-15): API pública con los sismos reportados desde 2012; integrada en tv ingest-fenomenos."}
-  IGP_OVS:  {url: "https://ovs.igp.gob.pe/", estado: no_accesible, motivo: "El nombre de host no resuelve en DNS (2026-11-15); el 14-11 devolvía 502. Los volcanes se cubren con GVP (Smithsonian)."}
+  IGP_OVS:  {url: "https://ovs.igp.gob.pe/", estado: no_accesible, motivo: "El nombre de host no resuelve en DNS (consulta del 2026-11-15; la del 2026-11-14 devolvía 502). Los volcanes se cubren con GVP (Smithsonian)."}
   INGEMMET: {url: "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_PELIGROS_GEOLOGICOS/MapServer/0", estado: integrado, motivo: "El servidor omite el certificado intermedio; se añadió el intermedio oficial de Sectigo (AIA, huella SHA-256 fijada) sin desactivar la verificación. 28 915 registros descargados con tv ingest-ingemmet."}
   ANA:      {url: "https://snirh.ana.gob.pe/", estado: portal, motivo: "Responde, pero los datos se descargan con formularios interactivos (sin API)."}
   CENEPRED: {url: "https://sigrid.cenepred.gob.pe/arcgis/rest/services", estado: servicio_arcgis, motivo: "ArcGIS REST público (v10.81, HTTP 200 el 2026-11-15) con escenarios de riesgo; aún no integrado en los experimentos."}

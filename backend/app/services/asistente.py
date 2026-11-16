@@ -164,6 +164,8 @@ REGLAS OBLIGATORIAS:
    comparaciones de modelos por partición son detalle secundario.
 10. No muestres claves internas ni nombres de campos (p. ej., "sequia_h1_power" o "seleccion_validacion"):
    descríbelos en palabras.
+11. Atribuye cada cifra a la fuente de datos y al modelo que figuran junto a ella en el CONTEXTO (p. ej.,
+   "fuente_de_datos"). No mezcles cifras de dos fuentes (NASA POWER, CHIRPS, IMERG) en la misma frase.
 """
 
 
@@ -308,15 +310,58 @@ def _longitudes(valor: Any) -> list[int]:
     return []
 
 
+# Nombres de conjuntos de datos que el asistente puede atribuir a una cifra.
+FUENTES_DATOS = {
+    "power": "NASA POWER (MERRA-2)",
+    "chirps": "CHIRPS v2.0",
+    "imerg": "NASA GPM IMERG",
+    "sismos": "USGS ComCat",
+}
+PATRON_FUENTE = re.compile(r"\b(CHIRPS|POWER|MERRA-2|IMERG|ComCat|USGS|IGP|GLC|INGEMMET|MODIS|SMAP|HLS|GVP)\b", re.IGNORECASE)
+PATRON_TRAMO = re.compile(r"[^\[]*?(?:\[[^\]]*\][\s,;]*)+")
+
+
+def _fuente_de_tarea(clave: str) -> str | None:
+    partes = clave.lower().split("_")
+    return next((nombre for k, nombre in FUENTES_DATOS.items() if k in partes), None)
+
+
+def fuentes_sin_respaldo(texto: str, contexto: Sequence[ExpedienteContexto]) -> list[str]:
+    """Fuentes de datos nombradas en un tramo cuyo(s) expediente(s) citado(s) no las contienen.
+
+    Cada tramo es el texto que precede a sus citas [TV-…]. Detecta atribuciones cruzadas (una cifra de
+    NASA POWER presentada como de CHIRPS) que el verificador numérico no ve: el número sí existe en el
+    expediente citado, pero la fuente nombrada no.
+    """
+    textos = {
+        e.id: f"{e.titulo} {e.resumen} {json.dumps(contexto_resultado(e.resultado), ensure_ascii=False)}".lower()
+        for e in contexto
+    }
+    problemas: list[str] = []
+    for m in PATRON_TRAMO.finditer(texto):
+        tramo = m.group(0)
+        ids = [i for i in PATRON_ID.findall(tramo) if i in textos]
+        if not ids:
+            continue
+        cuerpo = PATRON_ID.sub("", tramo)
+        for nombre in dict.fromkeys(x.group(1).upper() for x in PATRON_FUENTE.finditer(cuerpo)):
+            if not any(nombre.lower() in textos[i] for i in ids):
+                problemas.append(f"{nombre} ({', '.join(ids)})")
+    return problemas
+
+
 def _resumen_historial(r: dict[str, Any]) -> dict[str, Any]:
     """Historial: la lectura vigente de cada tarea (fuera de muestra, modelo elegido en la validación de
     cada año) y sus referencias; el detalle año a año se omite del contexto."""
     tareas = []
-    for tarea in (r.get("tareas") or {}).values():
+    for clave, tarea in (r.get("tareas") or {}).items():
         fuera = (tarea.get("agregado") or {}).get("fuera_de_muestra") or {}
         tareas.append(
             {
                 "descripcion": tarea.get("descripcion"),
+                # La fuente solo estaba en la clave interna (oculta por la regla 10): sin este campo el
+                # modelo atribuía cifras de NASA POWER a CHIRPS.
+                "fuente_de_datos": _fuente_de_tarea(clave),
                 "metrica": tarea.get("metrica_principal"),
                 "lectura_vigente_fuera_de_muestra": fuera.get(
                     tarea.get("lectura_principal", "seleccion_validacion")
@@ -403,17 +448,31 @@ class AsistenteGemini:
             r = self.conexion.generar(instrucciones, mensaje)
             citados, resultado, n = self._verificar(r.texto, expedientes, idioma)
             intentos, latencia, modelo, texto = 1, r.latencia_s, r.modelo, r.texto
+            atribuciones = fuentes_sin_respaldo(r.texto, expedientes)
             # La corrección solo si queda tiempo dentro del límite de la función (60 s en Vercel).
-            if not resultado.aprobado and latencia < 20:
+            if (not resultado.aprobado or atribuciones) and latencia < 20:
+                problemas = []
+                if resultado.no_trazables:
+                    problemas.append(
+                        f"Estas cifras NO están en los expedientes que citaste: {', '.join(resultado.no_trazables)}."
+                    )
+                if atribuciones:
+                    problemas.append(
+                        "Estas fuentes de datos NO aparecen en el expediente que citaste junto a ellas: "
+                        f"{', '.join(atribuciones)}."
+                    )
                 correccion = (
-                    f"{mensaje}\n\nTu respuesta anterior fue:\n{r.texto}\n\nEstas cifras NO están en los expedientes "
-                    f"que citaste: {', '.join(resultado.no_trazables)}. Reescribe la respuesta usando solo cifras "
-                    "copiadas del CONTEXTO y citando el expediente de cada una, o elimina esas cifras."
+                    f"{mensaje}\n\nTu respuesta anterior fue:\n{r.texto}\n\n{' '.join(problemas)} Reescribe la "
+                    "respuesta usando solo cifras copiadas del CONTEXTO, con la fuente de datos que figura junto a "
+                    "cada una y citando su expediente, o elimina esas cifras."
                 )
                 r2 = self.conexion.generar(instrucciones, correccion, temperatura=0.0)
                 citados2, resultado2, n2 = self._verificar(r2.texto, expedientes, idioma)
+                atribuciones2 = fuentes_sin_respaldo(r2.texto, expedientes)
                 intentos, latencia, modelo = 2, latencia + r2.latencia_s, r2.modelo
-                if resultado2.aprobado or len(resultado2.no_trazables) < len(resultado.no_trazables):
+                errores1 = len(resultado.no_trazables) + len(atribuciones)
+                errores2 = len(resultado2.no_trazables) + len(atribuciones2)
+                if (resultado2.aprobado and not atribuciones2) or errores2 < errores1:
                     texto, citados, resultado, n = r2.texto, citados2, resultado2, n2
         except ErrorGemini as e:
             raise ServicioNoDisponible(
